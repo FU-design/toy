@@ -1,0 +1,45 @@
+export const pageAdaptation = {
+  category: "页面适配",
+  qestionList: [
+    {
+      QS: "运维大屏的页面适配方案。",
+      AS: "",
+      URL: "",
+      MDMETA: ``,
+      MDPARSE: "",
+      isMD: false,
+    },
+    {
+      QS: "input输入框和select选择器“结合”使用",
+      AS: "",
+      URL: "https://juejin.cn/post/7083766700356829215#heading-2",
+      MDMETA: ``,
+      MDPARSE: "",
+      isMD: false,
+    },
+    {
+      QS: "利用ContentEditable属性在VUE下写一个输入框",
+      AS: "",
+      URL: "https://blog.yangteng.me/articles/2017/vue-content-editable/",
+      MDMETA: ``,
+      MDPARSE: "",
+      isMD: false,
+    },
+    {
+      QS: "【你不知道的ElementUI】被隐藏的神级组件: Popper和它的管家",
+      AS: "",
+      URL: "https://bbs.huaweicloud.com/blogs/326994",
+      MDMETA: ``,
+      MDPARSE: "",
+      isMD: false,
+    },
+    {
+      QS: "【Elment plus的小问题】el-popover点击空白处无法关闭",
+      AS: "",
+      URL: "https://www.cnblogs.com/listen9436/p/15016289.html",
+      MDMETA: ``,
+      MDPARSE: "",
+      isMD: false,
+    },
+  ],
+};
