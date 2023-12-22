@@ -1,6 +1,7 @@
 import { vue } from "./modules/vue";
 import { js } from "./modules/js";
 import { ts } from "./modules/ts";
+import { git } from "./modules/git";
 import { regExp } from "./modules/regExp";
 import { library } from "./modules/jsLibrary";
 import { dataFormat } from "./modules/dataFormat";
@@ -11,6 +12,7 @@ export const QS = [
   vue,
   js,
   ts,
+  git,
   dataFormat,
   performanceOptimization,
   pageAdaptation,
