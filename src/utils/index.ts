@@ -22,7 +22,7 @@ const cleanUrl = (href: string) => {
  */
 const renderer = () => {
   // 图片容器样式
-  const imgBox = `padding: 10px; box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+  const imgBox = `padding: 4px; box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05)`;
 
   // 重写图片渲染逻辑
@@ -34,7 +34,7 @@ const renderer = () => {
       }
       href = cleanHref;
 
-      let out = `<div><img style="${imgBox}" width="auto" height="400rem" src="${href}" alt="${text}"`;
+      let out = `<div><img style="${imgBox}" width="600rem" height="auto" src="${href}" alt="${text}"`;
       if (title) {
         out += ` title="${title}"`;
       }
