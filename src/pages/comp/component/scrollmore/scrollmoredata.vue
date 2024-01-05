@@ -36,7 +36,7 @@ const isLoading = ref<boolean>(false);
  */
 const initEvent = () => {
   wrapBox.value = document.getElementsByClassName("scroll-wrapper")[0];
-  unref(wrapBox.value).addEventListener("scroll", (e) => {
+  unref(wrapBox)?.addEventListener("scroll", (e) => {
     const target = e.target as Element;
     if (target.scrollHeight - target.scrollTop == target.clientHeight) {
       isLoading.value = true;
@@ -52,7 +52,7 @@ const initEvent = () => {
  * 组件销毁前移除监听事件
  */
 const removeEvent = () => {
-  unref(wrapBox.value)?.removeEventListener("scroll", () => {});
+  unref(wrapBox)?.removeEventListener("scroll", () => {});
 };
 
 onMounted(() => {
