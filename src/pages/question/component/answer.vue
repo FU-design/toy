@@ -3,7 +3,7 @@
     <Panel
       :visible="open"
       :hasFooter="false"
-      width="48%"
+      width="80%"
       @closed="handleClosed"
     >
       <template #header>
@@ -15,13 +15,25 @@
         <!-- 问题解答 -->
         <div v-if="data.MDMETA">
           <div>
-            <!-- <header>
-              <div class="flex-end">
-                <span @click="triggerPage(data)">切换</span>
+            <header>
+              <div @click.stop="triggerPage(data)" class="flex-end a-switch">
+                <!-- <span> html </span> -->
+                <div
+                  :class="[data.isMD ? 'l-s' : 'r-s']"
+                  class="switch-item"
+                ></div>
+                <!-- <span> md </span> -->
               </div>
-            </header> -->
-            <div v-show="!data.isMD" v-html="data.MDPARSE"></div>
-            <CodeBlock v-show="data.isMD" :code="data.MDMETA" />
+            </header>
+            <div
+              class="a-content transition"
+              :class="[data.isMD ? 'off' : 'on']"
+              v-html="data.MDPARSE"
+            ></div>
+            <CodeBlock
+              :class="[data.isMD ? 'on' : 'off', 'transition']"
+              :code="data.MDMETA"
+            />
           </div>
         </div>
       </template>
@@ -64,16 +76,19 @@ const handleClosed = (show: boolean) => {
   emits("closed", show);
 };
 
-// /**
-//  * @description 切换 md排版 和 解析后的 html
-//  * @param c
-//  */
-// const triggerPage = (c: any) => {
-//   c.isMD = !c.isMD;
-// };
+/**
+ * @description 切换 md排版 和 解析后的 html
+ * @param c
+ */
+const triggerPage = (c: any) => {
+  c.isMD = !c.isMD;
+};
 </script>
 
 <style scoped>
+.transition {
+  transition: all 0.8s;
+}
 .a-title {
   margin: 10px;
 }
@@ -81,6 +96,54 @@ const handleClosed = (show: boolean) => {
   font-weight: 600;
   color: rgba(78, 121, 221, 0.986);
   font-size: 20px;
+}
+.a-content {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.a-switch {
+  width: 48px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 20px;
+  position: relative;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.switch-item {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+  border-radius: 100%;
+  transition: all 0.5s;
+}
+
+.l-s {
+  transform: translateX(-100%);
+}
+
+.r-s {
+  transform: translateX(-20%);
+}
+
+.on {
+  transform: translateX(0);
+}
+
+.off {
+  transform: translateX(-100%);
+  position: absolute;
+  left: -100000px;
+}
+
+.a-switch > span:last-child {
+  flex: 2;
+  text-align: end;
 }
 
 /* .flex-end span { */

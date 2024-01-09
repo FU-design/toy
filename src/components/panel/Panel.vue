@@ -153,12 +153,11 @@ const handleClose = () => {
 .panel {
   width: 70%;
   height: 100%;
-  position: absolute;
-  z-index: 1000;
   inset: 0 0 auto auto;
   background-color: #fffffffb;
-  /* background-color: #d9d9d9; */
   pointer-events: auto;
+  position: absolute;
+  z-index: 1000;
   box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
     0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
 

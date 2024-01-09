@@ -1,6 +1,6 @@
 <template>
   <div class="code-block">
-    <highlightjs :code="codeStr" />
+    <highlightjs autodetect :code="codeStr" />
   </div>
 </template>
 
