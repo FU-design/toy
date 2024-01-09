@@ -7,9 +7,9 @@
       @closed="handleClosed"
     >
       <template #header>
-        <h4 class="a-title">
+        <div class="a-title">
           <i>{{ data.QS }}</i>
-        </h4>
+        </div>
       </template>
       <template #content>
         <!-- 问题解答 -->
@@ -75,9 +75,14 @@ const handleClosed = (show: boolean) => {
 
 <style scoped>
 .a-title {
-  color: rgba(78, 121, 221, 0.986);
   margin: 10px;
 }
+.a-title i {
+  font-weight: 600;
+  color: rgba(78, 121, 221, 0.986);
+  font-size: 20px;
+}
+
 /* .flex-end span { */
 /* background-color: #282c34;
   color: #abb2bf;

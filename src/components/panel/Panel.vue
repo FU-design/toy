@@ -209,9 +209,7 @@ const handleClose = () => {
   flex: 1;
   padding: 1rem 1rem 2rem 1rem;
   box-sizing: border-box;
-  /* background-color: #c7edcc; */
-  /* background-color: rgb(204, 232, 207); */
-  /* background-color: rgb(199, 237, 204); */
+  background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
   overflow: auto;
 }
 
@@ -228,5 +226,35 @@ const handleClose = () => {
 .panel-btn > div {
   font-weight: 500;
   cursor: pointer;
+}
+</style>
+<!-- 自定义markdown中元素的样式 -->
+<style>
+.panel-content h3,
+h4 {
+  padding: 8px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-image: linear-gradient(135deg, #c3cfe2 0%, #f5f7fa 100%);
+  font-size: Nunito, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu,
+    Cantarell, "Noto Sans", sans-serif;
+}
+.panel-content p {
+  margin: 0;
+}
+
+.panel-content pre {
+  margin-top: 6px;
+}
+
+.panel-content ul {
+  /* list-style: none; */
+  margin: 0;
+  /* padding: 0; */
+}
+.panel-content ul li {
+  padding: 8px 0 0 0;
+  margin-bottom: 10px;
 }
 </style>
