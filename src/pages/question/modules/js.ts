@@ -1,6 +1,7 @@
 import { parseMD } from "../../../utils/index";
 import JSON from "../../../markdowns/js/序列化-23-12-08_01.md?raw";
 import DomPos from "../../../markdowns/js/定位dom于视口中的位置-24-01-08.md?raw";
+import windowWH from "../../../markdowns/js/获取屏幕宽高width(),outerWidth,innerWidth,clientWidth的区别-24-01-09.md?raw";
 export const js = {
   category: "JS",
   qestionList: [
@@ -26,6 +27,14 @@ export const js = {
       URL: "",
       MDMETA: DomPos,
       MDPARSE: parseMD(DomPos),
+      isMD: false,
+    },
+    {
+      QS: "获取屏幕宽高width(),outerWidth,innerWidth,clientWidth的区别",
+      AS: "",
+      URL: "",
+      MDMETA: windowWH,
+      MDPARSE: parseMD(windowWH),
       isMD: false,
     },
     {

@@ -241,7 +241,7 @@ h4 {
     Cantarell, "Noto Sans", sans-serif;
 }
 .panel-content p {
-  margin: 0;
+  margin: 10px 0;
 }
 
 .panel-content pre {
@@ -249,12 +249,30 @@ h4 {
 }
 
 .panel-content ul {
-  /* list-style: none; */
   margin: 0;
-  /* padding: 0; */
 }
 .panel-content ul li {
-  padding: 8px 0 0 0;
-  margin-bottom: 10px;
+  margin: 10px 0;
+}
+
+.panel-content blockquote {
+  position: relative;
+  margin: 20px 0;
+  background-image: linear-gradient(135deg, #c3cfe23f 0%, #f5f7fa 100%);
+  font-size: #0000003f;
+}
+
+.panel-content blockquote > p {
+  padding: 10px 8px;
+  font-size: 15px;
+}
+
+.panel-content blockquote::before {
+  content: "";
+  height: 100%;
+  width: 4px;
+  display: inline-block;
+  position: absolute;
+  background-color: #0000003f;
 }
 </style>
