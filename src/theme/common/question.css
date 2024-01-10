@@ -18,12 +18,12 @@
 }
 
 .q-box {
-  /* height: 60px; */
-  padding: 1%;
   border-radius: 0.5rem;
   box-sizing: border-box;
-  background-color: #ffffffb0;
+  background-color: #ffffff18;
+  border: 1px solid #1414140c;
 }
+
 .q-box:hover {
   cursor: pointer;
   box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
@@ -35,19 +35,25 @@
   font-size: 1.5rem;
   margin: 0;
   padding: 8px;
-  border: 1px solid #e1e1e1;
-  border-top: transparent;
-  border-left: transparent;
-  border-right: transparent;
+  border-radius: 0.5rem;
 }
+
+/* 折叠打开后 */
+.q-title-expend {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .q-sub-title {
   display: inline-block;
   padding: 0 0 10px 0;
   box-sizing: border-box;
 }
+
 .q-sub-title:hover {
   text-decoration: wavy underline;
 }
+
 .q-content {
   overflow: hidden;
 }

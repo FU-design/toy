@@ -4,6 +4,7 @@ import { parseMD } from "../../../utils/index";
 
 export const vue = {
   category: "Vue",
+  cardColor: "vue",
   qestionList: [
     {
       QS: "Vue3.0 reactive()、ref()、unref()、isref()、toRefs()等常用",

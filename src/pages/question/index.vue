@@ -3,13 +3,26 @@
     <div class="q-box-wrapper" v-for="qs in qModule">
       <div class="q-box">
         <!-- 内容 -->
-        <h1 class="q-title" @click="openContent(qs)">{{ qs.category }}</h1>
+        <h1
+          class="q-title"
+          :class="[
+            qs.cardColor,
+            currBox?.includes(qs.category) ? 'q-title-expend' : '',
+          ]"
+          @click="openContent(qs)"
+        >
+          {{ qs.category }}
+        </h1>
         <!-- v-if="currBox?.includes(qs.category)" ---@note：开启折叠 -->
         <div class="q-content">
           <!-- 问题列表 -->
           <ul>
             <li v-for="(c, i) in qs.qestionList" :key="i">
-              <div class="q-sub-title" @click.stop="openAnswer(c)">
+              <div
+                class="q-sub-title"
+                :class="`${qs.cardColor}-word`"
+                @click.stop="openAnswer(c)"
+              >
                 {{ c.QS }}
               </div>
             </li>
@@ -65,5 +78,11 @@ const openContent = (qs: any) => {
 .source {
   padding: 1rem;
   box-sizing: border-box;
+}
+.vue {
+  background-image: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
+}
+.vue-word {
+  color: #213547;
 }
 </style>
