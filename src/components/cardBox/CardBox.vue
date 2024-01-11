@@ -27,4 +27,11 @@
   background-color: #ffffffa4;
   overflow: auto;
 }
+.card-box header {
+  font-weight: 600;
+}
+.card-box main {
+  width: 100%;
+  height: 100%;
+}
 </style>
