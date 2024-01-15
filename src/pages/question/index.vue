@@ -7,14 +7,17 @@
           class="q-title"
           :class="[
             qs.cardColor,
-            currBox?.includes(qs.category) ? 'q-title-expend' : '',
+            currBox?.includes(qs.category) ? 'q-title-expand' : '',
           ]"
           @click="openContent(qs)"
         >
           {{ qs.category }}
         </h1>
         <!-- v-if="currBox?.includes(qs.category)" ---@note：开启折叠 -->
-        <div class="q-content">
+        <div
+          class="q-content"
+          :class="[currBox?.includes(qs.category) ? 'expand' : 'merge']"
+        >
           <!-- 问题列表 -->
           <ul>
             <li v-for="(c, i) in qs.qestionList" :key="i">
@@ -48,7 +51,7 @@ import Answer from "./component/answer.vue";
 
 const visible = ref<boolean>(false);
 const qModule = ref<any>(QS);
-const currBox = ref<any>([]);
+const currBox = ref<any>([]); // 折叠卡片收集器
 const currQsInfo = ref<any>();
 
 /**
@@ -75,10 +78,7 @@ const openContent = (qs: any) => {
 
 <style scoped>
 @import url("../../theme/common/question.css");
-.source {
-  padding: 1rem;
-  box-sizing: border-box;
-}
+
 .vue {
   background-image: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
 }

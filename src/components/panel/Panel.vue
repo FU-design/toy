@@ -145,7 +145,7 @@ const handleClose = () => {
 .panel-wrapper {
   position: fixed; /* fixed 相对于浏览器视口定位 */
   inset: 0;
-  z-index: 1;
+  z-index: 9;
   pointer-events: none; /* 忽略鼠标操作,透过当前元素; 会被继承 */
   box-sizing: border-box;
 }

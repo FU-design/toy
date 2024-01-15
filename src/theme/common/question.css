@@ -22,6 +22,7 @@
   box-sizing: border-box;
   background-color: #ffffff18;
   border: 1px solid #1414140c;
+  overflow: hidden;
 }
 
 .q-box:hover {
@@ -32,16 +33,19 @@
 }
 
 .q-title {
+  position: relative;
+  z-index: 2;
   font-size: 1.5rem;
   margin: 0;
   padding: 8px;
   border-radius: 0.5rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 /* 折叠打开后 */
-.q-title-expend {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+.q-title-expand {
+  border-radius: 0.5rem;
 }
 
 .q-sub-title {
@@ -55,10 +59,25 @@
 }
 
 .q-content {
+  transition: all 0.5s;
   overflow: hidden;
 }
 
 .q-content ul li {
   padding: 2px;
+  box-sizing: border-box;
+}
+
+.expand {
+  height: 0px;
+  transform: translateY(-100%);
+}
+
+.merge {
+  transform: translateY(0);
+}
+
+.source {
+  padding: 1rem;
   box-sizing: border-box;
 }
