@@ -13,7 +13,8 @@
 
 <script lang="ts" setup>
 import { nextTick, onMounted, onUnmounted, ref, unref } from "vue";
-import { drawWall, drawPath, drawArrow, drawMoon } from "./canvas";
+// import { drawWall, drawPath, drawArrow, drawMoon } from "./canvas";
+import { draw } from "./canvas_02";
 
 const canvasW = ref<number>(0);
 const canvasH = ref<number>(0);
@@ -35,10 +36,11 @@ const initCanvas = () => {
   let ctx = canvas.getContext("2d");
   // 这里利用原生的话需要实现一个和 nextTick 原理一样的方法
   nextTick(() => {
-    drawWall(ctx, unref(canvasW), unref(canvasH));
-    drawPath(ctx);
-    drawArrow(ctx);
-    drawMoon(ctx);
+    // drawWall(ctx, unref(canvasW), unref(canvasH));
+    // drawPath(ctx);
+    // drawArrow(ctx);
+    // drawMoon(ctx);
+    draw(ctx);
   });
 };
 
