@@ -3,6 +3,7 @@ import { js } from "./modules/js";
 import { ts } from "./modules/ts";
 import { git } from "./modules/git";
 import { regExp } from "./modules/regExp";
+import { learnList } from "./modules/learnList";
 import { library } from "./modules/jsLibrary";
 import { dataFormat } from "./modules/dataFormat";
 import { pageAdaptation } from "./modules/pageAdaptation";
@@ -18,4 +19,5 @@ export const QS = [
   pageAdaptation,
   library,
   regExp,
+  learnList,
 ];
