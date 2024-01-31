@@ -11,7 +11,12 @@
           ]"
           @click="openContent(qs)"
         >
-          {{ qs.category }}
+          <IconProvider v-if="qs.logo" :size="40">
+            <component :title="qs.category" :is="qs.logo"></component>
+          </IconProvider>
+          <span v-else>
+            {{ qs.category }}
+          </span>
         </h1>
         <!-- v-if="currBox?.includes(qs.category)" ---@note：开启折叠 -->
         <div
@@ -21,11 +26,7 @@
           <!-- 问题列表 -->
           <ul>
             <li v-for="(c, i) in qs.qestionList" :key="i">
-              <div
-                class="q-sub-title"
-                :class="`${qs.cardColor}-word`"
-                @click.stop="openAnswer(c)"
-              >
+              <div class="q-sub-title" @click.stop="openAnswer(c)">
                 {{ c.QS }}
               </div>
             </li>
@@ -48,6 +49,7 @@
 import { ref, toRaw } from "vue";
 import { QS } from "./questions";
 import Answer from "./component/answer.vue";
+import { IconProvider } from "@twist-space/vue3-icons";
 
 const visible = ref<boolean>(false);
 const qModule = ref<any>(QS);
@@ -78,11 +80,4 @@ const openContent = (qs: any) => {
 
 <style scoped>
 @import url("../../theme/common/question.css");
-
-.vue {
-  background-image: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
-}
-.vue-word {
-  color: #213547;
-}
 </style>
