@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import pageView from "../layout/pageView.vue";
+import NotFound from "../layout/NotFound.vue";
 import comp from "./modules/comp";
 import question from "./modules/question";
 import minecraft from "./modules/minecraft";
@@ -28,6 +29,8 @@ const router = createRouter({
     comp,
     question,
     minecraft,
+    // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
   ],
 });
 
