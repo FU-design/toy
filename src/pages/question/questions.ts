@@ -7,8 +7,9 @@ import { notes } from "./modules/notes";
 import { learnList } from "./modules/learnList";
 import { library } from "./modules/jsLibrary";
 import { performanceOptimization } from "./modules/performanceOptimization";
-
+import { audition } from "./modules/audition";
 export const QS = [
+  audition,
   vue,
   js,
   ts,

@@ -63,3 +63,47 @@ export const parseMD = (content: string) => {
   marked.use({ renderer: renderer() });
   return marked.parse(content);
 };
+
+/**
+ * 通过获取的模块中的文件目录，遍历解析模块中的md文件，展示到页面中
+ * @param modulesFiles
+ * @returns
+ */
+export const getFileList = async (modulesFiles: any, modName: string) => {
+  const importStrs = [];
+  const fileKeys = Object.keys(modulesFiles);
+  for (let k of fileKeys) {
+    /**
+     * @note 资源可以使用 ?raw 后缀声明作为字符串引入。
+     * https://cn.vitejs.dev/guide/assets
+     */
+    const res: any = await import(k + "?raw");
+    importStrs.push(res.default);
+  }
+  return getResolveFiles(fileKeys, importStrs, modName);
+};
+
+/**
+ * 通过获取处理后的md文件数据，生成指定的数据结构
+ * @param files
+ * @param fileStr
+ * @param modName
+ * @returns
+ */
+export const getResolveFiles = (
+  files: any,
+  fileStr: string[],
+  modName: string
+) => {
+  return files.reduce((pre: any, curr: string, index: number) => {
+    pre.push({
+      QS: curr.replace(`/src/markdowns/${modName}/`, "").replace(".md", ""),
+      AS: "",
+      URL: "",
+      MDMETA: fileStr[index],
+      MDPARSE: parseMD(fileStr[index]),
+      isMD: false,
+    });
+    return pre;
+  }, []);
+};
