@@ -95,7 +95,7 @@ const triggerPage = (c: any) => {
 .a-title i {
   font-weight: 600;
   color: rgba(78, 121, 221, 0.986);
-  font-size: 20px;
+  font-size: 16px;
 }
 .a-content {
   width: 60%;

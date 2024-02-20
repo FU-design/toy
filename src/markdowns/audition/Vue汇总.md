@@ -1,0 +1,23 @@
+- Vue3 proxy 解决了哪些问题？
+- Vue 响应式原理
+- 发布订阅模式和观察者模式的异同
+- key 的作用
+- vue 和 react 区别，选型考虑
+- vue 组件间通信
+- vuex 数据流动过程
+- css module 原理
+- 说一下虚拟 DOM？为什么要使用虚拟 DOM？
+- SPA 单页面应用和多页面应用有什么区别
+- computed 和 watch 的区别
+- data 为什么是个函数，而不是对象
+- watch 能监听 computed 的属性吗
+- vue 的生命周期
+- mounted 拿到数据可以后可以直接获取 dom 吗
+- nextTick 原理
+- vue 模板（template）里为什么不能使用多个头结点？
+- vuex 为什么同时设计 mutation 和 action？只设计一个行不行？
+- vue2 和 vue3 在数据绑定这一块有什么区别？
+- vue 挂载和卸载父子组件生命周期钩子执行顺序
+- vue 的优化方案（等同于如何编写可读性高、易维护且高性能的 vue 代码）
+- keep-alive 的原理，使用有什么问题？如何解决？
+  [](https://blog.csdn.net/weixin_54542328/article/details/134599250)

@@ -247,6 +247,14 @@ h4 {
   margin-top: 6px;
 }
 
+.panel-content [light] {
+  margin: 0 4px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #c3cfe2;
+}
+
 .panel-content ul {
   margin: 0;
 }
