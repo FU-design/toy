@@ -10,3 +10,5 @@
 - HTML/CSS/JS
 - Tailwind CSS
 - Bootstrap
+- pixi.js
+- create.js
