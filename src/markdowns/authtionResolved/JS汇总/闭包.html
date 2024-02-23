@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击</button>
+  <p></p>
+  <script>
+
+    // function createComparisonFunction(propertyName) {
+    //   return function (obj1, obj2) {
+    //     let val1 = obj1[propertyName];
+    //     let val2 = obj2[propertyName];
+
+    //     if (val1 < val2) {
+    //       return function () {
+    //         return val1;
+    //       };
+    //     } else if (val1 > val2) {
+    //       return 1;
+    //     } else {
+    //       return 0;
+    //     }
+    //   };
+    // }
+    // const a = {
+    //   foo: 2,
+    // };
+    // const b = {
+    //   foo: 3,
+    // };
+    // console.dir(createComparisonFunction("foo")(a, b));
+
+    // var n = 10;
+    // function fn() {
+    //   var n = 20;
+    //   function f() {
+    //     n++;
+    //     console.log(n);
+    //   }
+    //   f();
+    //   return f;
+    // }
+
+    // var x = fn(); /// 21
+    // x(); // 22
+    // x(); // 23
+    // console.log(n); // 10
+
+    // let count = 0;
+    // (function immediate() {
+    //   if (count === 0) {
+    //     let count = 1;
+    //     console.log(count); // What is logged?
+    //   }
+    //   console.log(count); // What is logged?
+    // })();
+
+
+    {
+      // for (var i = 0; i < 3; i++) {
+      //   (function (j) {
+      //     setTimeout(function () {
+      //       console.log(j); // What is logged?
+      //     }, 1000);
+      //   })(i)
+      // }
+    }
+
+
+    {
+      // function createIncrement() {
+      //   let count = 0;
+      //   function increment() {
+      //     count++;
+      //   }
+
+      //   // let message = `Count is ${count}`;
+      //   function log() {
+      //     let message = `Count is ${count}`;
+      //     console.log(message);
+      //   }
+
+      //   return [increment, log];
+      // }
+
+      // const [increment, log] = createIncrement();
+      // increment();
+      // increment();
+      // increment();
+      // log(); // What is logged?
+    }
+
+
+    {
+      // function createIncrement() {
+      //   let count = 0;
+      //   function increment() {
+      //     count++;
+      //   }
+
+      //   // let message = `Count is ${count}`;
+      //   function log() {
+      //     let message = `Count is ${count}`;
+      //     console.log(message);
+      //   }
+
+      //   return [increment, log];
+      // }
+
+      // const [increment, log] = createIncrement();
+      // increment();
+      // increment();
+      // increment();
+      // log(); // What is logged?
+    }
+
+
+    var countClicked = 0;
+    const myButton = document.getElementsByTagName('button')[0]
+    const myText = document.getElementsByTagName('p')[0]
+    myButton.addEventListener('click', function handleClick() {
+      countClicked++;
+      myText.innerText = `You clicked ${countClicked} times`;
+    });
+
+    console.log('countClicked :>> ', countClicked);
+
+  </script>
+</body>
+
+</html>

@@ -1,26 +1,78 @@
-function createComparisonFunction(propertyName) {
-    return function (obj1, obj2) {
-        let val1 = obj1[propertyName]
-        let val2 = obj2[propertyName]
+// {
+//   function createIncrement() {
+//     let count = 0;
+//     function increment() {
+//       count++;
+//     }
 
-        if (val1 < val2) {
-            return function () {
-                return val1
-            }
-        } else if (val1 > val2) {
-            return 1
-        } else {
-            return 0
-        }
+//     // let message = `Count is ${count}`;
+//     function log() {
+//       let message = `Count is ${count}`;
+//       console.log(message);
+//     }
 
-    }
+//     return [increment, log];
+//   }
+
+//   const [increment, log] = createIncrement();
+//   increment();
+//   increment();
+//   increment();
+//   log(); // What is logged?
+// }
+
+// const message = "Hello, World!";
+
+// setTimeout(function callback() {
+//   console.log(message); // logs "Hello, World!"
+// }, 1000);
+
+// let i;
+// for (i = 0; i < 3; i++) {
+//   (function (j) {
+//     setTimeout(() => {
+//       console.log("j :>> ", j);
+//     }, 100);
+//   })(i);
+// }
+
+// {
+//   function Stack() {
+//     let items = [];
+//     return items;
+//   }
+//   const stack = new Stack();
+//   stack.push(1);
+//   stack.push(2);
+//   stack.push(3);
+
+//   console.log("stack :>> ", stack); // [ 1, 2, 3 ]
+//   stack.length = 0;
+//   console.log("stack :>> ", stack); // []
+// }
+
+{
+  function Stack() {
+    let items = [];
+
+    return {
+      get: () => {
+        return items;
+      },
+      push: (item) => {
+        items.push(item);
+      },
+      pop: () => {
+        return items.pop();
+      },
+    };
+  }
+  const stack = new Stack();
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
+
+  console.log("stack :>> ", stack.get()); // [ 1, 2, 3 ]
+  stack.length = 0;
+  console.log("stack :>> ", stack.get()); // [1, 2, 3]
 }
-const a = {
-    foo: 2
-}
-const b = {
-    foo: 3
-}
-console.dir(createComparisonFunction('foo')(a, b))
-
-
