@@ -51,28 +51,28 @@
 //   console.log("stack :>> ", stack); // []
 // }
 
-{
-  function Stack() {
-    let items = [];
+// {
+//   function Stack() {
+//     let items = [];
 
-    return {
-      get: () => {
-        return items;
-      },
-      push: (item) => {
-        items.push(item);
-      },
-      pop: () => {
-        return items.pop();
-      },
-    };
-  }
-  const stack = new Stack();
-  stack.push(1);
-  stack.push(2);
-  stack.push(3);
+//     return {
+//       get: () => {
+//         return items;
+//       },
+//       push: (item) => {
+//         items.push(item);
+//       },
+//       pop: () => {
+//         return items.pop();
+//       },
+//     };
+//   }
+//   const stack = new Stack();
+//   stack.push(1);
+//   stack.push(2);
+//   stack.push(3);
 
-  console.log("stack :>> ", stack.get()); // [ 1, 2, 3 ]
-  stack.length = 0;
-  console.log("stack :>> ", stack.get()); // [1, 2, 3]
-}
+//   console.log("stack :>> ", stack.get()); // [ 1, 2, 3 ]
+//   stack.length = 0;
+//   console.log("stack :>> ", stack.get()); // [1, 2, 3]
+// }
