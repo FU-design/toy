@@ -104,30 +104,31 @@ compareNames = null;
 
   - 上述中的类中声明 items 的属性可被随意修改，此刻想让其作为私有变量：
 
-        ```js
-        function Stack() {
-          let items = [];
-          return {
-            get: () => {
-              return items;
-            },
-            push: (item) => {
-              items.push(item);
-            },
-            pop: () => {
-              return items.pop();
-            },
-          };
-        }
-        const stack = new Stack();
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
+    ```js
+    function Stack() {
+      let items = [];
+      return {
+        get: () => {
+          return items;
+        },
+        push: (item) => {
+          items.push(item);
+        },
+        pop: () => {
+          return items.pop();
+          D;
+        },
+      };
+    }
+    const stack = new Stack();
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
 
-        console.log("stack :>> ", stack.get()); // [ 1, 2, 3 ]
-        stack.length = 0;
-        console.log("stack :>> ", stack.get()); // [1, 2, 3]
-        ```
+    console.log("stack :>> ", stack.get()); // [ 1, 2, 3 ]
+    stack.length = 0;
+    console.log("stack :>> ", stack.get()); // [1, 2, 3]
+    ```
 
 <hr>
 
@@ -145,8 +146,6 @@ compareNames = null;
 ### :curly_loop: 继承实现
 
 ### :curly_loop: 浅拷贝和深拷贝
-
-### :curly_loop: 手写实现 new 方法 【实现的原理】
 
 ### :curly_loop: 分别介绍一下原型、原型链、作用域和作用域链的含义和使用场景
 
@@ -307,12 +306,153 @@ _**Promise.prototype.finally()**_
 
 ### :curly_loop: 手写出 Promise A+ 规范
 
+### :curly_loop: 手写实现 new 方法 【实现的原理】
+
 ### :curly_loop: Promise 的 all 和 race 有什么区别
 
 ### :curly_loop: 箭头函数和普通函数的区别
 
-### :curly_loop: let、var 和 const 的区别？如果希望 const 定义的对象的属性也不能被修改该怎么做？
-
-### :curly_loop: instanceof 的实现原理
+### :curly_loop: let、var 和 const 的区别？如果希望 const 定义的对象的属性也不能被修改该怎么做？  
 
 ### :curly_loop: 数据类型有哪些？如何判断一个数据是否是数组
+
+_**数据类型**_
+
+- 原始类型: String Number Boolean BigInt Symbol Undefined Null
+- 引用类型: Object (Function 、Array、RegExp、Date 等等)
+
+_**判断数据的类型方式**_
+
+1. **`typeof`** 操作符，最适合用来判断一个变量是否是原始类型。
+
+   - 对于原始类型，除 null 以外，字符串、数值、布尔值、undefined 均可准确判断
+   - 对于引用类型，除 function 外，均会返回 "object"
+   - 对于 null 返回 object
+   - 对于 function 返回 function
+
+   ```js
+   typeof ""; // string 有效
+   typeof 1; // number 有效
+   typeof Symbol(); // symbol 有效
+   typeof true; //boolean 有效
+   typeof undefined; //undefined 有效
+   typeof null; //object 无效
+   typeof []; //object 无效
+   typeof new Function(); // function 有效
+   typeof new Date(); //object 无效
+   typeof new RegExp(); //object 无效
+   ```
+
+   > 注意 typeof 操作符在用于检测函数时也会返回"function"。当在 Safari（直到 Safari 5）和 Chrome（直到 Chrome 7）中用于检测正则表达式时，由于实现细节的原因，typeof 也会返回"function"。ECMA-262 规定，任何实现内部[[Call]]方法的对象都应该在 typeof 检测时返回"function"。因为上述浏览器中的正则表达式实现了这个方法，所以 typeof 对正则表达式也返回"function"。在 IE 和 Firefox 中，typeof 对正则表达式返回"object"。
+
+2. **`instanceOf`** 运算符,测试 **`构造函数的原型属性`** 是否出现在 **`对象原型链中的任何位置`**。
+
+   ```js
+   target instanceof constructor;
+   ```
+
+   - 只能用来判断两个对象是否属于实例关系， 而不能判断一个对象实例具体属于哪种类型。
+   - 用来检测 constructor.prototype 是否存在于参数 target 的原型链上。
+   - 若变量是给定引用类型的实例，则会返回布尔值 true
+   - 若变量是原始类型，则始终会返回 false
+
+   ```javaScript
+
+   [] instanceof Array; // true
+   {} instanceof Object;// true
+   new Date() instanceof Date;// true
+
+   function Person(){};
+   new Person() instanceof Person;
+
+   // because: 下述中模拟实现 instanceof 可知
+   [] instanceof Object; // true
+   new Date() instanceof Object;// true
+   new Person instanceof Object;// true
+   ```
+
+3. **`toString()`**
+
+   - toString() 是 Object 的原型方法，默认返回当前对象的 \[[Class]]。这是一个内部属性，其格式为[object Xxx]，其中 Xxx 就是对象的类型。
+   - 对于 Object 对象直接调用即可，对于其他的变量，需要通过 **`call/apply`** 来调用。
+
+   ```javaScript
+   Object.prototype.toString.call('') ;   // [object String]
+   Object.prototype.toString.call(1) ;    // [object Number]
+   Object.prototype.toString.call(true) ; // [object Boolean]
+   Object.prototype.toString.call(Symbol()); //[object Symbol]
+   Object.prototype.toString.call(undefined) ; // [object Undefined]
+   Object.prototype.toString.call(null) ; // [object Null]
+   Object.prototype.toString.call(new Function()) ; // [object Function]
+   Object.prototype.toString.call(new Date()) ; // [object Date]
+   Object.prototype.toString.call([]) ; // [object Array]
+   Object.prototype.toString.call(new RegExp()) ; // [object RegExp]
+   Object.prototype.toString.call(new Error()) ; // [object Error]
+   Object.prototype.toString.call(document) ; // [object HTMLDocument]
+   Object.prototype.toString.call(window) ; //[object global] window 是全局对象 global 的引用
+   ```
+
+_**模拟实现 instanceof**_
+
+- 实现原理：检测 **`constructor.prototype`** 是否存在于参数 target 的 **`原型链`** 上
+
+  ```js
+  // target instanceof constructor;
+  function newInstanceOf(L, R) {
+    // typeof 在监测函数时会返回 function ，虽然 function 也是 object
+    // 因为 typeof null 比较特殊，会返回 object，所以这里要单独判断
+    if (L === null || (typeof L !== "object" && typeof L !== "function"))
+      return false;
+    while (true) {
+      if (L === null) return false;
+      if (L === R.prototype) return true;
+      L = Object.getPrototypeOf(L);
+    }
+  }
+  ```
+
+_**如何判断一个数据是否是数组**_
+
+> _toString()_、_Array.isArray( target )_、_instanceof_
+
+1. **toString()**
+
+   ```js
+   Object.prototype.toString.call([]);
+   ```
+
+2. **Array.isArray( target )**
+
+   - 不检查值的原型链，也不依赖于它所附加的 Array 构造函数。
+   - 对于使用 **`数组字面量语法`** 或 **`Array 构造函数`** 创建的任何值，都返回 true。
+   - **`Array.prototype 是一个数组`**
+
+   ```js
+   // 鲜为人知的事实：其实 Array.prototype 也是一个数组：
+   Array.isArray(Array.prototype); // true
+   Array.isArray(Array()); // true
+
+   // 以下都是 false
+   Array.isArray();
+   Array.isArray({});
+   Array.isArray(null);
+   Array.isArray(undefined);
+   Array.isArray(17);
+   Array.isArray("Array");
+   Array.isArray(true);
+   Array.isArray(false);
+   Array.isArray(new Uint8Array(32));
+   ```
+
+[判断 JS 数据类型的四种方法](https://www.cnblogs.com/onepixel/p/5126046.html)
+
+### :curly_loop: 常用数组方法和他们之间的区别
+
+常用数组方法：
+
+- 第一个匹配的元素，使用 <kbd><strong>find()</strong></kbd>。
+- 数组中最后一个匹配元素的索引，使用 <kbd><strong>findLastIndex()</strong></kbd>。
+- 某个值的索引，使用 <kbd><strong>indexOf()</strong></kbd>。（它类似于 findIndex()，但是会检查每个元素是否与值相等，而不是使用一个测试函数。）
+- 该数组中是否存在一个值，使用 <kbd><strong>includes()</strong></kbd>。同样地，它检查每个元素是否和值相等，而不是使用一个测试函数。
+- 是否有 **`任意一个元素满足`** 提供的测试函数，使用 <kbd><strong>some()</strong></kbd>。
+- 是否有 **`所有元素满足`** 提供的测试函数，使用 <kbd><strong>every()</strong></kbd>。
