@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <img width="300" height="300" src="/image/bueaty.jpg" />
+  </div>
 </template>
 
 <script lang="ts" setup></script>

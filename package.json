@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite --open --mode dev",
     "build-tsc": "vue-tsc && vite build",
-    "build": "vite build",
+    "build": "vite build --mode pro",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "highlight.js": "^11.9.0",
     "marked": "^9.1.5",
     "marked-highlight": "^2.0.6",
+    "sass": "^1.71.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
