@@ -45,9 +45,9 @@ export default defineConfig(({ command, mode }) => {
 
     server: {
       host: "0.0.0.0",
-      port: 86, //todo 项目启动时自定义端口
+      port: 86, //todo 项目启动时的自定义端口
       hmr: true, //todo 开启热更新,更改代码后自动更新页面
-      open: true, //todo 开发服务器启动时，自动在浏览器中打开应用程序（也可以在package.json中的 “script” 选项中配置）
+      open: true, //todo 项目启动时，自动在浏览器中打开应用程序（也可以在package.json中的 “script” 选项中配置）
     },
 
     resolve: {
@@ -60,8 +60,15 @@ export default defineConfig(({ command, mode }) => {
          */
         // "@": fileURLToPath(new URL("./src", import.meta.url)),
         // "@": path.resovle(__dirname, "./src"),
+
+        /**
+         * 因为别名的配置主要是对资源目录的操作，在node中，path 模块会很有帮助，通常会配合使用。
+         * path 模块 ： node 中专门用来处理文件路径的模块；
+         * path.resolve() : path 模块中进行文件路径拼接的方法；
+         * __dirname : node 中的一个变量，哪个文件中使用了它，他就代表了该文件所在的目录（绝对路径）。
+         */
         "@": join(__dirname, "src"),
-        "/image": "src/assets/images/",
+        "@assets": join(__dirname, "src/assets"),
       },
       extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"], //todo 导入时想要省略的扩展名列表; 现在配置的是默认的
     },

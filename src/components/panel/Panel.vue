@@ -252,6 +252,9 @@ h4 {
 }
 .panel-content ul li {
   margin: 10px 0;
+  &::marker {
+    color: rgb(39, 72, 133);
+  }
 }
 
 .panel-content blockquote {
@@ -273,5 +276,11 @@ h4 {
   display: inline-block;
   position: absolute;
   background-color: #0000003f;
+}
+
+.panel-content :not(pre) > code {
+  background-color: rgba(0, 0, 0, 0.089);
+  padding: 2px 10px;
+  border-radius: 4px;
 }
 </style>
