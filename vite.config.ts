@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
-import { join } from "path";
+import path, { join } from "path";
 // import path from 'path'
 
 /**
@@ -29,10 +29,10 @@ export default defineConfig(({ command, mode }) => {
   //   };
   // }
   return {
-    base: "./", //todo 默认 / ,配置文件的根目录为相对路径
+    //todo 解决打包后的访问页面空白问题 (https://blog.csdn.net/muguli2008/article/details/122306515?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-122306515-blog-125894321.235^v43^pc_blog_bottom_relevance_base3&spm=1001.2101.3001.4242.1&utm_relevant_index=3
+    base: "./", // 默认 / ,配置文件的根目录为相对路径
     plugins: [
       vue(),
-      //
       vueJsx(),
       Components({
         resolvers: [
@@ -45,13 +45,21 @@ export default defineConfig(({ command, mode }) => {
 
     server: {
       host: "0.0.0.0",
-      port: 86, //todo 项目启动时的自定义端口
-      hmr: true, //todo 开启热更新,更改代码后自动更新页面
-      open: true, //todo 项目启动时，自动在浏览器中打开应用程序（也可以在package.json中的 “script” 选项中配置）
+      port: 86, //项目启动时的自定义端口
+      hmr: true, //开启热更新,更改代码后自动更新页面
+      open: true, //项目启动时，自动在浏览器中打开应用程序（也可以在package.json中的 “script” 选项中配置）
+      // proxy: {
+      //   "/api": {
+      //     target: "http://127.0.0.1:86",
+      //     changeOrigin: true,
+      //     ws: true,
+      //     rewrite: (path) => path.replace(/^\/api/, ""),
+      //   },
+      // },
     },
 
     resolve: {
-      //todo 别名路径配置
+      //别名路径配置
       alias: {
         /**
          * import.meta.url 是一个 ESM 的原生功能，会暴露当前模块的 URL。
@@ -74,10 +82,9 @@ export default defineConfig(({ command, mode }) => {
     },
 
     build: {
-      target: "modules", //todo 类型： string | string[],默认： 'modules'设置最终构建的浏览器兼容目标
-      outDir: "dist", //todo 类型：string,默认：dist 指定输出路径（相对于 项目根目录).
-      assetsDir: "", //todo 类型：string，默认：assets 指定生成静态资源的存放路径（相对于 build.outDir）。在 库模式 下不能使用。
-      sourcemap: true,
+      target: "modules", //默认： 'modules'设置最终构建的浏览器兼容目标
+      outDir: "dist", //默认：dist 指定输出路径（相对于 项目根目录).
+      assetsDir: "assets", //默认：assets 指定生成静态资源的存放路径（相对于 build.outDir）。
     },
   };
 });
