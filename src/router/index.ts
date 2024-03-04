@@ -1,11 +1,16 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+} from "vue-router";
 import pageView from "../layout/pageView.vue";
 import NotFound from "../layout/NotFound.vue";
 import comp from "./modules/comp";
 import question from "./modules/question";
 import minecraft from "./modules/minecraft";
 const router = createRouter({
-  history: createWebHistory(),
+  // history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       path: "/",
