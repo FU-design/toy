@@ -73,6 +73,31 @@ _**不同点：**_
 
 ### vue 组件间通信
 
+- 父子通信：
+
+  - `props/$emits`
+  - `$ref`
+  - `$parent/$children`
+  - `provide/inject`
+  - `$emit/$on（事件总线）`
+  - `$attrs/$listeners`
+  - `vuex`
+  - `pinia`、
+
+- 兄弟通信：
+
+  - `$emit/$on（事件总线）`
+  - `vuex`
+  - `pinia`
+
+- 跨组件通信：
+
+  - `provide/inject`
+  - `$emit/$on（事件总线）`
+  - `$attrs/$listeners`
+  - `vuex`
+  - `pinia`
+
 ### vuex 数据流动过程
 
 ### css module 原理

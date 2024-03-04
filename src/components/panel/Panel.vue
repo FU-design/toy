@@ -260,12 +260,12 @@ h4 {
 .panel-content blockquote {
   position: relative;
   margin: 20px 0;
-  background-image: linear-gradient(135deg, #c3cfe23f 0%, #f5f7fa 100%);
+  /* background-image: linear-gradient(135deg, #c3cfe23f 0%, #f5f7fa 100%); */
   font-size: #0000003f;
 }
 
 .panel-content blockquote > p {
-  padding: 10px 8px;
+  padding: 10px;
   font-size: 15px;
 }
 
@@ -275,12 +275,14 @@ h4 {
   width: 4px;
   display: inline-block;
   position: absolute;
-  background-color: #0000003f;
+  background-color: #2a43b35c;
 }
 
 .panel-content :not(pre) > code {
   background-color: rgba(0, 0, 0, 0.089);
   padding: 2px 10px;
   border-radius: 4px;
+  font-weight: 600;
+  color: rgb(207 85 85 / 99%);
 }
 </style>
