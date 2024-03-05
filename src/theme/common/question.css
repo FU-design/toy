@@ -1,9 +1,12 @@
 .question {
   display: flex;
   flex-wrap: wrap;
-  padding: 1%;
   position: relative;
   box-sizing: border-box;
+  width: 70vw;
+  background-color: rgba(0, 0, 0, 0.014);
+  margin: 0 auto;
+  height: 100vh;
 }
 
 .q-box-wrapper {

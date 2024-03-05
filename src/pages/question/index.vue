@@ -1,46 +1,14 @@
 <template>
   <div class="question">
-    <div class="q-box-wrapper" v-for="qs in qModule">
-      <div class="q-box">
-        <!-- 内容 -->
-        <h1
-          class="q-title"
-          :class="[
-            qs.cardColor,
-            currBox?.includes(qs.category) ? 'q-title-expand' : '',
-          ]"
-          @click="openContent(qs)"
-        >
-          <IconProvider v-if="qs.logo" :size="40">
+    <ul class="q-box">
+      <template v-for="qs in qModule">
+        <li class="q-item" v-if="qs.logo">
+          <IconProvider :size="40">
             <component :title="qs.category" :is="qs.logo"></component>
           </IconProvider>
-          <span v-else>
-            {{ qs.category }}
-          </span>
-        </h1>
-        <!-- v-if="currBox?.includes(qs.category)" ---@note：开启折叠 -->
-        <div
-          class="q-content"
-          :class="[currBox?.includes(qs.category) ? 'expand' : 'merge']"
-        >
-          <!-- 问题列表 -->
-          <ul>
-            <li v-for="(c, i) in qs.qestionList" :key="i">
-              <div class="q-sub-title" @click.stop="openAnswer(c)">
-                {{ c.QS }}
-              </div>
-            </li>
-          </ul>
-          <!-- 学习连接 -->
-          <div class="source" v-if="qs.source">
-            <div>参考：</div>
-            <template v-for="s in qs.source">
-              <a :href="s.url" target="_blank"> {{ s.url }}</a>
-            </template>
-          </div>
-        </div>
-      </div>
-    </div>
+        </li>
+      </template>
+    </ul>
     <Answer v-model:open="visible" :data-info="currQsInfo" />
   </div>
 </template>
@@ -77,7 +45,51 @@ const openContent = (qs: any) => {
   }
 };
 </script>
+<style lang="scss" scoped>
+@mixin f-ctr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.f-col-ctr {
+  display: flex;
+  align-items: center;
+}
+.f-row-ctr {
+  display: flex;
+  justify-content: center;
+}
+/* @import url("../../theme/common/question.css"); */
+.question {
+  width: 70vw;
+  height: calc(100vh - 60px);
+  position: relative;
+  background-color: rgba(235, 212, 212, 0.164);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.q-box {
+  position: absolute;
+  left: -4rem;
+  top: 0;
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 
-<style scoped>
-@import url("../../theme/common/question.css");
+  .q-item {
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+
+    &:hover {
+      // filter: drop-shadow(16px 16px 20px rgba(34, 34, 34, 0.411));
+      filter: drop-shadow(5px 5px 0 red) hue-rotate(180deg)
+        drop-shadow(5px 5px 0 red);
+      transition: all 0.5s ease 0s;
+    }
+  }
+}
 </style>
