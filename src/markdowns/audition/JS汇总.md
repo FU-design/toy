@@ -1,4 +1,4 @@
-### :curly_loop: 闭包【闭包的原理】
+### 闭包【闭包的原理】
 
 **概念**：闭包指那些引用了另一个函数作用域中变量的函数，通常是在嵌套函数中实现（匿名函数不是闭包）或者说 **`闭包是指有权访问另一个函数作用域中变量的函数`**
 
@@ -143,15 +143,15 @@ compareNames = null;
 
 <hr>
 
-### :curly_loop: 继承实现
+### 继承实现
 
-### :curly_loop: 浅拷贝和深拷贝
+### 浅拷贝和深拷贝
 
-### :curly_loop: 分别介绍一下原型、原型链、作用域和作用域链的含义和使用场景
+### 分别介绍一下原型、原型链、作用域和作用域链的含义和使用场景
 
-### :curly_loop: 数组的 filter、every、flat 的作用是什么
+### 数组的 filter、every、flat 的作用是什么
 
-### :curly_loop: es6 有哪些新特性【前端开发者不得不知的 ES6 十大特性】
+### es6 有哪些新特性【前端开发者不得不知的 ES6 十大特性】
 
 - Object.keys() 和 Object.values 和 Object.entries()
 
@@ -170,11 +170,11 @@ compareNames = null;
   console.log(Object.entries("foo")); // [['0','f'],['1','o'],['2','o']]
   ```
 
-### :curly_loop: 说一下对 Promise 的了解【Promise 实现原理】
+### 说一下对 Promise 的了解【Promise 实现原理】
 
-### :curly_loop: set、map 区别，map、object 区别
+### set、map 区别，map、object 区别
 
-### :curly_loop: promise 特性汇总
+### promise 特性汇总
 
 <hr>
 
@@ -304,17 +304,17 @@ _**Promise.prototype.finally()**_
 
 <hr>
 
-### :curly_loop: 手写出 Promise A+ 规范
+### 手写出 Promise A+ 规范
 
-### :curly_loop: 手写实现 new 方法 【实现的原理】
+### 手写实现 new 方法 【实现的原理】
 
-### :curly_loop: Promise 的 all 和 race 有什么区别
+### Promise 的 all 和 race 有什么区别
 
-### :curly_loop: 箭头函数和普通函数的区别
+### 箭头函数和普通函数的区别
 
-### :curly_loop: let、var 和 const 的区别？如果希望 const 定义的对象的属性也不能被修改该怎么做？  
+### let、var 和 const 的区别？如果希望 const 定义的对象的属性也不能被修改该怎么做？
 
-### :curly_loop: 数据类型有哪些？如何判断一个数据是否是数组
+### 数据类型有哪些？如何判断一个数据是否是数组
 
 _**数据类型**_
 
@@ -446,7 +446,7 @@ _**如何判断一个数据是否是数组**_
 
 [判断 JS 数据类型的四种方法](https://www.cnblogs.com/onepixel/p/5126046.html)
 
-### :curly_loop: 常用数组方法和他们之间的区别
+### 常用数组方法和他们之间的区别
 
 常用数组方法：
 

@@ -76,7 +76,7 @@ _**不同点：**_
 - 父子通信：
 
   - `props/$emits`
-  - `$ref`
+  - `$refs`
   - `$parent/$children`
   - `provide/inject`
   - `$emit/$on（事件总线）`
