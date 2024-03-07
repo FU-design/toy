@@ -1,14 +1,17 @@
 <template>
   <div class="page-layout">
-    <div class="page-layout-header">
-      <h1 class="web-title">{{ "Fdefined" }}</h1>
+    <header class="web-header">
+      <h6 class="web-title">{{ "Fdefined" }}</h6>
       <ul class="web-options flex-c">
         <li v-for="m in routerMap" :key="m.name" @click="handleOptions(m)">
           <span class="web-options-text">{{ m.meta.title }}</span>
         </li>
       </ul>
-    </div>
-    <div class="page-layout-content">
+    </header>
+    <div class="web-ctx">
+      <div class="web-ctx-pic">
+        <img src="../assets/images/fly.jpg" />
+      </div>
       <slot></slot>
     </div>
   </div>
@@ -36,38 +39,55 @@ const handleOptions = (o: RouteRecordRaw) => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .page-layout {
   display: flex;
   flex-direction: column;
-}
-.page-layout-header {
-  width: 100%;
-  height: 60px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  background-color: black;
-}
-.page-layout-content {
-  height: calc(100vh - 60px);
-  overflow: auto;
-}
-.web-title {
-  font-size: 2rem;
-  font-weight: 600;
-}
-.web-title,
-.web-options-text {
-  display: inline-block;
-  white-space: nowrap;
-  cursor: pointer;
-  padding: 10px;
+  background-color: #f5f5f5;
+  position: relative;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .web-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 60px;
+    padding-left: 10px;
+    color: #f5f5f5;
+    @include flex(null, center);
+    @include glass(30px);
+
+    transition: transform 400ms cubic-bezier(0.25, 0.37, 0.17, 0.96);
+  }
+  .web-ctx {
+    &-pic {
+      margin-top: -30vh;
+      border-radius: 8px;
+      overflow: hidden;
+      @include flex(center, center);
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .web-title {
+    font-size: 2rem;
+    font-weight: 600;
+  }
 }
 .web-options {
   list-style: none;
-}
-.web-options li {
-  font-weight: 600;
+  li {
+    font-weight: 600;
+  }
+  &-text {
+    display: inline-block;
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 10px;
+  }
 }
 </style>

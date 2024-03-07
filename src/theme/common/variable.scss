@@ -1,0 +1,16 @@
+@mixin flex($row: null, $col: null) {
+  display: flex;
+  align-items: $col;
+  justify-content: $row;
+}
+
+@mixin glass($blur: 8px, $border-width: 0) {
+  backdrop-filter: blur($blur);
+  background-color: rgba(30, 30, 31, 0.4);
+  box-shadow: rgba(172, 130, 130, 0.3) 2px 8px 8px;
+  border-width: $border-width;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.4) rgba(40, 40, 40, 0.35)
+    rgba(40, 40, 40, 0.35) rgba(255, 255, 255, 0.4);
+  border-image: initial;
+}

@@ -7,9 +7,9 @@ import path, { join } from "path";
 
 /**
  * todo node 中的内置方法
- * https://www.geeksforgeeks.org/node-js-url-fileurltopath-api/
- * https://www.geeksforgeeks.org/node-js-url-method/?ref=lbp
- * https://nodejs.org/docs/latest/api/url.html
+ * 【https://www.geeksforgeeks.org/node-js-url-fileurltopath-api/】
+ * 【https://www.geeksforgeeks.org/node-js-url-method/?ref=lbp】
+ * 【https://nodejs.org/docs/latest/api/url.html】
  */
 // import { fileURLToPath, URL } from "node:url";
 
@@ -79,6 +79,17 @@ export default defineConfig(({ command, mode }) => {
         "@assets": join(__dirname, "src/assets"),
       },
       extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"], //todo 导入时想要省略的扩展名列表; 现在配置的是默认的
+    },
+
+    css: {
+      preprocessorOptions: {
+        // 以预处理器的文件拓展名作为建
+        scss: {
+          // 文件路径，注意最后需要添加 ';'
+          additionalData: '@import "@/theme/common/variable.scss";',
+          // javascriptEnabled: true, 该选项是在使用 less 时，需要添加的 【https://dev.to/lico/issues-that-i-encountered-and-how-to-deal-with-them-while-migrating-from-cra-to-vite-51pg】
+        },
+      },
     },
 
     build: {
