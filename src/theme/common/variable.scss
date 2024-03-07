@@ -6,7 +6,7 @@
 
 @mixin glass($blur: 8px, $border-width: 0) {
   backdrop-filter: blur($blur);
-  background-color: rgba(30, 30, 31, 0.4);
+  background-color: rgba(30, 30, 31, 0.5);
   box-shadow: rgba(172, 130, 130, 0.3) 2px 8px 8px;
   border-width: $border-width;
   border-style: solid;

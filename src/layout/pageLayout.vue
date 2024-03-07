@@ -9,9 +9,6 @@
       </ul>
     </header>
     <div class="web-ctx">
-      <div class="web-ctx-pic">
-        <img src="../assets/images/fly.jpg" />
-      </div>
       <slot></slot>
     </div>
   </div>
@@ -45,36 +42,25 @@ const handleOptions = (o: RouteRecordRaw) => {
   flex-direction: column;
   background-color: #f5f5f5;
   position: relative;
-  height: 100vh;
-  overflow-y: auto;
   overflow-x: hidden;
   .web-header {
     position: sticky;
     top: 0;
     z-index: 2;
     width: 100%;
-    height: 60px;
-    padding-left: 10px;
-    color: #f5f5f5;
+    height: 40px;
+    padding: 0 20vh;
     @include flex(null, center);
-    @include glass(30px);
+    background-color: #fff;
 
     transition: transform 400ms cubic-bezier(0.25, 0.37, 0.17, 0.96);
   }
   .web-ctx {
-    &-pic {
-      margin-top: -30vh;
-      border-radius: 8px;
-      overflow: hidden;
-      @include flex(center, center);
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
+    height: calc(100vh - 30px);
+    overflow-y: scroll;
   }
   .web-title {
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 600;
   }
 }
@@ -88,6 +74,7 @@ const handleOptions = (o: RouteRecordRaw) => {
     white-space: nowrap;
     cursor: pointer;
     padding: 10px;
+    font-size: 0.8rem;
   }
 }
 </style>

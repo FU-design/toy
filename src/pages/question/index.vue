@@ -1,5 +1,8 @@
 <template>
   <div class="qs">
+    <!-- <div class="qs-pic">
+      <img src="../../assets/images/yuan.png" />
+    </div> -->
     <ul class="qs-category">
       <template v-for="qs in qModules">
         <li
@@ -51,6 +54,16 @@ const handleqModule = (qs: any) => {
   position: relative;
   margin: 0 auto;
   box-sizing: border-box;
+  &-pic {
+    margin-top: -30vh;
+    border-radius: 8px;
+    overflow: hidden;
+    @include flex(center, center);
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   &-ctx {
     height: 100%;
     padding: 10px;
@@ -66,8 +79,9 @@ const handleqModule = (qs: any) => {
       li {
         padding: 10px;
         margin: 10px;
-        flex: 0 1 calc((100% / 2) - 20px);
-        min-width: calc((100% / 2) - 20px);
+        // flex: 0 1 calc((100% / 1) - 20px);
+        // min-width: calc((100% / 1) - 20px);
+        flex: 0 1 calc(100% - 20px);
         height: 200px;
         cursor: pointer;
         box-sizing: border-box;
@@ -86,12 +100,14 @@ const handleqModule = (qs: any) => {
   &-category {
     position: absolute;
     left: -4rem;
-    top: 0;
+    top: 1rem;
     padding: 8px;
     margin: 0;
     list-style: none;
     font-size: 1.5rem;
     cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 1rem;
 
     &-item {
       margin: 1.5rem 0;

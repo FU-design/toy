@@ -14,5 +14,6 @@ import WareFallFlow from "./component/warefallFlow/warefallFow.vue";
 
 <style scoped>
 .comp {
+  padding: 0 40vh;
 }
 </style>
