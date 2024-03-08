@@ -1,6 +1,6 @@
-import { parseMD } from "../../../utils/index";
-import github from "../../../markdowns/git/github-23-12-22_01.md?raw";
-import gitCommand from "../../../markdowns/git/git常用指令-23-12-29_02.md?raw";
+import { parseMD } from "@/utils/index";
+import github from "@/markdowns/git/github-23-12-22_01.md?raw";
+import gitCommand from "@/markdowns/git/git常用指令-23-12-29_02.md?raw";
 import { SkGit } from "@twist-space/vue3-icons/sk";
 
 export const git = {

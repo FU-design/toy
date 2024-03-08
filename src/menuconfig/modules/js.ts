@@ -1,7 +1,7 @@
-import { parseMD } from "../../../utils/index";
+import { parseMD } from "@/utils/index";
 import { SkJavascript } from "@twist-space/vue3-icons/sk";
-import JSON from "../../../markdowns/js/序列化-23-12-08_01.md?raw";
-import DBNOTO from "../../../markdowns/js/DoubleBitwiseNOTOperator( JavaScript 的双重否运算)-24-01-19_05.md?raw";
+import JSON from "@/markdowns/js/序列化-23-12-08_01.md?raw";
+import DBNOTO from "@/markdowns/js/DoubleBitwiseNOTOperator( JavaScript 的双重否运算)-24-01-19_05.md?raw";
 export const js = {
   logo: SkJavascript,
   category: "JS",

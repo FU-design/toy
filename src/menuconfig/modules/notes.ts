@@ -1,9 +1,9 @@
 import { RaNotionLogo } from "@twist-space/vue3-icons/ra";
-import { parseMD } from "../../../utils/index";
-import DomPos from "../../../markdowns/notes/定位dom于视口中的位置-24-01-08_03.md?raw";
-import windowWH from "../../../markdowns/notes/获取屏幕宽高width(),outerWidth,innerWidth,clientWidth的区别-24-01-09_04.md?raw";
-import autoClosePanel from "../../../markdowns/notes/控制浮动面板点击空白处显隐-24-01-31_06.md?raw";
-import SpliceOfPage from "../../../markdowns/notes/前端实现分页处理.md?raw";
+import { parseMD } from "@/utils/index";
+import DomPos from "@/markdowns/notes/定位dom于视口中的位置-24-01-08_03.md?raw";
+import windowWH from "@/markdowns/notes/获取屏幕宽高width(),outerWidth,innerWidth,clientWidth的区别-24-01-09_04.md?raw";
+import autoClosePanel from "@/markdowns/notes/控制浮动面板点击空白处显隐-24-01-31_06.md?raw";
+import SpliceOfPage from "@/markdowns/notes/前端实现分页处理.md?raw";
 export const notes = {
   logo: RaNotionLogo,
   category: "问题记录",

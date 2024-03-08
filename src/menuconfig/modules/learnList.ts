@@ -1,5 +1,5 @@
-import { parseMD } from "../../../utils/index";
-import menuList from "../../../markdowns/learnList/menuList.md?raw";
+import { parseMD } from "@/utils/index";
+import menuList from "@/markdowns/learnList/menuList.md?raw";
 export const learnList = {
   category: "技能清单",
   qestionList: [

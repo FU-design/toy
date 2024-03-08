@@ -1,8 +1,8 @@
-import TS01 from "../../../markdowns/ts/any类型-23-11-09_01.md?raw";
-import TS02 from "../../../markdowns/ts/接口和对象类型-23-11-09_02.md?raw";
-import TS03 from "../../../markdowns/ts/数组类型-23-11-09_03.md?raw";
-import TS04 from "../../../markdowns/ts/ts的元组类型-23-11-20_04.md?raw";
-import { parseMD } from "../../../utils/index";
+import TS01 from "@/markdowns/ts/any类型-23-11-09_01.md?raw";
+import TS02 from "@/markdowns/ts/接口和对象类型-23-11-09_02.md?raw";
+import TS03 from "@/markdowns/ts/数组类型-23-11-09_03.md?raw";
+import TS04 from "@/markdowns/ts/ts的元组类型-23-11-20_04.md?raw";
+import { parseMD } from "@/utils/index";
 import { SkTypescript } from "@twist-space/vue3-icons/sk";
 export const ts = {
   logo: SkTypescript,

@@ -31,9 +31,9 @@ const router = createRouter({
         },
       ],
     },
-    comp,
-    question,
-    minecraft,
+    // comp,
+    // question,
+    // minecraft,
     // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
     { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
   ],

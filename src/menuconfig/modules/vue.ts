@@ -1,6 +1,6 @@
-import PJ from "../../../markdowns/vue/Provide&Inject-vue3.md?raw";
-import vueApitoCreateData from "../../../markdowns/vue/响应式数据实现-23-12-13_02.md?raw";
-import { parseMD } from "../../../utils/index";
+import PJ from "@/markdowns/vue/Provide&Inject-vue3.md?raw";
+import vueApitoCreateData from "@/markdowns/vue/响应式数据实现-23-12-13_02.md?raw";
+import { parseMD } from "@/utils/index";
 import { SkVuejsLight } from "@twist-space/vue3-icons/sk";
 
 export const vue = {

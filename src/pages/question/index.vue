@@ -1,8 +1,8 @@
-<template>
+<!-- <template>
   <div class="qs">
-    <!-- <div class="qs-pic">
+    <div class="qs-pic">
       <img src="../../assets/images/yuan.png" />
-    </div> -->
+    </div>
     <ul class="qs-category">
       <template v-for="qs in qModules">
         <li
@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { IconProvider } from "@twist-space/vue3-icons";
-import { QS } from "./questions";
+import { QS } from "@/menuconfig/questions";
 
 const qModules = ref<any>(QS);
 const currQModule = ref<any>(QS[0]);
@@ -131,3 +131,4 @@ const handleqModule = (qs: any) => {
   }
 }
 </style>
+../../menuconfig/questions -->
