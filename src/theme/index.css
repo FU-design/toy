@@ -29,13 +29,3 @@ body {
   margin: 0 auto;
   box-sizing: border-box;
 }
-
-.flex-c {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.flex-end {
-  display: flex;
-  justify-content: flex-end;
-}

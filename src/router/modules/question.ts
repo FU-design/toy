@@ -1,7 +1,8 @@
-import pageView from "../../layout/pageView.vue";
+import pageView from "@/layout/pageView.vue";
+import { QS } from "@/menuconfig/questions";
 
 const question = {
-  path: "/question",
+  path: "/",
   name: "Question",
   component: pageView,
   redirect: "/questionplace",
@@ -12,7 +13,7 @@ const question = {
     {
       path: "/questionplace",
       name: "QuestionPlace",
-      component: () => import("../../pages/question/index.vue"),
+      component: () => import("@/pages/question/answer.vue"),
       meta: {
         title: "疑难杂症",
       },

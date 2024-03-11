@@ -1,6 +1,7 @@
 import { parseMD } from "@/utils/index";
 import debounceAndthrottle from "@/markdowns/boost/防抖和节流-23-12-08_01.md?raw";
 export const performanceOptimization = {
+  logo: "",
   category: "性能优化",
   qestionList: [
     {

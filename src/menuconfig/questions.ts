@@ -20,3 +20,5 @@ export const QS = [
   regExp,
   learnList,
 ];
+
+console.log("QS :>> ", QS);

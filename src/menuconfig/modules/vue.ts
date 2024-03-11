@@ -8,7 +8,7 @@ export const vue = {
   category: "Vue",
   qestionList: [
     {
-      QS: "Vue3.0 reactive()、ref()、unref()、isref()、toRefs()等常用",
+      QS: "Vue3常用api",
       AS: "",
       URL: "",
       MDMETA: vueApitoCreateData,

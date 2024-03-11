@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="color: aliceblue">404</h1>
+    <h1 style="color: red">404</h1>
   </div>
 </template>
 

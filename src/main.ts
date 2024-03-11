@@ -39,6 +39,6 @@ app.component(
 );
 
 // 路由装载
-app.use(router);
 app.use(hljsVuePlugin);
+app.use(router);
 app.mount("#app");
