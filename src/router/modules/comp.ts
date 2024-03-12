@@ -3,19 +3,29 @@ import pageView from "@/layout/pageView.vue";
 const comp = {
   path: "/comp",
   name: "Comp",
+  redirect: "/scrollmore",
   component: pageView,
-  redirect: "/compsplace",
   meta: {
     title: "组件",
   },
   children: [
     {
-      path: "/compsplace",
-      name: "compsPlace",
-      component: () => import("@/pages/comp/index.vue"),
+      path: "/scrollmore",
+      name: "Scrollmore",
+      component: () => import("@/pages/comp/component/scrollmore/index.vue"),
       meta: {
-        title: "组件",
-        isPage: true,
+        title: "Scrollmore",
+        isSubPage: true,
+      },
+    },
+    {
+      path: "/warefallFlow",
+      name: "WarefallFlow",
+      component: () =>
+        import("@/pages/comp/component/warefallFlow/warefallFow.vue"),
+      meta: {
+        title: "WarefallFlow",
+        isSubPage: true,
       },
     },
   ],
