@@ -40,23 +40,20 @@ const handleOptions = (o: RouteRecordRaw) => {
 .page-layout {
   display: flex;
   flex-direction: column;
+  &-header {
+    width: 100%;
+    height: 60px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    background-color: black;
+  }
+  &-content {
+    height: calc(100vh - 60px);
+    overflow: auto;
+  }
 }
-.page-layout-header {
-  width: 100%;
-  height: 60px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  background-color: black;
-}
-.page-layout-content {
-  height: calc(100vh - 60px);
-  overflow: auto;
-}
-.web-title {
-  font-size: 2rem;
-  font-weight: 600;
-}
+
 .web-title,
 .web-options-text {
   display: inline-block;

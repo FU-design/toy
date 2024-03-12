@@ -1,16 +1,8 @@
 <template>
-  <div class="comp">
-    <!-- <CanvasExmaple /> -->
-    <!-- <ScrollMore /> -->
-    <!-- <WareFallFlow /> -->
-  </div>
+  <div class="comp"></div>
 </template>
 
-<script setup lang="ts">
-// import ScrollMore from "./component/scrollmore/index.vue";
-// import CanvasExmaple from "./component/canvasExmaple/index.vue";
-// import WareFallFlow from "./component/warefallFlow/warefallFow.vue";
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .comp {
