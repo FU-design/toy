@@ -19,11 +19,11 @@
 
 <style scoped>
 .card-box {
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 0.5rem;
+  padding: 1.6rem;
+  margin: 1.6rem;
+  border-radius: 0.8rem;
   /* box-shadow: rgba(10, 9, 9, 0.1) 0px 0px 5px; */
-  box-shadow: 0 0.125rem 0.3125rem 0.0625rem rgba(64, 60, 67, 0.16);
+  box-shadow: 0 0.2rem 0.5rem 0.1rem rgba(64, 60, 67, 0.16);
   background-color: #ffffffa4;
   overflow: auto;
 }

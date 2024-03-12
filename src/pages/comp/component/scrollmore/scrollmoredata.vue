@@ -69,12 +69,12 @@ onBeforeMount(() => {
   box-sizing: border-box;
 }
 .scroll-wrapper {
-  height: 400px;
+  height: 40rem;
   overflow: auto;
 }
 .scroll-wrapper ul {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 .scroll-wrapper ul .loading {

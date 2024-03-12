@@ -36,7 +36,7 @@ onMounted(() => {
   column-gap: 0;
 }
 .item {
-  padding: 2px;
+  padding: 0.2rem;
   position: relative;
   counter-increment: count;
 }
@@ -50,12 +50,12 @@ onMounted(() => {
 .item::after {
   position: absolute;
   display: block;
-  top: 2px;
-  left: 2px;
-  width: 24px;
-  height: 24px;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   text-align: center;
-  line-height: 24px;
+  line-height: 2.4rem;
   background-color: #000;
   color: #fff;
   content: counter(count);

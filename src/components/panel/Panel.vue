@@ -31,7 +31,6 @@
 <script lang="ts" setup>
 import { ref, reactive, watch, unref } from "vue";
 import { Panel, DragState } from "./types";
-import { getSysFontSize } from "@/utils/adaptation";
 
 const props = withDefaults(defineProps<Panel>(), {
   visible: false,
@@ -99,7 +98,7 @@ const mouseMove = (e: MouseEvent) => {
     // 设置最小拉伸宽度边界
     if (triggerSize > 460) {
       // 这里直接对面板的宽度css属性进行修改，未改动使用组件时的初始宽度，在关闭面板的时候，再次打开会自动重置为初始宽度
-      panelRef.value.style.width = `${dragState.startSizeW + moveSize}px`;
+      panelRef.value.style.width = `${dragState.startSizeW + moveSize / 10}rem`;
     }
   }
 };
@@ -159,8 +158,9 @@ const handleClose = () => {
   pointer-events: auto;
   position: absolute;
   z-index: 1000;
-  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
-    0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.6rem 1.6rem 0 rgba(0, 0, 0, 0.08),
+    0 0.3rem 0.6rem -0.4rem rgba(0, 0, 0, 0.12),
+    0 0.9rem 2.8rem 0.8rem rgba(0, 0, 0, 0.05);
 
   display: flex;
   flex-direction: column;
@@ -176,13 +176,13 @@ const handleClose = () => {
   position: fixed;
   left: 0;
   height: 100%;
-  width: 2px;
+  width: 0.2rem;
   cursor: pointer;
 }
 .drag-size:hover {
   background-color: rgba(153, 153, 153, 0.185);
   cursor: col-resize;
-  width: 4px;
+  width: 0.4rem;
 }
 
 /* 利用动画效果来控制抽屉的显隐 */
@@ -198,8 +198,9 @@ const handleClose = () => {
 .panel-header {
   padding: 0.2rem 1rem;
   box-sizing: border-box;
-  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
-    0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.6rem 1.6rem 0 rgba(0, 0, 0, 0.08),
+    0 0.3rem 0.6rem -0.4rem rgba(0, 0, 0, 0.12),
+    0 0.9rem 2.8rem 0.8rem rgba(0, 0, 0, 0.05);
 
   display: flex;
   align-items: center;
@@ -232,27 +233,27 @@ const handleClose = () => {
 <style>
 .panel-content h3,
 h4 {
-  padding: 8px;
+  padding: 0.8rem;
   margin-top: 0;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  margin-bottom: 1rem;
+  border-radius: 0.4rem;
   background-image: linear-gradient(135deg, #c3cfe2 0%, #f5f7fa 100%);
   font-size: Nunito, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu,
     Cantarell, "Noto Sans", sans-serif;
 }
 .panel-content p {
-  margin: 10px 0;
+  margin: 1rem 0;
 }
 
 .panel-content pre {
-  margin-top: 6px;
+  margin-top: 0.6rem;
 }
 
 .panel-content ul {
   margin: 0;
 }
 .panel-content ul li {
-  margin: 10px 0;
+  margin: 1rem 0;
   &::marker {
     color: rgb(39, 72, 133);
   }
@@ -260,20 +261,20 @@ h4 {
 
 .panel-content blockquote {
   position: relative;
-  margin: 20px 0;
+  margin: 2rem 0;
   /* background-image: linear-gradient(135deg, #c3cfe23f 0%, #f5f7fa 100%); */
   font-size: #0000003f;
 }
 
 .panel-content blockquote > p {
-  padding: 10px;
-  font-size: 15px;
+  padding: 1rem;
+  font-size: 1.5rem;
 }
 
 .panel-content blockquote::before {
   content: "";
   height: 100%;
-  width: 4px;
+  width: 0.4rem;
   display: inline-block;
   position: absolute;
   background-color: #2a43b35c;
@@ -281,8 +282,8 @@ h4 {
 
 .panel-content :not(pre) > code {
   background-color: rgba(0, 0, 0, 0.089);
-  padding: 2px 10px;
-  border-radius: 4px;
+  padding: 0.2rem 1rem;
+  border-radius: 0.4rem;
   font-weight: 600;
   color: rgb(207 85 85 / 99%);
 }

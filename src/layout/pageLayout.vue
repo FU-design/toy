@@ -44,39 +44,39 @@ const handleOptions = (o: RouteRecordRaw) => {
   display: flex;
   aside {
     width: 18vw;
-    min-width: 12.5rem;
+    min-width: 20rem;
     height: 100vh;
-    border-right: 1px solid $border-color;
+    border-right: 0.1rem solid $border-color;
     h1 {
-      padding: 1rem;
+      padding: 1.6rem;
       margin: 0;
-      font-size: 1.25rem;
-      border-bottom: 1px solid $border-color;
+      font-size: 2rem;
+      border-bottom: 0.1rem solid $border-color;
     }
     .web-options {
       list-style: none;
       display: flex;
       flex-wrap: wrap;
       margin: 0;
-      padding: 0.625rem 0 0 0.625rem;
+      padding: 1rem 0 0 1rem;
       li {
-        border-radius: 0.5rem;
+        border-radius: 0.8rem;
         font-weight: 500;
-        padding: 0.25rem;
-        margin: 0.25rem;
+        padding: 0.4rem;
+        margin: 0.4rem;
         color: $li-text-color;
-        border: 1px solid $border-color;
+        border: 0.1rem solid $border-color;
 
         &:hover {
           cursor: pointer;
           color: $hover-text;
           background-color: $hover-bg;
           transition: all 0.5s;
-          box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+          box-shadow: 0 0 0.1rem rgba(0, 0, 0, 0);
         }
       }
       &-text {
-        padding: 0 0.5rem;
+        padding: 0 0.8rem;
       }
     }
   }

@@ -37,11 +37,11 @@ pre,
 samp {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     Liberation Mono, Courier New, monospace;
-  font-size: 0.9rem;
-  line-height: 1.5rem;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
 }
 
 .hljs {
-  border-radius: 0.4rem;
+  border-radius: 0.8rem;
 }
 </style>
