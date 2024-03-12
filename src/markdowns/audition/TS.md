@@ -1,4 +1,0 @@
-- Typescript 相较于 JavaScript 有什么优势和劣势？
-- const func = (a, b) => a + b; 要求编写 Typescript，要求 a，b 参数类型一致，都为 number 或者都为 string
-- 实现 ReturnType
-- 实现 DeepReadOnly

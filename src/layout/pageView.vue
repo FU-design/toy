@@ -14,5 +14,7 @@ import PageLayout from "./pageLayout.vue";
 .page-view {
   width: 100%;
   height: 100%;
+  /* background-color: aliceblue; */
+  background-color: #f2f3f5;
 }
 </style>

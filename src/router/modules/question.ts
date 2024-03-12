@@ -1,5 +1,4 @@
 import pageView from "@/layout/pageView.vue";
-import { QS } from "@/menuconfig/questions";
 
 const question = {
   path: "/",

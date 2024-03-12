@@ -1,4 +1,4 @@
-import pageView from "../../layout/pageView.vue";
+import pageView from "@/layout/pageView.vue";
 
 const comp = {
   path: "/comp",
@@ -12,7 +12,7 @@ const comp = {
     {
       path: "/compsplace",
       name: "compsPlace",
-      component: () => import("../../pages/comp/index.vue"),
+      component: () => import("@/pages/comp/index.vue"),
       meta: {
         title: "组件",
       },
