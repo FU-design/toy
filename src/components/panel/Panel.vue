@@ -31,6 +31,7 @@
 <script lang="ts" setup>
 import { ref, reactive, watch, unref } from "vue";
 import { Panel, DragState } from "./types";
+import { getSysFontSize } from "@/utils/adaptation";
 
 const props = withDefaults(defineProps<Panel>(), {
   visible: false,

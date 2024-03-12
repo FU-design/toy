@@ -4,7 +4,7 @@
   justify-content: $row;
 }
 
-@mixin glass($blur: 8px, $border-width: 0) {
+@mixin glass($blur: 0.5rem, $border-width: 0) {
   backdrop-filter: blur($blur);
   background-color: rgba(30, 30, 31, 0.5);
   box-shadow: rgba(172, 130, 130, 0.3) 2px 8px 8px;

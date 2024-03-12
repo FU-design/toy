@@ -15,6 +15,7 @@ const comp = {
       component: () => import("@/pages/comp/index.vue"),
       meta: {
         title: "组件",
+        isPage: true,
       },
     },
   ],

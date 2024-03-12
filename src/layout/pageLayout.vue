@@ -1,16 +1,16 @@
 <template>
   <div class="page-layout">
-    <div class="page-layout-header">
+    <header class="page-layout-header">
       <h1 class="web-title">{{ "Fdefined" }}</h1>
       <ul class="web-options">
         <li v-for="m in routerMap" :key="m.name" @click="handleOptions(m)">
           <span class="web-options-text">{{ m.meta.title }}</span>
         </li>
       </ul>
-    </div>
-    <div class="page-layout-content">
+    </header>
+    <section class="page-layout-content">
       <slot></slot>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -20,8 +20,10 @@ import { useRouter } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 const router = useRouter();
 const routerMap = ref(
-  computed(() => router.getRoutes().filter((r) => !r.redirect))
+  computed(() => router.getRoutes().filter((r) => r.meta.isPage))
 );
+
+console.log("routerMap :>> ", routerMap);
 onMounted(() => {
   // router.hasRoute(path); //# 检查路由是否存在
   // router.getRoutes(); //# 获取所有路由
@@ -42,30 +44,40 @@ const handleOptions = (o: RouteRecordRaw) => {
   flex-direction: column;
   &-header {
     width: 100%;
-    height: 60px;
+    height: 2.25rem;
     color: #fff;
     display: flex;
     align-items: center;
-    background-color: black;
+    justify-content: center;
+    background-color: #666;
   }
   &-content {
-    height: calc(100vh - 60px);
+    height: calc(100vh - 3.75rem);
     overflow: auto;
   }
 }
 
-.web-title,
-.web-options-text {
-  display: inline-block;
-  white-space: nowrap;
-  cursor: pointer;
-  padding: 10px;
+.web-title {
+  padding: 0 0.5rem;
+  font-size: 1.25rem;
 }
+
 .web-options {
   list-style: none;
   display: flex;
   li {
-    font-weight: 600;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    padding: 0.25rem;
+    &:hover {
+      cursor: pointer;
+      background-color: #000;
+      transition: all 0.5s;
+      color: #eee;
+    }
+  }
+  &-text {
+    padding: 0 0.5rem;
   }
 }
 </style>

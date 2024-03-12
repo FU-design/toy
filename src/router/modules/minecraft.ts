@@ -15,6 +15,7 @@ const minecraft = {
       component: () => import("../../pages/minecraft/index.vue"),
       meta: {
         title: "小世界",
+        isPage: true,
       },
     },
   ],

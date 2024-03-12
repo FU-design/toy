@@ -15,6 +15,7 @@ const question = {
       component: () => import("@/pages/question/answer.vue"),
       meta: {
         title: "疑难杂症",
+        isPage: true,
       },
     },
   ],
