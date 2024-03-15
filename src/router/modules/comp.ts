@@ -28,6 +28,15 @@ const comp = {
         isSubPage: true,
       },
     },
+    {
+      path: "/drag",
+      name: "Drag",
+      component: () => import("@/pages/comp/component/drag/index.vue"),
+      meta: {
+        title: "Drag",
+        isSubPage: true,
+      },
+    },
   ],
 };
 
