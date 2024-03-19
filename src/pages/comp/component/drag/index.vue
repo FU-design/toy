@@ -35,7 +35,9 @@ const getDragEl = () => {
     }
   });
 };
-
+/**
+ * 通过闭包处理重复监听
+ */
 const newHandle = (targeDom: Element) => {
   initDrag(targeDom);
 };
