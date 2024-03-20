@@ -4,13 +4,13 @@ const minecraft = {
   path: "/mine",
   name: "Mine",
   component: pageView,
-  redirect: "/minecraft",
+  redirect: "/mine/minecraft",
   meta: {
     title: "小世界",
   },
   children: [
     {
-      path: "/minecraft",
+      path: "minecraft",
       name: "MineCraft",
       component: () => import("../../pages/minecraft/index.vue"),
       meta: {

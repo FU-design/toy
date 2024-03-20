@@ -3,14 +3,14 @@ import pageView from "@/layout/pageView.vue";
 const comp = {
   path: "/comp",
   name: "Comp",
-  redirect: "/scrollmore",
+  redirect: "/comp/scrollmore",
   component: pageView,
   meta: {
     title: "组件",
   },
   children: [
     {
-      path: "/scrollmore",
+      path: "scrollmore",
       name: "Scrollmore",
       component: () => import("@/pages/comp/component/scrollmore/index.vue"),
       meta: {
@@ -19,7 +19,7 @@ const comp = {
       },
     },
     {
-      path: "/warefallFlow",
+      path: "warefallFlow",
       name: "WarefallFlow",
       component: () =>
         import("@/pages/comp/component/warefallFlow/warefallFow.vue"),
@@ -29,7 +29,7 @@ const comp = {
       },
     },
     {
-      path: "/drag",
+      path: "drag",
       name: "Drag",
       component: () => import("@/pages/comp/component/drag/index.vue"),
       meta: {

@@ -20,7 +20,7 @@ const getImgsUrlList = () => {
 
 const generateRandomNumber = () => {
   // 生成随机宽度和高度，例如，这里设置最大宽高为 800 像素
-  const maxHeight = 800;
+  const maxHeight = 400;
   const randomHeight = Math.floor(Math.random() * maxHeight) + 1;
   return randomHeight;
 };
@@ -36,28 +36,26 @@ onMounted(() => {
   column-gap: 0;
 }
 .item {
-  padding: 0.2rem;
   position: relative;
   counter-increment: count;
-}
-
-.item img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.item::after {
-  position: absolute;
-  display: block;
-  top: 0.2rem;
-  left: 0.2rem;
-  width: 2.4rem;
-  height: 2.4rem;
-  text-align: center;
-  line-height: 2.4rem;
-  background-color: #000;
-  color: #fff;
-  content: counter(count);
+  object-fit: contain;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+  &::after {
+    position: absolute;
+    display: block;
+    top: 0.2rem;
+    left: 0.2rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    text-align: center;
+    line-height: 2.4rem;
+    background-color: #000;
+    color: #fff;
+    content: counter(count);
+  }
 }
 </style>

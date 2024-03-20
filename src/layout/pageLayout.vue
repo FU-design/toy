@@ -17,13 +17,20 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 const router = useRouter();
 const routerMap = ref(
   computed(() => router.getRoutes().filter((r) => r.meta.isSubPage))
 );
+
+const { currentRoute } = router;
+const activeIndex = ref<string>(`/${currentRoute.value.path.split("/")[1]}`);
+
+watch(currentRoute, (to) => {
+  activeIndex.value = `/${to.path.split("/")[1]}`;
+});
 
 onMounted(() => {
   // router.hasRoute(path); //# 检查路由是否存在
