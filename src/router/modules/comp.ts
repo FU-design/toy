@@ -37,6 +37,16 @@ const comp = {
         isSubPage: true,
       },
     },
+    {
+      path: "tagTextMixInput",
+      name: "TagTextMixInput",
+      component: () =>
+        import("@/pages/comp/component/tagTextMixInput/index.vue"),
+      meta: {
+        title: "TagTextMixInput",
+        isSubPage: true,
+      },
+    },
   ],
 };
 
