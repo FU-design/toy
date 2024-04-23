@@ -1,4 +1,5 @@
 @import "./common/reset.css";
+@import "./common/reset.scss";
 :root {
   font-family: Fira Code, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;

@@ -10,8 +10,7 @@
   box-shadow: rgba(172, 130, 130, 0.3) 0.2rem 0.8rem 0.8rem;
   border-width: $border-width;
   border-style: solid;
-  border-color: rgba(255, 255, 255, 0.4) rgba(40, 40, 40, 0.35)
-    rgba(40, 40, 40, 0.35) rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.4) rgba(40, 40, 40, 0.35) rgba(40, 40, 40, 0.35) rgba(255, 255, 255, 0.4);
   border-image: initial;
 }
 
@@ -20,3 +19,4 @@ $hover-text: #eee;
 $hover-bg: #31363f;
 $li-text-color: #888;
 $content-bg: #ddd;
+$code-bg: #ededed
