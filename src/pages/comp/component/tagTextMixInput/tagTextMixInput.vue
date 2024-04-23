@@ -22,7 +22,7 @@ interface InnerOps {
   [propKey: string]: any;
 }
 
-const config = {
+const NodeInfo = {
   attributes: true,
   childList: true,
   subtree: true,
@@ -35,6 +35,8 @@ const props = withDefaults(defineProps<mixConfig>(), {
   contents: () => [],
 });
 
+const emits = defineEmits(["focus", "blur", "change"]);
+
 const tagTextMixinputRef = ref<HTMLElement | null>(null);
 const observer = ref<MutationObserver | null>();
 const range = ref<Range | null>(null);
@@ -43,7 +45,7 @@ const range = ref<Range | null>(null);
  * 处理混合输入框的获取焦点事件
  * @param e
  */
-const handleFocus = (_e: Event) => {
+const handleFocus = (e: Event) => {
   const selection = getSelection();
   if (!["I"].includes(selection?.focusNode?.parentNode?.nodeName || "")) {
     if (!range.value) {
@@ -61,20 +63,22 @@ const handleFocus = (_e: Event) => {
   if (!observer.value) {
     observer.value = new MutationObserver(handleObserver);
   }
-  observer.value?.observe(tagTextMixinputRef.value as Node, config);
+  observer.value?.observe(tagTextMixinputRef.value as HTMLElement, NodeInfo);
+  emits("focus", e);
 };
 
 /**
  * 处理混合输入框的失去焦点事件
- * @param _e
+ * @param e
  */
-const handleBlur = (_e: Event) => {
+const handleBlur = (e: Event) => {
   //! 关键代码
   range.value = getSelection()?.getRangeAt(0) || null;
   //从 MutationObserver 的通知队列中删除所有待处理的通知
   observer.value?.takeRecords();
   //失去焦点，停止监听
   observer.value?.disconnect();
+  emits("blur", e);
 };
 
 const handleObserver = (
@@ -92,11 +96,7 @@ const handleObserver = (
       console.log("characterData :>> ");
     }
   });
-};
-
-const initEvent = () => {
-  tagTextMixinputRef.value?.addEventListener("focus", handleFocus);
-  tagTextMixinputRef.value?.addEventListener("blur", handleBlur);
+  emits("change");
 };
 
 /**
@@ -111,6 +111,14 @@ const initContents = () => {
     fragment.appendChild(creataNode(v));
   });
   tagTextMixinputRef.value?.appendChild(fragment);
+};
+
+/**
+ * 初始化所用事件
+ */
+const initEvent = () => {
+  tagTextMixinputRef.value?.addEventListener("focus", handleFocus);
+  tagTextMixinputRef.value?.addEventListener("blur", handleBlur);
 };
 
 /**
@@ -142,21 +150,29 @@ const insertTag = (item: InnerOps) => {
 
 /**
  * 根据数据类型创建指定类型的 DOM 对象（自行拓展）
- * @param config
+ * @param NodeInfo
  */
-const creataNode = (config: InnerOps): Node => {
-  if (config.type === "tag") {
+const creataNode = (NodeInfo: InnerOps): Node => {
+  if (NodeInfo.type === "tag") {
     const tag = document.createElement("i");
     tag.classList.add("tag");
-    tag.innerHTML = config.text;
+    tag.innerHTML = NodeInfo.text;
     tag.setAttribute("contenteditable", "false");
     return tag;
   }
-  if (config.type === "text") {
-    const text = document.createTextNode(config.text || "");
+  if (NodeInfo.type === "text") {
+    const text = document.createTextNode(NodeInfo.text || "");
     return text;
   }
   return document.createDocumentFragment();
+};
+
+/**
+ * 外部方法：清楚所有绑定的事件
+ */
+const removeAllEvent = () => {
+  tagTextMixinputRef.value?.removeEventListener("focus", handleFocus);
+  tagTextMixinputRef.value?.removeEventListener("blur", handleBlur);
 };
 
 onMounted(() => {
@@ -165,12 +181,12 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  tagTextMixinputRef.value?.removeEventListener("focus", handleFocus);
-  tagTextMixinputRef.value?.removeEventListener("blur", handleBlur);
+  removeAllEvent();
 });
 
 defineExpose({
   insertTag,
+  removeAllEvent,
 });
 </script>
 <style lang="scss">

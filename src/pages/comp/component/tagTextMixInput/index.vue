@@ -10,14 +10,16 @@
     </div>
     <div class="select-plane" @click="handleClick"></div>
     <div class="list-box">
-      <div class="list-item" v-for="item in list">
+      <div class="list-item" v-for="(item, idx) in list">
         <div class="item">{{ item.id }}</div>
         <div class="item">{{ item.name }}</div>
         <div class="item">
           <tagTextMixInput
-            :ref="handleRef"
+            ref="mixInputRefs"
+            :key="item.id"
             placeholder="请输入内容"
             :contents="item.inputContent"
+            @focus="handleFocus(idx)"
           />
         </div>
       </div>
@@ -30,8 +32,12 @@ import { onMounted, ref } from "vue";
 import tagTextMixInput from "./tagTextMixInput.vue";
 
 const list = ref<any>([]);
-const currTag = ref<any>(null);
+const currMixFlag = ref<number | undefined>(undefined);
+const mixInputRefs = ref<InstanceType<typeof tagTextMixInput>[]>([]); // Requires Vue v3.2.25 or above
 
+/**
+ * 模拟假数据
+ */
 const initSelectData = () => {
   const fragment = document.createDocumentFragment();
   const selectBox = document.querySelector(".select-plane");
@@ -45,15 +51,9 @@ const initSelectData = () => {
   selectBox?.appendChild(fragment);
 };
 
-const handleRef = (el: any) => {
-  if (!currTag.value) {
-    return;
-  }
-  el?.insertTag(currTag.value);
-  currTag.value = null;
-  return el;
-};
-
+/**
+ * 模拟请求的table数据
+ */
 const fetchData = () => {
   list.value = new Array(10).fill(1).map((_v, idx) => {
     return {
@@ -64,16 +64,29 @@ const fetchData = () => {
   });
 };
 
-// 利用事件冒泡的特性实现每一条点击事件的触发
+/**
+ * 利用事件冒泡的特性实现每一条点击事件的触发
+ * @param e
+ */
 const handleClick = (e: Event) => {
   const target = e.target as HTMLElement;
   const key = target.getAttribute("data-key");
   if (key) {
-    currTag.value = {
-      type: "tag",
-      text: key,
-    };
+    if (currMixFlag.value != undefined) {
+      mixInputRefs.value[currMixFlag.value]?.insertTag({
+        type: "tag",
+        text: key,
+      });
+    }
   }
+};
+
+/**
+ * 获取当前操作的混合输入框的标识
+ * @param idx
+ */
+const handleFocus = (idx: number) => {
+  currMixFlag.value = idx;
 };
 
 onMounted(() => {
