@@ -8,23 +8,33 @@
       <label>Range</label>
       <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Range"></a>
     </div> -->
-    <div class="select-plane" @click="handleClick"></div>
-    <div class="list-box">
-      <div class="list-item" v-for="(item, idx) in list">
-        <div class="item">{{ item.id }}</div>
-        <div class="item">{{ item.name }}</div>
-        <div class="item">
-          <tagTextMixInput
-            ref="mixInputRefs"
-            :key="item.id"
-            placeholder="请输入内容"
-            v-model:contents="item.inputContent"
-            @focus="handleFocus(idx)"
-            @change="handleChange"
-          />
+    <CardBox>
+      <div class="wrp-inner">
+        <div class="select-plane" @click="handleClick"></div>
+        <div class="list-box">
+          <div class="list-item" v-for="(item, idx) in list">
+            <div class="item">{{ item.id }}</div>
+            <div class="item">{{ item.name }}</div>
+            <div class="item">
+              <tagTextMixInput
+                ref="mixInputRefs"
+                :key="item.id"
+                placeholder="请输入内容"
+                v-model:contents="item.inputContent"
+                @focus="handleFocus(idx)"
+                @change="handleChange"
+              />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </CardBox>
+    <CardBox>
+      <template #header>
+        <label>核心</label>
+      </template>
+      <div v-html="getMdToHTML()"></div>
+    </CardBox>
   </div>
 </template>
 
@@ -32,10 +42,18 @@
 import { onMounted, ref } from "vue";
 import tagTextMixInput from "./tagTextMixInput.vue";
 import { ListItem, InnerOps } from "./type";
+import CardBox from "@/components/cardBox/CardBox.vue";
+import { parseMD } from "@/utils/render";
+import readme from "./README.md?raw";
 
 const list = ref<ListItem[]>([]);
 const currMixFlag = ref<number | undefined>(undefined);
 const mixInputRefs = ref<InstanceType<typeof tagTextMixInput>[]>([]); // Requires Vue v3.2.25 or above
+
+const getMdToHTML = () => {
+  const html = parseMD(readme);
+  return html;
+};
 
 /**
  * 模拟假数据
@@ -103,11 +121,13 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .wrp {
-  height: 100%;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
+  padding: 20px;
   box-sizing: border-box;
-  overflow: auto;
+}
+.wrp-inner {
   display: flex;
   .list {
     &-box {
@@ -128,12 +148,15 @@ onMounted(() => {
     }
   }
   .item {
-    align-self: baseline;
     width: calc(100% / 3);
     height: 100%;
     box-sizing: border-box;
     padding: 10px;
     border-right: 1px solid #ddd;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     &:last-child {
       border: none;
     }

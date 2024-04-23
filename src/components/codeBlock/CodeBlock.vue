@@ -30,16 +30,6 @@ onMounted(() => {
   width: 100%;
   height: auto;
 }
-/* 重置 highLight.js 中代码字体样式 */
-code,
-kbd,
-pre,
-samp {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    Liberation Mono, Courier New, monospace;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-}
 
 .hljs {
   border-radius: 0.8rem;
