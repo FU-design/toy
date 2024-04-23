@@ -26,7 +26,7 @@ const NodeInfo = {
   attributes: true,
   childList: true,
   subtree: true,
-  // characterData: true, // 修改字符是否发生改变(默认false)
+  characterData: true, // 修改字符是否发生改变(默认false)
 };
 
 const props = withDefaults(defineProps<mixConfig>(), {
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<mixConfig>(), {
   contents: () => [],
 });
 
-const emits = defineEmits(["focus", "blur", "change"]);
+const emits = defineEmits(["focus", "blur", "change", "update:contents"]);
 
 const tagTextMixinputRef = ref<HTMLElement | null>(null);
 const observer = ref<MutationObserver | null>();
@@ -72,15 +72,21 @@ const handleFocus = (e: Event) => {
  * @param e
  */
 const handleBlur = (e: Event) => {
-  //! 关键代码
+  //! 关键代码----> 存储失去焦点前的选择范围对象（后续外部选择插入数据的前置操作）
   range.value = getSelection()?.getRangeAt(0) || null;
   //从 MutationObserver 的通知队列中删除所有待处理的通知
   observer.value?.takeRecords();
-  //失去焦点，停止监听
-  observer.value?.disconnect();
+  //失去焦点，停止监听（这里不能停止监听）
+  // observer.value?.disconnect();
   emits("blur", e);
 };
 
+/**
+ * 因使用 contenteditable 属性为 true的元素不像表单控件拥有 change 事件，且使用 input 的事件
+ * 无法监听到DOM元素的插入和删除，只能监听到键盘输入内容的变化，故使用mutationObserver来平替
+ * @param mutations
+ * @param _observer
+ */
 const handleObserver = (
   mutations: MutationRecord[],
   _observer: MutationObserver
@@ -96,7 +102,8 @@ const handleObserver = (
       console.log("characterData :>> ");
     }
   });
-  emits("change");
+  emits("change", formatMixInputContent());
+  emits("update:contents", formatMixInputContent());
 };
 
 /**
@@ -111,6 +118,31 @@ const initContents = () => {
     fragment.appendChild(creataNode(v));
   });
   tagTextMixinputRef.value?.appendChild(fragment);
+};
+
+/**
+ * 将当前文本输入框中的DOM内容格式化为JSON格式
+ */
+const formatMixInputContent = () => {
+  const formatData: InnerOps[] = [];
+  const childNodes = tagTextMixinputRef.value?.childNodes;
+  if (childNodes) {
+    const len = childNodes?.length || 0;
+    for (let i = 0; i < len; i++) {
+      if (childNodes[i].nodeName === "I") {
+        formatData.push({
+          type: "tag",
+          text: childNodes[i].textContent || "",
+        });
+      } else {
+        formatData.push({
+          type: "text",
+          text: childNodes[i].textContent || "",
+        });
+      }
+    }
+  }
+  return formatData;
 };
 
 /**
@@ -168,7 +200,7 @@ const creataNode = (NodeInfo: InnerOps): Node => {
 };
 
 /**
- * 外部方法：清楚所有绑定的事件
+ * 外部方法：清除所有绑定的事件
  */
 const removeAllEvent = () => {
   tagTextMixinputRef.value?.removeEventListener("focus", handleFocus);

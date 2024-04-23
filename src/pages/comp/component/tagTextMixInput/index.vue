@@ -18,8 +18,9 @@
             ref="mixInputRefs"
             :key="item.id"
             placeholder="请输入内容"
-            :contents="item.inputContent"
+            v-model:contents="item.inputContent"
             @focus="handleFocus(idx)"
+            @change="handleChange"
           />
         </div>
       </div>
@@ -87,6 +88,11 @@ const handleClick = (e: Event) => {
  */
 const handleFocus = (idx: number) => {
   currMixFlag.value = idx;
+};
+
+const handleChange = (_val: any) => {
+  console.log("val :>> ", _val);
+  console.log("list.value :>> ", list.value);
 };
 
 onMounted(() => {
