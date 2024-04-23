@@ -48,7 +48,7 @@ const handleFocus = (_e: Event) => {
   if (!["I"].includes(selection?.focusNode?.parentNode?.nodeName || "")) {
     if (!range.value) {
       range.value = new Range();
-      // range.value.collapse(true); // 将 range 的边界折叠到起点（即光标选取范围的起始和结束边界折叠到起始边界，默认是 false 结束边界）
+      range.value.collapse(true); // 将 range 的边界折叠到起点（即光标选取范围的起始和结束边界折叠到起始边界，默认是 false 结束边界）
       selection?.removeAllRanges();
       selection?.addRange(range.value);
     } else {
@@ -129,7 +129,6 @@ const insertTag = (item: InnerOps) => {
   ) {
     return;
   }
-
   const tag = creataNode(item);
   // 清除已经选择的内容
   range.value.deleteContents();
@@ -183,7 +182,6 @@ defineExpose({
   padding: 10px;
   box-sizing: border-box;
   caret-color: chocolate; /* 光标颜色 */
-  background-color: #eeeeee62;
   border-width: 1px;
   border-style: solid;
   border-color: #d9d9d9;
@@ -214,7 +212,9 @@ defineExpose({
     line-height: 1.5;
     border-radius: 4px;
     box-sizing: border-box;
-    background-color: rgb(102, 156, 202);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    color: cornflowerblue;
   }
 }
 </style>
