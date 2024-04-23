@@ -9,25 +9,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-
-interface mixConfig {
-  contenteditable?: boolean;
-  placeholder?: string;
-  contents?: InnerOps[];
-}
-
-interface InnerOps {
-  type: "tag" | "text";
-  text: string;
-  [propKey: string]: any;
-}
-
-const NodeInfo = {
-  attributes: true,
-  childList: true,
-  subtree: true,
-  characterData: true, // 修改字符是否发生改变(默认false)
-};
+import { InnerOps, mixConfig, NodeInfo } from "./type";
 
 const props = withDefaults(defineProps<mixConfig>(), {
   contenteditable: true,

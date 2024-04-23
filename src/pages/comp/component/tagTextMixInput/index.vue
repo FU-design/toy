@@ -1,13 +1,13 @@
 <template>
   <div class="wrp">
-    <div>
+    <!-- <div>
       <label>Selection</label>
-      <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Selection" />
+      <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Selection"></a>
     </div>
     <div>
       <label>Range</label>
-      <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Range" />
-    </div>
+      <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Range"></a>
+    </div> -->
     <div class="select-plane" @click="handleClick"></div>
     <div class="list-box">
       <div class="list-item" v-for="(item, idx) in list">
@@ -31,8 +31,9 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import tagTextMixInput from "./tagTextMixInput.vue";
+import { ListItem, InnerOps } from "./type";
 
-const list = ref<any>([]);
+const list = ref<ListItem[]>([]);
 const currMixFlag = ref<number | undefined>(undefined);
 const mixInputRefs = ref<InstanceType<typeof tagTextMixInput>[]>([]); // Requires Vue v3.2.25 or above
 
@@ -90,9 +91,8 @@ const handleFocus = (idx: number) => {
   currMixFlag.value = idx;
 };
 
-const handleChange = (_val: any) => {
-  console.log("val :>> ", _val);
-  console.log("list.value :>> ", list.value);
+const handleChange = (val: InnerOps) => {
+  console.log("val :>> ", val);
 };
 
 onMounted(() => {
@@ -108,12 +108,16 @@ onMounted(() => {
   background-color: #fff;
   box-sizing: border-box;
   overflow: auto;
+  display: flex;
   .list {
     &-box {
+      flex: 1;
       display: flex;
+      height: 400px;
       flex-direction: column;
       border: 1px solid #ddd;
       border-radius: 6px;
+      overflow: auto;
     }
     &-item {
       display: flex;
@@ -124,7 +128,7 @@ onMounted(() => {
     }
   }
   .item {
-    align-self: center;
+    align-self: baseline;
     width: calc(100% / 3);
     height: 100%;
     box-sizing: border-box;
@@ -138,8 +142,9 @@ onMounted(() => {
 </style>
 <style lang="scss">
 .select-plane {
+  width: 30%;
+  margin-right: 40px;
   height: 400px;
-  margin: 10px 0;
   border-radius: 6px;
   border: 1px solid #ddd;
   background-color: #eee;
