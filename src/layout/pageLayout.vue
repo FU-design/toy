@@ -91,7 +91,7 @@ const handleOptions = (o: RouteRecordRaw) => {
     height: 100vh;
     flex: 1;
     overflow: auto;
-    padding: 0 10vw;
+    // padding: 0 1vw;
     box-sizing: border-box;
     background-color: $content-bg;
   }
