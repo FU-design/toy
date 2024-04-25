@@ -35,7 +35,7 @@ const isLoading = ref<boolean>(false);
  * 监听滚动事件，递增数据叠加
  */
 const initEvent = () => {
-  wrapBox.value = document.getElementsByClassName("scroll-wrapper")[0];
+  wrapBox.value = document.querySelector(".scroll-wrapper");
   unref(wrapBox)?.addEventListener("scroll", (e) => {
     const target = e.target as Element;
     if (target.scrollHeight - target.scrollTop == target.clientHeight) {
