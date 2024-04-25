@@ -30,16 +30,7 @@ const range = ref<Range | null>(null);
 const handleFocus = (e: Event) => {
   const selection = getSelection();
   if (!["I"].includes(selection?.focusNode?.parentNode?.nodeName || "")) {
-    if (!range.value) {
-      range.value = new Range();
-      range.value.collapse(true); // 将 range 的边界折叠到起点（即光标选取范围的起始和结束边界折叠到起始边界，默认是 false 结束边界）
-      selection?.removeAllRanges();
-      selection?.addRange(range.value);
-    } else {
-      range.value.collapse(true); // 这里需要折叠边界（不折叠，会在插入元素节点后，自动的将其全部选中）
-      selection?.removeAllRanges();
-      selection?.addRange(range.value);
-    }
+    restSelection(selection);
   }
   // 恢复监听
   if (!observer.value) {
@@ -47,6 +38,22 @@ const handleFocus = (e: Event) => {
   }
   observer.value?.observe(tagTextMixinputRef.value as HTMLElement, NodeInfo);
   emits("focus", e);
+};
+
+/**
+ * 重置光标选中范围
+ * @param selection
+ */
+const restSelection = (selection: Selection | null) => {
+  if (!selection) {
+    return;
+  }
+  if (!range.value) {
+    range.value = new Range();
+  }
+  range.value.collapse(true); // 这里需要折叠边界（不折叠，会在插入元素节点后，自动的将其全部选中）
+  selection?.removeAllRanges();
+  selection?.addRange(range.value);
 };
 
 /**
