@@ -1,4 +1,4 @@
-import { App, defineAsyncComponent as asyncComp } from "vue";
+import { defineAsyncComponent as asyncComp } from "vue";
 
 const baseCompMap = {
   CardBox: "cardBox/CardBox",
@@ -7,7 +7,7 @@ const baseCompMap = {
   // Test: "",
 };
 
-const install = (app: App) => {
+const install = (app: any) => {
   // 对只有组件名，未提供组件路径或路径错误的抛出和捕获处理
   try {
     for (const [key, path] of Object.entries(baseCompMap)) {

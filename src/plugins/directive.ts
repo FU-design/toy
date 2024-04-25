@@ -1,9 +1,8 @@
 import { parseMD } from "@/utils/render";
-import { App } from "vue";
 
 const baseDirective = {
   // 自定义指令 Markdown 文件内容转化为 HTML
-  install: (app: App) => {
+  install: (app: any) => {
     // 自定义指令 Markdown 文件内容转化为 HTML
     app.directive("md", {
       // 在绑定元素的 attribute 前或事件监听器应用前调用
