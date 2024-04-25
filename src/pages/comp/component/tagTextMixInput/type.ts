@@ -4,10 +4,10 @@ export interface InnerOps {
   [propKey: string]: any;
 }
 
-export interface mixConfig {
+export interface mixConfig<T> {
   contenteditable?: boolean;
   placeholder?: string;
-  contents?: InnerOps[];
+  contents?: T[];
 }
 
 export const NodeInfo = {

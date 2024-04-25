@@ -11,7 +11,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { InnerOps, mixConfig, NodeInfo } from "./type";
 
-const props = withDefaults(defineProps<mixConfig>(), {
+const props = withDefaults(defineProps<mixConfig<InnerOps>>(), {
   contenteditable: true,
   placeholder: "请输入",
   contents: () => [],
@@ -111,7 +111,7 @@ const initContents = () => {
 };
 
 /**
- * 将当前文本输入框中的DOM内容格式化为JSON格式
+ * 将当前文本输入框中的DOM内容格式化为JSON格式 （自行拓展）
  */
 const formatMixInputContent = () => {
   const formatData: InnerOps[] = [];
@@ -144,7 +144,7 @@ const initEvent = () => {
 };
 
 /**
- * 在光标位置插入新的 tag
+ * 在光标位置插入新的 tag （自行拓展）
  * @param item
  */
 const insertTag = (item: InnerOps) => {
