@@ -92,13 +92,14 @@ const handleObserver = (
  * 初始化当前混合输入框中的内容
  */
 const initContents = () => {
-  if (props.contents.length <= 0) {
+  const len = props.contents.length;
+  if (len <= 0) {
     return;
   }
   const fragment = document.createDocumentFragment();
-  props.contents.forEach((v: InnerOps) => {
-    fragment.appendChild(creataNode(v));
-  });
+  for (let i = 0; i < len; i++) {
+    fragment.appendChild(creataNode(props.contents[i]));
+  }
   tagTextMixinputRef.value?.appendChild(fragment);
 };
 
@@ -218,6 +219,7 @@ defineExpose({
   border-radius: 6px;
   transition: all 0.2s;
   overflow: auto;
+  white-space: normal;
   &::before {
     content: attr(data-placeholder); /* 模拟原生 input 的 placeholder */
     color: #888;

@@ -12,16 +12,16 @@
       <div class="wrp-inner">
         <div class="select-plane" @click="handleClick"></div>
         <div class="list-box">
-          <div class="list-item" v-for="(item, idx) in list">
+          <div class="list-item" v-for="item in list">
             <div class="item">{{ item.id }}</div>
             <div class="item">{{ item.name }}</div>
             <div class="item">
-              <tagTextMixInput
-                ref="mixInputRefs"
+              <mix-input
+                :ref="(el) => getMixInputRefs(el, item)"
                 :key="item.id"
                 placeholder="请输入内容"
                 v-model:contents="item.inputContent"
-                @focus="handleFocus(idx)"
+                @focus="handleFocus(item)"
                 @change="handleChange"
               />
             </div>
@@ -40,15 +40,16 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import tagTextMixInput from "./tagTextMixInput.vue";
-import { ListItem, InnerOps } from "./type";
+import mixInput from "./tagTextMixInput.vue";
+import { ListItem, InnerOps, CompType } from "./type";
+import { initSelectData, fetchData } from "./request";
 import CardBox from "@/components/cardBox/CardBox.vue";
 import { parseMD } from "@/utils/render";
 import readme from "./README.md?raw";
 
 const list = ref<ListItem[]>([]);
-const currMixFlag = ref<number | undefined>(undefined);
-const mixInputRefs = ref<InstanceType<typeof tagTextMixInput>[]>([]); // Requires Vue v3.2.25 or above
+const currMixFlag = ref<ListItem>();
+const mixInputRef = ref<Map<ListItem, CompType<typeof mixInput>>>(new Map());
 
 const getMdToHTML = () => {
   const html = parseMD(readme);
@@ -56,32 +57,12 @@ const getMdToHTML = () => {
 };
 
 /**
- * 模拟假数据
+ * 根据table数据的id存储循环中的子组件实例
+ * @param el 子组件实例
+ * @param flag table中每一行的数据
  */
-const initSelectData = () => {
-  const fragment = document.createDocumentFragment();
-  const selectBox = document.querySelector(".select-plane");
-  for (let i = 0; i < 30; i++) {
-    const item = document.createElement("div");
-    item.classList.add("select-item");
-    item.setAttribute("data-key", `item-${i}`);
-    item.innerHTML = `function ${i + 1}`;
-    fragment.appendChild(item);
-  }
-  selectBox?.appendChild(fragment);
-};
-
-/**
- * 模拟请求的table数据
- */
-const fetchData = () => {
-  list.value = new Array(10).fill(1).map((_v, idx) => {
-    return {
-      id: `item-${idx}`,
-      name: `name-${idx}`,
-      inputContent: [],
-    };
-  });
+const getMixInputRefs = (el: any, flag: ListItem) => {
+  mixInputRef.value?.set(flag, el);
 };
 
 /**
@@ -93,7 +74,7 @@ const handleClick = (e: Event) => {
   const key = target.getAttribute("data-key");
   if (key) {
     if (currMixFlag.value != undefined) {
-      mixInputRefs.value[currMixFlag.value]?.insertTag({
+      mixInputRef.value?.get(currMixFlag.value)?.insertTag({
         type: "tag",
         text: key,
       });
@@ -102,11 +83,19 @@ const handleClick = (e: Event) => {
 };
 
 /**
- * 获取当前操作的混合输入框的标识
- * @param idx
+ * 获取table数据
  */
-const handleFocus = (idx: number) => {
-  currMixFlag.value = idx;
+const getList = async () => {
+  const res = await fetchData();
+  list.value = res as ListItem[];
+};
+
+/**
+ * 获取当前操作的混合输入框的标识
+ * @param flag
+ */
+const handleFocus = (flag: ListItem) => {
+  currMixFlag.value = flag;
 };
 
 const handleChange = (val: InnerOps) => {
@@ -114,8 +103,12 @@ const handleChange = (val: InnerOps) => {
 };
 
 onMounted(() => {
+  getList();
   initSelectData();
-  fetchData();
+});
+
+onMounted(() => {
+  mixInputRef.value.clear();
 });
 </script>
 

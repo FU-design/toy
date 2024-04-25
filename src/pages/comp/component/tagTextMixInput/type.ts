@@ -21,3 +21,6 @@ export interface ListItem {
   inputContent: InnerOps[];
   [propKey: string]: any;
 }
+
+export type CompType<T extends abstract new (...args: any) => any> =
+  InstanceType<T>;
