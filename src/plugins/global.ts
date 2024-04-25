@@ -1,11 +1,11 @@
-import globalDirective from "./directive";
-import globalComp from "./comp";
+import directivePlugins from "./directive";
+import compPlugins from "./comp";
 import { App } from "vue";
-
+import hljsVuePlugin from "./highlight";
 export default {
   install(app: App, _options?: any) {
-    // 全局组件注册
-    globalComp(app);
-    globalDirective(app);
+    app.use(compPlugins);
+    app.use(directivePlugins);
+    app.use(hljsVuePlugin);
   },
 };

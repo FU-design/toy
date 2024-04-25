@@ -7,7 +7,7 @@ const baseCompMap = {
   // Test: "",
 };
 
-export default (app: App) => {
+const install = (app: App) => {
   // 对只有组件名，未提供组件路径或路径错误的抛出和捕获处理
   try {
     for (const [key, path] of Object.entries(baseCompMap)) {
@@ -23,3 +23,8 @@ export default (app: App) => {
     console.error("error :>> ", error);
   }
 };
+
+const baseComp = {
+  install: install,
+};
+export default baseComp;
