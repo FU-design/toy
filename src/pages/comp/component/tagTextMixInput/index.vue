@@ -33,7 +33,7 @@
       <template #header>
         <label>核心</label>
       </template>
-      <div v-html="getMdToHTML()"></div>
+      <div v-once v-md="readme"></div>
     </CardBox>
   </div>
 </template>
@@ -44,17 +44,11 @@ import mixInput from "./tagTextMixInput.vue";
 import { ListItem, InnerOps, CompType } from "./type";
 import { initSelectData, fetchData } from "./request";
 import CardBox from "@/components/cardBox/CardBox.vue";
-import { parseMD } from "@/utils/render";
 import readme from "./README.md?raw";
 
 const list = ref<ListItem[]>([]);
 const currMixFlag = ref<ListItem>();
 const mixInputRef = ref<Map<ListItem, CompType<typeof mixInput>>>(new Map());
-
-const getMdToHTML = () => {
-  const html = parseMD(readme);
-  return html;
-};
 
 /**
  * 根据table数据的id存储循环中的子组件实例
