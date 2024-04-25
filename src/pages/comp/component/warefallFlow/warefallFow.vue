@@ -39,11 +39,6 @@ onMounted(() => {
   position: relative;
   counter-increment: count;
   object-fit: contain;
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-  }
   &::after {
     position: absolute;
     display: block;
@@ -56,6 +51,11 @@ onMounted(() => {
     background-color: #000;
     color: #fff;
     content: counter(count);
+  }
+  & > img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
   }
 }
 </style>
