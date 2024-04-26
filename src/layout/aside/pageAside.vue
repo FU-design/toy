@@ -24,12 +24,12 @@
 <script setup lang="ts">
 import { onMounted, computed, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useSideStore } from "@/store/side";
+import { useAsideStore } from "@/store/aside";
 import { storeToRefs } from "pinia";
 import type { RouteRecordRaw } from "vue-router";
 
 const router = useRouter();
-const side = useSideStore();
+const side = useAsideStore();
 const { currentRoute } = router;
 const { fold } = storeToRefs(side);
 

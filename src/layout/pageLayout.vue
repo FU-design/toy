@@ -1,7 +1,7 @@
 <template>
   <div class="page-layout">
     <!-- <PageHeader /> -->
-    <PageSide />
+    <PageAside />
     <section class="page-layout-content">
       <slot></slot>
     </section>
@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 // import PageHeader from "./header/pageHeader.vue";
-import PageSide from "./side/pageSide.vue";
+import PageAside from "./aside/pageAside.vue";
 onMounted(() => {
   // router.hasRoute(path); //# 检查路由是否存在
   // router.getRoutes(); //# 获取所有路由
