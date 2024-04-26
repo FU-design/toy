@@ -30,6 +30,7 @@ body {
   overflow: hidden;
   /* 16px */
   font-size: 1.6rem;
+  background-color: #f8f8f8;
 }
 
 #app {
