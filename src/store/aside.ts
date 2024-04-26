@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 // options store
-// export const useSideStore = defineStore("side", {
+// export default defineStore("side", {
 //   state: () => ({ fold: true }),
 //   getters: {},
 //   actions: {
@@ -16,7 +16,7 @@ import { ref } from "vue";
 // });
 
 // setup store （$reset需要自己创建）
-export const useAsideStore = defineStore(
+export default defineStore(
   "aside",
   () => {
     const fold = ref(false);
