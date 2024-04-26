@@ -110,7 +110,6 @@ onMounted(() => {
 .wrp {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
   padding: 20px;
   box-sizing: border-box;
 }
