@@ -10,6 +10,9 @@ import { ref } from "vue";
 //       this.fold = state;
 //     },
 //   },
+// persist: {
+// ...配置
+// },
 // });
 
 // setup store （$reset需要自己创建）
@@ -28,6 +31,7 @@ export const useAsideStore = defineStore(
 
     return { fold, setSideFoldState, $reset };
   },
+  // 持久化配置
   {
     persist: {
       key: "aside",
