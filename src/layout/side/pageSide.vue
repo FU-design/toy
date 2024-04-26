@@ -1,39 +1,41 @@
 <template>
-  <aside>
-    <h1 class="web-title">Fdefined</h1>
-    <ul class="web-options">
-      <li
-        :class="[m.name == currentRoute.name ? 'selected' : '']"
-        v-for="m in routerMap"
-        :key="m.name"
-        @click="handleOptions(m)"
-      >
-        <span class="web-options-text">{{ m.meta.title }}</span>
-      </li>
-    </ul>
-    <div class="fold">
-      <svg width="100" height="40">
-        <polygon points="0,20 20,14 20,26" fill="#eee" />
-        <polygon points="20,20 40,14 40,26" fill="#eee" />
-        <polygon points="40,20 60,14 60,26" fill="#eee" />
+  <div class="aside-wrp" :class="{ folded: fold }">
+    <aside>
+      <h1 class="web-title">Fdefined</h1>
+      <ul class="web-options">
+        <li
+          :class="[m.name == currentRoute.name ? 'selected' : '']"
+          v-for="m in routerMap"
+          :key="m.name"
+          @click="handleOptions(m)"
+        >
+          <span class="web-options-text">{{ m.meta.title }}</span>
+        </li>
+      </ul>
+    </aside>
+    <div class="fold-btn">
+      <svg width="100%" height="100%" @click="handleFold">
+        <circle v-for="idx in 5" cx="14" :cy="idx * 10" r="2" fill="#d9d9d9" />
       </svg>
     </div>
-  </aside>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, computed, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useSideStore } from "@/store/side";
+import { storeToRefs } from "pinia";
 import type { RouteRecordRaw } from "vue-router";
 
 const router = useRouter();
+const side = useSideStore();
 const { currentRoute } = router;
+const { fold } = storeToRefs(side);
 
 const routerMap = ref(
   computed(() => router.getRoutes().filter((r) => r.meta.isSubPage))
 );
-
-// const activeIndex = ref<string>(`/${currentRoute.value.path.split("/")[1]}`);
 
 onMounted(() => {
   // router.hasRoute(path); //# 检查路由是否存在
@@ -47,16 +49,23 @@ onMounted(() => {
 const handleOptions = (o: RouteRecordRaw) => {
   router.push({ name: o.name });
 };
+
+const handleFold = () => {
+  side.setSideFoldState(!fold.value);
+};
 </script>
 
 <style lang="scss" scoped>
-aside {
+.aside-wrp {
   position: relative;
+  display: flex;
+}
+aside {
   min-width: 20rem;
   width: 18vw;
   height: 100vh;
   background-color: $side-bg;
-  border-right: 0.1rem solid $border-color;
+  transition: 0.3s ease;
 
   h1 {
     padding: 1.6rem;
@@ -97,44 +106,27 @@ aside {
     }
   }
 }
-
-.fold {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  &:hover {
-    background-color: #e5e5e5;
-  }
-  & > svg:hover {
-    transition: all 0.2;
-    animation-duration: 2s;
-    animation-name: heartbeat;
-    animation-iteration-count: infinite;
-    & > polygon {
-      fill: #eeee;
-    }
+.folded {
+  width: 10px;
+  & > aside {
+    opacity: 0;
+    transform: translateX(-20vh);
   }
 }
+.fold-btn {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  // height: 100%;
+  & > svg:hover {
+    transition: all 0.2;
 
-@keyframes heartbeat {
-  0% {
-    filter: drop-shadow(-1px 0 2px #000);
-  }
-  25% {
-    filter: drop-shadow(-1px 0 3px #000);
-  }
-  50% {
-    filter: drop-shadow(-1px 0 4px #000);
-  }
-  75% {
-    filter: drop-shadow(-1px 0 3px #000);
-  }
-  100% {
-    filter: drop-shadow(-1px 0 2px #000);
+    & > circle {
+      fill: #666;
+    }
   }
 }
 </style>
