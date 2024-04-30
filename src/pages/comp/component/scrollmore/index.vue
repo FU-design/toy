@@ -1,5 +1,5 @@
 <template>
-  <CardBox>
+  <cardBox>
     <template #header>
       <div class="get-data-btn">
         <div>滚动加载大量数据简单实现</div>
@@ -11,7 +11,7 @@
         <div class="row">{{ $row }}</div>
       </template>
     </ScrollMoreData>
-  </CardBox>
+  </cardBox>
 </template>
 
 <script lang="ts" setup>

@@ -1,5 +1,5 @@
 <template>
-  <CardBox>
+  <cardBox>
     <template #header>
       <div>
         <div>canvas</div>
@@ -8,11 +8,11 @@
     <div id="container" class="canvas-container">
       <canvas :width="canvasW" :height="canvasH" id="canvas"></canvas>
     </div>
-  </CardBox>
+  </cardBox>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, onUnmounted, ref, unref } from "vue";
+import { nextTick, onMounted, onUnmounted, ref } from "vue";
 // import { drawWall, drawPath, drawArrow, drawMoon } from "./canvas";
 import { draw } from "./canvas_02";
 
