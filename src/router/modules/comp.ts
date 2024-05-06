@@ -47,6 +47,15 @@ const comp = {
         isSubPage: true,
       },
     },
+    {
+      path: "canvas",
+      name: "Canvas",
+      component: () => import("@/pages/comp/component/canvas/index.vue"),
+      meta: {
+        title: "Canvas",
+        isSubPage: true,
+      },
+    },
   ],
 };
 
