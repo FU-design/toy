@@ -136,14 +136,6 @@ const formatMixInputContent = () => {
 };
 
 /**
- * 初始化所用事件
- */
-const initEvent = () => {
-  tagTextMixinputRef.value?.addEventListener("focus", handleFocus);
-  tagTextMixinputRef.value?.addEventListener("blur", handleBlur);
-};
-
-/**
  * 在光标位置插入新的 tag （自行拓展）
  * @param item
  */
@@ -187,6 +179,14 @@ const creataNode = (NodeInfo: InnerOps): Node => {
     return text;
   }
   return document.createDocumentFragment();
+};
+
+/**
+ * 初始化所用事件
+ */
+const initEvent = () => {
+  tagTextMixinputRef.value?.addEventListener("focus", handleFocus);
+  tagTextMixinputRef.value?.addEventListener("blur", handleBlur);
 };
 
 /**
