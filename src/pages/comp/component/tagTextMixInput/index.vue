@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import mixInput from "./tagTextMixInput.vue";
 import { ListItem, InnerOps, CompType } from "./type";
 import { initSelectData, fetchData } from "./request";
@@ -100,7 +100,7 @@ onMounted(() => {
   initSelectData();
 });
 
-onMounted(() => {
+onUnmounted(() => {
   mixInputRef.value.clear();
 });
 </script>
