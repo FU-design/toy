@@ -1,118 +1,147 @@
 <template>
   <div class="canvas">
-    <cardBox>
-      <canvas id="demo1" width="500" height="400"></canvas>
-    </cardBox>
+    <canvas class="grid" id="demo1" width="500" height="400"></canvas>
+    <canvas class="grid" id="demo2" width="500" height="400"></canvas>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, nextTick } from "vue";
-import { degTrigger } from "../../../../utils/tool";
+import { onMounted } from "vue";
+import useCanvas from "@/hooks/useCanvas";
+import { degTrigger } from "@/utils/tool";
+const { ctx } = useCanvas("#demo1");
+const { ctx: ctx2 } = useCanvas("#demo2");
 
-const initDemo1 = () => {
-  const canvas1 = document.querySelector("#demo1") as HTMLCanvasElement;
-  const context = canvas1.getContext("2d");
-
-  context!.font = "40pt Calibri";
-  context!.fillStyle = "red";
-  context!.fillText("Hello Canvas", 0, 100);
+/**
+ * 绘制矩形
+ */
+const drawRect = () => {
+  ctx.value?.fillRect(25, 25, 100, 100); // 绘制一个填充矩形
+  ctx.value?.clearRect(45, 45, 60, 60); // 以矩形的方式清除该区域画布内容
+  ctx.value?.strokeRect(50, 50, 50, 50); // 绘制一个线框矩形
 };
 
-const initDemo2 = () => {
-  const canvas1 = document.querySelector("#demo1") as HTMLCanvasElement;
-  const ctx = canvas1.getContext("2d");
-
-  ctx!.lineWidth = 10; // 设置描边的宽度 （必须在 stroke() 前设置）
-
-  ctx?.beginPath(); // 清空子路径列表，创建一个新的路径
-  ctx?.moveTo(100, 100); // 起始坐标点
-  ctx?.lineTo(350, 50); // 线段的目标坐标点
-  ctx!.strokeStyle = "red"; // 描边的颜色
-  ctx!.lineJoin = "round"; // 设置 2 个长度不为 0 的相连部分（线段、圆弧、曲线）如何连接在一起的属性
-  ctx?.stroke(); // 描边
-
-  ctx?.beginPath();
-  ctx?.moveTo(350, 50);
-  ctx?.lineTo(350, 150);
-  ctx!.strokeStyle = "blue";
-  //   ctx!.lineCap = "square"; //方形结尾，增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
-  ctx!.lineJoin = "bevel"; // 设置 2 个长度不为 0 的相连部分（线段、圆弧、曲线）如何连接在一起的属性
-  ctx?.stroke();
-
-  ctx?.beginPath();
-  ctx?.moveTo(100, 140);
-  ctx?.lineTo(350, 150);
-  ctx!.strokeStyle = "green";
-  //   ctx!.lineCap = "round"; //默认值 butt | round | square 绘制每一条线段末端的属性
-  ctx!.lineJoin = "round"; // 设置 2 个长度不为 0 的相连部分（线段、圆弧、曲线）如何连接在一起的属性
-  ctx?.stroke();
+/**
+ * 绘制路径
+ */
+const drawPath = () => {
+  ctx.value?.beginPath();
+  ctx.value?.moveTo(125, 125); // 移动笔触
+  ctx.value?.lineTo(150, 150);
+  ctx.value?.stroke();
 };
 
-const initDemo3 = () => {
-  const canvas1 = document.querySelector("#demo1") as HTMLCanvasElement;
-  const ctx = canvas1.getContext("2d");
-
-  ctx?.beginPath();
-  //x,y 原点坐标，半径，开始弧度，结束弧度，顺逆时针
-  ctx?.arc(100, 100, 50, degTrigger("-90deg"), degTrigger("90deg"), false);
-  ctx!.lineWidth = 10;
-  ctx?.stroke();
-
-  ctx?.beginPath();
-  //x,y 原点坐标，半径，开始弧度，结束弧度，顺逆时针
-  ctx?.arc(150, 150, 50, degTrigger("90deg"), degTrigger("-90deg"), false);
-  ctx!.lineWidth = 10;
-  ctx?.stroke();
-
-  ctx?.beginPath();
-  //x,y 原点坐标，半径，开始弧度，结束弧度，顺逆时针
-  ctx?.arc(100, 200, 50, degTrigger("-90deg"), degTrigger("90deg"), false);
-  ctx!.lineWidth = 10;
-  ctx?.stroke();
+/**
+ * 通过路径绘制三角形
+ */
+const drawTriangleByPath = () => {
+  ctx.value?.beginPath();
+  ctx.value?.moveTo(150, 150);
+  ctx.value?.lineTo(180, 150);
+  ctx.value?.lineTo(150, 180);
+  // ctx.value?.stroke(); // 不会自定闭合
+  ctx.value?.fill(); // 可自动闭合
 };
 
-// 路径图
-const pathDiagram = () => {
-  const canvas1 = document.querySelector("#demo1") as HTMLCanvasElement;
-  const ctx = canvas1.getContext("2d");
+/**
+ * 通过路径绘制笑脸（利用 moveTo() 去除绘制时连续的线）
+ */
+const drawSmile = () => {
+  ctx.value?.beginPath();
+  ctx.value?.arc(80, 300, 60, 0, degTrigger("360deg"));
 
-  ctx?.beginPath();
-  ctx?.moveTo(100, 20);
+  ctx.value?.moveTo(60, 290);
+  ctx.value?.arc(50, 290, 10, 0, degTrigger("360deg")); // 左眼
 
-  //   line 1
-  ctx?.lineTo(200, 160);
+  ctx.value?.moveTo(120, 290);
+  ctx.value?.arc(110, 290, 10, 0, degTrigger("360deg")); // 右眼
 
-  //二次贝塞尔曲线路径
-  ctx?.quadraticCurveTo(230, 200, 250, 120);
+  ctx.value?.moveTo(120, 310);
+  ctx.value?.arc(80, 310, 40, 0, degTrigger("180deg"), false); // 口
 
-  //三次贝赛尔曲线路径
-  ctx?.bezierCurveTo(290, -40, 300, 200, 400, 150);
-
-  ctx?.lineTo(450, 90);
-
-  ctx!.lineWidth = 5;
-  ctx!.strokeStyle = "blue";
-  ctx!.lineCap = "round";
-  ctx?.stroke();
+  ctx.value?.stroke();
 };
 
-const initEvent = () => {
-  //   initDemo1();
-  initDemo2();
-  //   initDemo3();
-  //   pathDiagram();
+/**
+ * 绘制不同的圆弧
+ */
+const drawArc = () => {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 3; j++) {
+      ctx.value?.beginPath();
+      let x = 340 + j * 50; // x 坐标值
+      let y = 25 + i * 50; // y 坐标值
+      let radius = 20; // 圆弧半径
+      let startAngle = 0; // 开始点
+      let endAngle = Math.PI + (Math.PI * j) / 2; // 结束点
+      let anticlockwise = i % 2 == 0 ? false : true; // 顺时针或逆时针
+
+      ctx.value?.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+      if (i > 1) {
+        ctx.value?.fill();
+      } else {
+        ctx.value?.stroke();
+      }
+    }
+  }
+};
+
+/**
+ * 二次贝塞尔曲线绘制气泡对话框
+ */
+const drawBubbleBox = () => {
+  ctx2.value?.beginPath();
+  ctx2.value?.moveTo(75, 25);
+  ctx2.value?.quadraticCurveTo(25, 25, 25, 62.5);
+  ctx2.value?.quadraticCurveTo(25, 100, 50, 100);
+  ctx2.value?.quadraticCurveTo(50, 120, 30, 125);
+  ctx2.value?.quadraticCurveTo(60, 120, 65, 100);
+  ctx2.value?.quadraticCurveTo(125, 100, 125, 62.5);
+  ctx2.value?.quadraticCurveTo(125, 25, 75, 25);
+  ctx2.value?.stroke();
+};
+
+/**
+ * 三次贝塞尔曲线绘制心型
+ */
+const drawHeart = () => {
+  //三次贝塞尔曲线
+  ctx2.value?.beginPath();
+  ctx2.value?.moveTo(75, 40);
+  ctx2.value?.bezierCurveTo(75, 37, 70, 25, 50, 25);
+  ctx2.value?.bezierCurveTo(20, 25, 20, 62.5, 20, 62.5);
+  ctx2.value?.bezierCurveTo(20, 80, 40, 102, 75, 120);
+  ctx2.value?.bezierCurveTo(110, 102, 130, 80, 130, 62.5);
+  ctx2.value?.bezierCurveTo(130, 62.5, 130, 25, 100, 25);
+  ctx2.value?.bezierCurveTo(85, 25, 75, 37, 75, 40);
+  ctx2.value?.fill();
 };
 
 onMounted(() => {
-  initEvent();
+  drawRect();
+  drawPath();
+  drawTriangleByPath();
+  drawSmile();
+  drawArc();
+  drawBubbleBox();
+  drawHeart();
 });
 </script>
 
 <style lang="scss" scoped>
-.canvas {
-  width: 100%;
-  height: 100%;
-  //   background-color: black;
+canvas {
+  // width: 100%;
+  // height: 100%;
+  margin-right: 10px;
+  background-color: rgba(139, 136, 136, 0.507);
+}
+.grid {
+  background: #ccc;
+  background-image: linear-gradient(white 0px, transparent 0),
+    linear-gradient(90deg, white 0px, transparent 0),
+    linear-gradient(hsla(0, 0%, 100%, 0.3) 1px, transparent 0),
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.3) 1px, transparent 0);
+  background-size: 75px 75px, 75px 75px, 15px 15px, 15px 15px;
 }
 </style>
