@@ -118,14 +118,54 @@ const drawHeart = () => {
   ctx2.value?.fill();
 };
 
+/**
+ * 绘制圆角矩形
+ */
+
+const roundedRect = () => {
+  roundedRects(ctx2.value, 100, 100, 100, 100, 8);
+  ctx2.value?.beginPath();
+  ctx2.value?.moveTo(50, 50);
+  ctx2.value?.lineTo(200, 50);
+  ctx2.value?.quadraticCurveTo(200, 100, 200, 100);
+  ctx2.value?.stroke();
+};
+
+const roundedRects = (
+  ctx: CanvasRenderingContext2D | null | undefined,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number
+) => {
+  ctx?.beginPath();
+  ctx?.moveTo(x, y + radius);
+
+  ctx?.lineTo(x, y + height - radius);
+  ctx?.quadraticCurveTo(x, y + height, x + radius, y + height);
+
+  ctx?.lineTo(x + width - radius, y + height);
+  ctx?.quadraticCurveTo(x + width, y + height, x + width, y + height - radius);
+
+  ctx?.lineTo(x + width, y + radius);
+  ctx?.quadraticCurveTo(x + width, y, x + width - radius, y);
+
+  ctx?.lineTo(x + radius, y);
+  ctx?.quadraticCurveTo(x, y, x, y + radius);
+
+  ctx?.stroke();
+};
+
 onMounted(() => {
   drawRect();
   drawPath();
   drawTriangleByPath();
   drawSmile();
   drawArc();
-  drawBubbleBox();
-  drawHeart();
+  // drawBubbleBox();
+  // drawHeart();
+  roundedRect();
 });
 </script>
 
