@@ -109,7 +109,6 @@ aside {
 .folded {
   width: 10px;
   & > aside {
-    opacity: 0;
     transform: translateX(-20vh);
   }
 }

@@ -6,11 +6,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onUnmounted, onMounted } from "vue";
 import useCanvas from "@/hooks/useCanvas";
 import { degTrigger } from "@/utils/tool";
-const { ctx } = useCanvas("#demo1");
-const { ctx: ctx2 } = useCanvas("#demo2");
+const { ctx, initSelector, cleanup } = useCanvas("#demo1");
+const {
+  ctx: ctx2,
+  initSelector: initSelector2,
+  cleanup: cleanup2,
+} = useCanvas("#demo2");
 
 /**
  * 绘制矩形
@@ -157,7 +161,7 @@ const roundedRects = (
   ctx?.stroke();
 };
 
-onMounted(() => {
+const loadAllDraw = () => {
   drawRect();
   drawPath();
   drawTriangleByPath();
@@ -166,6 +170,17 @@ onMounted(() => {
   // drawBubbleBox();
   // drawHeart();
   roundedRect();
+};
+
+onMounted(() => {
+  initSelector();
+  initSelector2();
+  loadAllDraw();
+});
+
+onUnmounted(() => {
+  cleanup();
+  cleanup2();
 });
 </script>
 
