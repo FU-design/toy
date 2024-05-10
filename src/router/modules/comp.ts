@@ -56,6 +56,15 @@ const comp = {
         isSubPage: true,
       },
     },
+    {
+      path: "xTable",
+      name: "XTable",
+      component: () => import("@/pages/comp/component/xTable/index.vue"),
+      meta: {
+        title: "XTable",
+        isSubPage: true,
+      },
+    },
   ],
 };
 

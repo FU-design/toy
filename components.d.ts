@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ATable: typeof import('ant-design-vue/es')['Table']
     CardBox: typeof import('./src/components/cardBox/CardBox.vue')['default']
     Panel: typeof import('./src/components/panel/Panel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
