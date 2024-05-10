@@ -1,6 +1,6 @@
 ## 关于监听器（watch）的一些 tips
 
-> 在 Vue.js 中，通过 `watch 选项`（在 Vue 2）或 `watch API & watchEffect API`（在 Vue 3）创建的数据侦听器在组件卸载后<font color=yellow>不会</font>自动清除。**如果组件在卸载前不显式地移除这些侦听器，它们将继续存在。**
+> 在 Vue.js 中，通过 `watch 选项`（在 Vue 2）或 `watch API & watchEffect API`（在 Vue 3）在组件外或通过异步在组件内创建的数据侦听器<font color=yellow>不会</font>自动清除。**如果组件在卸载前不显式地移除这些侦听器，它们将继续存在。**
 
 > 通常，这种情况不会导致明显的问题，因为在组件卸载后，数据侦听器的目标数据已经不再存在。但如果侦听器是侦听外部对象或服务，则可能会出现问题，因为它们可能会在组件卸载后继续运行。
 
