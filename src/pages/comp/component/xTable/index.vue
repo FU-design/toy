@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <x-table :data="data" :loading="loading" :columns="columns">
-      <template #name="{ record }">{{ record }}</template>
+      <template #td-operation>
+        <span>编辑</span>
+        <span>删除</span>
+      </template>
     </x-table>
   </div>
 </template>
@@ -44,7 +47,7 @@ interface DataItem {
 }
 
 const initData = () => {
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10000; i++) {
     const item = {
       key: i.toString(),
       name: `Edrward ${i}`,

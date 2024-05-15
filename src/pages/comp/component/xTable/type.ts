@@ -8,3 +8,8 @@ export interface XTablePorps {
   pagination?: TablePaginationConfig;
   customRender?: any;
 }
+
+export interface SlotsMap {
+  thSlots: string[];
+  tdSlots: string[];
+}
