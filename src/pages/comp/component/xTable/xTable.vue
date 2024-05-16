@@ -44,11 +44,11 @@ import { toRefs, useSlots, useAttrs, computed } from "vue";
 import { SlotsMap, SlotEnum } from "./type";
 import { Table, TableProps } from "ant-design-vue";
 
+const slots = useSlots();
+const attrs = useAttrs();
 const props = defineProps<TableProps>();
 const { dataSource, columns, rowKey, pagination } = toRefs(props);
 const emits = defineEmits(["change"]);
-const slots = useSlots();
-const attrs = useAttrs();
 
 /**
  * 获取表头插槽和单元格插槽
