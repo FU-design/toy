@@ -5,7 +5,7 @@ export interface XTablePorps {
   data: any[];
   loading: boolean;
   rowKey?: string | ((record: any) => string);
-  pagination?: TablePaginationConfig;
+  pagination: TablePaginationConfig | false | undefined;
   customRender?: any;
 }
 

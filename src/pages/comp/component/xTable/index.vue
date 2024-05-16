@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <x-table :data="data" :loading="loading" :columns="columns">
+    <x-table
+      :data="dataSource"
+      :loading="loading"
+      :columns="columnsProp"
+      :pagination="paginateProp"
+      @change="handleChange"
+    >
       <template #td-name="{ record }">
         <a>{{ record.name }}</a>
         <copy-outlined @click="handleCopy(record.name)" />
@@ -17,16 +23,21 @@
 </template>
 
 <script setup lang="ts">
-import { getCurrentInstance, ref } from "vue";
+import { getCurrentInstance, onMounted } from "vue";
 import { TableColumnType } from "ant-design-vue";
 import { CopyOutlined } from "@ant-design/icons-vue";
 import xTable from "./xTable.vue";
+import useTable from "@/hooks/useTable";
 
-const data = ref<DataItem[]>([]);
-const loading = ref(false);
+interface DataItem {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+}
+
 const app = getCurrentInstance();
 const globalProperties = app?.appContext.config.globalProperties;
-
 const columns: TableColumnType[] = [
   {
     title: "name",
@@ -49,22 +60,22 @@ const columns: TableColumnType[] = [
   },
 ];
 
-interface DataItem {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
+const { dataSource, columnsProp, loading, paginateProp, handleChange } =
+  useTable({
+    dataSource: [],
+    columns: columns,
+    pagination: undefined,
+  });
 
 const initData = () => {
   for (let i = 0; i < 10000; i++) {
-    const item = {
+    const item: DataItem = {
       key: i.toString(),
       name: `Edrward ${i}`,
       age: 32,
       address: `London Park no. ${i}`,
     };
-    data.value.push(item);
+    dataSource.value.push(item);
   }
 };
 
@@ -83,7 +94,9 @@ const handleCopy = (text: string) => {
       });
 };
 
-initData();
+onMounted(() => {
+  initData();
+});
 </script>
 
 <style lang="scss" scoped>

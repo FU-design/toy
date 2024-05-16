@@ -5,7 +5,7 @@
       :columns="columns"
       :loading="loading"
       :rowKey="rowKey"
-      @change="handleChange"
+      :pagination="pagination"
       v-bind="attrs"
     >
       <template #headerCell="{ column }">
@@ -31,23 +31,21 @@
         </template>
       </template>
     </Table>
-    <div v-if="!attrs.pagination"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { toRefs, useSlots, useAttrs, computed } from "vue";
 import { XTablePorps, SlotsMap } from "./type";
-import { Table, TableProps } from "ant-design-vue";
-
-const slots = useSlots();
-const attrs = useAttrs();
+import { Table } from "ant-design-vue";
 
 const props = withDefaults(defineProps<XTablePorps>(), {
   data: () => [],
 });
+const { data, columns, rowKey, pagination } = toRefs(props);
 
-const { data, columns, rowKey } = toRefs(props);
+const slots = useSlots();
+const attrs = useAttrs();
 
 /**
  * 获取表头插槽和单元格插槽
@@ -63,10 +61,6 @@ const slotsMap = computed<SlotsMap>(() => {
   });
   return res;
 });
-
-const handleChange: TableProps["onChange"] = (pagination, filters, sorter) => {
-  console.log("Various parameters", pagination, filters, sorter);
-};
 </script>
 
 <style scoped></style>
