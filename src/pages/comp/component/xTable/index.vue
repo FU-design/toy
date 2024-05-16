@@ -1,15 +1,16 @@
 <template>
   <div class="container">
     <x-table
-      :data="dataSource"
+      :dataSource="data"
       :loading="loading"
       :columns="columnsProp"
       :pagination="paginateProp"
       @change="handleChange"
     >
-      <template #td-name="{ record }">
-        <a>{{ record.name }}</a>
-        <copy-outlined @click="handleCopy(record.name)" />
+      <template #customFilterIcon> 1111 </template>
+      <template #td-name="{ text }">
+        <a>{{ text }}</a>
+        <copy-outlined @click="handleCopy(text)" />
       </template>
       <template #td-operation>
         <div class="action-ops">
@@ -24,7 +25,7 @@
 
 <script setup lang="ts">
 import { getCurrentInstance, onMounted } from "vue";
-import { TableColumnType } from "ant-design-vue";
+import type { TableColumnType } from "ant-design-vue";
 import { CopyOutlined } from "@ant-design/icons-vue";
 import xTable from "./xTable.vue";
 import useTable from "@/hooks/useTable";
@@ -43,6 +44,28 @@ const columns: TableColumnType[] = [
     title: "name",
     dataIndex: "name",
     width: "25%",
+    filters: [
+      {
+        text: "Joe",
+        value: "Joe",
+      },
+      {
+        text: "Category 1",
+        value: "Category 1",
+      },
+      {
+        text: "Category 2",
+        value: "Category 2",
+      },
+    ],
+    filterMode: "tree",
+    filterSearch: true,
+    // filterIcon: ({ filtered, column }) => {
+    //   console.log("filtered-boolean :>> ", filtered);
+    //   console.log("column-Column :>> ", column);
+    //   return h(CopyOutlined);
+    // },
+    onFilter: (value, record) => record.name.startsWith(value),
   },
   {
     title: "age",
@@ -60,12 +83,17 @@ const columns: TableColumnType[] = [
   },
 ];
 
-const { dataSource, columnsProp, loading, paginateProp, handleChange } =
-  useTable({
-    dataSource: [],
-    columns: columns,
-    pagination: undefined,
-  });
+const {
+  dataSource: data,
+  columnsProp,
+  loading,
+  paginateProp,
+  handleChange,
+} = useTable({
+  dataSource: [],
+  columns: columns,
+  pagination: undefined,
+});
 
 const initData = () => {
   for (let i = 0; i < 10000; i++) {
@@ -75,7 +103,7 @@ const initData = () => {
       age: 32,
       address: `London Park no. ${i}`,
     };
-    dataSource.value.push(item);
+    data.value.push(item);
   }
 };
 

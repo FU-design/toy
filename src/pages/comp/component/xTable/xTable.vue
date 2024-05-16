@@ -6,6 +6,7 @@
       :loading="loading"
       :rowKey="rowKey"
       :pagination="pagination"
+      @change="(...args) => emits('change', ...args)"
       v-bind="attrs"
     >
       <template #headerCell="{ column }">
@@ -31,18 +32,21 @@
           ></slot>
         </template>
       </template>
+      <template v-for="slot in slotsMap.elseSlots" v-slot:[slot]="slotScope">
+        <slot :name="slot" :slotScope="{ slotScope }"></slot>
+      </template>
     </Table>
   </div>
 </template>
 
 <script setup lang="ts">
 import { toRefs, useSlots, useAttrs, computed } from "vue";
-import { SlotsMap } from "./type";
+import { SlotsMap, SlotEnum } from "./type";
 import { Table, TableProps } from "ant-design-vue";
 
 const props = defineProps<TableProps>();
 const { dataSource, columns, rowKey, pagination } = toRefs(props);
-
+const emits = defineEmits(["change"]);
 const slots = useSlots();
 const attrs = useAttrs();
 
@@ -50,12 +54,16 @@ const attrs = useAttrs();
  * 获取表头插槽和单元格插槽
  */
 const slotsMap = computed<SlotsMap>(() => {
-  const res: SlotsMap = { thSlots: [], tdSlots: [] };
-  Object.keys(slots).forEach((s) => {
+  const res: SlotsMap = { thSlots: [], tdSlots: [], elseSlots: [] };
+  Object.keys(slots).forEach((s: any) => {
     if (/^th-/.test(s)) {
       res.thSlots.push(s);
     } else if (/^td-/.test(s)) {
       res.tdSlots.push(s);
+    } else {
+      if (SlotEnum[s] !== undefined) {
+        res.elseSlots.push(s);
+      }
     }
   });
   return res;

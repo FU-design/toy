@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import {
+import type {
   TableProps,
   TablePaginationConfig,
   TableColumnType,
@@ -31,12 +31,13 @@ const useTable = (config: UseTable) => {
 
   const handleChange: TableProps["onChange"] = (
     pagination: TablePaginationConfig,
-    filters: any,
-    sorter: any
+    _filters: any,
+    _sorter: any
   ) => {
     paginateProp.value = Object.assign(paginateProp.value, pagination);
-    console.log("filters:", filters);
-    console.log("sorter:", sorter);
+    // console.log("pagination :>> ", pagination);
+    // console.log("filters:", filters);
+    // console.log("sorter:", sorter);
   };
 
   return {
