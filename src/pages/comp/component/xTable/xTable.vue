@@ -39,9 +39,7 @@ import { toRefs, useSlots, useAttrs, computed } from "vue";
 import { XTablePorps, SlotsMap } from "./type";
 import { Table } from "ant-design-vue";
 
-const props = withDefaults(defineProps<XTablePorps>(), {
-  data: () => [],
-});
+const props = defineProps<XTablePorps>();
 const { data, columns, rowKey, pagination } = toRefs(props);
 
 const slots = useSlots();
