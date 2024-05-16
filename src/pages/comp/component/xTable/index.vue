@@ -6,8 +6,11 @@
         <copy-outlined @click="handleCopy(record.name)" />
       </template>
       <template #td-operation>
-        <span>编辑</span>
-        <span>删除</span>
+        <div class="action-ops">
+          <span>编辑</span>
+          <span>删除</span>
+          <span>删除</span>
+        </div>
       </template>
     </x-table>
   </div>
@@ -15,9 +18,9 @@
 
 <script setup lang="ts">
 import { getCurrentInstance, ref } from "vue";
-import xTable from "./xTable.vue";
 import { TableColumnType } from "ant-design-vue";
 import { CopyOutlined } from "@ant-design/icons-vue";
+import xTable from "./xTable.vue";
 
 const data = ref<DataItem[]>([]);
 const loading = ref(false);
@@ -83,8 +86,16 @@ const handleCopy = (text: string) => {
 initData();
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container {
   padding: 20px;
+}
+.action-ops {
+  display: flex;
+  flex-wrap: wrap;
+  span {
+    cursor: pointer;
+    padding: 2px 4px;
+  }
 }
 </style>
