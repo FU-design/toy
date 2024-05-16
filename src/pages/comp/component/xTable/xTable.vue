@@ -20,12 +20,13 @@
           </template>
         </div>
       </template>
-      <template #bodyCell="{ column, record }">
+      <template #bodyCell="{ column, text, record }">
         <template v-for="slotName in slotsMap.tdSlots">
           <slot
             v-if="slotName.replace('td-', '') === column.dataIndex"
             :name="slotName"
             :column="column"
+            :text="text"
             :record="record"
           ></slot>
         </template>
