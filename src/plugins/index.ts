@@ -1,6 +1,7 @@
 import directivePlugin from "./globalDirective";
 import compPlugin from "./globalComp";
 import hljsVuePlugin from "./highlight";
+import varible from "./globalVarible";
 import type { App } from "vue";
 
 export default {
@@ -8,5 +9,6 @@ export default {
     app.use(compPlugin);
     app.use(directivePlugin);
     app.use(hljsVuePlugin);
+    app.use(varible);
   },
 };
