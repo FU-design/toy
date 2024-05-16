@@ -67,29 +67,6 @@ const slotsMap = computed<SlotsMap>(() => {
 const handleChange: TableProps["onChange"] = (pagination, filters, sorter) => {
   console.log("Various parameters", pagination, filters, sorter);
 };
-
-// const checkPrefix = (str: string, isTh = false) => {
-//   const regexTh = str.match(/^th-/g);
-//   const regexTd = str.match(/^td-/g);
-//   if (isTh && regexTh) {
-//     return str.replace(regexTh[0], "");
-//   }
-//   if (regexTd) {
-//     return str.replace(regexTd[0], "");
-//   }
-// };
-
-// watchEffect(() => {
-//   Object.keys(slots).forEach((s) => {
-//     if (/^th-/.test(s)) {
-//       slotsMap.value.thSlots.push(s);
-//     } else if (/^td-/.test(s)) {
-//       slotsMap.value.tdSlots.push(s);
-//     } else {
-//       slotsMap.value.elseSlots.push(s);
-//     }
-//   });
-// });
 </script>
 
 <style scoped></style>
