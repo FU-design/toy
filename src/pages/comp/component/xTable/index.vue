@@ -65,6 +65,9 @@ const initData = () => {
   }
 };
 
+/**
+ * 文本复制
+ */
 const handleCopy = (text: string) => {
   const copyText = globalProperties?.$copyText;
   copyText &&

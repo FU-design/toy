@@ -1,6 +1,6 @@
 /**
  * 角度转弧度
- * @param deg
+ * @param deg 角度
  * @returns
  */
 export const degTrigger = (deg: string): number => {
@@ -9,7 +9,7 @@ export const degTrigger = (deg: string): number => {
 
 /**
  * 弧度转角度
- * @param rad
+ * @param rad 弧度
  * @returns
  */
 export const radTrigger = (rad: string): number => {
@@ -17,7 +17,7 @@ export const radTrigger = (rad: string): number => {
 };
 
 /**
- * @description: 复制文本到剪贴板
+ * 复制文本到剪贴板
  * @param {string} text 复制的字符串
  */
 export const copyText = (text: string): Promise<any> => {
