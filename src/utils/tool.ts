@@ -1,7 +1,17 @@
+/**
+ * 角度转弧度
+ * @param deg
+ * @returns
+ */
 export const degTrigger = (deg: string): number => {
   return parseInt(deg.replace("deg", "")) * (Math.PI / 180);
 };
 
+/**
+ * 弧度转角度
+ * @param rad
+ * @returns
+ */
 export const radTrigger = (rad: string): number => {
   return parseInt(rad.replace("rad", "")) * (180 / Math.PI);
 };
