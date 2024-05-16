@@ -1,7 +1,7 @@
 <template>
   <div>
     <Table
-      :data-source="data"
+      :data-source="dataSource"
       :columns="columns"
       :loading="loading"
       :rowKey="rowKey"
@@ -37,11 +37,11 @@
 
 <script setup lang="ts">
 import { toRefs, useSlots, useAttrs, computed } from "vue";
-import { XTablePorps, SlotsMap } from "./type";
-import { Table } from "ant-design-vue";
+import { SlotsMap } from "./type";
+import { Table, TableProps } from "ant-design-vue";
 
-const props = defineProps<XTablePorps>();
-const { data, columns, rowKey, pagination } = toRefs(props);
+const props = defineProps<TableProps>();
+const { dataSource, columns, rowKey, pagination } = toRefs(props);
 
 const slots = useSlots();
 const attrs = useAttrs();
