@@ -65,15 +65,15 @@ onUnmounted(() => {
 <style scoped>
 .canvas-container {
   width: 100%;
-  height: 40rem;
+  height: 400px;
   box-sizing: border-box;
   overflow: hidden;
   background-image: linear-gradient(
       to right,
-      rgba(60, 10, 30, 0.06) 0.1rem,
+      rgba(60, 10, 30, 0.06) 1px,
       transparent 0
     ),
-    linear-gradient(to bottom, rgba(60, 10, 30, 0.06) 0.1rem, transparent 0);
-  background-size: 1rem 1rem;
+    linear-gradient(to bottom, rgba(60, 10, 30, 0.06) 1px, transparent 0);
+  background-size: 10px 10px;
 }
 </style>

@@ -99,18 +99,18 @@ const handleqModule = (qs: any) => {
   }
   &-category {
     position: absolute;
-    left: -4rem;
-    top: 1rem;
+    left: -40px;
+    top: 10px;
     padding: 8px;
     margin: 0;
     list-style: none;
-    font-size: 1.5rem;
+    font-size: 15px;
     cursor: pointer;
     background-color: #ffffff;
-    border-radius: 1rem;
+    border-radius: 16px;
 
     &-item {
-      margin: 1.5rem 0;
+      margin: 15px 0;
       box-sizing: border-box;
       @include flex(center);
     }

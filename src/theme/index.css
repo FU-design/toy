@@ -20,7 +20,7 @@
 /* web移动端适配之rem适配原理 https://cloud.tencent.com/developer/article/1947398 [https://www.kancloud.cn/geeker-jun_1987/bootstrap/1861630*/
 html {
   /* 16px * 0.625 = 10px */
-  font-size: 62.5%;
+  /* font-size: 62.5%; */
 }
 
 body {
@@ -28,8 +28,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
-  /* 16px */
-  font-size: 1.6rem;
+  font-size: 16px;
   background-color: #f8f8f8;
 }
 

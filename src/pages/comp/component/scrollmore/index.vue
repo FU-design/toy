@@ -38,14 +38,14 @@ const getData = async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0 1rem 0;
-  border-bottom: 0.4rem solid rgba(194, 194, 194, 0.322);
+  padding: 0 0 10px 0;
+  border-bottom: 4px solid rgba(194, 194, 194, 0.322);
 }
 .row {
   background-color: burlywood;
-  padding: 1rem 0.6rem;
-  margin: 0.2rem;
-  border-radius: 0.4rem;
+  padding: 10px 6px;
+  margin: 2px;
+  border-radius: 4px;
   cursor: pointer;
 }
 .row:hover {

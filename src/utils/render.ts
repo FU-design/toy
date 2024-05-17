@@ -34,7 +34,7 @@ const renderer = () => {
       }
       href = cleanHref;
 
-      let out = `<div><img style="${imgBox}" width="600rem" height="auto" src="${href}" alt="${text}"`;
+      let out = `<div><img style="${imgBox}" width="600px" height="auto" src="${href}" alt="${text}"`;
       if (title) {
         out += ` title="${title}"`;
       }

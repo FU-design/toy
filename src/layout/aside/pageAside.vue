@@ -61,48 +61,48 @@ const handleFold = () => {
   display: flex;
 }
 aside {
-  min-width: 20rem;
+  min-width: 200px;
   width: 18vw;
   height: 100vh;
   background-color: $side-bg;
   transition: 0.3s ease;
 
   h1 {
-    padding: 1.6rem;
+    padding: 16px;
     margin: 0;
-    font-size: 2rem;
-    border-bottom: 0.1rem solid $border-color;
+    font-size: 20px;
+    border-bottom: 1px solid $border-color;
   }
   .web-options {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
     margin: 0;
-    padding: 1rem 0 0 1rem;
+    padding: 10px 0 0 10px;
     .selected {
       background-color: $hover-bg;
       transition: all 0.5s;
       color: #e8e8e8;
-      box-shadow: 0 0 0.1rem rgba(0, 0, 0, 0);
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     }
     li {
       cursor: pointer;
-      border-radius: 0.8rem;
+      border-radius: 8px;
       font-weight: 500;
-      padding: 0.4rem;
-      margin: 0.4rem;
+      padding: 4px;
+      margin: 4px;
       color: $li-text-color;
-      border: 0.1rem solid $border-color;
+      border: 1px solid $border-color;
 
       &:hover {
         color: $hover-text;
         background-color: $hover-bg;
         transition: all 0.5s;
-        box-shadow: 0 0 0.1rem rgba(0, 0, 0, 0);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
       }
     }
     &-text {
-      padding: 0 0.8rem;
+      padding: 0 8px;
     }
   }
 }

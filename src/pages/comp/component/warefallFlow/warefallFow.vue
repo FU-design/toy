@@ -42,12 +42,12 @@ onMounted(() => {
   &::after {
     position: absolute;
     display: block;
-    top: 0.2rem;
-    left: 0.2rem;
-    width: 2.4rem;
-    height: 2.4rem;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
     text-align: center;
-    line-height: 2.4rem;
+    line-height: 24px;
     background-color: #000;
     color: #fff;
     content: counter(count);
