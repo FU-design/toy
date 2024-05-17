@@ -2,7 +2,7 @@
   <div class="warefall-flow">
     <div class="grid">
       <div class="item" v-for="url in items">
-        <img :src="url" alt="404" @load="handleImageLoad" />
+        <img :src="url" alt="404" @load="layoutGrid" />
       </div>
     </div>
   </div>
@@ -10,20 +10,8 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
-const items = ref<any>([]);
-
-const getImgsUrlList = () => {
-  items.value = Object.keys(new Array(60).fill(1)).map((_v, idx) => {
-    return `https://picsum.photos/id/${idx}/100/${generateRandomNumber()}`;
-  });
-};
-
-const generateRandomNumber = () => {
-  // 生成随机宽度和高度，例如，这里设置最大宽高为 800 像素
-  const maxHeight = 200;
-  const randomHeight = Math.floor(Math.random() * maxHeight) + 1;
-  return randomHeight;
-};
+import { getImgs } from "./request";
+const items = ref<string[]>([]);
 
 const layoutGrid = () => {
   const grid = document.querySelector(".grid") as HTMLDivElement;
@@ -42,25 +30,29 @@ const layoutGrid = () => {
   const gutterWidth = columnWidth * 0.05; // 间距为列宽的 5%
 
   gridItems.forEach((item) => {
-    // 去除项目间的间隔得出最后每个项目的宽度
-    item.style.width = `${columnWidth - gutterWidth}px`; // 减去间距
     const minColumnHeight = Math.min(...columns);
     const columnIndex = columns.indexOf(minColumnHeight);
-    item.style.top = `${minColumnHeight}px`;
-    item.style.left = `${(columnWidth + gutterWidth) * columnIndex}px`;
+    const left = (columnWidth + gutterWidth) * columnIndex;
+    const top = minColumnHeight;
+
+    // 去除项目间的间隔得出最后每个项目的宽度
+    item.style.width = `${columnWidth - gutterWidth}px`; // 减去间距
+    item.style.top = `${top}px`;
+    item.style.left = `${left}px`;
     columns[columnIndex] += item.offsetHeight + gutterWidth;
     item.style.opacity = 1; // 图片布局完成后设置透明度为 1
   });
 
-  grid.style.height = `${Math.max(...columns)}px`;
+  // grid.style.height = `${Math.max(...columns)}px`;
 };
 
-const handleImageLoad = () => {
-  layoutGrid();
+const getImgUrls = async () => {
+  const res = await getImgs();
+  items.value = res;
 };
 
 onMounted(() => {
-  getImgsUrlList();
+  getImgUrls();
   window.addEventListener("resize", layoutGrid);
 });
 
@@ -80,8 +72,6 @@ onBeforeUnmount(() => {
   height: 100%;
 }
 .item {
-  /* position: relative; */
-  /* counter-increment: count; */
   background-color: #f3f3f3;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -96,19 +86,6 @@ onBeforeUnmount(() => {
     display: block;
     width: 100%;
     height: auto;
-    &::after {
-      position: absolute;
-      display: block;
-      top: 2px;
-      left: 2px;
-      width: 24px;
-      height: 24px;
-      text-align: center;
-      line-height: 24px;
-      background-color: #000;
-      color: #fff;
-      content: counter(count);
-    }
   }
 }
 </style>
