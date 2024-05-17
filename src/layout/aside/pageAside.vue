@@ -109,7 +109,7 @@ aside {
 .folded {
   width: 10px;
   & > aside {
-    transform: translateX(-20vh);
+    transform: translateX(-100vh);
   }
 }
 .fold-btn {
@@ -119,7 +119,7 @@ aside {
   transform: translateY(-50%);
   cursor: pointer;
   width: 20px;
-  // height: 100%;
+  height: 60px;
   & > svg:hover {
     transition: all 0.2;
 

@@ -21,9 +21,9 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .page-layout {
+  height: 100%;
   display: flex;
   &-content {
-    height: 100vh;
     flex: 1;
     overflow: auto;
     padding: 0 1rem;
