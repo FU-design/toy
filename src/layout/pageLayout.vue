@@ -24,8 +24,7 @@ onMounted(() => {
   height: 100%;
   display: flex;
   &-content {
-    flex: 1;
-    overflow: auto;
+    width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
     background-color: $page-bg;
