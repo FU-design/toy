@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { getImgs } from "./request";
-import { layoutGrid, layoutFull } from "./warefallFowUtil";
+import { layoutFull } from "./warefallFowUtil";
 
 const items = ref<string[]>([]);
 

@@ -48,37 +48,17 @@ export const layoutFull = () => {
   const cols = Math.floor(pw / itemw); // 获取列的数目
   const space = (pw - cols * itemw) / (cols + 1); // 将剩余的空间规划为子项目间的间距
 
-  const t = 10; // 初始的 top 值
   const len = gridItems.length;
-  const arr = Array(cols)
-    .fill(0)
-    .map((_v, i) => {
-      return {
-        x: Math.floor((i + 1) * space + itemw * i),
-        y: t,
-      };
-    });
+  const columns = Array(cols).fill(0);
 
   for (let j = 0; j < len; j++) {
-    const idx = getMinHeight(arr);
-    const { x, y } = arr[idx];
+    const minColHeight = Math.min(...columns);
+    const colIdx = columns.indexOf(minColHeight);
     const resetStyle = {
-      left: `${x}px`,
-      top: `${y}px`,
+      left: `${Math.floor((colIdx + 1) * space + itemw * colIdx)}px`,
+      top: `${minColHeight}px`,
     };
     Object.assign(gridItems[j].style, resetStyle);
-    arr[idx].y += gridItems[j].offsetHeight + t;
+    columns[colIdx] += gridItems[j].offsetHeight + 10;
   }
-};
-
-const getMinHeight = (arr: any) => {
-  let minH = arr[0].y;
-  let idx = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i].y < minH) {
-      minH = arr[i].y;
-      idx = i;
-    }
-  }
-  return idx;
 };
