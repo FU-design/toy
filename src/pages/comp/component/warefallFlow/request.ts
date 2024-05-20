@@ -20,5 +20,5 @@ const generateRandomNumber = () => {
   // 生成随机宽度和高度，例如，这里设置最大宽高为 800 像素
   const maxHeight = 200;
   const randomHeight = Math.floor(Math.random() * maxHeight) + 1;
-  return randomHeight;
+  return Math.max(randomHeight, 50);
 };
