@@ -5,7 +5,7 @@
  * @param selector 
  */
 export function layoutWarefall(selector: string | HTMLElement) {
-  let el = null;
+  let el: HTMLElement | undefined;
   if (typeof selector == "string") {
     el = document.querySelector(selector) as HTMLElement; // 获取容器
   }
@@ -15,11 +15,10 @@ export function layoutWarefall(selector: string | HTMLElement) {
     const pw = el?.offsetWidth; // 获取容器的宽
     const itemw = gridItems[0].offsetWidth; // 获取单个子项目的最后内部填充后的宽
     const cols = Math.floor(pw / itemw); // 获取列的数目
-
     const space = (pw - cols * itemw) / (cols + 1); // 将剩余的空间规划为子项目间的间距
-    const len = gridItems.length;
     const columns = Array(cols).fill(0);
 
+    const len = gridItems.length;
     for (let i = 0; i < len; i++) {
       const minColHeight = Math.min(...columns);
       const colIdx = columns.indexOf(minColHeight);
@@ -33,10 +32,7 @@ export function layoutWarefall(selector: string | HTMLElement) {
       columns[colIdx] += gridItems[i].offsetHeight + 10;
     }
     el?.style.setProperty('height', `${Math.max(...columns)}px`)
-  } else {
-    throw Error("el cannot be null")
   }
-
 }
 
 /**
@@ -46,20 +42,21 @@ export function layoutWarefall(selector: string | HTMLElement) {
  * @param delay 
  * @returns 
  */
-export function loadScroll(selector: string | HTMLElement, binding: () => void, delay = 2000) {
-  let el = null;
-  let timer: NodeJS.Timeout | null = null
+export function loadScroll(selector: string | Element, binding: () => void, delay = 2000): () => void {
+  let el: Element | undefined;
+  let timer: ReturnType<typeof setTimeout> | undefined
+
   if (typeof selector == "string") {
-    el = document.querySelector(selector) as HTMLElement; // 获取容器
+    el = document.querySelector(selector) as Element; // 获取容器
   }
+
   const handleScroll = (event: Event) => {
     if (!timer) {
-      const { scrollTop, clientHeight, scrollHeight } = el as HTMLDivElement;
+      const { scrollTop, clientHeight, scrollHeight } = el as Element;
       if (scrollTop + clientHeight >= scrollHeight) {
         timer = setTimeout(() => {
-          console.log("滚到底部了 :>> ");
           binding();
-          timer = null
+          timer = undefined
         }, delay)
       }
     } else {
@@ -68,23 +65,34 @@ export function loadScroll(selector: string | HTMLElement, binding: () => void, 
   }
   el?.addEventListener("scroll", handleScroll);
   return () => {
-    console.log('已销毁监听器 :>> ',);
     el?.removeEventListener('scroll', handleScroll)
   }
 }
 
 
 
+
 /**
- * 给dom添加节流
- * @param selector 
- * @param binding 
+ * 防抖（到时间间隔后，最后一次触发）
+ * @param func
+ * @param delay
+ * @returns
  */
-export function throttle(func: () => void, delay = 2000) {
-  let timer = null
-  if (!timer) {
-    timer = setTimeout(() => {
-      func()
-    }, delay)
+export function debounce(func: (...args: any[]) => void, delay: number, immediate = false) {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  return function debounced(this: any, ...args: any[]) {
+    if (!timer) {
+      if (immediate) {
+        func.apply(this, args)
+      }
+      timer = setTimeout(() => {
+        func.apply(this, args)
+      }, delay)
+      return
+    }
+    clearTimeout(timer)
   }
 }
+
+
+
