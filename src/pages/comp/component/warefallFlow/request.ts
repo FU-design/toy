@@ -12,7 +12,7 @@ export const getImgs = (): Promise<string[]> => {
 
 const getImgsUrlList = () => {
     return Object.keys(new Array(50).fill(1)).map((_v, idx) => {
-        return `https://picsum.photos/id/${idx}/200/${generateRandomNumber()}`;
+        return `https://picsum.photos/id/${idx}/400/${generateRandomNumber()}`;
     });
 };
 

@@ -55,9 +55,6 @@ onBeforeUnmount(() => {
   overflow: auto;
 }
 
-.grid {
-  position: relative;
-}
 .item {
   background-color: #f3f3f3;
   border: 1px solid #ccc;
@@ -65,9 +62,8 @@ onBeforeUnmount(() => {
   padding: 5px;
   box-sizing: border-box;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: absolute;
   opacity: 0;
-  /* transition: all 0.3s; */
+  transition: all 0.3s;
 
   img {
     display: block;
