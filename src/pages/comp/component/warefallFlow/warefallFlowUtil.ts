@@ -1,10 +1,12 @@
+type voidFunc = () => void;
+
 
 /**
  * 观感： 8 缺陷加载时会出现缩聚点
  * @description 不固定列数,响应式设计布局
  * @param selector 
  */
-export function layoutWarefall(selector: string | HTMLElement) {
+export function layoutWarefall(selector: string | HTMLElement): void {
   let el: HTMLElement | undefined;
   if (typeof selector == "string") {
     el = document.querySelector(selector) as HTMLElement; // 获取容器
@@ -35,14 +37,9 @@ export function layoutWarefall(selector: string | HTMLElement) {
   }
 }
 
-/**
- * 判断容器的滚动条是否滚动到底部
- * @param selector 
- * @param binding 
- * @param delay 
- * @returns 
- */
-export function loadScroll(selector: string | Element, binding: () => void, delay = 2000): () => void {
+
+// 判断容器的滚动条是否滚动到底部
+export function loadScroll(selector: string | Element, binding: voidFunc, delay = 2000): voidFunc {
   let el: Element | undefined;
   let timer: ReturnType<typeof setTimeout> | undefined
 
@@ -72,15 +69,10 @@ export function loadScroll(selector: string | Element, binding: () => void, dela
 
 
 
-/**
- * 防抖（到时间间隔后，最后一次触发）
- * @param func
- * @param delay
- * @returns
- */
-export function debounce(func: (...args: any[]) => void, delay: number, immediate = false) {
+// 防抖（到时间间隔后，最后一次触发）
+export function debounce(func: Function, delay?: number, immediate?: boolean) {
   let timer: ReturnType<typeof setTimeout> | undefined;
-  return function debounced(this: any, ...args: any[]) {
+  return function (this: any, ...args: any[]) {
     if (!timer) {
       if (immediate) {
         func.apply(this, args)
@@ -91,6 +83,7 @@ export function debounce(func: (...args: any[]) => void, delay: number, immediat
       return
     }
     clearTimeout(timer)
+    timer = undefined
   }
 }
 
