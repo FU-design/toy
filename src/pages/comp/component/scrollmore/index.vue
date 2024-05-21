@@ -3,7 +3,7 @@
     <template #header>
       <div class="get-data-btn">
         <div>滚动加载大量数据简单实现</div>
-        <button id="btn">获取数据</button>
+        <button @click="getData">获取数据</button>
       </div>
     </template>
     <ScrollMoreData :list-data="listData" :each-size="eachSize">
@@ -15,10 +15,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import ScrollMoreData from "./scrollmoredata.vue";
 import { mockData, MockData } from "../../../../utils/mock";
-import { debounce } from "../warefallFlow/warefallFlowUtil";
 
 const listData = ref<string[]>([]);
 const eachSize = ref<number>(50);
@@ -27,21 +26,11 @@ const eachSize = ref<number>(50);
  * 获取数据
  */
 const getData = async () => {
-  const { code, data } = (await mockData(1000)) as MockData;
+  const { code, data } = (await mockData(60)) as MockData;
   if (code == 200) {
-    listData.value = data;
+    listData.value = [...listData.value, ...data];
   }
 };
-
-const debouncedBtn = debounce(() => {
-  console.log("11111 :>> ", 11111);
-  getData();
-}, 100);
-
-onMounted(() => {
-  const btn = document.querySelector("#btn");
-  btn?.addEventListener("click", debouncedBtn);
-});
 </script>
 
 <style scoped>
