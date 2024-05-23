@@ -95,7 +95,8 @@ export default defineComponent({
   name: "AutoForm",
   props: FormProps,
   emits: ["update:modelValue", "ok"],
-  setup(props, { attrs, slots, emit, expose }) {
+  // props,{attrs, slots, emit, expose}
+  setup(props, { emit, expose }) {
     const labelCol = { style: { width: "150px" } };
     const wrapperCol = { span: 14 };
     const { modelValue, formItems } = toRefs(props);

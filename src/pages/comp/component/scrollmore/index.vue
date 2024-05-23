@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import ScrollMoreData from "./scrollmoredata.vue";
 import { mockData, MockData } from "../../../../utils/mock";
 import AutoFrom from "../autoForm/autoForm.vue";
