@@ -19,6 +19,15 @@ const comp = {
       },
     },
     {
+      path: "autoFrom",
+      name: "AutoFrom",
+      component: () => import("@/pages/comp/component/autoForm/index.vue"),
+      meta: {
+        title: "AutoFrom",
+        isSubPage: true,
+      },
+    },
+    {
       path: "warefallFlow",
       name: "WarefallFlow",
       component: () =>
