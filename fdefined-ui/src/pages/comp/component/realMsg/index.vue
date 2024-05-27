@@ -1,18 +1,22 @@
 <template>
   <div class="wrp">
-    <card-box v-for="idx in 9">
+    <card-box v-for="idx in 2">
       <template #header>
         <div class="title">
           <span>WS test</span>
-          <a-button type="primary" @click="handleConnect">connect</a-button>
+          <a-button type="primary">connect</a-button>
         </div>
       </template>
       <div class="msg-box">
         <div class="msg-output"></div>
         <div class="msg-input">
-          <div class="msg-input-inner" contenteditable="true"></div>
+          <div
+            :id="`id_${idx}`"
+            class="msg-input-inner"
+            contenteditable="true"
+          ></div>
           <section>
-            <a-button>发送</a-button>
+            <a-button @click="handleSendMsg(idx)">发送</a-button>
           </section>
         </div>
       </div>
@@ -21,12 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { WebSocketServer } from "./ws";
+import { ref, onMounted, onBeforeUnmount } from "vue";
+let ws = WebSocket | null;
 
-const handleConnect = () => {
-  const ws = WebSocketServer("ws://127.0.0.1:8090");
-  console.log("ws :>> ", ws);
-
+const connectWebSocket = () => {
+  ws = new WebSocket("ws://localhost:8080");
   // 监听打开事件
   ws.onopen = () => {
     console.log("连接到WebSocket服务器");
@@ -34,7 +37,7 @@ const handleConnect = () => {
 
   // 监听消息事件
   ws.onmessage = (event) => {
-    console.log("event :>> ", event);
+    console.log("event :>> ", event.data);
   };
 
   // 监听关闭事件
@@ -47,10 +50,32 @@ const handleConnect = () => {
     console.error("WebSocket错误:", error);
   };
 };
+
+const handleSendMsg = (idx) => {
+  const msgBox = document.querySelector(`#id_${idx}`);
+  const msg = msgBox.textContent;
+  if (!msg) return;
+  let umsg = {
+    idCard: idx,
+    msg: msgBox.textContent,
+  };
+  ws.send(JSON.stringify(umsg));
+};
+
+onMounted(() => {
+  connectWebSocket();
+});
+
+onBeforeUnmount(() => {
+  if (ws) {
+    ws.close();
+  }
+});
 </script>
 
 <style lang="scss" scoped>
 .wrp {
+  // 该布局属于是响应式设计
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 10px;
@@ -64,12 +89,12 @@ const handleConnect = () => {
   box-sizing: border-box;
   height: 500px;
   .msg-output {
-    background: hsl(150deg 30% 80%);
+    background: hsl(150, 30%, 92%);
     height: 70%;
   }
   .msg-input {
     height: calc(100% - 70%);
-    border: 1px solid hsl(150deg 30% 80%);
+    border: 1px solid hsl(150, 30%, 92%);
     border-top: 0;
     display: flex;
     flex-direction: column;
