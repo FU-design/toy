@@ -35,17 +35,10 @@ const getData = async () => {
 </script>
 
 <style scoped>
-.wrp {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-}
 .get-data-btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0 10px 0;
-  border-bottom: 4px solid rgba(194, 194, 194, 0.322);
 }
 .row {
   background-color: burlywood;
