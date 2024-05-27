@@ -74,6 +74,15 @@ const comp = {
         isSubPage: true,
       },
     },
+    {
+      path: "realMsg",
+      name: "RealMsg",
+      component: () => import("@/pages/comp/component/realMsg/index.vue"),
+      meta: {
+        title: "RealMsg",
+        isSubPage: true,
+      },
+    },
   ],
 };
 
