@@ -17,21 +17,23 @@
 
 <script setup></script>
 
-<style scoped>
+<style lang="scss" scoped>
 .card-box {
-  padding: 16px;
   margin: 16px 0;
   border-radius: 8px;
-  /* box-shadow: rgba(10, 9, 9, 0.1) 0px 0px 5px; */
   box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
   background-color: #ffffffa4;
   /* overflow: auto; */
-}
-.card-box header {
-  font-weight: 600;
-}
-.card-box main {
-  width: 100%;
-  height: auto;
+  & > header {
+    padding: 10px 16px;
+    font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  }
+  & > main {
+    width: 100%;
+    height: auto;
+    padding: 10px 16px 16px;
+    box-sizing: border-box;
+  }
 }
 </style>

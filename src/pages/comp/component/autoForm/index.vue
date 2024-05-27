@@ -1,16 +1,22 @@
 <template>
-  <div>
+  <div class="wrp">
     <cardBox>
       <template #header>
         <div>防抖测试</div>
       </template>
       <AutoFrom v-model="form" :formItems="formItem" />
     </cardBox>
+    <cardBox>
+      <template #header>
+        <div>节流（throttle）测试</div>
+      </template>
+    </cardBox>
   </div>
 </template>
 
 <script setup lang="ts">
 import AutoFrom from "./autoForm.vue";
+
 import { ref } from "vue";
 
 const form = ref<any>({});

@@ -1,15 +1,28 @@
 <template>
-  <div class="warefall-flow">
-    <div class="grid">
-      <div class="item" v-for="url in items">
-        <img :src="url" alt="404" @load="handleResize" />
+  <div class="wrp">
+    <cardBox>
+      <template #header> 瀑布流实现（js） </template>
+      <div class="warefall-flow">
+        <div class="grid">
+          <div class="item" v-for="url in items">
+            <img :src="url" alt="404" @load="handleResize" />
+          </div>
+        </div>
       </div>
-    </div>
+    </cardBox>
+
+    <cardBox>
+      <template #header>
+        <div>实现方式</div>
+      </template>
+      <div v-once v-md="readme"></div>
+    </cardBox>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import readme from "./README.md?raw";
 import { getImgs } from "./request";
 import { layoutWarefall, loadScroll } from "./warefallFlowUtil";
 
@@ -51,7 +64,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .warefall-flow {
-  height: 100%;
+  height: 500px;
   overflow: auto;
 }
 
@@ -63,7 +76,7 @@ onBeforeUnmount(() => {
   box-sizing: border-box;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   opacity: 0;
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
 
   img {
     display: block;
