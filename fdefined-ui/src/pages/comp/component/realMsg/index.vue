@@ -3,15 +3,15 @@
     <card-box v-for="idx in 2">
       <template #header>
         <div class="title">
-          <span>WS test</span>
-          <a-button type="primary">connect</a-button>
+          <span>WS {{ idx }}</span>
+          <a-button type="primary">chat{{ idx }}</a-button>
         </div>
       </template>
       <div class="msg-box">
-        <div class="msg-output"></div>
+        <div :id="`output_${idx}`" class="msg-output"></div>
         <div class="msg-input">
           <div
-            :id="`id_${idx}`"
+            :id="`input_${idx}`"
             class="msg-input-inner"
             contenteditable="true"
           ></div>
@@ -25,8 +25,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
-let ws = WebSocket | null;
+import { onMounted, onBeforeUnmount, ref } from "vue";
+interface MsgBox {
+  id: string | number;
+  msg: string;
+}
+
+enum Pos {
+  left = "msgL",
+  right = "msgR",
+}
+type PosType = keyof typeof Pos;
+
+let ws: WebSocket | null;
+const msgBox = ref<MsgBox[] | null>(null);
 
 const connectWebSocket = () => {
   ws = new WebSocket("ws://localhost:8080");
@@ -37,7 +49,10 @@ const connectWebSocket = () => {
 
   // 监听消息事件
   ws.onmessage = (event) => {
-    console.log("event :>> ", event.data);
+    const recevice = event.data as string;
+    const currMsg = JSON.parse(recevice.replace("服务器收到:", ""));
+    msgBox.value?.push(currMsg);
+    outPutMsg(currMsg);
   };
 
   // 监听关闭事件
@@ -51,15 +66,34 @@ const connectWebSocket = () => {
   };
 };
 
-const handleSendMsg = (idx) => {
-  const msgBox = document.querySelector(`#id_${idx}`);
-  const msg = msgBox.textContent;
-  if (!msg) return;
-  let umsg = {
-    idCard: idx,
-    msg: msgBox.textContent,
-  };
-  ws.send(JSON.stringify(umsg));
+const handleSendMsg = (idx: number) => {
+  const msgBox = document.querySelector(`#input_${idx}`);
+  const msg = msgBox?.textContent;
+  if (!msg) {
+    alert("消息不能为空");
+    return;
+  }
+  const sendMsg = JSON.stringify({
+    id: idx,
+    msg,
+  });
+  ws?.send(sendMsg);
+  msgBox.textContent = "";
+};
+
+const outPutMsg = (msgInfo: MsgBox) => {
+  const chats = document.querySelectorAll(".msg-output");
+  chats.forEach((chat) => {
+    const pos = chat.id === `output_${msgInfo.id}` ? "right" : "left";
+    chat.appendChild(createSingleMsg(pos, msgInfo.msg));
+  });
+};
+
+const createSingleMsg = (pos: PosType, msg: string): Element => {
+  const singleMsg = document.createElement("div");
+  singleMsg.classList.add(Pos[pos]);
+  singleMsg.textContent = msg;
+  return singleMsg;
 };
 
 onMounted(() => {
@@ -72,7 +106,15 @@ onBeforeUnmount(() => {
   }
 });
 </script>
-
+<style>
+.msgL {
+  padding: 10px;
+}
+.msgR {
+  padding: 10px;
+  text-align: end;
+}
+</style>
 <style lang="scss" scoped>
 .wrp {
   // 该布局属于是响应式设计
