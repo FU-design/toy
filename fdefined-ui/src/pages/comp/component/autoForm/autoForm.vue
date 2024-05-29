@@ -184,6 +184,7 @@ export default defineComponent({
       componentDisabled,
       onSubmit,
       onReset,
+      setOptionsVal,
     };
   },
 });

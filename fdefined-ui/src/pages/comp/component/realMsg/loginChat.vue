@@ -2,24 +2,24 @@
   <div class="wrp">
     <div class="login-chat">
       <h1>login Chat</h1>
-      <AutoFrom v-model="form" :formItems="formItem" @ok="submitIsOk">
+      <AutoForm v-model="form" :formItems="formItem" @ok="submitIsOk">
         <template #btngroup="{ onSubmit }">
           <a-button style="width: 100%" type="primary" @click="onSubmit">
             Sign in
           </a-button>
         </template>
-      </AutoFrom>
+      </AutoForm>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, unref } from "vue";
-import AutoFrom from "../autoForm/autoForm.vue";
+import { onMounted, ref, unref } from "vue";
+import AutoForm from "../autoForm/autoForm.vue";
 import useChat, { type ChatInfo } from "@/hooks/useChat";
 
 const { chatInfo, setChatInfo } = useChat();
-const form = ref<ChatInfo | null>();
+const form = ref<ChatInfo>({ chatCode: "", chatName: "" });
 const formItem = [
   {
     type: "input",
@@ -63,8 +63,12 @@ const formItem = [
   },
 ];
 const submitIsOk = () => {
-  setChatInfo;
+  setChatInfo(unref(form) as ChatInfo);
 };
+onMounted(() => {
+  Object.assign(form.value, unref(chatInfo));
+  console.log("form.value :>> ", form.value);
+});
 </script>
 
 <style lang="scss" scoped>
