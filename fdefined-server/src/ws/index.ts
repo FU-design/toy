@@ -16,13 +16,10 @@ wss.on("connection", (ws: WebSocket) => {
   ws.on("message", (message: string) => {
     console.log("收到消息:", message);
     msgCollecter.push(message);
-
-    
-
     console.log("msgCollecter :>> ", JSON.parse(message));
 
     // 发送消息给客户端
-    ws.send(`服务器收到: ${msgCollecter}`);
+    ws.send(`服务器收到: ${message}`);
   });
 
   // 监听关闭事件

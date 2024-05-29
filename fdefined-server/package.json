@@ -1,4 +1,7 @@
 {
+	"scripts": {
+		"server": "npx ts-node src/ws/index.ts"
+	},
 	"dependencies": {
 		"ws": "^8.17.0"
 	},
