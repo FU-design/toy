@@ -1,26 +1,29 @@
 <template>
   <div class="wrp">
-    <card-box v-for="idx in 2">
-      <template #header>
-        <div class="title">
-          <span>WS {{ idx }}</span>
-          <a-button type="primary">chat{{ idx }}</a-button>
+    <div class="profile"></div>
+    <div class="wrp wrp-add">
+      <card-box v-for="idx in 2">
+        <template #header>
+          <div class="title">
+            <span>WS {{ idx }}</span>
+            <a-button type="primary">chat{{ idx }}</a-button>
+          </div>
+        </template>
+        <div class="msg-box">
+          <div :id="`output_${idx}`" class="msg-output"></div>
+          <div class="msg-input">
+            <div
+              :id="`input_${idx}`"
+              class="msg-input-inner"
+              contenteditable="true"
+            ></div>
+            <section>
+              <a-button @click="handleSendMsg(idx)">发送</a-button>
+            </section>
+          </div>
         </div>
-      </template>
-      <div class="msg-box">
-        <div :id="`output_${idx}`" class="msg-output"></div>
-        <div class="msg-input">
-          <div
-            :id="`input_${idx}`"
-            class="msg-input-inner"
-            contenteditable="true"
-          ></div>
-          <section>
-            <a-button @click="handleSendMsg(idx)">发送</a-button>
-          </section>
-        </div>
-      </div>
-    </card-box>
+      </card-box>
+    </div>
   </div>
 </template>
 
@@ -97,7 +100,7 @@ const createSingleMsg = (pos: PosType, msg: string): Element => {
 };
 
 onMounted(() => {
-  connectWebSocket();
+  // connectWebSocket();
 });
 
 onBeforeUnmount(() => {
@@ -116,7 +119,12 @@ onBeforeUnmount(() => {
 }
 </style>
 <style lang="scss" scoped>
-.wrp {
+.profile {
+  height: 100px;
+  background-color: #666;
+  margin: 10px 0;
+}
+.wrp-add {
   // 该布局属于是响应式设计
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));

@@ -77,7 +77,7 @@ const comp = {
     {
       path: "realMsg",
       name: "RealMsg",
-      component: () => import("@/pages/comp/component/realMsg/index.vue"),
+      component: () => import("@/pages/comp/component/realMsg/loginChat.vue"),
       meta: {
         title: "RealMsg",
         isSubPage: true,

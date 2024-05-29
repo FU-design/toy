@@ -27,9 +27,14 @@
           />
         </a-form-item>
       </div>
-      <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmit">Submit</a-button>
-        <a-button style="margin-left: 10px">Reset</a-button>
+      <a-form-item :wrapper-col="{ span: 24 }">
+        <!-- 作用域插槽传递事件 -->
+        <slot name="btngroup" :onSubmit="onSubmit" :onReset="onReset">
+          <div class="wrp-btn">
+            <a-button type="primary" @click="onSubmit">Submit</a-button>
+            <a-button @click="onReset">Reset</a-button>
+          </div>
+        </slot>
       </a-form-item>
     </a-form>
   </div>
@@ -97,8 +102,8 @@ export default defineComponent({
   emits: ["update:modelValue", "ok"],
   // props,{attrs, slots, emit, expose}
   setup(props, { emit, expose }) {
-    const labelCol = { style: { width: "150px" } };
-    const wrapperCol = { span: 14 };
+    const labelCol = { style: { width: "auto" } };
+    const wrapperCol = { span: 24 };
     const { modelValue, formItems } = toRefs(props);
 
     const ruleFormRef = ref();
@@ -154,11 +159,14 @@ export default defineComponent({
         .validate()
         .then(() => {
           emit("update:modelValue", unref(ruleForm));
+          emit("ok");
         })
         .catch((error: Error) => {
           console.log("error", error);
         });
     };
+
+    const onReset = () => {};
 
     onMounted(() => {
       initForm();
@@ -175,9 +183,15 @@ export default defineComponent({
       ruleForm,
       componentDisabled,
       onSubmit,
+      onReset,
     };
   },
 });
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.wrp-btn {
+  display: flex;
+  justify-content: space-around;
+}
+</style>

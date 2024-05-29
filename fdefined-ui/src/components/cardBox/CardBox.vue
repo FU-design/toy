@@ -1,6 +1,6 @@
 <template>
   <div class="card-box">
-    <header>
+    <header v-if="showHeader">
       <slot name="header"> </slot>
     </header>
     <main>
@@ -15,7 +15,18 @@
   </div>
 </template>
 
-<script setup></script>
+<script lang="ts" setup>
+import { toRefs } from "vue";
+
+interface CardBoxProps {
+  showHeader?: boolean;
+}
+const props = withDefaults(defineProps<CardBoxProps>(), {
+  showHeader: true,
+});
+
+const { showHeader } = toRefs(props);
+</script>
 
 <style lang="scss" scoped>
 .card-box {
