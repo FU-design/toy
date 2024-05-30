@@ -78,7 +78,6 @@ aside {
   h1 {
     padding: 16px;
     margin: 0;
-    font-size: 20px;
     border-bottom: 1px solid $border-color;
   }
   .web-options {

@@ -66,7 +66,6 @@ onUnmounted(() => {
 .canvas-container {
   width: 100%;
   height: 400px;
-  box-sizing: border-box;
   overflow: hidden;
   background-image: linear-gradient(
       to right,

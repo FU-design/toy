@@ -103,7 +103,6 @@ onMounted(() => {
   padding: 10px;
   margin: 10px;
   text-align: center;
-  box-sizing: border-box;
   background-color: cadetblue;
 }
 

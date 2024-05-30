@@ -147,7 +147,6 @@ const handleClose = () => {
   inset: 0;
   z-index: 9;
   pointer-events: none; /* 忽略鼠标操作,透过当前元素; 会被继承 */
-  box-sizing: border-box;
 }
 
 .panel {
@@ -168,7 +167,6 @@ const handleClose = () => {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   overflow: hidden;
-  box-sizing: border-box;
 }
 
 .drag-size {
@@ -196,7 +194,6 @@ const handleClose = () => {
 
 .panel-header {
   padding: 2px 10px;
-  box-sizing: border-box;
   box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
     0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
 
@@ -207,14 +204,12 @@ const handleClose = () => {
 .panel-content {
   flex: 1;
   padding: 10px 10px 20px 10px;
-  box-sizing: border-box;
   background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
   overflow: auto;
 }
 
 .panel-footer {
   padding: 10px;
-  box-sizing: border-box;
   /* background-color: blanchedalmond; */
 }
 

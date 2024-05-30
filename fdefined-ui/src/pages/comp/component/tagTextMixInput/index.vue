@@ -110,7 +110,6 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  box-sizing: border-box;
 }
 .wrp-inner {
   display: flex;
@@ -135,7 +134,6 @@ onUnmounted(() => {
   .item {
     width: calc(100% / 3);
     height: 100%;
-    box-sizing: border-box;
     padding: 10px;
     border-right: 1px solid #ddd;
 

@@ -26,7 +26,6 @@ onMounted(() => {
   &-content {
     width: 100%;
     padding: 0 10px;
-    box-sizing: border-box;
     background-color: $page-bg;
     position: relative;
   }

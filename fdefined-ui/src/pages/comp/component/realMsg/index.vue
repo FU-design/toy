@@ -1,28 +1,26 @@
 <template>
-  <div class="wrp">
-    <div class="wrp wrp-add">
-      <card-box>
-        <template #header>
-          <div class="title">
-            <span>WS</span>
-            <a-button type="primary"> chatName：{{ chat?.chatName }} </a-button>
-          </div>
-        </template>
-        <div class="msg-box">
-          <div :id="`output_${chat?.chatCode}`" class="msg-output"></div>
-          <div class="msg-input">
-            <div
-              :id="`input_${chat?.chatCode}`"
-              class="msg-input-inner"
-              contenteditable="true"
-            ></div>
-            <section>
-              <a-button @click="handleSendMsg">send</a-button>
-            </section>
-          </div>
+  <div class="real-msg">
+    <card-box>
+      <template #header>
+        <div class="title">
+          <span>WS</span>
+          <a-button type="primary"> chatName：{{ chat?.chatName }} </a-button>
         </div>
-      </card-box>
-    </div>
+      </template>
+      <div class="msg-box">
+        <div :id="`output_${chat?.chatCode}`" class="msg-output"></div>
+        <div class="msg-input">
+          <div
+            :id="`input_${chat?.chatCode}`"
+            class="msg-input-inner"
+            contenteditable="true"
+          ></div>
+          <section>
+            <a-button @click="handleSendMsg">send</a-button>
+          </section>
+        </div>
+      </div>
+    </card-box>
   </div>
 </template>
 
@@ -116,32 +114,34 @@ onBeforeUnmount(() => {
 </script>
 <style lang="scss">
 .singl-msg-inner {
+  max-width: 60%;
   padding: 10px 12px;
   margin: 0;
   border-radius: 18px;
   background-color: cornflowerblue;
-  word-break: break-word;
-  max-width: 60%;
+  // word-break: break-word;
+  word-break: break-all;
+  font-size: 14px;
   display: flex;
   align-items: center;
 }
 
 .sender {
-  height: 50px;
-  background-color: cadetblue;
-  // 纵横比
-  aspect-ratio: 1 / 1;
+  height: 40px;
   text-align: center;
   overflow: hidden;
-  line-height: 50px;
-  font-size: 20px;
+  line-height: 40px;
+  font-size: 19px;
   font-weight: 600;
   border-radius: 50%;
+  background-color: cadetblue;
+
+  // 纵横比
+  aspect-ratio: 1 / 1;
 }
 
 .msg-base {
   display: flex;
-  box-sizing: border-box;
   margin: 10px 0;
   padding: 2px 0;
 }
@@ -159,11 +159,15 @@ onBeforeUnmount(() => {
 }
 </style>
 <style lang="scss" scoped>
-.wrp-add {
-  // 该布局属于是响应式设计
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-  gap: 10px;
+.real-msg {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  :deep(.card-box) {
+    main {
+      padding: 2px;
+    }
+  }
 }
 .title {
   display: flex;
@@ -171,18 +175,18 @@ onBeforeUnmount(() => {
   justify-content: space-between;
 }
 .msg-box {
-  box-sizing: border-box;
   height: 500px;
+  width: 100%;
   .msg-output {
-    background: hsl(150, 30%, 92%);
+    // background: hsl(150, 30%, 92%);
     height: 70%;
-    box-sizing: border-box;
-    padding: 6px;
+    padding: 6px 10px;
+    overflow: auto;
   }
   .msg-input {
     height: calc(100% - 70%);
-    border: 1px solid hsl(150, 30%, 92%);
-    border-top: 0;
+    border-top: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
     display: flex;
     flex-direction: column;
 
@@ -197,7 +201,6 @@ onBeforeUnmount(() => {
     }
 
     section {
-      box-sizing: border-box;
       padding: 10px;
       text-align: end;
     }

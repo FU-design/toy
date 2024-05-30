@@ -66,7 +66,6 @@ onBeforeMount(() => {
 
 <style scoped>
 .scroll-more-data {
-  box-sizing: border-box;
 }
 .scroll-wrapper {
   height: 400px;

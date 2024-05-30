@@ -96,7 +96,6 @@ onBeforeUnmount(() => {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
-  box-sizing: border-box;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   opacity: 0;
   /* transition: all 0.3s; */

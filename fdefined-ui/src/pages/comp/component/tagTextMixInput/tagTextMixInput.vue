@@ -218,7 +218,6 @@ defineExpose({
   height: 100%;
   border-radius: 4px;
   padding: 10px;
-  box-sizing: border-box;
   caret-color: chocolate; /* 光标颜色 */
   border-width: 1px;
   border-style: solid;
@@ -250,7 +249,6 @@ defineExpose({
     display: inline-block;
     line-height: 1.5;
     border-radius: 4px;
-    box-sizing: border-box;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
       rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     color: cornflowerblue;
