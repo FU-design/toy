@@ -1,5 +1,6 @@
 export interface MsgBox {
   id: string | number;
+  name: string;
   msg: string;
 }
 

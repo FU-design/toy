@@ -71,6 +71,7 @@ const handleSendMsg = () => {
   }
   const sendMsg = JSON.stringify({
     id: chat.value?.chatCode,
+    name: chat.value?.chatName,
     msg,
   });
   ws?.send(sendMsg);
@@ -81,15 +82,26 @@ const handleSendMsg = () => {
 const outPutMsg = (msgInfo: MsgBox) => {
   const chat = document.querySelector(".msg-output");
   const pos = chat?.id === `output_${msgInfo.id}` ? "right" : "left";
-  chat?.appendChild(createSingleMsg(pos, msgInfo.msg));
+  chat?.appendChild(createSingleMsg(pos, msgInfo));
 };
 
 // 根据位置信息，生成单条的信息
-const createSingleMsg = (pos: PosType, msg: string): Element => {
-  const singleMsg = document.createElement("div");
-  singleMsg.classList.add(Pos[pos]);
-  singleMsg.textContent = msg;
-  return singleMsg;
+const createSingleMsg = (pos: PosType, msgInfo: MsgBox): Element => {
+  const innerMeg = document.createElement("p");
+  innerMeg.classList.add("singl-msg-inner");
+  innerMeg.textContent = msgInfo.msg;
+
+  const sender = document.createElement("div");
+  sender.classList.add("sender");
+  sender.textContent = msgInfo.name.charAt(0) + "";
+
+  const singleMsgBox = document.createElement("div");
+  singleMsgBox.classList.add(Pos[pos], "msg-base");
+  singleMsgBox.appendChild(innerMeg);
+  pos === "left"
+    ? singleMsgBox.insertBefore(sender, singleMsgBox.firstChild)
+    : singleMsgBox.appendChild(sender);
+  return singleMsgBox;
 };
 
 onMounted(() => {
@@ -102,13 +114,48 @@ onBeforeUnmount(() => {
   }
 });
 </script>
-<style>
+<style lang="scss">
+.singl-msg-inner {
+  padding: 10px 12px;
+  margin: 0;
+  border-radius: 18px;
+  background-color: cornflowerblue;
+  word-break: break-word;
+  max-width: 60%;
+  display: flex;
+  align-items: center;
+}
+
+.sender {
+  height: 50px;
+  background-color: cadetblue;
+  // 纵横比
+  aspect-ratio: 1 / 1;
+  text-align: center;
+  overflow: hidden;
+  line-height: 50px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 50%;
+}
+
+.msg-base {
+  display: flex;
+  box-sizing: border-box;
+  margin: 10px 0;
+  padding: 2px 0;
+}
 .msgL {
-  padding: 10px;
+  justify-content: flex-start;
+  .singl-msg-inner {
+    margin-left: 10px;
+  }
 }
 .msgR {
-  padding: 10px;
-  text-align: end;
+  justify-content: flex-end;
+  .singl-msg-inner {
+    margin-right: 10px;
+  }
 }
 </style>
 <style lang="scss" scoped>
@@ -129,6 +176,8 @@ onBeforeUnmount(() => {
   .msg-output {
     background: hsl(150, 30%, 92%);
     height: 70%;
+    box-sizing: border-box;
+    padding: 6px;
   }
   .msg-input {
     height: calc(100% - 70%);
