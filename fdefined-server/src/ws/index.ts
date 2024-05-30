@@ -15,11 +15,18 @@ wss.on("connection", (ws: WebSocket) => {
   // 监听消息事件
   ws.on("message", (message: string) => {
     console.log("收到消息:", message);
-    msgCollecter.push(message);
-    console.log("msgCollecter :>> ", JSON.parse(message));
+    msgCollecter.push(JSON.parse(message));
+    console.log("msgCollecter :>> ", msgCollecter);
 
-    // 发送消息给客户端
-    ws.send(`服务器收到: ${message}`);
+    // 发送消息给每个连接到服务的客户端
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(`服务器收到: ${message}`);
+      }
+    });
+
+    // 实时对当前发送信息的连接用户返回消息
+    // ws.send(`服务器收到: ${message}`);
   });
 
   // 监听关闭事件
