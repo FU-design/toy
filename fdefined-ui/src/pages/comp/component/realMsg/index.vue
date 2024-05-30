@@ -1,24 +1,23 @@
 <template>
   <div class="wrp">
-    <div class="profile"></div>
     <div class="wrp wrp-add">
-      <card-box v-for="idx in 2">
+      <card-box>
         <template #header>
           <div class="title">
-            <span>WS {{ idx }}</span>
-            <a-button type="primary">chat{{ idx }}</a-button>
+            <span>WS</span>
+            <a-button type="primary"> chatName：{{ chat?.chatName }} </a-button>
           </div>
         </template>
         <div class="msg-box">
-          <div :id="`output_${idx}`" class="msg-output"></div>
+          <div :id="`output_${chat?.chatCode}`" class="msg-output"></div>
           <div class="msg-input">
             <div
-              :id="`input_${idx}`"
+              :id="`input_${chat?.chatCode}`"
               class="msg-input-inner"
               contenteditable="true"
             ></div>
             <section>
-              <a-button @click="handleSendMsg(idx)">发送</a-button>
+              <a-button @click="handleSendMsg">send</a-button>
             </section>
           </div>
         </div>
@@ -28,20 +27,13 @@
 </template>
 
 <script setup lang="ts">
+import useChat from "@/hooks/useChat";
 import { onMounted, onBeforeUnmount, ref } from "vue";
-interface MsgBox {
-  id: string | number;
-  msg: string;
-}
-
-enum Pos {
-  left = "msgL",
-  right = "msgR",
-}
-type PosType = keyof typeof Pos;
+import { type MsgBox, type PosType, Pos } from "./type";
 
 let ws: WebSocket | null;
 const msgBox = ref<MsgBox[] | null>(null);
+const { chatInfo: chat } = useChat();
 
 const connectWebSocket = () => {
   ws = new WebSocket("ws://localhost:8080");
@@ -69,29 +61,30 @@ const connectWebSocket = () => {
   };
 };
 
-const handleSendMsg = (idx: number) => {
-  const msgBox = document.querySelector(`#input_${idx}`);
+// 发送消息操作
+const handleSendMsg = () => {
+  const msgBox = document.querySelector(`#input_${chat.value?.chatCode}`);
   const msg = msgBox?.textContent;
   if (!msg) {
     alert("消息不能为空");
     return;
   }
   const sendMsg = JSON.stringify({
-    id: idx,
+    id: chat.value?.chatCode,
     msg,
   });
   ws?.send(sendMsg);
   msgBox.textContent = "";
 };
 
+// 确认信息发出后所在的位置
 const outPutMsg = (msgInfo: MsgBox) => {
-  const chats = document.querySelectorAll(".msg-output");
-  chats.forEach((chat) => {
-    const pos = chat.id === `output_${msgInfo.id}` ? "right" : "left";
-    chat.appendChild(createSingleMsg(pos, msgInfo.msg));
-  });
+  const chat = document.querySelector(".msg-output");
+  const pos = chat?.id === `output_${msgInfo.id}` ? "right" : "left";
+  chat?.appendChild(createSingleMsg(pos, msgInfo.msg));
 };
 
+// 根据位置信息，生成单条的信息
 const createSingleMsg = (pos: PosType, msg: string): Element => {
   const singleMsg = document.createElement("div");
   singleMsg.classList.add(Pos[pos]);
@@ -100,7 +93,7 @@ const createSingleMsg = (pos: PosType, msg: string): Element => {
 };
 
 onMounted(() => {
-  // connectWebSocket();
+  connectWebSocket();
 });
 
 onBeforeUnmount(() => {
@@ -119,11 +112,6 @@ onBeforeUnmount(() => {
 }
 </style>
 <style lang="scss" scoped>
-.profile {
-  height: 100px;
-  background-color: #666;
-  margin: 10px 0;
-}
 .wrp-add {
   // 该布局属于是响应式设计
   display: grid;

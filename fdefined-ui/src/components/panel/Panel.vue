@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 import { ref, reactive, watch, unref } from "vue";
-import { Panel, DragState } from "./types";
+import type { Panel, DragState } from "./types";
 
 const props = withDefaults(defineProps<Panel>(), {
   visible: false,
@@ -39,10 +39,10 @@ const props = withDefaults(defineProps<Panel>(), {
   hasFooter: true,
 });
 const emits = defineEmits(["update:visible", "closed"]);
-const visible = ref<boolean>(props.visible);
-const width = ref<string>(props.width);
+const visible = ref(props.visible);
+const width = ref(props.width);
 const panelRef = ref<HTMLDivElement>();
-const isDrag = ref<boolean>(false);
+const isDrag = ref(false);
 const dragState = reactive<DragState>({
   startMouseL: 0,
   startSizeW: 0,

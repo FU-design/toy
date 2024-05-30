@@ -17,10 +17,8 @@
 
 <script lang="ts" setup>
 import { toRefs } from "vue";
+import type { CardBoxProps } from "./types";
 
-interface CardBoxProps {
-  showHeader?: boolean;
-}
 const props = withDefaults(defineProps<CardBoxProps>(), {
   showHeader: true,
 });
@@ -30,6 +28,7 @@ const { showHeader } = toRefs(props);
 
 <style lang="scss" scoped>
 .card-box {
+  height: auto;
   margin: 16px 0;
   border-radius: 8px;
   box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);

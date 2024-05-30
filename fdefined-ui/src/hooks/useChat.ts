@@ -1,4 +1,4 @@
-import { onMounted, ref, Ref, unref } from "vue";
+import { onMounted, ref, type Ref, unref } from "vue";
 
 export interface ChatInfo {
   chatCode: string;
