@@ -6,7 +6,7 @@ import { ref } from "vue";
 //   state: () => ({ fold: true }),
 //   getters: {},
 //   actions: {
-//     setSideFoldState(state: boolean) {
+//     setSideState(state: boolean) {
 //       this.fold = state;
 //     },
 //   },
@@ -17,11 +17,11 @@ import { ref } from "vue";
 
 // setup store （$reset需要自己创建）
 export default defineStore(
-  "aside",
+  "sideState",
   () => {
     const fold = ref(false);
 
-    function setSideFoldState(state: boolean) {
+    function setSideState(state: boolean) {
       fold.value = state;
     }
 
@@ -29,12 +29,12 @@ export default defineStore(
       fold.value = false;
     }
 
-    return { fold, setSideFoldState, $reset };
+    return { fold, setSideState, $reset };
   },
   // 持久化配置
   {
     persist: {
-      key: "aside",
+      key: "sideState",
       storage: sessionStorage,
     },
   }

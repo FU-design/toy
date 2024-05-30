@@ -49,8 +49,9 @@ import {
   onMounted,
   toRefs,
   unref,
+  type PropType,
+  type Ref,
 } from "vue";
-import type { PropType, Ref } from "vue";
 
 interface FormOptions {
   rowCol: number; // 表单单行几列
@@ -76,7 +77,7 @@ interface FormItemState {
 
 const FormProps = {
   modelValue: {
-    type: Object,
+    type: Object as PropType<Record<string, any>>,
     required: false,
   },
   formItems: {
@@ -154,6 +155,12 @@ export default defineComponent({
       Object.assign(optionsMapVal.value as Ref<T>, key, list);
     }
 
+    // 手动更新 form 的值
+    function updateValue(newVal: typeof props.modelValue) {
+      const updatedVal = { ...ruleForm.value, ...newVal };
+      Object.assign(ruleForm.value, updatedVal);
+    }
+
     const onSubmit = () => {
       ruleFormRef.value
         .validate()
@@ -173,7 +180,7 @@ export default defineComponent({
     });
 
     // 暴露外部调用方法
-    expose({ setOptionsVal });
+    expose({ setOptionsVal, updateValue });
 
     return {
       labelCol,
@@ -185,6 +192,7 @@ export default defineComponent({
       onSubmit,
       onReset,
       setOptionsVal,
+      updateValue,
     };
   },
 });

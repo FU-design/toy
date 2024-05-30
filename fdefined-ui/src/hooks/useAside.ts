@@ -1,19 +1,19 @@
-import { ref, Ref } from "vue";
+import { ref, type Ref } from "vue";
 
-interface AsideState {
-  asideState: Ref<boolean>;
-  setSideFoldState: (state: boolean) => void;
+interface SideState {
+  sideState: Ref<boolean>;
+  setSideState: (state: boolean) => void;
 }
 
 // 全局状态
-const asideState = ref(false);
+const sideState = ref(false);
 
-export default function useAsideState(): AsideState {
-  function setSideFoldState(state: boolean) {
-    asideState.value = state;
+export default function useSideState(): SideState {
+  function setSideState(state: boolean) {
+    sideState.value = state;
   }
   return {
-    asideState,
-    setSideFoldState,
+    sideState,
+    setSideState,
   };
 }

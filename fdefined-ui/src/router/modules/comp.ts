@@ -1,5 +1,4 @@
 import pageView from "@/layout/pageView.vue";
-
 const comp = {
   path: "/comp",
   name: "Comp",
@@ -15,7 +14,7 @@ const comp = {
       component: () => import("@/pages/comp/component/scrollmore/index.vue"),
       meta: {
         title: "Scrollmore",
-        isSubPage: true,
+        menu: true,
       },
     },
     {
@@ -24,7 +23,7 @@ const comp = {
       component: () => import("@/pages/comp/component/autoForm/index.vue"),
       meta: {
         title: "AutoFrom",
-        isSubPage: true,
+        menu: true,
       },
     },
     {
@@ -34,7 +33,7 @@ const comp = {
         import("@/pages/comp/component/warefallFlow/warefallFow.vue"),
       meta: {
         title: "WarefallFlow",
-        isSubPage: true,
+        menu: true,
       },
     },
     {
@@ -43,7 +42,7 @@ const comp = {
       component: () => import("@/pages/comp/component/drag/index.vue"),
       meta: {
         title: "Drag",
-        isSubPage: true,
+        menu: true,
       },
     },
     {
@@ -53,7 +52,7 @@ const comp = {
         import("@/pages/comp/component/tagTextMixInput/index.vue"),
       meta: {
         title: "TagTextMixInput",
-        isSubPage: true,
+        menu: true,
       },
     },
     {
@@ -62,7 +61,7 @@ const comp = {
       component: () => import("@/pages/comp/component/canvas/index.vue"),
       meta: {
         title: "Canvas",
-        isSubPage: true,
+        menu: true,
       },
     },
     {
@@ -71,17 +70,36 @@ const comp = {
       component: () => import("@/pages/comp/component/xTable/index.vue"),
       meta: {
         title: "XTable",
-        isSubPage: true,
+        menu: true,
       },
     },
     {
       path: "realMsg",
       name: "RealMsg",
-      component: () => import("@/pages/comp/component/realMsg/loginChat.vue"),
+      redirect: "/comp/realMsg/loginChat",
       meta: {
         title: "RealMsg",
-        isSubPage: true,
+        menu: true,
       },
+      children: [
+        {
+          path: "loginChat",
+          name: "LoginChat",
+          component: () =>
+            import("@/pages/comp/component/realMsg/loginChat.vue"),
+          meta: {
+            menu: false,
+          },
+        },
+        {
+          path: "chat",
+          name: "Chat",
+          component: () => import("@/pages/comp/component/realMsg/index.vue"),
+          meta: {
+            menu: false,
+          },
+        },
+      ],
     },
   ],
 };
