@@ -43,7 +43,6 @@ const { showHeader } = toRefs(props);
     width: 100%;
     height: auto;
     padding: 10px 16px 16px;
-    box-sizing: border-box;
   }
 }
 </style>

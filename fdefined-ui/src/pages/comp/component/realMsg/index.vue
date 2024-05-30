@@ -49,12 +49,25 @@ const connectWebSocket = () => {
   };
 
   // 监听关闭事件
-  ws.onclose = () => {
+  ws.onclose = (event) => {
+    if (event.code != 1000) {
+      // Error code 1000 means that the connection was closed normally.
+      // Try to reconnect.
+      if (!navigator.onLine) {
+        alert("你已处于网络离线状态，请尝试重新连接");
+      }
+    }
     console.log("断开与WebSocket服务器的连接");
   };
 
-  // 监听错误事件
+  // 监听错误事件（错误事件触发后，紧接着就是触发关闭事件）
   ws.onerror = (error) => {
+    //1. 网络上的错误（无网络）使用 HTML5 的 navigator.onLine 可判断
+    if (navigator.onLine) {
+      alert("You are Online");
+    } else {
+      alert("You are Offline");
+    }
     console.error("WebSocket错误:", error);
   };
 };
