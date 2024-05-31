@@ -1,13 +1,19 @@
 {
 	"scripts": {
-		"server": "npx ts-node src/ws/index.ts"
+		"server": "nodemon -e ts --exec ts-node app.ts",
+		"ws": "npx ts-node ws/index.ts"
 	},
 	"dependencies": {
+		"express": "^4.19.2",
+		"jsonwebtoken": "^9.0.2",
 		"ws": "^8.17.0"
 	},
 	"devDependencies": {
+		"@types/express": "^4.17.21",
+		"@types/jsonwebtoken": "^9.0.6",
 		"@types/node": "^20.12.12",
 		"@types/ws": "^8.5.10",
+		"nodemon": "^3.1.2",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.5"
 	}
