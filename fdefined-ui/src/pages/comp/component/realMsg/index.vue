@@ -32,44 +32,57 @@ import { type MsgBox, type PosType, Pos } from "./type";
 let ws: WebSocket | null;
 const msgBox = ref<MsgBox[] | null>(null);
 const { chatInfo: chat } = useChat();
+const wsUrl = "ws://localhost:8080";
 
-const connectWebSocket = () => {
-  ws = new WebSocket("ws://localhost:8080");
-  // 监听打开事件
-  ws.onopen = () => {
-    console.log("连接到WebSocket服务器");
-  };
+// 监听打开事件
+const onOpen = (evt: Event) => {
+  console.log("连接到WebSocket服务器", evt);
+};
 
-  // 监听消息事件
-  ws.onmessage = (event) => {
-    const recevice = event.data as string;
+// 监听消息事件
+const onMessage = (evt: MessageEvent) => {
+  if (typeof evt.data === "string") {
+    const recevice = evt.data;
     const currMsg = JSON.parse(recevice.replace("服务器收到:", ""));
     msgBox.value?.push(currMsg);
     outPutMsg(currMsg);
-  };
+  }
 
-  // 监听关闭事件
-  ws.onclose = (event) => {
-    if (event.code != 1000) {
-      // Error code 1000 means that the connection was closed normally.
-      // Try to reconnect.
-      if (!navigator.onLine) {
-        alert("你已处于网络离线状态，请尝试重新连接");
-      }
-    }
-    console.log("断开与WebSocket服务器的连接");
-  };
+  if (evt.data instanceof ArrayBuffer) {
+    const buffer = evt.data;
+    console.log("Received arraybuffer", buffer);
+  }
+};
 
-  // 监听错误事件（错误事件触发后，紧接着就是触发关闭事件）
-  ws.onerror = (error) => {
-    //1. 网络上的错误（无网络）使用 HTML5 的 navigator.onLine 可判断
-    if (navigator.onLine) {
-      alert("You are Online");
-    } else {
-      alert("You are Offline");
+// 监听关闭事件
+const onClose = (evt: CloseEvent) => {
+  if (evt.code != 1000) {
+    // Error code 1000 means that the connection was closed normally.
+    // Try to reconnect.
+    if (!navigator.onLine) {
+      alert("你已处于网络离线状态，请尝试重新连接");
     }
-    console.error("WebSocket错误:", error);
-  };
+  }
+  console.log("断开与WebSocket服务器的连接");
+};
+
+// 监听错误事件（错误事件触发后，紧接着就是触发关闭事件）
+const onError = (evt: Event) => {
+  // 网络上的错误（无网络）使用 HTML5 的 navigator.onLine 可判断
+  if (navigator.onLine) {
+    alert("You are Online");
+  } else {
+    alert("You are Offline");
+  }
+  console.error("WebSocket错误:", evt);
+};
+
+const connectWebSocket = () => {
+  ws = new WebSocket(wsUrl);
+  ws.onopen = (evt) => onOpen(evt);
+  ws.onmessage = (evt) => onMessage(evt);
+  ws.onclose = (evt) => onClose(evt);
+  ws.onerror = (evt) => onError(evt);
 };
 
 // 发送消息操作
