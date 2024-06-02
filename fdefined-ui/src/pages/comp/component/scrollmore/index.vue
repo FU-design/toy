@@ -7,11 +7,11 @@
           <button @click="getData">获取数据</button>
         </div>
       </template>
-      <ScrollMoreData :list-data="listData" :each-size="eachSize">
+      <scroll-more-data :list-data="listData" :each-size="eachSize">
         <template #default="{ $row }">
           <div class="row">{{ $row }}</div>
         </template>
-      </ScrollMoreData>
+      </scroll-more-data>
     </cardBox>
   </div>
 </template>

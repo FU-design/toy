@@ -4,7 +4,7 @@
       <template #header>
         <div>防抖测试</div>
       </template>
-      <AutoFrom v-model="form" :formItems="formItem" />
+      <auto-from v-model="form" :formItems="formItem" />
     </cardBox>
     <cardBox>
       <template #header>

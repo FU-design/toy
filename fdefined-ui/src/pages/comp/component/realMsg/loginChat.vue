@@ -2,7 +2,7 @@
   <div class="wrp">
     <div class="login-chat">
       <h1>login Chat</h1>
-      <AutoForm
+      <auto-form
         ref="autoFormRef"
         v-model="form"
         :formItems="formItem"
@@ -13,7 +13,7 @@
             Sign in
           </a-button>
         </template>
-      </AutoForm>
+      </auto-form>
     </div>
   </div>
 </template>

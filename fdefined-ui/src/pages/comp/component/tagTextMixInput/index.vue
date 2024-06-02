@@ -40,14 +40,14 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref } from "vue";
-import mixInput from "./tagTextMixInput.vue";
+import MixInput from "./tagTextMixInput.vue";
 import { ListItem, InnerOps, CompType } from "./type";
 import { initSelectData, fetchData } from "./request";
 import readme from "./README.md?raw";
 
 const list = ref<ListItem[]>([]);
 const currMixFlag = ref<ListItem>();
-const mixInputRef = ref<Map<ListItem, CompType<typeof mixInput>>>(new Map());
+const mixInputRef = ref<Map<ListItem, CompType<typeof MixInput>>>(new Map());
 
 /**
  * 根据table数据的id存储循环中的子组件实例

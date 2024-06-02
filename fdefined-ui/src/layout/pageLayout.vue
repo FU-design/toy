@@ -1,7 +1,7 @@
 <template>
   <div class="page-layout">
     <!-- <pageHeader /> -->
-    <SideBar />
+    <side-bar />
     <section class="page-layout-content">
       <slot></slot>
     </section>

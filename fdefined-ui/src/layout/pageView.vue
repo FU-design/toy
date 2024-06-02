@@ -1,12 +1,12 @@
 <template>
   <div class="page-view">
-    <pageLayout>
+    <page-layout>
       <router-view v-slot="{ Component }">
         <transition name="slide-fade">
           <component :is="Component" />
         </transition>
       </router-view>
-    </pageLayout>
+    </page-layout>
 
     <!-- 添加内置组件过度 -->
     <!-- <transition name="slide-fade">
