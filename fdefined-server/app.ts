@@ -1,7 +1,9 @@
 import express, { type Express } from "express";
 import routes from "./routes/index";
+const cors = require("cors");
 const port = 3000;
 const app: Express = express();
+app.use(cors()); // 启用 CORS
 app.use(express.json());
 
 [...routes.entries()].forEach(([name, route]) => app.use(name, route));
