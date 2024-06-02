@@ -23,6 +23,7 @@ import { onMounted, ref, unref } from "vue";
 import AutoForm from "../autoForm/autoForm.vue";
 import useChat, { type ChatInfo } from "@/hooks/useChat";
 import { useRouter } from "vue-router";
+import { login } from "@/api/login/index";
 
 const { chatInfo, setChatInfo } = useChat();
 const form = ref<ChatInfo>({ chatCode: "", chatName: "" });
@@ -71,10 +72,18 @@ const formItem = [
   },
 ];
 
-const submitIsOk = () => {
-  setChatInfo(unref(form) as ChatInfo);
-  router.replace({ path: "/comp/realMsg/chat" });
+const submitIsOk = async () => {
+  const chatInfo = unref(form) as ChatInfo;
+  const { status, statusText, data } = await login(chatInfo);
+  if (status === 200) {
+    localStorage.setItem("token", data.token);
+    setChatInfo(chatInfo);
+    router.replace({ path: "/comp/realMsg/chat" });
+  } else {
+    alert(statusText);
+  }
 };
+
 onMounted(() => {
   const chatCard = chatInfo.value;
   if (chatCard) {
