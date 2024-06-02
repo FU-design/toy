@@ -65,8 +65,6 @@ onBeforeMount(() => {
 </script>
 
 <style scoped>
-.scroll-more-data {
-}
 .scroll-wrapper {
   height: 400px;
   overflow: auto;

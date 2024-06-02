@@ -1,16 +1,16 @@
 <template>
   <div class="wrp">
-    <cardBox>
+    <card-box>
       <template #header>
         <div>防抖测试</div>
       </template>
       <auto-from v-model="form" :formItems="formItem" />
-    </cardBox>
-    <cardBox>
+    </card-box>
+    <card-box>
       <template #header>
         <div>节流（throttle）测试</div>
       </template>
-    </cardBox>
+    </card-box>
   </div>
 </template>
 

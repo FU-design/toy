@@ -22,27 +22,21 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted, computed } from "vue";
+import { useRouter } from "vue-router";
 import useSideStore from "@/store/sideBar";
 import { storeToRefs } from "pinia";
 import type { RouteRecordRaw } from "vue-router";
 
 const router = useRouter();
-const route = useRoute();
 const side = useSideStore();
-// const { currentRoute } = router;
+const { currentRoute } = router;
 const { fold } = storeToRefs(side);
-const activePath = ref(route.path);
-
-watch(route, (newRoute) => {
-  activePath.value = newRoute.matched[0].path;
-});
 
 const routerMap = computed(() => router.getRoutes().filter((r) => r.meta.menu));
 
 const isActive = (path: string) => {
-  return activePath.value.startsWith(path);
+  return currentRoute.value.path.startsWith(path);
 };
 
 onMounted(() => {
