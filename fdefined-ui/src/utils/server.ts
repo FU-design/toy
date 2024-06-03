@@ -1,5 +1,6 @@
+import router from "@/router";
 import axios from "axios";
-import { useRouter } from "vue-router";
+import useAuthStore from "@/store/authorization";
 
 import type {
   AxiosInstance,
@@ -19,7 +20,6 @@ export interface ApiResponse<T> {
   request?: any;
 }
 
-const router = useRouter();
 const baseConfig = {
   baseURL: "http://localhost:3000", // 替换为服务器地址
   timeout: 10000, // 请求超时时间
@@ -32,15 +32,16 @@ const axiosInstance: AxiosInstance = axios.create(baseConfig);
 const request = axiosInstance.interceptors.request;
 const response = axiosInstance.interceptors.response;
 
-//配置拦截器
+//请求拦截器
 request.use(
   (config) => {
     // 发送请求的时候带上token等等
-    const token = localStorage.getItem("token");
+    const { chatInfo } = useAuthStore();
+    const token = chatInfo?.token;
     if (token) {
       config.headers["authorization"] = `${token}`;
     } else {
-      router.replace("/comp/realMsg/");
+      router.replace({ name: "LoginChat" });
     }
     return config;
   },
@@ -49,6 +50,7 @@ request.use(
   }
 );
 
+// 响应拦截器
 response.use(
   (response: AxiosResponse) => {
     return response;

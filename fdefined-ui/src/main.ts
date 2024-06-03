@@ -9,4 +9,5 @@ const app = createApp(App);
 app.use(plugin);
 app.use(router);
 app.use(pinia);
+
 app.mount("#app");

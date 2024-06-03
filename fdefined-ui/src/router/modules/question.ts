@@ -10,7 +10,7 @@ const question = {
   },
   children: [
     {
-      path: "/questionplace",
+      path: "questionplace",
       name: "QuestionPlace",
       component: () => import("@/pages/question/answer.vue"),
       meta: {

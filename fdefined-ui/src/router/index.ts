@@ -23,4 +23,23 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, _from, next) => {
+  // ❗️ 避免无限重定向
+  if (to.name != "LoginChat") {
+    const auth = localStorage.getItem("auth");
+    if (auth) {
+      const { chatInfo } = JSON.parse(auth);
+      if (chatInfo.chatCode && chatInfo.chatName && chatInfo.token) {
+        next();
+      } else {
+        next({ name: "LoginChat" });
+      }
+    } else {
+      next({ name: "LoginChat" });
+    }
+  } else {
+    next();
+  }
+});
+
 export default router;

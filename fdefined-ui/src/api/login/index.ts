@@ -1,7 +1,7 @@
 import { post } from "../request";
-import type { ChatInfo } from "./types";
+import { ChatInfo } from "./types";
 
 // 登录接口
-export function login(data: ChatInfo) {
-  return post<ChatInfo>("/login", data);
+export function login<T>(data: ChatInfo) {
+  return post<T>("/login", data);
 }
