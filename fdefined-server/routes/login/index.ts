@@ -7,8 +7,9 @@ const router = Router();
 
 // 模拟账号
 const chatInfo = {
-  chatCode: "code_fdefined",
-  chatName: "Fdefined",
+  authCode: "code_fdefined",
+  name: "Fdefined",
+  pwsd: "1024",
 };
 
 // 中间件函数
@@ -37,10 +38,11 @@ router.use(timeLog);
 
 // 定义路由---登录
 router.post("/login", function (req, res) {
-  const { chatCode, chatName } = req.body;
-  if (chatCode === chatInfo.chatCode && chatName === chatInfo.chatName) {
+  const { chatPassword, chatName } = req.body;
+  const { pwsd, name, authCode } = chatInfo;
+  if (pwsd === chatPassword && name === chatName) {
     const token = jwt.sign(chatInfo, secretKey, { expiresIn: "1h" });
-    res.json({ token });
+    res.json({ chatCode: authCode, token, chatName: name });
   } else {
     res.status(401).json({ message: "身份信息错误" });
   }
