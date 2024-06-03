@@ -25,14 +25,16 @@
 </template>
 
 <script setup lang="ts">
-import useChat from "@/hooks/useChat";
 import { onMounted, onBeforeUnmount, ref } from "vue";
 import { type MsgBox, type PosType, Pos } from "./type";
+import useAuthStore from "@/store/authorization";
+import { storeToRefs } from "pinia";
 
 let ws: WebSocket | null;
 const msgBox = ref<MsgBox[] | null>(null);
-const { chatInfo: chat } = useChat();
 const wsUrl = "ws://localhost:8080";
+const auth = useAuthStore();
+const { chatInfo: chat } = storeToRefs(auth);
 
 // 监听打开事件
 const onOpen = (evt: Event) => {
@@ -42,15 +44,13 @@ const onOpen = (evt: Event) => {
 // 监听消息事件
 const onMessage = (evt: MessageEvent) => {
   if (typeof evt.data === "string") {
-    const recevice = evt.data;
-    const currMsg = JSON.parse(recevice.replace("服务器收到:", ""));
+    const currMsg = JSON.parse(evt.data.replace("服务器收到:", ""));
     msgBox.value?.push(currMsg);
     outPutMsg(currMsg);
   }
 
   if (evt.data instanceof ArrayBuffer) {
-    const buffer = evt.data;
-    console.log("Received arraybuffer", buffer);
+    console.log("Received arraybuffer", evt.data);
   }
 };
 
@@ -69,11 +69,11 @@ const onClose = (evt: CloseEvent) => {
 // 监听错误事件（错误事件触发后，紧接着就是触发关闭事件）
 const onError = (evt: Event) => {
   // 网络上的错误（无网络）使用 HTML5 的 navigator.onLine 可判断
-  if (navigator.onLine) {
-    alert("You are Online");
-  } else {
-    alert("You are Offline");
-  }
+  // if (navigator.onLine) {
+  //   alert("You are Online");
+  // } else {
+  //   alert("You are Offline");
+  // }
   console.error("WebSocket错误:", evt);
 };
 
@@ -98,6 +98,10 @@ const handleSendMsg = () => {
     name: chat.value?.chatName,
     msg,
   });
+  if (ws?.readyState == 3) {
+    alert("服务未连接，请尝试重新连接");
+    return;
+  }
   ws?.send(sendMsg);
   msgBox.textContent = "";
 };

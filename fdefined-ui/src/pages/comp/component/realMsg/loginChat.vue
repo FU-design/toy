@@ -21,41 +21,22 @@
 <script setup lang="ts">
 import { onMounted, ref, unref } from "vue";
 import AutoForm from "../autoForm/autoForm.vue";
-import useChat, { type ChatInfo } from "@/hooks/useChat";
 import { useRouter } from "vue-router";
+import useAuthStore from "@/store/authorization";
 import { login } from "@/api/login/index";
+import type { ChatInfo } from "@/api/login/types";
 
-const { chatInfo, setChatInfo } = useChat();
+const auth = useAuthStore();
 const form = ref<ChatInfo>({ chatCode: "", chatName: "" });
 const autoFormRef = ref<InstanceType<typeof AutoForm> | null>(null);
 const router = useRouter();
 const formItem = [
   {
     type: "input",
-    key: "chatCode",
-    itemOptions: {
-      name: "chatCode",
-      label: "chatCode",
-      labelCol: { style: { fontWeight: 600 }, span: 9 },
-      wrapperCol: { span: 15 },
-      labelAlign: "right",
-      rules: [
-        { required: true, message: "Please enter chatCode", trigger: "blur" },
-        {
-          min: 3,
-          max: 50,
-          message: "The length must be 3-50",
-          trigger: "blur",
-        },
-      ],
-    },
-  },
-  {
-    type: "input",
     key: "chatName",
     itemOptions: {
       name: "chatName",
-      label: "chatName",
+      label: "ChatName",
       labelCol: { style: { fontWeight: 600 }, span: 9 },
       wrapperCol: { span: 15 },
       labelAlign: "right",
@@ -70,14 +51,41 @@ const formItem = [
       ],
     },
   },
+  {
+    type: "input",
+    key: "chatPassword",
+    extraOps: {
+      type: "password",
+      autocomplete: "current-password",
+    },
+    itemOptions: {
+      name: "chatPassword",
+      label: "Password",
+      labelCol: { style: { fontWeight: 600 }, span: 9 },
+      wrapperCol: { span: 15 },
+      labelAlign: "right",
+      rules: [
+        {
+          required: true,
+          message: "Please enter Password",
+          trigger: "blur",
+        },
+        {
+          min: 3,
+          max: 50,
+          message: "The length must be 3-50",
+          trigger: "blur",
+        },
+      ],
+    },
+  },
 ];
 
 const submitIsOk = async () => {
   const chatInfo = unref(form) as ChatInfo;
-  const { status, statusText, data } = await login(chatInfo);
+  const { status, statusText, data } = await login<ChatInfo>(chatInfo);
   if (status === 200) {
-    localStorage.setItem("token", data.token);
-    setChatInfo(chatInfo);
+    auth.setChatInfo(data);
     router.replace({ path: "/comp/realMsg/chat" });
   } else {
     alert(statusText);
@@ -85,9 +93,9 @@ const submitIsOk = async () => {
 };
 
 onMounted(() => {
-  const chatCard = chatInfo.value;
+  const chatCard = auth.chatInfo;
   if (chatCard) {
-    autoFormRef.value?.updateValue({ ...chatCard });
+    autoFormRef.value?.updateValue({ chatName: chatCard.chatName });
     router.replace({ path: "/comp/realMsg/chat" });
   }
 });

@@ -1,9 +1,5 @@
+import { ChatInfo } from "@/api/login/types";
 import { onMounted, ref, type Ref, unref } from "vue";
-
-export interface ChatInfo {
-  chatCode: string;
-  chatName: string;
-}
 
 interface Chat {
   chatInfo: Ref<ChatInfo | null>;
