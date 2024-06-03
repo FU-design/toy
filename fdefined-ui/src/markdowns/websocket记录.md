@@ -41,9 +41,7 @@
    };
    ```
 
-### 具体细节
-
-> WebSocket 是一种通信协议，它提供了在单个 TCP 连接上进行全双工通信的能力。WebSocket 协议由 IETF 标准化（RFC 6455），并由 Web IDL 定义其 API，成为 HTML5 的一部分。
+## WebSocket 事件（event）
 
 1. `open` ...
 2. `error` 事件触发后，紧接着就是触发 close 事件。
@@ -67,26 +65,93 @@
 
 4. `close` 事件标志着服务器和客户端之间通信的结束，除非重新连接，否则无法再次交换任何信息（可能出现网络或其他不良因素触发关闭事件）
 
-### websocket 的优点
+在前端使用 WebSocket 时，查看连接状态是确保实时通信正常工作的关键步骤。WebSocket 对象提供了一些属性和事件，可以帮助你监控连接状态。
 
-- 双向（Bidirectional）
+## WebSocket 连接状态（status）
+
+WebSocket 对象有一个`readyState`属性，它表示 WebSocket 连接的当前状态。`readyState`可以有以下几个值：
+
+- `0 (WebSocket.CONNECTING)`：正在建立连接。
+- `1 (WebSocket.OPEN)`：连接已建立，可以进行通信。
+- `2 (WebSocket.CLOSING)`：连接正在关闭。
+- `3 (WebSocket.CLOSED)`：连接已关闭或无法建立。
+
+##### 示例：监控 WebSocket 连接状态
+
+创建 WebSocket 连接并监控其状态：
+
+```javascript
+// 创建WebSocket连接
+const socket = new WebSocket("wss://example.com/socket");
+
+// 监听连接打开事件
+socket.addEventListener("open", (event) => {
+  console.log("WebSocket is open now.");
+  checkConnectionStatus();
+});
+
+// 监听连接关闭事件
+socket.addEventListener("close", (event) => {
+  console.log("WebSocket is closed now.");
+  checkConnectionStatus();
+});
+
+// 监听连接错误事件
+socket.addEventListener("error", (event) => {
+  console.error("WebSocket error observed:", event);
+  checkConnectionStatus();
+});
+
+// 监听消息事件
+socket.addEventListener("message", (event) => {
+  console.log("Message from server:", event.data);
+});
+
+// 检查WebSocket连接状态
+function checkConnectionStatus() {
+  switch (socket.readyState) {
+    case WebSocket.CONNECTING:
+      console.log("WebSocket is connecting...");
+      break;
+    case WebSocket.OPEN:
+      console.log("WebSocket is open.");
+      break;
+    case WebSocket.CLOSING:
+      console.log("WebSocket is closing...");
+      break;
+    case WebSocket.CLOSED:
+      console.log("WebSocket is closed.");
+      break;
+    default:
+      console.log("Unknown WebSocket state.");
+      break;
+  }
+}
+
+// 定时检查WebSocket连接状态
+setInterval(checkConnectionStatus, 5000);
+```
+
+## websocket 的优点
+
+- **双向（Bidirectional）**
   http 协议，只能是客户端请求了，服务端才会做出响应，客户端使用返回的内容。websocket 协议则没有这个限制，客户端和服务端双方都可主动的向对方发送消息。
 
-- 全双工（Full Duplex）
+- **全双工（Full Duplex）**
   数据传输的模式：
 
   - 单工：数据发送方和接收方角色固定，只能是发送方单向的向接收发送数据。
   - 半双工：数据发送双方都可成为，但不能同一时间同时向对方发送或自身接收。（http(s)请求）
   - 全双工：数据发送双方都可成为，不仅可同时向对方发送而且还能同时接收数据。
 
-- 单个 TCP 连接
+- **单个 TCP 连接**
   HTTP 请求会发起新的 TCP 连接，并在收到响应后终止。需要为另一个 HTTP 请求/响应建立新的 TCP 连接；
   对于 websocket 连接，则是在 HTTP 连接的基础上进行升级，使客户端和服务器端的 websocket 连接的整个生命周期使用相同的 TCP l 连接进行。
 
-- 低延迟
+- **低延迟**
   相比传统的 HTTP 请求-响应模型，WebSocket 减少了通信延迟，适用于实时应用。
 
-- 持久连接
+- **持久连接**
   一旦建立，连接将保持打开状态，直到客户端或服务器主动关闭连接。
 
 > Web Socket 是一种低级协议。一切，包括简单的请求/响应设计模式、如何创建/更新/删除资源需要、状态代码等，都建立在它之上。所有这些都是针对 HTTP 明确定义的。
