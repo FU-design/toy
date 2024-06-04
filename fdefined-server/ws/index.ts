@@ -1,27 +1,40 @@
 import WebSocket, { WebSocketServer } from "ws";
+import http from "http";
+import { v4 as uuidv4 } from "uuid";
 
-const PORT = 8080; // 自定义WebSocket服务器地址和端口
-const HOST = "localhost"; // 使用本地回环地址
-const wss = new WebSocketServer({ port: PORT });
+const port = 8080;
+const server = http.createServer();
+const wsServer = new WebSocketServer({ server });
 
-// 与客户端建立连接，成功连接时触发
-wss.on("connection", (socket: WebSocket) => {
-  socket.on("message", onMessage); // 监听消息事件
-  socket.on("close", () => console.log("客户端断开连接")); // 监听关闭事件
-  socket.on("error", console.error); // 监听错误事件
+server.listen(port, () =>
+  console.log(`WebSocket server is running on port ${port}`)
+);
+
+// save maintaining all active connections
+const clients: Record<string, WebSocket> = {};
+
+// every connection is a socket or information of user
+wsServer.on("connection", (socket: WebSocket) => {
+  console.log('Client connected :>> ');
+  // unique code
+  const userId = uuidv4();
+  // collect user
+  clients[userId] = socket;
+
+  socket?.on('message', (data: WebSocket.RawData) => {
+    broadcastMessage(data.toString())
+  })
 });
 
-function onMessage(message: WebSocket.RawData) {
-  console.log("收到消息:", message); // ArrayBuffer
-  // 发送消息给每个连接到服务的客户端
-  wss.clients.forEach((client) => {
-    // console.log("client :>> ", client); // 每个 client 都是一个websocket实例
+
+// send messgae all active connections
+function broadcastMessage(json: string) {
+  const data = json;
+  for (let userId in clients) {
+    let client = clients[userId];
     if (client.readyState === WebSocket.OPEN) {
-      client.send(`服务器收到: ${message}`);
+      client.send(data);
     }
-  });
-  // 实时只对当前发送信息的用户，将发送的信息返回到该用户的客户端
-  // socket.send(`服务器收到: ${message}`);
+  };
 }
 
-console.log(`WebSocket服务器启动，监听地址 socket://${HOST}:${PORT}`);
