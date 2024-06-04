@@ -82,13 +82,18 @@ const formItem = [
 ];
 
 const submitIsOk = async () => {
-  const chatInfo = unref(form) as ChatInfo;
-  const { status, statusText, data } = await login<ChatInfo>(chatInfo);
-  if (status === 200) {
-    auth.setChatInfo(data);
-    router.replace({ path: "/comp/realMsg/chat" });
-  } else {
-    alert(statusText);
+  try {
+    const chatInfo = unref(form) as ChatInfo;
+    const res = await login<ChatInfo>(chatInfo);
+    const { status, statusText, data } = await login<ChatInfo>(chatInfo);
+    if (status === 200) {
+      auth.setChatInfo(data);
+      router.replace({ path: "/comp/realMsg/chat" });
+    } else {
+      alert(statusText);
+    }
+  } catch (error: any) {
+    alert(error.response.data.message);
   }
 };
 

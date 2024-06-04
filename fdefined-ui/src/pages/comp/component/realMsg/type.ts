@@ -1,7 +1,14 @@
+import type { ChatInfo } from "@/api/login/types"
+
+export enum MessageType {
+  ADD_MESSAGE,
+}
+
 export interface MsgBox {
-  id: string | number;
-  name: string;
-  msg: string;
+  content: string
+  sender: ChatInfo
+  timestamp: Date
+  type: MessageType
 }
 
 export enum Pos {

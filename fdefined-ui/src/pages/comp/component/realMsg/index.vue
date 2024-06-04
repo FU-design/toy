@@ -8,13 +8,9 @@
         </div>
       </template>
       <div class="msg-box">
-        <div :id="`output_${chat?.chatCode}`" class="msg-output"></div>
+        <div id="output" class="msg-output"></div>
         <div class="msg-input">
-          <div
-            :id="`input_${chat?.chatCode}`"
-            class="msg-input-inner"
-            contenteditable="true"
-          ></div>
+          <div id="input" class="msg-input-inner" contenteditable="true"></div>
           <section>
             <a-button @click="handleSendMsg">send</a-button>
           </section>
@@ -25,16 +21,33 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from "vue";
-import { type MsgBox, type PosType, Pos } from "./type";
+import { onMounted, onBeforeUnmount } from "vue";
+import { type MsgBox, type PosType, MessageType, Pos } from "./type";
 import useAuthStore from "@/store/authorization";
 import { storeToRefs } from "pinia";
+import WebSocketClient from "./websocket.ts";
+import { ChatInfo } from "@/api/login/types.ts";
 
-let ws: WebSocket | null;
-const msgBox = ref<MsgBox[] | null>(null);
+let ws: WebSocketClient | null;
 const wsUrl = "ws://localhost:8080";
 const auth = useAuthStore();
 const { chatInfo: chat } = storeToRefs(auth);
+
+const connectWebSocket = () => {
+  ws = new WebSocketClient(wsUrl);
+  ws.on("open", (evt) => {
+    onOpen(evt);
+  });
+  ws.on("message", (evt) => {
+    onMessage(evt);
+  });
+  ws.on("close", (evt) => {
+    onClose(evt);
+  });
+  ws.on("error", (evt) => {
+    onError(evt);
+  });
+};
 
 // 监听打开事件
 const onOpen = (evt: Event) => {
@@ -43,88 +56,70 @@ const onOpen = (evt: Event) => {
 
 // 监听消息事件
 const onMessage = (evt: MessageEvent) => {
-  if (typeof evt.data === "string") {
-    const currMsg = JSON.parse(evt.data.replace("服务器收到:", ""));
-    msgBox.value?.push(currMsg);
-    outPutMsg(currMsg);
-  }
-
-  if (evt.data instanceof ArrayBuffer) {
-    console.log("Received arraybuffer", evt.data);
-  }
+  const currMsg = JSON.parse(evt.data);
+  const chatWindow = document.querySelector(".msg-output");
+  const pos =
+    chat.value?.chatCode === currMsg.sender.chatCode ? "right" : "left";
+  chatWindow?.appendChild(createSingleMsg(pos, currMsg));
 };
 
 // 监听关闭事件
 const onClose = (evt: CloseEvent) => {
-  if (evt.code != 1000) {
-    // Error code 1000 means that the connection was closed normally.
-    // Try to reconnect.
-    if (!navigator.onLine) {
-      alert("你已处于网络离线状态，请尝试重新连接");
-    }
-  }
-  console.log("断开与WebSocket服务器的连接");
+  console.log("断开与WebSocket服务器的连接", evt);
 };
 
 // 监听错误事件（错误事件触发后，紧接着就是触发关闭事件）
 const onError = (evt: Event) => {
-  // 网络上的错误（无网络）使用 HTML5 的 navigator.onLine 可判断
-  // if (navigator.onLine) {
-  //   alert("You are Online");
-  // } else {
-  //   alert("You are Offline");
-  // }
   console.error("WebSocket错误:", evt);
-};
-
-const connectWebSocket = () => {
-  ws = new WebSocket(wsUrl);
-  ws.onopen = (evt) => onOpen(evt);
-  ws.onmessage = (evt) => onMessage(evt);
-  ws.onclose = (evt) => onClose(evt);
-  ws.onerror = (evt) => onError(evt);
 };
 
 // 发送消息操作
 const handleSendMsg = () => {
-  const msgBox = document.querySelector(`#input_${chat.value?.chatCode}`);
+  const msgBox = document.querySelector("#input");
   const msg = msgBox?.textContent;
   if (!msg) {
     alert("消息不能为空");
     return;
   }
-  const sendMsg = JSON.stringify({
-    id: chat.value?.chatCode,
-    name: chat.value?.chatName,
-    msg,
-  });
-  if (ws?.readyState == 3) {
-    alert("服务未连接，请尝试重新连接");
-    return;
+  if (chat.value) {
+    ws?.send(createMessage(0, msg, chat.value));
+    msgBox.textContent = "";
   }
-  ws?.send(sendMsg);
-  msgBox.textContent = "";
 };
 
-// 确认信息发出后所在的位置
-const outPutMsg = (msgInfo: MsgBox) => {
-  const chat = document.querySelector(".msg-output");
-  const pos = chat?.id === `output_${msgInfo.id}` ? "right" : "left";
-  chat?.appendChild(createSingleMsg(pos, msgInfo));
+const createMessage = (
+  type: MessageType,
+  content: string,
+  sender: ChatInfo
+) => {
+  return {
+    type: MessageType[type],
+    sender,
+    content,
+    timestamp: Date.now(),
+  };
+};
+
+const createTag = (
+  tagName: keyof HTMLElementTagNameMap,
+  className: string | string[]
+) => {
+  const element = document.createElement(tagName);
+  if (Array.isArray(className)) {
+    element.classList.add(...className);
+  } else {
+    element.classList.add(className);
+  }
+  return element;
 };
 
 // 根据位置信息，生成单条的信息
 const createSingleMsg = (pos: PosType, msgInfo: MsgBox): Element => {
-  const innerMeg = document.createElement("p");
-  innerMeg.classList.add("singl-msg-inner");
-  innerMeg.textContent = msgInfo.msg;
-
-  const sender = document.createElement("div");
-  sender.classList.add("sender");
-  sender.textContent = msgInfo.name.charAt(0) + "";
-
-  const singleMsgBox = document.createElement("div");
-  singleMsgBox.classList.add(Pos[pos], "msg-base");
+  const innerMeg = createTag("p", "singl-msg-inner");
+  innerMeg.textContent = `${msgInfo.content}`;
+  const sender = createTag("div", "sender");
+  sender.textContent = `${msgInfo.sender.chatName.charAt(0)}`;
+  const singleMsgBox = createTag("div", [`${Pos[pos]}`, "msg-base"]);
   singleMsgBox.appendChild(innerMeg);
   pos === "left"
     ? singleMsgBox.insertBefore(sender, singleMsgBox.firstChild)
@@ -137,9 +132,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  if (ws) {
-    ws.close();
-  }
+  ws?.disConnect();
 });
 </script>
 <style lang="scss">
@@ -147,13 +140,14 @@ onBeforeUnmount(() => {
   max-width: 60%;
   padding: 10px 12px;
   margin: 0;
-  border-radius: 18px;
-  background-color: cornflowerblue;
+  border-radius: 8px;
   // word-break: break-word;
   word-break: break-all;
   font-size: 14px;
   display: flex;
   align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .sender {
@@ -164,7 +158,8 @@ onBeforeUnmount(() => {
   font-size: 19px;
   font-weight: 600;
   border-radius: 50%;
-  background-color: cadetblue;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 
   // 纵横比
   aspect-ratio: 1 / 1;
