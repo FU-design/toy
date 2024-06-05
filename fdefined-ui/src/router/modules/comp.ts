@@ -9,6 +9,15 @@ const comp = {
   },
   children: [
     {
+      path: "flowable",
+      name: "Flowable",
+      component: () => import("@/pages/comp/component/antvx6-flowable/index.vue"),
+      meta: {
+        title: "Flowable",
+        menu: true,
+      },
+    },
+    {
       path: "scrollmore",
       name: "Scrollmore",
       component: () => import("@/pages/comp/component/scrollmore/index.vue"),

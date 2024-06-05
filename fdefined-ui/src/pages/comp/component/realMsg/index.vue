@@ -128,7 +128,7 @@ const createSingleMsg = (pos: PosType, msgInfo: MsgBox): Element => {
 };
 
 onMounted(() => {
-  connectWebSocket();
+  // connectWebSocket();
 });
 
 onBeforeUnmount(() => {
