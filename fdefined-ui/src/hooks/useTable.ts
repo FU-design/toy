@@ -1,20 +1,14 @@
-import { ref } from "vue";
-import type {
-  TableProps,
-  TablePaginationConfig,
-  TableColumnType,
-} from "ant-design-vue";
+import { ref, onUnmounted } from "vue";
+import type { TablePaginationConfig, TableColumnType } from "ant-design-vue";
 
-interface UseTable {
-  dataSource: any[];
-  columns: TableColumnType[];
-  pagination: TablePaginationConfig | false | undefined;
-}
-
-const useTable = (config: UseTable) => {
+const useBaseTable = <T>(
+  columns: TableColumnType[],
+  rows?: T[],
+  pagination?: TablePaginationConfig | false | undefined
+) => {
   const loading = ref(false);
-  const dataSource = ref(config.dataSource);
-  const columnsProp = ref<TableColumnType[]>(config.columns);
+  const dataSource = ref<T[]>(rows || []);
+  const columnsProp = ref<TableColumnType[]>(columns);
   const paginateProp = ref<TablePaginationConfig>({
     current: 1,
     pageSize: 10,
@@ -25,28 +19,39 @@ const useTable = (config: UseTable) => {
   });
 
   // merge pagination config
-  if (config.pagination) {
-    paginateProp.value = Object.assign(paginateProp.value, config.pagination);
+  if (pagination) {
+    paginateProp.value = Object.assign(paginateProp.value, pagination);
   }
 
-  const handleChange: TableProps["onChange"] = (
-    pagination: TablePaginationConfig,
-    _filters: any,
-    _sorter: any
-  ) => {
+  const onChange = (pagination: TablePaginationConfig) => {
     paginateProp.value = Object.assign(paginateProp.value, pagination);
-    // console.log("pagination :>> ", pagination);
-    // console.log("filters:", filters);
-    // console.log("sorter:", sorter);
   };
+
+  const restState = () => {
+    loading.value = false;
+    dataSource.value = [];
+    paginateProp.value = {
+      current: 1,
+      pageSize: 10,
+      total: dataSource.value.length || 0,
+      size: "small",
+      showSizeChanger: true,
+      pageSizeOptions: ["10", "20", "30", "40", "50"],
+    };
+  };
+
+  onUnmounted(() => {
+    restState();
+  });
 
   return {
     columnsProp,
     dataSource,
     loading,
     paginateProp,
-    handleChange,
+    onChange,
+    restState,
   };
 };
 
-export default useTable;
+export default useBaseTable;
