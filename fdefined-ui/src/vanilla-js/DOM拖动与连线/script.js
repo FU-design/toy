@@ -1,3 +1,9 @@
+document.addEventListener("DOMContentLoaded", (evt) => {
+  initNodes();
+  initGlobalEvent();
+  handleClick();
+});
+
 let selectedNode = null;
 let currNode = null;
 let oldNode = null;
@@ -36,12 +42,6 @@ const nodeList = [
     option: {},
   },
 ];
-
-document.addEventListener("DOMContentLoaded", (evt) => {
-  initNodes();
-  initGlobalEvent();
-  handleClick();
-});
 
 /**
  * 启动对鼠标位置的监听
@@ -178,7 +178,7 @@ function createElement({ tag, attrs = {}, styles = {}, children = [] }) {
 
 /**
  * 查找源节点列表中等于 id 的节点
- * @param {*} id
+ * @param {string} id
  * @returns
  */
 function searchNodeInfo(id) {
