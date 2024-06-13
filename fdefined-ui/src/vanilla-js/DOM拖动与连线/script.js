@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", (evt) => {
   initNodes();
   initGlobalEvent();
-  handleClick();
+  // handleClick();
 });
 
 const menuOps = [
@@ -66,8 +66,8 @@ function initGlobalEvent() {
  */
 function initNodes() {
   const fragment = document.createDocumentFragment();
-  nodeList.forEach((n) => {
-    fragment.appendChild(createBaseNode(n, true));
+  nodeList.forEach((node) => {
+    fragment.appendChild(createBaseNode(node, true));
   });
   addNode(fragment);
 }
@@ -147,23 +147,31 @@ function createBaseNode(nodeCfg, isInit = false) {
   });
   connectPoint.addEventListener("click", showDropOptions);
   node.addEventListener("mousedown", dragStart);
+  node.addEventListener("click", handleSelectNode);
   return node;
 }
 
-function showDropOptions(evt) {
+function handleSelectNode(evt) {
   evt.stopPropagation();
+  setSelectNode(evt.currentTarget);
+}
+
+function showDropOptions(evt) {
   document.body.appendChild(menu);
   const rect = evt.currentTarget.getBoundingClientRect();
-  const x = rect.left + window.scrollX + rect.width / 2 - menu.offsetWidth / 2;
-  const y = rect.bottom + window.scrollY + 4;
+  const x = rect.left + rect.width / 2;
+  const y = rect.bottom + 4;
   menu.style.left = `${x}px`;
   menu.style.top = `${y}px`;
   setVisibility(true);
-  document.addEventListener("click", (evt) => {
-    if (!menu.contains(evt.target)) {
-      setVisibility(false);
-    }
-  });
+  document.addEventListener("click", handleMenuClose, true);
+}
+
+function handleMenuClose(evt) {
+  if (!menu.contains(evt.target)) {
+    setVisibility(false);
+  }
+  document.removeEventListener("click", handleMenuClose, true);
 }
 
 function createDropMenu(opsList) {
@@ -197,6 +205,23 @@ function createDropMenu(opsList) {
     },
     children,
   });
+}
+
+function createLine(x1, y1, x2, y2, id) {
+  // 确保有一个SVG容器
+  let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("id", "svgContainer");
+  document.body.appendChild(svg);
+
+  let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  line.setAttribute("x1", x1);
+  line.setAttribute("y1", y1);
+  line.setAttribute("x2", x2);
+  line.setAttribute("y2", y2);
+  line.setAttribute("id", id);
+  line.style.stroke = "black"; // 线的颜色
+  line.style.strokeWidth = "2"; // 线的宽度
+  document.getElementById("svgContainer").appendChild(line);
 }
 
 // 点击添加节点菜单选项，创建新的节点
@@ -288,12 +313,12 @@ function createNodeConfig(x = 0, y = 0, offsetX = 0, offsetY = 0, option) {
   return config;
 }
 
-function handleClick() {
-  const btn = document.querySelector(".add-node-btn");
-  btn.addEventListener("click", (e) => {
-    addNode(createBaseNode(createNodeConfig()));
-  });
-}
+// function handleClick() {
+//   const btn = document.querySelector(".add-node-btn");
+//   btn.addEventListener("click", (e) => {
+//     addNode(createBaseNode(createNodeConfig()));
+//   });
+// }
 
 function getNodeList() {
   return nodeList;
