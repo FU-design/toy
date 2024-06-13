@@ -4,9 +4,19 @@ document.addEventListener("DOMContentLoaded", (evt) => {
   handleClick();
 });
 
-let selectedNode = null;
+const menuOps = [
+  { name: "添加应用", icon: "../../assets/flow/app.png" },
+  { name: "分支条件", icon: "../../assets/flow/condition.png" },
+  { name: "分发流程", icon: "../../assets/flow/distribute.png" },
+  { name: "循环流程", icon: "../../assets/flow/circle.png" },
+  { name: "错误捕获", icon: "../../assets/flow/monitor.png" },
+];
+
+let draggingNode = null;
+let selectNode = null;
 let currNode = null;
-let oldNode = null;
+let currentLine = null;
+let menu = createDropMenu(menuOps);
 
 const nodeList = [
   {
@@ -17,7 +27,7 @@ const nodeList = [
     icon: "../../assets/svg/start.svg",
     actdesc: "收到指定接口请求触发流程",
     nodedesc: "1111111",
-    mousePos: {
+    nodePos: {
       initX: 0,
       initY: 0,
       offsetX: 0,
@@ -33,7 +43,7 @@ const nodeList = [
     icon: "../../assets/svg/end.svg",
     actdesc: "收到指定接口请求触发流程",
     nodedesc: "1111111",
-    mousePos: {
+    nodePos: {
       initX: 0,
       initY: 0,
       offsetX: 0,
@@ -48,17 +58,18 @@ const nodeList = [
  */
 function initGlobalEvent() {
   document.addEventListener("mousemove", dragMove, false);
+  document.addEventListener("mouseup", dragEnd, false);
 }
 
 /**
  * 根据nodeList数据列表生成数据
  */
 function initNodes() {
-  const f = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
   nodeList.forEach((n) => {
-    f.appendChild(createBaseNode(n, true));
+    fragment.appendChild(createBaseNode(n, true));
   });
-  addNode(f);
+  addNode(fragment);
 }
 
 /**
@@ -80,12 +91,23 @@ function createBaseNode(nodeCfg, isInit = false) {
   if (!isInit) {
     nodeList.push(nodeCfg);
   }
+  const connectPoint = createElement({
+    tag: "div",
+    attrs: {
+      id: nodeCfg.id,
+      class: "connect-point",
+    },
+    children: ["+"],
+  });
   const node = createElement({
     tag: "div",
     attrs: {
       id: nodeCfg.id,
       [`data-type`]: nodeCfg.type,
       class: `${nodeCfg.class}`,
+    },
+    styles: {
+      transform: `translate3d(${nodeCfg.nodePos.initX}px, ${nodeCfg.nodePos.initY}px, 0px)`,
     },
     children: [
       createElement({
@@ -120,44 +142,163 @@ function createBaseNode(nodeCfg, isInit = false) {
           }),
         ],
       }),
+      connectPoint,
     ],
   });
-  node.addEventListener("mousedown", dragSelect);
-  node.addEventListener("mouseup", dragEnd);
+  connectPoint.addEventListener("click", showDropOptions);
+  node.addEventListener("mousedown", dragStart);
   return node;
+}
+
+function showDropOptions(evt) {
+  evt.stopPropagation();
+  document.body.appendChild(menu);
+  const rect = evt.currentTarget.getBoundingClientRect();
+  const x = rect.left + window.scrollX + rect.width / 2 - menu.offsetWidth / 2;
+  const y = rect.bottom + window.scrollY + 4;
+  menu.style.left = `${x}px`;
+  menu.style.top = `${y}px`;
+  setVisibility(true);
+  document.addEventListener("click", (evt) => {
+    if (!menu.contains(evt.target)) {
+      setVisibility(false);
+    }
+  });
+}
+
+function createDropMenu(opsList) {
+  const children = opsList.map((v) => {
+    const item = createElement({
+      tag: "div",
+      children: [
+        createElement({
+          tag: "div",
+          attrs: { class: "icon" },
+          children: [
+            createElement({
+              tag: "img",
+              attrs: { src: `${v.icon}` },
+            }),
+          ],
+        }),
+        createElement({
+          tag: "div",
+          children: [`${v.name}`],
+        }),
+      ],
+    });
+    item.onclick = handleOpsItemClick;
+    return item;
+  });
+  return createElement({
+    tag: "div",
+    attrs: {
+      class: "dropdown-menu",
+    },
+    children,
+  });
+}
+
+// 点击添加节点菜单选项，创建新的节点
+function handleOpsItemClick(evt) {
+  evt.stopPropagation();
+  const { left: x, top: y } = menu.getBoundingClientRect();
+  const newNode = createBaseNode(createNodeConfig(x, y, x, y));
+  addNode(newNode);
+  setVisibility(false);
+  setSelectNode(newNode);
+}
+
+function setVisibility(isvisible) {
+  menu.style.visibility = isvisible ? "visible" : "hidden";
+}
+
+function setSelectNode(el) {
+  if (selectNode) {
+    selectNode.classList.remove("node-selected");
+  }
+  el.classList.add("node-selected");
+  selectNode = el;
+}
+
+/**
+ * 查找源节点列表中等于 id 的节点
+ * @param {string} id
+ * @returns
+ */
+function searchNodeInfo(id) {
+  return nodeList.find((v) => v.id === id);
+}
+
+/**
+ * 鼠标放下
+ * @param {Event} evt
+ */
+function dragStart(evt) {
+  evt.preventDefault();
+  if (evt.target.classList.contains("connect-point")) {
+    return;
+  }
+  const el = evt.currentTarget;
+  draggingNode = el;
+  setSelectNode(el);
+  currNode = searchNodeInfo(draggingNode.id);
+  currNode.nodePos.initX = evt.clientX - currNode.nodePos.offsetX;
+  currNode.nodePos.initY = evt.clientY - currNode.nodePos.offsetY;
+}
+
+/**
+ * 鼠标移动
+ * @param {Event} evt
+ */
+function dragMove(evt) {
+  if (draggingNode) {
+    currNode.nodePos.offsetX = evt.clientX - currNode.nodePos.initX;
+    currNode.nodePos.offsetY = evt.clientY - currNode.nodePos.initY;
+    draggingNode.style.transform = `translate3d(${currNode.nodePos.offsetX}px, ${currNode.nodePos.offsetY}px, 0)`;
+  }
+}
+
+function dragEnd() {
+  draggingNode = null;
+  currNode = null;
 }
 
 /**
  * 基本节点基本配置
  * @returns
  */
-function createNodeConfig() {
+function createNodeConfig(x = 0, y = 0, offsetX = 0, offsetY = 0, option) {
   const id = generateSecureRandomString(8);
-  return {
+  const config = {
     id,
     type: "base",
     name: "base",
     icon: "../../assets/flow/start.png",
     actdesc: "11111",
     nodedesc: "1111111",
-    mousePos: {
-      initX: 0,
-      initY: 0,
-      offsetX: 0,
-      offsetY: 0,
+    nodePos: {
+      initX: x,
+      initY: y,
+      offsetX,
+      offsetY,
     },
-    option: {},
   };
+  Object.assign(config, option);
+  return config;
 }
 
-/**
- * 创建一个DOM元素，并可选地设置属性、样式和子节点。
- * @param {string} tag 表示标签名的字符串。
- * @param {Object} [options.attrs] 要设置的属性键值对。
- * @param {Object} [options.styles] 要应用的CSS样式键值对。
- * @param {Array} [options.children] 子元素，可以是字符串（文本节点）或DOM元素。
- * @returns {Element} 新创建的DOM元素。
- */
+function handleClick() {
+  const btn = document.querySelector(".add-node-btn");
+  btn.addEventListener("click", (e) => {
+    addNode(createBaseNode(createNodeConfig()));
+  });
+}
+
+function getNodeList() {
+  return nodeList;
+}
+
 function createElement({ tag, attrs = {}, styles = {}, children = [] }) {
   const element = document.createElement(tag);
   Object.keys(attrs).forEach((attr) => {
@@ -176,71 +317,6 @@ function createElement({ tag, attrs = {}, styles = {}, children = [] }) {
   return element;
 }
 
-/**
- * 查找源节点列表中等于 id 的节点
- * @param {string} id
- * @returns
- */
-function searchNodeInfo(id) {
-  return nodeList.find((v) => v.id === id);
-}
-
-/**
- * 鼠标放下
- * @param {Event} evt
- */
-function dragSelect(evt) {
-  evt.preventDefault();
-  selectedNode = evt.currentTarget;
-  currNode = searchNodeInfo(selectedNode.id);
-  checkSelected();
-  currNode.mousePos.initX = evt.clientX - currNode.mousePos.offsetX;
-  currNode.mousePos.initY = evt.clientY - currNode.mousePos.offsetY;
-}
-
-/**
- * 鼠标移动
- * @param {Event} evt
- */
-function dragMove(evt) {
-  if (selectedNode) {
-    currNode.mousePos.offsetX = evt.clientX - currNode.mousePos.initX;
-    currNode.mousePos.offsetY = evt.clientY - currNode.mousePos.initY;
-    selectedNode.style.transform = `translate3d(${currNode.mousePos.offsetX}px, ${currNode.mousePos.offsetY}px, 0)`;
-  }
-}
-
-/**
- * 鼠标抬起
- * @param {*} evt
- */
-function dragEnd(evt) {
-  const el = evt.currentTarget;
-  if (searchNodeInfo(el.id)) {
-    oldNode = currNode;
-    selectedNode = null;
-    currNode = null;
-  }
-}
-
-/**
- * 用于切换选中的节点的样式
- */
-function checkSelected() {
-  if (oldNode && oldNode.id != currNode.id) {
-    const old = document.querySelector(`#${oldNode.id}`);
-    old.style.zIndex = 1;
-    old.style.border = "none";
-  }
-  selectedNode.style.zIndex = 10;
-  selectedNode.style.border = "1px solid blue";
-}
-
-/**
- * 模拟节点id
- * @param {*} length
- * @returns
- */
 function generateSecureRandomString(length) {
   const array = new Uint8Array(length);
   window.crypto.getRandomValues(array);
@@ -251,22 +327,4 @@ function generateSecureRandomString(length) {
     result += characters.charAt(value % characters.length);
   });
   return result;
-}
-
-/**
- * 按钮添加节点
- */
-function handleClick() {
-  const btn = document.querySelector(".add-node-btn");
-  btn.addEventListener("click", (e) => {
-    addNode(createBaseNode(createNodeConfig()));
-  });
-}
-
-/**
- * 获取所有的节点信息
- * @returns
- */
-function getNodeList() {
-  return nodeList;
 }
