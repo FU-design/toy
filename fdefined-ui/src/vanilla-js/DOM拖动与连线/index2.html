@@ -75,7 +75,7 @@
       cursor: pointer;
       padding: 10px;
       font-size: 14px;
-      z-index: 1;
+      z-index: 2;
       box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
     }
 
@@ -172,18 +172,35 @@
       color: #999;
       margin-bottom: 10px;
     }
+
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
   </style>
 </head>
 
 <body>
   <div class="app">
-    <header></header>
+    <!-- <header></header> -->
     <div class="container">
       <!-- <div class="panel">
         <div class="add-node-btn">添加节点</div>
       </div> -->
       <div class="layout">
       </div>
+      <svg id="svg">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" />
+          </marker>
+        </defs>
+      </svg>
     </div>
   </div>
 </body>

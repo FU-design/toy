@@ -18,8 +18,20 @@ let currNode = null;
 let currentLine = null;
 let menu = createDropMenu(menuOps);
 
-const nodeList = [
+const lineList = [
   {
+    id: "_ysv3nQZD",
+    source: "start",
+    target: "_nbmRBiqz",
+  },
+  {
+    id: "_itvedsmh",
+    source: "_nbmRBiqz",
+    target: "_picik0nP",
+  },
+];
+const nodeMap = {
+  start: {
     id: "start",
     type: "start",
     name: "Start",
@@ -35,24 +47,35 @@ const nodeList = [
     },
     option: {},
   },
-  {
-    id: "end",
-    type: "end",
-    name: "End",
-    class: "end-node",
-    icon: "../../assets/svg/end.svg",
-    actdesc: "收到指定接口请求触发流程",
+  _nbmRBiqz: {
+    id: "_nbmRBiqz",
+    type: "base",
+    name: "base",
+    icon: "../../assets/flow/start.png",
+    actdesc: "11111",
     nodedesc: "1111111",
     nodePos: {
-      initX: 0,
-      initY: 0,
-      offsetX: 0,
-      offsetY: 0,
+      initX: 300,
+      initY: 280,
+      offsetX: 300,
+      offsetY: 280,
     },
-    option: {},
   },
-];
-
+  _picik0nP: {
+    id: "_picik0nP",
+    type: "base",
+    name: "base",
+    icon: "../../assets/flow/start.png",
+    actdesc: "11111",
+    nodedesc: "1111111",
+    nodePos: {
+      initX: 300,
+      initY: 480,
+      offsetX: 300,
+      offsetY: 480,
+    },
+  },
+};
 /**
  * 启动对鼠标位置的监听
  */
@@ -66,10 +89,17 @@ function initGlobalEvent() {
  */
 function initNodes() {
   const fragment = document.createDocumentFragment();
-  nodeList.forEach((node) => {
+  for (let [id, node] of Object.entries(nodeMap)) {
     fragment.appendChild(createBaseNode(node, true));
-  });
+  }
   addNode(fragment);
+  initLines();
+}
+
+function initLines() {
+  lineList.forEach((line) => {
+    drawLine(line.id, line.source, line.target);
+  });
 }
 
 /**
@@ -89,7 +119,7 @@ function addNode(node) {
  */
 function createBaseNode(nodeCfg, isInit = false) {
   if (!isInit) {
-    nodeList.push(nodeCfg);
+    nodeMap[nodeCfg.id] = nodeCfg;
   }
   const connectPoint = createElement({
     tag: "div",
@@ -158,9 +188,9 @@ function handleSelectNode(evt) {
 
 function showDropOptions(evt) {
   document.body.appendChild(menu);
-  const rect = evt.currentTarget.getBoundingClientRect();
-  const x = rect.left + rect.width / 2;
-  const y = rect.bottom + 4;
+  const { left, bottom, width } = evt.currentTarget.getBoundingClientRect();
+  const x = left + window.scrollX + width / 2;
+  const y = bottom + window.scrollY + 4;
   menu.style.left = `${x}px`;
   menu.style.top = `${y}px`;
   setVisibility(true);
@@ -174,6 +204,11 @@ function handleMenuClose(evt) {
   document.removeEventListener("click", handleMenuClose, true);
 }
 
+/**
+ * 创建节点选项菜单
+ * @param {*} opsList
+ * @returns
+ */
 function createDropMenu(opsList) {
   const children = opsList.map((v) => {
     const item = createElement({
@@ -207,52 +242,94 @@ function createDropMenu(opsList) {
   });
 }
 
-function createLine(x1, y1, x2, y2, id) {
-  // 确保有一个SVG容器
-  let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("id", "svgContainer");
-  document.body.appendChild(svg);
-
-  let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-  line.setAttribute("x1", x1);
-  line.setAttribute("y1", y1);
-  line.setAttribute("x2", x2);
-  line.setAttribute("y2", y2);
-  line.setAttribute("id", id);
-  line.style.stroke = "black"; // 线的颜色
-  line.style.strokeWidth = "2"; // 线的宽度
-  document.getElementById("svgContainer").appendChild(line);
-}
-
 // 点击添加节点菜单选项，创建新的节点
 function handleOpsItemClick(evt) {
   evt.stopPropagation();
-  const { left: x, top: y } = menu.getBoundingClientRect();
-  const newNode = createBaseNode(createNodeConfig(x, y, x, y));
+  // 获取选中的来源节点的坐标信息
+  const { left: x, top: y } = selectNode.getBoundingClientRect();
+  // 根基节点菜单选项生成新的节点
+  const newNode = createBaseNode(createNodeConfig(x, y + 200, x, y + 200));
+  // 将新生成的节点放到面板容器中
   addNode(newNode);
+  // 关闭菜单
   setVisibility(false);
+
+  // 绘制连线
+  const id = generateSecureRandomString(8);
+  drawLine(id, selectNode.id, newNode.id);
+  // 更新全局存储连线的全局变量
+  updateLineList({ id, source: selectNode.id, target: newNode.id });
+  // 更改选中的节点的选中样式
   setSelectNode(newNode);
 }
 
+function updateNodePosition(nodeId) {
+  lineList.forEach((link) => {
+    if (link.source === nodeId || link.target === nodeId) {
+      updateLinePos(link.id);
+    }
+  });
+}
+
+function updateLinePos(linkId) {
+  let link = lineList.find((l) => l.id === linkId);
+  if (!link) return;
+
+  let sourceNode = document.querySelector(`#${nodeMap[link.source].id}`);
+  let targetNode = document.querySelector(`#${nodeMap[link.target].id}`);
+
+  const fromRect = sourceNode.getBoundingClientRect();
+  const toRect = targetNode.getBoundingClientRect();
+
+  let line = document.querySelector(`line[id='${linkId}']`); // 假设每条线都有唯一的ID作为属性
+  if (line) {
+    line.setAttribute(
+      "x1",
+      fromRect.left + window.scrollX + fromRect.width / 2
+    );
+    line.setAttribute("y1", fromRect.bottom + window.scrollY);
+    line.setAttribute("x2", toRect.left + window.scrollX + toRect.width / 2);
+    line.setAttribute("y2", toRect.top + window.scrollY - 10);
+  }
+}
+
+function updateLineList(line) {
+  lineList.push(line);
+}
+
+// 绘制连线
+function drawLine(id, fromId, toId) {
+  let svg = document.getElementById("svg");
+  let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+  let sourceNode = document.querySelector(`#${fromId}`);
+  let targetNode = document.querySelector(`#${toId}`);
+
+  let fromRect = sourceNode.getBoundingClientRect();
+  let toRect = targetNode.getBoundingClientRect();
+
+  line.setAttribute("id", id);
+  line.setAttribute("x1", fromRect.left + window.scrollX + fromRect.width / 2);
+  line.setAttribute("y1", fromRect.bottom + window.scrollY);
+  line.setAttribute("x2", toRect.left + window.scrollX + toRect.width / 2);
+  line.setAttribute("y2", toRect.top + window.scrollY - 10);
+  line.setAttribute("stroke", "black");
+  line.setAttribute("marker-end", "url(#arrowhead)");
+  svg.appendChild(line);
+}
+
+// 控制菜单的显式和隐藏
 function setVisibility(isvisible) {
   menu.style.visibility = isvisible ? "visible" : "hidden";
 }
 
+// 指定被选中的节点的样式
 function setSelectNode(el) {
   if (selectNode) {
     selectNode.classList.remove("node-selected");
   }
   el.classList.add("node-selected");
   selectNode = el;
-}
-
-/**
- * 查找源节点列表中等于 id 的节点
- * @param {string} id
- * @returns
- */
-function searchNodeInfo(id) {
-  return nodeList.find((v) => v.id === id);
 }
 
 /**
@@ -267,7 +344,7 @@ function dragStart(evt) {
   const el = evt.currentTarget;
   draggingNode = el;
   setSelectNode(el);
-  currNode = searchNodeInfo(draggingNode.id);
+  currNode = nodeMap[draggingNode.id];
   currNode.nodePos.initX = evt.clientX - currNode.nodePos.offsetX;
   currNode.nodePos.initY = evt.clientY - currNode.nodePos.offsetY;
 }
@@ -281,9 +358,13 @@ function dragMove(evt) {
     currNode.nodePos.offsetX = evt.clientX - currNode.nodePos.initX;
     currNode.nodePos.offsetY = evt.clientY - currNode.nodePos.initY;
     draggingNode.style.transform = `translate3d(${currNode.nodePos.offsetX}px, ${currNode.nodePos.offsetY}px, 0)`;
+    updateNodePosition(selectNode.id);
   }
 }
 
+/**
+ * 鼠标抬起
+ */
 function dragEnd() {
   draggingNode = null;
   currNode = null;
@@ -313,16 +394,15 @@ function createNodeConfig(x = 0, y = 0, offsetX = 0, offsetY = 0, option) {
   return config;
 }
 
-// function handleClick() {
-//   const btn = document.querySelector(".add-node-btn");
-//   btn.addEventListener("click", (e) => {
-//     addNode(createBaseNode(createNodeConfig()));
-//   });
-// }
-
 function getNodeList() {
-  return nodeList;
+  return nodeMap;
 }
+
+function getLineList() {
+  return lineList;
+}
+
+// ---------------------------------- util func -------------------------------
 
 function createElement({ tag, attrs = {}, styles = {}, children = [] }) {
   const element = document.createElement(tag);
@@ -351,5 +431,5 @@ function generateSecureRandomString(length) {
   array.forEach((value) => {
     result += characters.charAt(value % characters.length);
   });
-  return result;
+  return `_${result}`;
 }

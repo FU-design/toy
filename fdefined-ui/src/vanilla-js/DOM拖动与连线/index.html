@@ -1,46 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Drag and Connect DOM Elements</title>
+  <title>Dynamic Node Connections</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      position: relative;
-    }
-
-    #box1,
-    #box2 {
-      display: flex;
-      align-items: center;
-      width: 300px;
-      height: 100px;
-      background: skyblue;
+    .node {
+      width: 20px;
+      height: 20px;
+      background-color: red;
       position: absolute;
-      cursor: pointer;
-      z-index: 1;
-      box-sizing: border-box;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    #line {
-      stroke: black;
-      stroke-width: 2;
-    }
-
-    .icon {
-      height: 100%;
-      background-color: cadetblue;
-      flex: 0 1 30%;
-    }
-
-    .desc {
-      flex: 1;
-      height: 100%;
-      background-color: azure;
     }
 
     svg {
@@ -49,86 +17,67 @@
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
+      z-index: -1;
     }
 
-    .wrp {
-      position: fixed;
-      background-color: #666;
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
+      z-index: -1;
     }
   </style>
 </head>
 
 <body>
-
-  <div class="wrp">
-    <div class="draggable" id="box1" style="top: 100px; left: 100px;">
-      <div class="icon"></div>
-      <div class="desc"></div>
-    </div>
-    <div class="draggable" id="box2" style="top: 100px; left: 300px;">
-      <div class="icon"></div>
-      <div class="desc"></div>
-    </div>
-    <svg>
-      <line id="line" x1="0" y1="0" x2="0" y2="0" />
-    </svg>
-  </div>
+  <button id="addNode">Add Node</button>
+  <svg id="svg"></svg>
 
   <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('addNode').addEventListener('click', addNode);
 
-      let selectedElement = null;
-      const line = document.getElementById('line');
-      const connectors = [];
+    let nodes = [];
+    let nodeId = 0;
 
-      function makeDraggable(el) {
-        const element = el;
-        element.addEventListener('mousedown', startDrag);
-        element.addEventListener('mousemove', drag);
-        element.addEventListener('mouseup', endDrag);
-        element.addEventListener('mouseleave', endDrag);
+    function addNode() {
+      let newNode = document.createElement('div');
+      newNode.className = 'node';
+      newNode.id = `node${nodeId++}`;
+      newNode.style.top = `${Math.random() * (window.innerHeight - 20)}px`;
+      newNode.style.left = `${Math.random() * (window.innerWidth - 20)}px`;
 
-        function startDrag(e) {
-          let targetElement = event.currentTarget; // 这可能是子元素
-          // 处理拖动逻辑...
-          selectedElement = e.target;
-          connectors[selectedElement.id] = connectors[selectedElement.id] || { x: 0, y: 0 };
+      document.body.appendChild(newNode);
+      newNode.addEventListener('click', connectNodes);
 
-        }
+      nodes.push(newNode);
 
-        function drag(evt) {
-          if (selectedElement) {
-            evt.preventDefault();
-            const x = parseFloat(selectedElement.getAttribute('x')) || selectedElement.offsetLeft;
-            const y = parseFloat(selectedElement.getAttribute('y')) || selectedElement.offsetTop;
-            selectedElement.style.left = `${x + evt.movementX}px`;
-            selectedElement.style.top = `${y + evt.movementY}px`;
-            connectors[selectedElement.id].x = x + evt.movementX + selectedElement.offsetWidth / 2;
-            connectors[selectedElement.id].y = y + evt.movementY + selectedElement.offsetHeight / 2;
-            drawLine();
-          }
-        }
-
-        function endDrag(evt) {
-          selectedElement = null;
-        }
+      if (nodes.length > 1) {
+        drawLine(nodes[nodes.length - 2], newNode);
       }
+    }
 
-      function drawLine() {
-        if (connectors['box1'] && connectors['box2']) {
-          line.setAttribute('x1', connectors['box1'].x);
-          line.setAttribute('y1', connectors['box1'].y);
-          line.setAttribute('x2', connectors['box2'].x);
-          line.setAttribute('y2', connectors['box2'].y);
-        }
-      }
+    function drawLine(from, to) {
+      let svg = document.getElementById('svg');
+      let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 
-      makeDraggable(document.querySelector('#box1'));
-      makeDraggable(document.querySelector('#box2'));
-    });
+      let fromRect = from.getBoundingClientRect();
+      let toRect = to.getBoundingClientRect();
+
+      line.setAttribute('x1', fromRect.left + fromRect.width / 2);
+      line.setAttribute('y1', fromRect.top + window.scrollY + fromRect.height / 2);
+      line.setAttribute('x2', toRect.left + toRect.width / 2);
+      line.setAttribute('y2', toRect.top + window.scrollY + toRect.height / 2);
+      line.setAttribute('stroke', 'black');
+
+      svg.appendChild(line);
+    }
+
+    function connectNodes(event) {
+      // 预留功能：点击已有节点进行连接操作。
+      event.stopPropagation(); // 阻止事件冒泡导致的重复添加
+    }
   </script>
 </body>
 
