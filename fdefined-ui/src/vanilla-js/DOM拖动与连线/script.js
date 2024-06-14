@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", (evt) => {
   initNodes();
+  initLines();
   initGlobalEvent();
-  // handleClick();
 });
 
 const menuOps = [
@@ -20,14 +20,9 @@ let menu = createDropMenu(menuOps);
 
 const lineList = [
   {
-    id: "_ysv3nQZD",
+    id: "_GwJHzebo",
     source: "start",
-    target: "_nbmRBiqz",
-  },
-  {
-    id: "_itvedsmh",
-    source: "_nbmRBiqz",
-    target: "_picik0nP",
+    target: "_CPeWeFYK",
   },
 ];
 const nodeMap = {
@@ -35,44 +30,29 @@ const nodeMap = {
     id: "start",
     type: "start",
     name: "Start",
-    class: "start-node",
     icon: "../../assets/svg/start.svg",
     actdesc: "收到指定接口请求触发流程",
     nodedesc: "1111111",
     nodePos: {
       initX: 0,
       initY: 0,
-      offsetX: 0,
-      offsetY: 0,
+      startLeft: 0,
+      startTop: 0,
     },
     option: {},
   },
-  _nbmRBiqz: {
-    id: "_nbmRBiqz",
+  _CPeWeFYK: {
+    id: "_CPeWeFYK",
     type: "base",
     name: "base",
     icon: "../../assets/flow/start.png",
     actdesc: "11111",
     nodedesc: "1111111",
     nodePos: {
-      initX: 300,
-      initY: 280,
-      offsetX: 300,
-      offsetY: 280,
-    },
-  },
-  _picik0nP: {
-    id: "_picik0nP",
-    type: "base",
-    name: "base",
-    icon: "../../assets/flow/start.png",
-    actdesc: "11111",
-    nodedesc: "1111111",
-    nodePos: {
-      initX: 300,
-      initY: 480,
-      offsetX: 300,
-      offsetY: 480,
+      initX: 369,
+      initY: 364,
+      startLeft: 174,
+      startTop: 340,
     },
   },
 };
@@ -93,7 +73,6 @@ function initNodes() {
     fragment.appendChild(createBaseNode(node, true));
   }
   addNode(fragment);
-  initLines();
 }
 
 function initLines() {
@@ -134,10 +113,10 @@ function createBaseNode(nodeCfg, isInit = false) {
     attrs: {
       id: nodeCfg.id,
       [`data-type`]: nodeCfg.type,
-      class: `${nodeCfg.class}`,
     },
     styles: {
-      transform: `translate3d(${nodeCfg.nodePos.initX}px, ${nodeCfg.nodePos.initY}px, 0px)`,
+      left: `${nodeCfg.nodePos.startLeft}px`,
+      top: `${nodeCfg.nodePos.startTop}px`,
     },
     children: [
       createElement({
@@ -246,9 +225,13 @@ function createDropMenu(opsList) {
 function handleOpsItemClick(evt) {
   evt.stopPropagation();
   // 获取选中的来源节点的坐标信息
-  const { left: x, top: y } = selectNode.getBoundingClientRect();
+  const x = selectNode.offsetLeft;
+  const y = selectNode.offsetTop;
+  const height = selectNode.offsetHeight;
   // 根基节点菜单选项生成新的节点
-  const newNode = createBaseNode(createNodeConfig(x, y + 200, x, y + 200));
+  const newNode = createBaseNode(
+    createNodeConfig(x, y + height + 100, x, y + height + 100)
+  );
   // 将新生成的节点放到面板容器中
   addNode(newNode);
   // 关闭菜单
@@ -338,15 +321,15 @@ function setSelectNode(el) {
  */
 function dragStart(evt) {
   evt.preventDefault();
-  if (evt.target.classList.contains("connect-point")) {
-    return;
-  }
+  if (evt.target.classList.contains("connect-point")) return;
   const el = evt.currentTarget;
   draggingNode = el;
   setSelectNode(el);
-  currNode = nodeMap[draggingNode.id];
-  currNode.nodePos.initX = evt.clientX - currNode.nodePos.offsetX;
-  currNode.nodePos.initY = evt.clientY - currNode.nodePos.offsetY;
+  currNode = nodeMap[el.id];
+  currNode.nodePos.initX = evt.clientX;
+  currNode.nodePos.initY = evt.clientY;
+  currNode.nodePos.startLeft = el.offsetLeft;
+  currNode.nodePos.startTop = el.offsetTop;
 }
 
 /**
@@ -355,9 +338,12 @@ function dragStart(evt) {
  */
 function dragMove(evt) {
   if (draggingNode) {
-    currNode.nodePos.offsetX = evt.clientX - currNode.nodePos.initX;
-    currNode.nodePos.offsetY = evt.clientY - currNode.nodePos.initY;
-    draggingNode.style.transform = `translate3d(${currNode.nodePos.offsetX}px, ${currNode.nodePos.offsetY}px, 0)`;
+    const { nodePos } = currNode;
+    const moveX = evt.clientX - currNode.nodePos.initX;
+    const moveY = evt.clientY - currNode.nodePos.initY;
+
+    draggingNode.style.left = `${nodePos.startLeft + moveX}px`;
+    draggingNode.style.top = `${nodePos.startTop + +moveY}px`;
     updateNodePosition(selectNode.id);
   }
 }
@@ -374,7 +360,7 @@ function dragEnd() {
  * 基本节点基本配置
  * @returns
  */
-function createNodeConfig(x = 0, y = 0, offsetX = 0, offsetY = 0, option) {
+function createNodeConfig(x = 0, y = 0, startLeft = 0, startTop = 0, option) {
   const id = generateSecureRandomString(8);
   const config = {
     id,
@@ -386,8 +372,8 @@ function createNodeConfig(x = 0, y = 0, offsetX = 0, offsetY = 0, option) {
     nodePos: {
       initX: x,
       initY: y,
-      offsetX,
-      offsetY,
+      startLeft,
+      startTop,
     },
   };
   Object.assign(config, option);
