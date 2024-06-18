@@ -12,6 +12,8 @@
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
     "@antv/x6": "^2.18.1",
+    "@antv/x6-plugin-selection": "^2.2.2",
+    "@antv/x6-vue-shape": "^2.1.2",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@twist-space/vue3-icons": "^0.2.11",
     "@types/node": "^20.8.10",

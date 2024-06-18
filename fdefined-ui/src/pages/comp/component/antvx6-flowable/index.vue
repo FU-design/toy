@@ -1,172 +1,150 @@
 <template>
   <div class="flowable">
     <div id="container"></div>
-    <section>
-      <a-button @click="createNode">点击生成节点</a-button>
-    </section>
+    <TeleportContainer />
+    <a-button v-for="command in commandOps" @click="transform(command.key)">
+      {{ command.label }}
+    </a-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Graph, Shape } from "@antv/x6";
+import { defineComponent, provide, shallowRef } from "vue";
+import { Selection } from "@antv/x6-plugin-selection";
+import { Graph, Node, Path, Edge, Platform, StringExt } from "@antv/x6";
 import { onMounted, onUnmounted, ref } from "vue";
+import { data } from "./nodeData";
+import { register, getTeleport } from "@antv/x6-vue-shape";
+import StartNode from "./flow-nodes/start.vue";
+import EndNode from "./flow-nodes/end.vue";
 
-const graph = ref<Graph>();
-
-// const data = {
-//   // 节点
-//   nodes: [
-//     {
-//       id: "node1", // String，可选，节点的唯一标识
-//       x: 40, // Number，必选，节点位置的 x 值
-//       y: 40, // Number，必选，节点位置的 y 值
-//       width: 80, // Number，可选，节点大小的 width 值
-//       height: 40, // Number，可选，节点大小的 height 值
-//       label: "hello", // String，节点标签
-//     },
-//     {
-//       id: "node2", // String，节点的唯一标识
-//       x: 160, // Number，必选，节点位置的 x 值
-//       y: 180, // Number，必选，节点位置的 y 值
-//       width: 80, // Number，可选，节点大小的 width 值
-//       height: 40, // Number，可选，节点大小的 height 值
-//       label: "world", // String，节点标签
-//     },
-//   ],
-//   // 边
-//   edges: [
-//     {
-//       source: "node1", // String，必须，起始节点 id
-//       target: "node2", // String，必须，目标节点 id
-//     },
-//   ],
-// };
-
-const createNode = () => {
-  const node1 = {
-    id: "node1",
-    shape: "rect", // Specify which graph to use, the default value is 'rect'
-    x: 100,
-    y: 100,
-    width: 80,
-    height: 40,
-    label: "New Node1",
-    attrs: {
-      body: {
-        fill: "#fff",
-        stroke: "#000",
-      },
-      label: {
-        text: "JERRY",
-        fill: "black",
-      },
-    },
-    ports: {
-      // 分组
-      groups: {
-        group1: {
-          attrs: {
-            circle: {
-              r: 4,
-              magnet: true,
-              stroke: "#31d0c6",
-              strokeWidth: 4,
-              fill: "#fff",
-            },
+register({
+  shape: "start",
+  width: 200,
+  height: 48,
+  component: StartNode,
+  ports: {
+    groups: {
+      bottom: {
+        position: "bottom",
+        attrs: {
+          circle: {
+            r: 4,
+            magnet: false,
+            stroke: "transparent",
+            strokeWidth: 1,
+            fill: "transparent",
           },
         },
       },
-      // 连接桩集合
-      items: [
-        {
-          id: "port1",
-          group: "group1", // 指定分组名称
-        },
-        {
-          id: "port2",
-          group: "group1", // 指定分组名称
-        },
-        {
-          id: "port3",
-          group: "group1", // 指定分组名称
-        },
-      ],
     },
-  };
-  const node2 = {
-    id: "node2",
-    shape: "rect", // Specify which graph to use, the default value is 'rect'
-    x: 300,
-    y: 200,
-    width: 80,
-    height: 40,
-    label: "New Node2",
+  },
+});
+
+register({
+  shape: "end",
+  width: 200,
+  height: 48,
+  component: EndNode,
+  ports: {
+    groups: {
+      top: {
+        position: "top",
+        attrs: {
+          circle: {
+            r: 4,
+            magnet: false,
+            stroke: "transparent",
+            strokeWidth: 1,
+            fill: "transparent",
+          },
+        },
+      },
+      bottom: {
+        position: "bottom",
+        attrs: {
+          circle: {
+            r: 4,
+            magnet: false,
+            stroke: "transparent",
+            strokeWidth: 1,
+            fill: "transparent",
+          },
+        },
+      },
+    },
+  },
+});
+
+const TeleportContainer = defineComponent(getTeleport());
+console.log("TeleportContainer :>> ", TeleportContainer);
+Graph.registerEdge(
+  "dag-edge",
+  {
+    inherit: "edge",
     attrs: {
-      body: {
-        fill: "#fff",
-        stroke: "#000",
-      },
-      label: {
-        text: "TOM",
-        fill: "black",
+      line: {
+        stroke: "#C2C8D5",
+        strokeWidth: 1,
+        targetMarker: null,
       },
     },
-  };
+  },
+  true
+);
 
-  const line = {
-    shape: "edge", // 指定使用何种图形，默认值为 'edge'
-    source: "node1",
-    target: "node2",
-    // 增加额外点，线会按顺序通过这些点然后到达目标节点
-    // vertices: [
-    //   { x: 100, y: 200 },
-    //   { x: 300, y: 120 },
-    // ],
-    // 对vertices的进一步处理
-    // router: {
-    //   name: "orth",
-    //   args: {},
-    // },
-    // 连接器线的拐点
-    connector: {
-      name: "rounded",
-      // name: "smooth",
-      // name: "jumpover",
-      args: {},
-    },
-  };
+Graph.registerConnector(
+  "algo-connector",
+  (s, e) => {
+    const offset = 20;
+    const deltaY = Math.abs(e.y - s.y);
+    const control = Math.floor((deltaY / 3) * 2);
 
-  graph.value?.addNode(node1);
-  graph.value?.addNode(node2);
-  graph.value?.addEdge(line);
-  graph.value?.centerContent();
-};
+    const v1 = { x: s.x, y: s.y + offset + control };
+    const v2 = { x: e.x, y: e.y - offset - control };
 
-const initGraph = () => {
-  graph.value = new Graph({
-    container: document.getElementById("container") as HTMLElement,
-    height: 600,
-    background: {
-      color: "#fff", // 设置画布背景颜色
-    },
-    grid: {
-      size: 10, // 网格大小 10px
-      visible: true, // 渲染网格背景
-    },
-    panning: {
-      enabled: true,
-      eventTypes: ["mouseWheel"],
-    },
-  });
-  // graph.value.fromJSON(data);
-  graph.value.centerContent();
-};
+    return Path.normalize(
+      `M ${s.x} ${s.y}
+       L ${s.x} ${s.y + offset}
+       C ${v1.x} ${v1.y} ${v2.x} ${v2.y} ${e.x} ${e.y - offset}
+       L ${e.x} ${e.y}
+      `
+    );
+  },
+  true
+);
 
-const disposeGraph = () => {
-  if (graph.value) {
-    graph.value.dispose();
-  }
-};
+interface Command {
+  key: string;
+  label: string;
+}
+
+const commands: Command[] = [
+  {
+    key: "zoomIn",
+    label: "ZoomIn(0.2)",
+  },
+  {
+    key: "zoomOut",
+    label: "ZoomOut(-0.2)",
+  },
+  {
+    key: "zoomTo",
+    label: "ZoomTo(1)",
+  },
+  {
+    key: "zoomToFit",
+    label: "ZoomToFit",
+  },
+  {
+    key: "centerContent",
+    label: "CenterContent",
+  },
+];
+
+const graph = shallowRef<Graph | null>(null);
+const currNode = ref<Node | null>(null);
+const commandOps = ref(commands);
 
 onMounted(() => {
   initGraph();
@@ -175,6 +153,121 @@ onMounted(() => {
 onUnmounted(() => {
   disposeGraph();
 });
+
+const transform = (command: string) => {
+  switch (command) {
+    case "translate":
+      graph.value?.translate(20, 20);
+      break;
+    case "zoomIn":
+      graph.value?.zoom(0.2);
+      break;
+    case "zoomOut":
+      graph.value?.zoom(-0.2);
+      break;
+    case "zoomTo":
+      graph.value?.zoomTo(1);
+      break;
+    case "zoomToFit":
+      graph.value?.zoomToFit();
+      break;
+    case "centerContent":
+      graph.value?.centerContent();
+      break;
+    default:
+      break;
+  }
+};
+
+const initGraph = () => {
+  graph.value = new Graph({
+    container: document.getElementById("container") as HTMLDivElement,
+    height: 600,
+    background: {
+      color: "#fff", // 设置画布背景颜色
+    },
+    // grid: {
+    //   size: 10, // 网格大小 10px
+    //   visible: true, // 渲染网格背景
+    // },
+    panning: {
+      enabled: true,
+      eventTypes: ["leftMouseDown", "mouseWheel"],
+    },
+    mousewheel: {
+      enabled: true,
+      modifiers: "ctrl",
+      factor: 1.1,
+      maxScale: 1.5,
+      minScale: 0.5,
+    },
+    highlighting: {
+      magnetAdsorbed: {
+        name: "stroke",
+        args: {
+          attrs: {
+            fill: "#fff",
+            stroke: "#31d0c6",
+            strokeWidth: 4,
+          },
+        },
+      },
+    },
+    connecting: {
+      snap: true,
+      allowBlank: false,
+      allowLoop: false,
+      highlight: true,
+      connector: "algo-connector",
+      connectionPoint: "anchor",
+      anchor: "center",
+      validateMagnet({ magnet }) {
+        return magnet.getAttribute("port-group") !== "top";
+      },
+      createEdge() {
+        return graph.value?.createEdge({
+          shape: "dag-edge",
+          attrs: {
+            line: {
+              strokeDasharray: "5 5",
+            },
+          },
+          zIndex: -1,
+        });
+      },
+    },
+  });
+
+  graph.value.fromJSON(data);
+  graph.value.centerContent();
+
+  graph.value?.use(
+    new Selection({
+      multiple: true,
+      rubberEdge: true,
+      rubberNode: true,
+      modifiers: "shift",
+      rubberband: true,
+      // enabled: true,
+    })
+  );
+
+  graph.value.on("node:selected", ({ node }: { node: Node }) => {
+    currNode.value = node;
+  });
+};
+
+const getCurrNode = () => {
+  return currNode;
+};
+
+const disposeGraph = () => {
+  if (graph.value) {
+    graph.value.dispose();
+  }
+};
+
+provide("getCurrNode", getCurrNode);
 </script>
 
 <style scoped>
