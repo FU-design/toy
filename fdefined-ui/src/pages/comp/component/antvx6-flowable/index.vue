@@ -78,6 +78,7 @@ register({
 });
 
 const TeleportContainer = defineComponent(getTeleport());
+console.log("TeleportContainer :>> ", TeleportContainer);
 Graph.registerEdge(
   "dag-edge",
   {
@@ -145,7 +146,7 @@ const commands: Command[] = [
 const graph = shallowRef<Graph | null>(null);
 const currNode = ref<Node | null>(null);
 const commandOps = ref(commands);
-provide("node", currNode);
+provide("node", currNode.value);
 
 onMounted(() => {
   initGraph();

@@ -33,11 +33,12 @@
 
 <script lang="ts">
 import { Graph, Node, StringExt } from "@antv/x6";
-import { defineComponent, inject, Ref } from "vue";
+import { defineComponent, inject, ref } from "vue";
 export default defineComponent({
   setup() {
-    const currNode = inject<Ref<Node>>("node") || null;
-    const data = currNode?.value.getData();
+    const getNode = inject<Function>("getNode") as Function;
+    const node = ref<Node>(getNode());
+    const data = node.value.getData();
 
     /**
      * 根据起点初始下游节点的位置信息
@@ -94,16 +95,16 @@ export default defineComponent({
 
     // 创建下游的节点和边
     const createDownstream = (type: string) => {
-      const { graph } = currNode?.value.model || {};
+      const { graph } = node?.value.model || {};
       if (graph) {
         const offset = 60;
-        const position = resolveNodePostion(currNode?.value as Node, offset);
+        const position = resolveNodePostion(node?.value as Node, offset);
         const newNode = createNode(type, graph, position) as any;
-        const source = currNode?.value.id as string;
+        const source = node?.value.id as string;
         const target = newNode.id;
 
         // 找出所有当前节点的输出的边对象实例
-        const outgoingEdges = graph.getOutgoingEdges(currNode?.value as Node);
+        const outgoingEdges = graph.getOutgoingEdges(node?.value as Node);
         outgoingEdges?.forEach((edge) => {
           const target = edge.getTargetCell();
           graph.removeEdge(edge); // 移除当前边

@@ -1,10 +1,6 @@
 <template>
   <div class="start-node">
-    <div
-      @mouseenter="onMainMouseEnter"
-      @mouseleave="onMainMouseLeave"
-      class="main-area"
-    >
+    <div class="main-area">
       <div class="main-info">
         <i
           class="node-logo"
@@ -37,81 +33,12 @@
 
 <script lang="ts">
 import { Graph, Node, StringExt } from "@antv/x6";
-import { defineComponent, inject, Ref } from "vue";
+import { defineComponent, inject, ref } from "vue";
 export default defineComponent({
   setup() {
-    const currNode = inject<Ref<Node>>("node") || null;
-    const data = currNode?.value.getData();
-
-    // 鼠标进入矩形主区域的时候显示连接桩
-    const onMainMouseEnter = () => {
-      // if (currNode?.value) {
-      //   const ports = currNode.value.getPorts() || [];
-      //   ports.forEach((port) => {
-      //     currNode.value.setPortProp(port.id as string, "attrs/circle", {
-      //       fill: "#fff",
-      //       stroke: "#85A5FF",
-      //     });
-      //   });
-      // }
-    };
-
-    // 鼠标离开矩形主区域的时候隐藏连接桩
-    const onMainMouseLeave = () => {
-      // if (currNode?.value) {
-      //   const ports = currNode?.value.getPorts() || [];
-      //   ports.forEach((port) => {
-      //     currNode?.value.setPortProp(port.id as string, "attrs/circle", {
-      //       fill: "transparent",
-      //       stroke: "transparent",
-      //     });
-      //   });
-      // }
-    };
-
-    /**
-     * 根据起点初始下游节点的位置信息
-     * @param node 起始节点
-     * @param graph
-     * @returns
-     */
-    const getDownstreamNodePosition = (
-      node: Node,
-      graph: Graph,
-      dx = 250,
-      dy = 100
-    ) => {
-      // 找出画布中以该起始节点为起点的相关边的终点id集合
-      const downstreamNodeIdList: string[] = [];
-      graph.getEdges().forEach((edge) => {
-        const originEdge = edge.toJSON()?.data;
-        if (originEdge.source === node.id) {
-          downstreamNodeIdList.push(originEdge.target);
-        }
-      });
-      // 获取起点的位置信息
-      const position = node.getPosition();
-      let minX = Infinity;
-      let maxY = -Infinity;
-      graph.getNodes().forEach((graphNode) => {
-        if (downstreamNodeIdList.indexOf(graphNode.id) > -1) {
-          const nodePosition = graphNode.getPosition();
-          // 找到所有节点中最左侧的节点的x坐标
-          if (nodePosition.x < minX) {
-            minX = nodePosition.x;
-          }
-          // 找到所有节点中最x下方的节点的y坐标
-          if (nodePosition.y > maxY) {
-            maxY = nodePosition.y;
-          }
-        }
-      });
-
-      return {
-        x: minX !== Infinity ? minX - 200 : position.x + dx,
-        y: maxY !== -Infinity ? maxY : position.y,
-      };
-    };
+    const getNode = inject<Function>("getNode") as Function;
+    const node = ref<Node>(getNode());
+    const data = node.value.getData();
 
     const resolveNodePostion = (node: Node, offset: number = 60) => {
       const { x, y } = node.getPosition();
@@ -124,16 +51,16 @@ export default defineComponent({
 
     // 创建下游的节点和边
     const createDownstream = (type: string) => {
-      const { graph } = currNode?.value.model || {};
+      const { graph } = node?.value.model || {};
       if (graph) {
         const offset = 60;
-        const position = resolveNodePostion(currNode?.value as Node, offset);
+        const position = resolveNodePostion(node?.value as Node, offset);
         const newNode = createNode(type, graph, position) as any;
-        const source = currNode?.value.id as string;
+        const source = node?.value.id as string;
         const target = newNode.id;
 
         // 找出所有当前节点的输出的边对象实例
-        const outgoingEdges = graph.getOutgoingEdges(currNode?.value as Node);
+        const outgoingEdges = graph.getOutgoingEdges(node?.value as Node);
         outgoingEdges?.forEach((edge) => {
           const target = edge.getTargetCell();
           graph.removeEdge(edge); // 移除当前边
@@ -226,8 +153,6 @@ export default defineComponent({
 
     return {
       data,
-      onMainMouseEnter,
-      onMainMouseLeave,
       createDownstream,
     };
   },
