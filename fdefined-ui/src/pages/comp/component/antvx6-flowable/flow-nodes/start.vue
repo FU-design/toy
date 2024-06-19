@@ -1,10 +1,10 @@
 <template>
-  <div
-    class="start-node"
-    @mouseenter="onMainMouseEnter"
-    @mouseleave="onMainMouseLeave"
-  >
-    <div class="main-area">
+  <div class="start-node">
+    <div
+      @mouseenter="onMainMouseEnter"
+      @mouseleave="onMainMouseLeave"
+      class="main-area"
+    >
       <div class="main-info">
         <i
           class="node-logo"
@@ -13,7 +13,7 @@
           }"
         >
         </i>
-        <div class="node-name">name</div>
+        <div class="node-name">{{ data?.name }}</div>
       </div>
       <div class="node-status"></div>
     </div>
@@ -23,10 +23,10 @@
         <template #overlay>
           <a-menu>
             <a-menu-item key="0">
-              <a href="">1st menu item</a>
+              <span @click="createDownstream(`1st end`)">1st menu item</span>
             </a-menu-item>
             <a-menu-item key="1">
-              <a href="">2nd menu item</a>
+              <span @click="createDownstream(`2st end`)">2st menu item</span>
             </a-menu-item>
           </a-menu>
         </template>
@@ -36,41 +36,199 @@
 </template>
 
 <script lang="ts">
-import { Node } from "@antv/x6";
+import { Graph, Node, StringExt } from "@antv/x6";
 import { defineComponent, inject, Ref } from "vue";
 export default defineComponent({
   setup() {
-    const getCurrNode = inject<Function>("getCurrNode");
-    const currNode = getCurrNode && (getCurrNode() as Ref<Node>);
+    const currNode = inject<Ref<Node>>("node") || null;
+    const data = currNode?.value.getData();
 
     // 鼠标进入矩形主区域的时候显示连接桩
     const onMainMouseEnter = () => {
-      if (currNode?.value) {
-        const ports = currNode.value.getPorts() || [];
-        ports.forEach((port) => {
-          currNode.value.setPortProp(port.id as string, "attrs/circle", {
-            fill: "#fff",
-            stroke: "#85A5FF",
-          });
-        });
-      }
+      // if (currNode?.value) {
+      //   const ports = currNode.value.getPorts() || [];
+      //   ports.forEach((port) => {
+      //     currNode.value.setPortProp(port.id as string, "attrs/circle", {
+      //       fill: "#fff",
+      //       stroke: "#85A5FF",
+      //     });
+      //   });
+      // }
     };
 
     // 鼠标离开矩形主区域的时候隐藏连接桩
     const onMainMouseLeave = () => {
-      if (currNode?.value) {
-        const ports = currNode?.value.getPorts() || [];
-        ports.forEach((port) => {
-          currNode?.value.setPortProp(port.id as string, "attrs/circle", {
-            fill: "transparent",
-            stroke: "transparent",
-          });
+      // if (currNode?.value) {
+      //   const ports = currNode?.value.getPorts() || [];
+      //   ports.forEach((port) => {
+      //     currNode?.value.setPortProp(port.id as string, "attrs/circle", {
+      //       fill: "transparent",
+      //       stroke: "transparent",
+      //     });
+      //   });
+      // }
+    };
+
+    /**
+     * 根据起点初始下游节点的位置信息
+     * @param node 起始节点
+     * @param graph
+     * @returns
+     */
+    const getDownstreamNodePosition = (
+      node: Node,
+      graph: Graph,
+      dx = 250,
+      dy = 100
+    ) => {
+      // 找出画布中以该起始节点为起点的相关边的终点id集合
+      const downstreamNodeIdList: string[] = [];
+      graph.getEdges().forEach((edge) => {
+        const originEdge = edge.toJSON()?.data;
+        if (originEdge.source === node.id) {
+          downstreamNodeIdList.push(originEdge.target);
+        }
+      });
+      // 获取起点的位置信息
+      const position = node.getPosition();
+      let minX = Infinity;
+      let maxY = -Infinity;
+      graph.getNodes().forEach((graphNode) => {
+        if (downstreamNodeIdList.indexOf(graphNode.id) > -1) {
+          const nodePosition = graphNode.getPosition();
+          // 找到所有节点中最左侧的节点的x坐标
+          if (nodePosition.x < minX) {
+            minX = nodePosition.x;
+          }
+          // 找到所有节点中最x下方的节点的y坐标
+          if (nodePosition.y > maxY) {
+            maxY = nodePosition.y;
+          }
+        }
+      });
+
+      return {
+        x: minX !== Infinity ? minX - 200 : position.x + dx,
+        y: maxY !== -Infinity ? maxY : position.y,
+      };
+    };
+
+    const resolveNodePostion = (node: Node, offset: number = 60) => {
+      const { x, y } = node.getPosition();
+      const { height } = node.getSize();
+      return {
+        x: x,
+        y: height + y + offset,
+      };
+    };
+
+    // 创建下游的节点和边
+    const createDownstream = (type: string) => {
+      const { graph } = currNode?.value.model || {};
+      if (graph) {
+        const offset = 60;
+        const position = resolveNodePostion(currNode?.value as Node, offset);
+        const newNode = createNode(type, graph, position) as any;
+        const source = currNode?.value.id as string;
+        const target = newNode.id;
+
+        // 找出所有当前节点的输出的边对象实例
+        const outgoingEdges = graph.getOutgoingEdges(currNode?.value as Node);
+        outgoingEdges?.forEach((edge) => {
+          const target = edge.getTargetCell();
+          graph.removeEdge(edge); // 移除当前边
+          createEdge(newNode?.id as string, target?.id as string, graph); // 创建新的边，源节点为新节点，目标为原节点的目标节点
         });
+
+        // 动态向下调整新节点以下的所有节点，为新节点及动态添加的节点腾出空间
+        graph.getNodes().forEach((n) => {
+          if (n.id !== newNode.id && n.getPosition().y >= position.y) {
+            n.translate(0, (newNode.getSize()?.height as number) + offset);
+          }
+        });
+
+        createEdge(source, target, graph);
+        // 选中新创建的节点
+        graph.select(newNode.id);
       }
     };
+
+    /**
+     * 创建节点并添加到画布
+     * @param type 节点类型
+     * @param graph
+     * @param position 节点位置
+     * @returns
+     */
+    const createNode = (type: string, graph: Graph, position?: Position) => {
+      if (!graph) {
+        return {};
+      }
+      let newNode = {};
+      const id = StringExt.uuid();
+      const node = {
+        id,
+        shape: "end",
+        x: position?.x,
+        y: position?.y,
+        ports: getPortsByType(id),
+        data: {
+          name: type,
+          type,
+        },
+      };
+      newNode = graph.addNode(node);
+      return newNode;
+    };
+
+    // 根据节点的类型获取ports
+    const getPortsByType = (nodeId: string) => {
+      return [
+        {
+          id: `${nodeId}-in`,
+          group: "in",
+        },
+        {
+          id: `${nodeId}-out`,
+          group: "out",
+        },
+      ];
+    };
+
+    /**
+     * 创建边并添加到画布
+     * @param source
+     * @param target
+     * @param graph
+     */
+    const createEdge = (source: string, target: string, graph: Graph) => {
+      const edge = {
+        id: StringExt.uuid(),
+        shape: "dag-edge",
+        source: {
+          cell: source,
+          port: `${source}-out`,
+        },
+        target: {
+          cell: target,
+          port: `${target}-in`,
+        },
+        zIndex: -1,
+        data: {
+          source,
+          target,
+        },
+      };
+      if (graph) {
+        graph.addEdge(edge);
+      }
+    };
+
     return {
+      data,
       onMainMouseEnter,
       onMainMouseLeave,
+      createDownstream,
     };
   },
 });
@@ -141,5 +299,9 @@ export default defineComponent({
   border-radius: 50%;
   background-color: #fff;
   cursor: pointer;
+}
+
+.x6-node-selected .main-area {
+  border-color: #3471f9;
 }
 </style>

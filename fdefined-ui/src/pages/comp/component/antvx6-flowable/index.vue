@@ -5,6 +5,7 @@
     <a-button v-for="command in commandOps" @click="transform(command.key)">
       {{ command.label }}
     </a-button>
+    <a-button @click="getFlowableData">data</a-button>
   </div>
 </template>
 
@@ -25,7 +26,7 @@ register({
   component: StartNode,
   ports: {
     groups: {
-      bottom: {
+      out: {
         position: "bottom",
         attrs: {
           circle: {
@@ -48,7 +49,7 @@ register({
   component: EndNode,
   ports: {
     groups: {
-      top: {
+      in: {
         position: "top",
         attrs: {
           circle: {
@@ -60,12 +61,12 @@ register({
           },
         },
       },
-      bottom: {
+      out: {
         position: "bottom",
         attrs: {
           circle: {
             r: 4,
-            magnet: false,
+            magnet: true,
             stroke: "transparent",
             strokeWidth: 1,
             fill: "transparent",
@@ -77,7 +78,6 @@ register({
 });
 
 const TeleportContainer = defineComponent(getTeleport());
-console.log("TeleportContainer :>> ", TeleportContainer);
 Graph.registerEdge(
   "dag-edge",
   {
@@ -145,6 +145,7 @@ const commands: Command[] = [
 const graph = shallowRef<Graph | null>(null);
 const currNode = ref<Node | null>(null);
 const commandOps = ref(commands);
+provide("node", currNode);
 
 onMounted(() => {
   initGraph();
@@ -221,9 +222,6 @@ const initGraph = () => {
       connector: "algo-connector",
       connectionPoint: "anchor",
       anchor: "center",
-      validateMagnet({ magnet }) {
-        return magnet.getAttribute("port-group") !== "top";
-      },
       createEdge() {
         return graph.value?.createEdge({
           shape: "dag-edge",
@@ -238,12 +236,12 @@ const initGraph = () => {
     },
   });
 
-  graph.value.fromJSON(data);
+  graph.value.fromJSON(data as any);
   graph.value.centerContent();
 
   graph.value?.use(
     new Selection({
-      multiple: true,
+      multiple: false,
       rubberEdge: true,
       rubberNode: true,
       modifiers: "shift",
@@ -252,13 +250,29 @@ const initGraph = () => {
     })
   );
 
-  graph.value.on("node:selected", ({ node }: { node: Node }) => {
-    currNode.value = node;
-  });
+  initGraphEvent();
+  graph.value.select("node-0");
 };
 
-const getCurrNode = () => {
-  return currNode;
+const initGraphEvent = () => {
+  if (graph.value) {
+    graph.value.on("node:selected", ({ node }: { node: Node }) => {
+      currNode.value = node;
+    });
+  }
+};
+
+// 获取所有数据
+const getFlowableData = () => {
+  const flowableData: any = { nodes: [], edges: [] };
+  graph.value?.getNodes().forEach((node) => {
+    flowableData.nodes.push(node.toJSON());
+  });
+  graph.value?.getEdges().forEach((edge) => {
+    flowableData.edges.push(edge.toJSON());
+  });
+
+  console.log("flowableData :>> ", flowableData);
 };
 
 const disposeGraph = () => {
@@ -266,8 +280,6 @@ const disposeGraph = () => {
     graph.value.dispose();
   }
 };
-
-provide("getCurrNode", getCurrNode);
 </script>
 
 <style scoped>
