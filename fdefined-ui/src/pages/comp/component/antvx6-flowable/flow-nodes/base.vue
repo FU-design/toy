@@ -1,20 +1,16 @@
 <template>
-  <div class="start-node">
+  <div class="end-node">
     <div class="main-area">
       <div class="main-info">
-        <i
-          class="node-logo"
-          :style="{
-            backgroundImage: `url(https://mdn.alipayobjects.com/huamei_f4t1bn/afts/img/A*RXnuTpQ22xkAAAAAAAAAAAAADtOHAQ/original)`,
-          }"
-        >
-        </i>
-        <div class="node-name">{{ data?.name }}</div>
+        <div class="node-logo">
+          <img :src="data.icon" alt="" />
+        </div>
+        <div class="node-name">{{ data.name }}</div>
       </div>
       <div class="node-status"></div>
     </div>
     <div class="node-plus">
-      <drop-menu @selected="createDownstream"></drop-menu>
+      <drop-menu @selected="createDownstream" />
     </div>
   </div>
 </template>
@@ -22,15 +18,15 @@
 <script lang="ts">
 import { Graph, Node } from "@antv/x6";
 import { defineComponent, inject, ref } from "vue";
-import { createEdge, createNode, menuOps, type MenuItem } from "../actionOps";
 import DropMenu from "../flow-ops/dropMenu.vue";
 import { resolveNodePostion } from "../config";
+import { createEdge, createNode, MenuItem } from "../actionOps";
+
 export default defineComponent({
   components: {
     DropMenu,
   },
   setup() {
-    // 此注入是由 @antv/x6-vue-shape 提供给自定义组件的
     const getNode = inject<Function>("getNode") as Function;
     const node = ref<Node>(getNode());
     const data = node.value.getData();
@@ -68,15 +64,13 @@ export default defineComponent({
 
     return {
       data,
-      menuOps,
       createDownstream,
     };
   },
 });
 </script>
-
 <style lang="scss" scoped>
-.start-node {
+.end-node {
   display: flex;
   align-items: center;
   background-color: #fff;
@@ -117,9 +111,11 @@ export default defineComponent({
 .node-name {
   overflow: hidden;
   display: inline-block;
+  width: 70px;
   margin-left: 6px;
   color: rgba(0, 0, 0, 65%);
   font-size: 12px;
+  font-family: PingFangSC;
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: top;

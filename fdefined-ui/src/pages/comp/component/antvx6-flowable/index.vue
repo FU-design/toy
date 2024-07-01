@@ -15,10 +15,14 @@
 <script setup lang="ts">
 import { provide, shallowRef, unref } from "vue";
 import { Selection } from "@antv/x6-plugin-selection";
-import { Graph, Node } from "@antv/x6";
+import { Graph, Node, Options } from "@antv/x6";
 import { onMounted, onUnmounted, ref } from "vue";
 import { data } from "./nodeData";
-import { CustomGraph, TeleportContainer } from "./config";
+import {
+  CustomGraph,
+  getOrderedNodesAndEdges,
+  TeleportContainer,
+} from "./config";
 import { commands, transform } from "./actionOps";
 
 const graph = shallowRef<Graph | null>(null);
@@ -35,8 +39,9 @@ onUnmounted(() => {
 });
 
 const initGraph = () => {
-  graph.value = new CustomGraph({
-    container: document.getElementById("container") as HTMLDivElement,
+  const container = document.getElementById("container") as HTMLDivElement;
+  const config = {
+    container,
     height: 600,
     background: {
       color: "#fff", // 设置画布背景颜色
@@ -88,11 +93,12 @@ const initGraph = () => {
         });
       },
     },
-  });
-
+  } as Partial<Options.Manual>;
+  graph.value = new CustomGraph(config);
+  // 初始化数据
   graph.value.fromJSON(data as any);
+  // 将试图内容剧中于布局正中心
   graph.value.centerContent();
-
   graph.value?.use(
     new Selection({
       multiple: false,
@@ -104,6 +110,7 @@ const initGraph = () => {
     })
   );
   initGraphEvent();
+  // 默认选中的节点
   graph.value.select("node-0");
 };
 
@@ -118,15 +125,17 @@ const initGraphEvent = () => {
 
 // 获取所有数据
 const getFlowableData = () => {
-  const flowableData: any = { nodes: [], edges: [] };
-  graph.value?.getNodes().forEach((node) => {
-    flowableData.nodes.push(node.toJSON());
-  });
-  graph.value?.getEdges().forEach((edge) => {
-    flowableData.edges.push(edge.toJSON());
-  });
+  // const flowableData: any = { nodes: [], edges: [] };
+  // graph.value?.getNodes().forEach((node) => {
+  //   flowableData.nodes.push(node.toJSON());
+  // });
+  // graph.value?.getEdges().forEach((edge) => {
+  //   flowableData.edges.push(edge.toJSON());
+  // });
+  // console.log("flowableData :>> ", flowableData);
 
-  console.log("flowableData :>> ", flowableData);
+  const res = getOrderedNodesAndEdges(unref(graph) as Graph);
+  console.log("res ", res);
 };
 
 // 销毁 Graph 实例

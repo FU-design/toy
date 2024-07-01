@@ -2,202 +2,26 @@
   <div class="end-node">
     <div class="main-area">
       <div class="main-info">
-        <i
-          class="node-logo"
-          :style="{
-            backgroundImage: `url(https://mdn.alipayobjects.com/huamei_f4t1bn/afts/img/A*zUgORbGg1HIAAAAAAAAAAAAADtOHAQ/original)`,
-          }"
-        >
-        </i>
+        <div class="node-logo">
+          <img :src="data.icon" alt="" />
+        </div>
         <div class="node-name">{{ data.name }}</div>
       </div>
       <div class="node-status"></div>
-    </div>
-    <div class="node-plus">
-      <a-dropdown :trigger="['click']">
-        <a> + </a>
-        <template #overlay>
-          <a-menu>
-            <a-menu-item key="0">
-              <span @click="createDownstream(`1st end`)">1st menu item</span>
-            </a-menu-item>
-            <a-menu-item key="1">
-              <span @click="createDownstream(`2st end`)">2st menu item</span>
-            </a-menu-item>
-          </a-menu>
-        </template>
-      </a-dropdown>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Graph, Node, StringExt } from "@antv/x6";
+import { Node } from "@antv/x6";
 import { defineComponent, inject, ref } from "vue";
 export default defineComponent({
   setup() {
     const getNode = inject<Function>("getNode") as Function;
     const node = ref<Node>(getNode());
     const data = node.value.getData();
-
-    /**
-     * 根据起点初始下游节点的位置信息
-     * @param node 起始节点
-     * @param graph
-     * @returns
-     */
-    const getDownstreamNodePosition = (
-      node: Node,
-      graph: Graph,
-      dx = 250,
-      dy = 100
-    ) => {
-      // 找出画布中以该起始节点为起点的相关边的终点id集合
-      const downstreamNodeIdList: string[] = [];
-      graph.getEdges().forEach((edge) => {
-        const originEdge = edge.toJSON()?.data;
-        if (originEdge.source === node.id) {
-          downstreamNodeIdList.push(originEdge.target);
-        }
-      });
-      // 获取起点的位置信息
-      const position = node.getPosition();
-      let minX = Infinity;
-      let maxY = -Infinity;
-      graph.getNodes().forEach((graphNode) => {
-        if (downstreamNodeIdList.indexOf(graphNode.id) > -1) {
-          const nodePosition = graphNode.getPosition();
-          // 找到所有节点中最左侧的节点的x坐标
-          if (nodePosition.x < minX) {
-            minX = nodePosition.x;
-          }
-          // 找到所有节点中最x下方的节点的y坐标
-          if (nodePosition.y > maxY) {
-            maxY = nodePosition.y;
-          }
-        }
-      });
-
-      return {
-        x: minX !== Infinity ? minX - 200 : position.x + dx,
-        y: maxY !== -Infinity ? maxY : position.y,
-      };
-    };
-
-    const resolveNodePostion = (node: Node, offset: number = 60) => {
-      const { x, y } = node.getPosition();
-      const { height } = node.getSize();
-      return {
-        x: x,
-        y: height + y + offset,
-      };
-    };
-
-    // 创建下游的节点和边
-    const createDownstream = (type: string) => {
-      const { graph } = node?.value.model || {};
-      if (graph) {
-        const offset = 60;
-        const position = resolveNodePostion(node?.value as Node, offset);
-        const newNode = createNode(type, graph, position) as any;
-        const source = node?.value.id as string;
-        const target = newNode.id;
-
-        // 找出所有当前节点的输出的边对象实例
-        const outgoingEdges = graph.getOutgoingEdges(node?.value as Node);
-        outgoingEdges?.forEach((edge) => {
-          const target = edge.getTargetCell();
-          graph.removeEdge(edge); // 移除当前边
-          createEdge(newNode?.id as string, target?.id as string, graph); // 创建新的边，源节点为新节点，目标为原节点的目标节点
-        });
-
-        // 动态向下调整新节点以下的所有节点，为新节点及动态添加的节点腾出空间
-        graph.getNodes().forEach((n) => {
-          if (n.id !== newNode.id && n.getPosition().y >= position.y) {
-            n.translate(0, (newNode.getSize()?.height as number) + offset);
-          }
-        });
-
-        createEdge(source, target, graph);
-        // 选中新创建的节点
-        graph.select(newNode.id);
-      }
-    };
-
-    /**
-     * 创建节点并添加到画布
-     * @param type 节点类型
-     * @param graph
-     * @param position 节点位置
-     * @returns
-     */
-    const createNode = (type: string, graph: Graph, position?: Position) => {
-      if (!graph) {
-        return {};
-      }
-      let newNode = {};
-      const id = StringExt.uuid();
-      const node = {
-        id,
-        shape: "end",
-        x: position?.x,
-        y: position?.y,
-        ports: getPortsByType(type, id),
-        data: {
-          name: type,
-          type,
-        },
-      };
-      newNode = graph.addNode(node);
-      return newNode;
-    };
-
-    // 根据节点的类型获取ports
-    const getPortsByType = (type: string, nodeId: string) => {
-      return [
-        {
-          id: `${nodeId}-in`,
-          group: "in",
-        },
-        {
-          id: `${nodeId}-out`,
-          group: "out",
-        },
-      ];
-    };
-
-    /**
-     * 创建边并添加到画布
-     * @param source
-     * @param target
-     * @param graph
-     */
-    const createEdge = (source: string, target: string, graph: Graph) => {
-      const edge = {
-        id: StringExt.uuid(),
-        shape: "dag-edge",
-        source: {
-          cell: source,
-          port: `${source}-out`,
-        },
-        target: {
-          cell: target,
-          port: `${target}-in`,
-        },
-        zIndex: -1,
-        data: {
-          source,
-          target,
-        },
-      };
-      if (graph) {
-        graph.addEdge(edge);
-      }
-    };
-
     return {
       data,
-      createDownstream,
     };
   },
 });
