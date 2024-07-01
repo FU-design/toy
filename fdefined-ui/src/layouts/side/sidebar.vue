@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import useSideStore from "@/store/sideBar";
+import useSideStore from "@/stores/sideBar";
 import { storeToRefs } from "pinia";
 import type { RouteRecordRaw } from "vue-router";
 

@@ -1,4 +1,4 @@
-import pageView from "@/layout/pageView.vue";
+import pageView from "@/layouts/pageView.vue";
 
 const minecraft = {
   path: "/mine",

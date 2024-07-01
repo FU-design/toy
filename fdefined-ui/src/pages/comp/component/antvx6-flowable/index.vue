@@ -1,147 +1,25 @@
 <template>
   <div class="flowable">
-    <div id="container"></div>
-    <TeleportContainer />
-    <a-button v-for="command in commandOps" @click="transform(command.key)">
-      {{ command.label }}
+    <a-button
+      v-for="{ key, label } in commandOps"
+      @click="transform(key, unref(graph))"
+    >
+      {{ label }}
     </a-button>
     <a-button @click="getFlowableData">data</a-button>
+    <div id="container"></div>
+    <TeleportContainer />
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, provide, shallowRef } from "vue";
+import { provide, shallowRef, unref } from "vue";
 import { Selection } from "@antv/x6-plugin-selection";
-import { Graph, Node, Path, Edge, Platform, StringExt } from "@antv/x6";
+import { Graph, Node } from "@antv/x6";
 import { onMounted, onUnmounted, ref } from "vue";
 import { data } from "./nodeData";
-import { register, getTeleport } from "@antv/x6-vue-shape";
-import StartNode from "./flow-nodes/start.vue";
-import EndNode from "./flow-nodes/end.vue";
-
-register({
-  shape: "start",
-  width: 200,
-  height: 48,
-  component: StartNode,
-  ports: {
-    groups: {
-      out: {
-        position: "bottom",
-        attrs: {
-          circle: {
-            r: 4,
-            magnet: false,
-            stroke: "transparent",
-            strokeWidth: 1,
-            fill: "transparent",
-          },
-        },
-      },
-    },
-  },
-});
-
-register({
-  shape: "end",
-  width: 200,
-  height: 48,
-  component: EndNode,
-  ports: {
-    groups: {
-      in: {
-        position: "top",
-        attrs: {
-          circle: {
-            r: 4,
-            magnet: false,
-            stroke: "transparent",
-            strokeWidth: 1,
-            fill: "transparent",
-          },
-        },
-      },
-      out: {
-        position: "bottom",
-        attrs: {
-          circle: {
-            r: 4,
-            magnet: true,
-            stroke: "transparent",
-            strokeWidth: 1,
-            fill: "transparent",
-          },
-        },
-      },
-    },
-  },
-});
-
-const TeleportContainer = defineComponent(getTeleport());
-console.log("TeleportContainer :>> ", TeleportContainer);
-Graph.registerEdge(
-  "dag-edge",
-  {
-    inherit: "edge",
-    attrs: {
-      line: {
-        stroke: "#C2C8D5",
-        strokeWidth: 1,
-        targetMarker: null,
-      },
-    },
-  },
-  true
-);
-
-Graph.registerConnector(
-  "algo-connector",
-  (s, e) => {
-    const offset = 20;
-    const deltaY = Math.abs(e.y - s.y);
-    const control = Math.floor((deltaY / 3) * 2);
-
-    const v1 = { x: s.x, y: s.y + offset + control };
-    const v2 = { x: e.x, y: e.y - offset - control };
-
-    return Path.normalize(
-      `M ${s.x} ${s.y}
-       L ${s.x} ${s.y + offset}
-       C ${v1.x} ${v1.y} ${v2.x} ${v2.y} ${e.x} ${e.y - offset}
-       L ${e.x} ${e.y}
-      `
-    );
-  },
-  true
-);
-
-interface Command {
-  key: string;
-  label: string;
-}
-
-const commands: Command[] = [
-  {
-    key: "zoomIn",
-    label: "ZoomIn(0.2)",
-  },
-  {
-    key: "zoomOut",
-    label: "ZoomOut(-0.2)",
-  },
-  {
-    key: "zoomTo",
-    label: "ZoomTo(1)",
-  },
-  {
-    key: "zoomToFit",
-    label: "ZoomToFit",
-  },
-  {
-    key: "centerContent",
-    label: "CenterContent",
-  },
-];
+import { CustomGraph, TeleportContainer } from "./config";
+import { commands, transform } from "./actionOps";
 
 const graph = shallowRef<Graph | null>(null);
 const currNode = ref<Node | null>(null);
@@ -156,33 +34,8 @@ onUnmounted(() => {
   disposeGraph();
 });
 
-const transform = (command: string) => {
-  switch (command) {
-    case "translate":
-      graph.value?.translate(20, 20);
-      break;
-    case "zoomIn":
-      graph.value?.zoom(0.2);
-      break;
-    case "zoomOut":
-      graph.value?.zoom(-0.2);
-      break;
-    case "zoomTo":
-      graph.value?.zoomTo(1);
-      break;
-    case "zoomToFit":
-      graph.value?.zoomToFit();
-      break;
-    case "centerContent":
-      graph.value?.centerContent();
-      break;
-    default:
-      break;
-  }
-};
-
 const initGraph = () => {
-  graph.value = new Graph({
+  graph.value = new CustomGraph({
     container: document.getElementById("container") as HTMLDivElement,
     height: 600,
     background: {
@@ -250,11 +103,11 @@ const initGraph = () => {
       // enabled: true,
     })
   );
-
   initGraphEvent();
   graph.value.select("node-0");
 };
 
+// 初始化 Graph 事件
 const initGraphEvent = () => {
   if (graph.value) {
     graph.value.on("node:selected", ({ node }: { node: Node }) => {
@@ -276,6 +129,7 @@ const getFlowableData = () => {
   console.log("flowableData :>> ", flowableData);
 };
 
+// 销毁 Graph 实例
 const disposeGraph = () => {
   if (graph.value) {
     graph.value.dispose();
@@ -285,6 +139,8 @@ const disposeGraph = () => {
 
 <style scoped>
 .flowable {
+  height: 100%;
+  width: 100%;
   padding: 10px;
 }
 #container {

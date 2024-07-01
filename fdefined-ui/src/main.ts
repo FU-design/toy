@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import pinia from "@/store/index";
+import pinia from "@/stores/index";
 import plugin from "./plugins";
 import "./theme/index.css";
 const app = createApp(App);

@@ -2,7 +2,15 @@ import { register, getTeleport } from "@antv/x6-vue-shape";
 import StartNode from "./flow-nodes/start.vue";
 import EndNode from "./flow-nodes/end.vue";
 import { defineComponent } from "vue";
-import { Graph, Node, Path, Edge, Platform, StringExt } from "@antv/x6";
+import {
+  Graph,
+  Node,
+  Path,
+  Edge,
+  Platform,
+  StringExt,
+  Options,
+} from "@antv/x6";
 
 // 自定义vue节点
 register({
@@ -63,8 +71,6 @@ register({
   },
 });
 
-export const TeleportContainer = defineComponent(getTeleport());
-
 // 自定义线
 Graph.registerEdge(
   "dag-edge",
@@ -102,3 +108,11 @@ Graph.registerConnector(
   },
   true
 );
+
+export class CustomGraph extends Graph {
+  constructor(option: Partial<Options.Manual>) {
+    super(option);
+  }
+}
+
+export const TeleportContainer = defineComponent(getTeleport());

@@ -1,4 +1,4 @@
-import pageView from "@/layout/pageView.vue";
+import pageView from "@/layouts/pageView.vue";
 const comp = {
   path: "/comp",
   name: "Comp",

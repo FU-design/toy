@@ -4,7 +4,7 @@ import {
   type RouteRecordRaw,
   // createWebHashHistory,
 } from "vue-router";
-import NotFound from "@/layout/NotFound.vue";
+import NotFound from "@/layouts/NotFound.vue";
 import comp from "./modules/comp";
 import question from "./modules/question";
 import minecraft from "./modules/minecraft";
