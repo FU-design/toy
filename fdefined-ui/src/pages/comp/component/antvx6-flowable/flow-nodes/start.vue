@@ -36,6 +36,7 @@ import { Graph, Node, StringExt } from "@antv/x6";
 import { defineComponent, inject, ref } from "vue";
 export default defineComponent({
   setup() {
+    // 此注入是由 @antv/x6-vue-shape 提供给自定义组件的
     const getNode = inject<Function>("getNode") as Function;
     const node = ref<Node>(getNode());
     const data = node.value.getData();
