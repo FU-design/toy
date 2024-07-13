@@ -49,6 +49,7 @@ onMounted(() => {
  * @param o
  */
 const routerSkip = (o: RouteRecordRaw) => {
+  console.log('o :>> ', o);
   router.push({ name: o.name });
 };
 

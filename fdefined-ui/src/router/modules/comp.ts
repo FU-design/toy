@@ -11,7 +11,8 @@ const comp = {
     {
       path: "flowable",
       name: "Flowable",
-      component: () => import("@/pages/comp/component/antvx6-flowable/index.vue"),
+      component: () =>
+        import("@/pages/comp/component/antvx6-flowable/index.vue"),
       meta: {
         title: "Flowable",
         menu: true,
@@ -65,15 +66,6 @@ const comp = {
       },
     },
     {
-      path: "canvas",
-      name: "Canvas",
-      component: () => import("@/pages/comp/component/canvas/index.vue"),
-      meta: {
-        title: "Canvas",
-        menu: true,
-      },
-    },
-    {
       path: "xTable",
       name: "XTable",
       component: () => import("@/pages/comp/component/xTable/index.vue"),
@@ -82,34 +74,34 @@ const comp = {
         menu: true,
       },
     },
-    {
-      path: "realMsg",
-      name: "RealMsg",
-      redirect: "/comp/realMsg/loginChat",
-      meta: {
-        title: "RealMsg",
-        menu: true,
-      },
-      children: [
-        {
-          path: "loginChat",
-          name: "LoginChat",
-          component: () =>
-            import("@/pages/comp/component/realMsg/loginChat.vue"),
-          meta: {
-            menu: false,
-          },
-        },
-        {
-          path: "chat",
-          name: "Chat",
-          component: () => import("@/pages/comp/component/realMsg/index.vue"),
-          meta: {
-            menu: false,
-          },
-        },
-      ],
-    },
+    // {
+    //   path: "realMsg",
+    //   name: "RealMsg",
+    //   redirect: "/comp/realMsg/loginChat",
+    //   meta: {
+    //     title: "RealMsg",
+    //     menu: true,
+    //   },
+    //   children: [
+    //     {
+    //       path: "loginChat",
+    //       name: "LoginChat",
+    //       component: () =>
+    //         import("@/pages/comp/component/realMsg/loginChat.vue"),
+    //       meta: {
+    //         menu: false,
+    //       },
+    //     },
+    //     {
+    //       path: "chat",
+    //       name: "Chat",
+    //       component: () => import("@/pages/comp/component/realMsg/index.vue"),
+    //       meta: {
+    //         menu: false,
+    //       },
+    //     },
+    //   ],
+    // },
   ],
 };
 

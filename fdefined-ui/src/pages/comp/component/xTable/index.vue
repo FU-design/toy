@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <x-table
-      :dataSource="data"
+      :dataSource="dataSource"
       :loading="loading"
       :columns="columnsProp"
       :pagination="paginateProp"
-      @change="handleChange"
+      @change="onChange"
     >
       <template #customFilterIcon> 1111 </template>
       <template #td-name="{ text }">
@@ -24,11 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { getCurrentInstance, onMounted } from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
 import type { TableColumnType } from "ant-design-vue";
 import { CopyOutlined } from "@ant-design/icons-vue";
 import xTable from "./xTable.vue";
-import useTable from "@/hooks/useTable";
+import useTable from "@/composables/useTable";
 
 interface DataItem {
   key: string;
@@ -82,19 +82,14 @@ const columns: TableColumnType[] = [
     dataIndex: "operation",
   },
 ];
+const data = ref<DataItem>([]);
 
-const {
-  dataSource: data,
-  columnsProp,
-  loading,
-  paginateProp,
-  handleChange,
-} = useTable({
-  dataSource: [],
-  columns: columns,
-  pagination: undefined,
-});
+const { dataSource, columnsProp, loading, paginateProp, onChange } =
+  useTable<DataItem>(columns, data.value, undefined);
 
+/**
+ * 模拟数据
+ */
 const initData = () => {
   for (let i = 0; i < 10000; i++) {
     const item: DataItem = {
