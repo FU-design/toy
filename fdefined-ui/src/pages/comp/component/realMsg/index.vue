@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount } from "vue";
 import { type MsgBox, type PosType, MessageType, Pos } from "./type";
-import useAuthStore from "@/store/authorization";
+import useAuthStore from "@/stores/authorization";
 import { storeToRefs } from "pinia";
 import WebSocketClient from "./websocket.ts";
 import { ChatInfo } from "@/api/login/types.ts";

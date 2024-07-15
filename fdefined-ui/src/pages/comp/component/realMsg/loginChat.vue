@@ -22,7 +22,7 @@
 import { onMounted, ref, unref } from "vue";
 import AutoForm from "../autoForm/autoForm.vue";
 import { useRouter } from "vue-router";
-import useAuthStore from "@/store/authorization";
+import useAuthStore from "@/stores/authorization";
 import { login } from "@/api/login/index";
 import type { ChatInfo } from "@/api/login/types";
 

@@ -1,6 +1,6 @@
 import router from "@/router";
 import axios from "axios";
-import useAuthStore from "@/store/authorization";
+import useAuthStore from "@/stores/authorization";
 
 import type {
   AxiosInstance,
