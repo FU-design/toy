@@ -49,7 +49,7 @@ onMounted(() => {
  * @param o
  */
 const routerSkip = (o: RouteRecordRaw) => {
-  console.log('o :>> ', o);
+  console.log("o :>> ", o);
   router.push({ name: o.name });
 };
 
@@ -60,16 +60,63 @@ const handleFold = () => {
 
 <style lang="scss" scoped>
 .aside-wrp {
-  position: relative;
-  display: flex;
-}
-aside {
-  min-width: 200px;
   width: 18vw;
-  height: 100vh;
+  height: 100%;
+  display: flex;
   background-color: $side-bg;
-  transition: 0.3s ease;
+  transition: 0.5s ease;
+  position: relative;
+}
 
+// /* 针对手机竖屏的样式 */
+// @media (max-width: 320px) {
+//   .aside-wrp {
+//     width: 10px;
+//   }
+// }
+
+// /* 针对小屏幕（手机）的样式 */
+// @media (max-width: 480px) {
+//   .aside-wrp {
+//     width: 100px;
+//   }
+// }
+
+/* 针对中小屏幕（大屏手机和小平板）的样式 */
+// @media (max-width: 600px) {
+//   .aside-wrp {
+//     width: 10px;
+//   }
+// }
+
+/* 针对中等屏幕（平板竖屏）的样式 */
+@media (max-width: 768px) {
+  .aside-wrp {
+    width: 10px;
+  }
+}
+
+// /* 针对大屏幕（平板横屏、小型桌面显示器）的样式 */
+// @media (min-width: 992px) {
+//   .aside-wrp {
+//   }
+// }
+
+// /* 针对特大屏幕（桌面显示器）的样式 */
+// @media (min-width: 1200px) {
+//   .aside-wrp {
+//   }
+// }
+
+// /* 针对超大屏幕（大型桌面显示器）的样式 */
+// @media (max-width: 1600px) {
+//   .aside-wrp {
+//   }
+// }
+
+aside {
+  width: 100%;
+  height: 100%;
   h1 {
     padding: 16px;
     margin: 0;
@@ -110,7 +157,7 @@ aside {
 }
 .folded {
   width: 10px;
-  & > aside {
+  & > .aside-wrp {
     transform: translateX(-100vh);
   }
 }

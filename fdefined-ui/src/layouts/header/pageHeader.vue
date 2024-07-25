@@ -8,7 +8,7 @@
 header {
   width: 100%;
   height: 24px;
-  background-color: aliceblue;
+  // background-color: aliceblue;
   position: absolute;
 }
 </style>

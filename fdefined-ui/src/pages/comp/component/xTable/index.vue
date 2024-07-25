@@ -82,7 +82,7 @@ const columns: TableColumnType[] = [
     dataIndex: "operation",
   },
 ];
-const data = ref<DataItem>([]);
+const data = ref<DataItem[]>([]);
 
 const { dataSource, columnsProp, loading, paginateProp, onChange } =
   useTable<DataItem>(columns, data.value, undefined);

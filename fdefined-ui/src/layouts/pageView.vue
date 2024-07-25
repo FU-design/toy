@@ -24,7 +24,7 @@ import PageLayout from "./pageLayout.vue";
   width: 100%;
   height: 100%;
   /* background-color: aliceblue; */
-  background-color: #f2f3f5;
+  /* background-color: #f2f3f5; */
 }
 /*
   进入和离开动画可以使用不同

@@ -28,6 +28,7 @@ onMounted(() => {
     padding: 0 10px;
     background-color: $page-bg;
     position: relative;
+    overflow: auto;
   }
 }
 </style>
