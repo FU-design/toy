@@ -2,16 +2,18 @@
   <div class="aside-wrp" :class="{ folded: fold }">
     <aside>
       <h1 class="web-title">Fdefined</h1>
-      <ul class="web-options">
-        <li
-          :class="{ selected: isActive(m.path) }"
-          v-for="m in routerMap"
-          :key="m.name"
-          @click="routerSkip(m)"
-        >
-          <span class="web-options-text">{{ m.meta.title }}</span>
-        </li>
-      </ul>
+      <div class="menu-wrap">
+        <ul class="menu-list">
+          <li
+            :class="{ selected: isActive(m.path) }"
+            v-for="m in routerMap"
+            :key="m.name"
+            @click="routerSkip(m)"
+          >
+            <span class="menu-list-text">{{ m.meta.title }}</span>
+          </li>
+        </ul>
+      </div>
     </aside>
     <div class="fold-btn">
       <svg width="100%" height="100%" @click="handleFold">
@@ -49,7 +51,6 @@ onMounted(() => {
  * @param o
  */
 const routerSkip = (o: RouteRecordRaw) => {
-  console.log("o :>> ", o);
   router.push({ name: o.name });
 };
 
@@ -122,7 +123,13 @@ aside {
     margin: 0;
     border-bottom: 1px solid $border-color;
   }
-  .web-options {
+  .menu-wrap {
+    height: 100%;
+    padding: 16px 0;
+    margin-right: 10px;
+    overflow: auto;
+  }
+  .menu-list {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
@@ -155,12 +162,14 @@ aside {
     }
   }
 }
+
 .folded {
   width: 10px;
   & > .aside-wrp {
     transform: translateX(-100vh);
   }
 }
+
 .fold-btn {
   position: absolute;
   top: 50%;
