@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # 仅在推送到默认分支时运行。
   push:
-    branches: ['main']
+    branches: ["main"]
 
   # 这个选项可以使你手动在 Action tab 页面触发工作流
   workflow_dispatch:
@@ -17,7 +17,7 @@ permissions:
 
 # 允许一个并发的部署
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -40,18 +40,18 @@ jobs:
         with:
           node-version: 18.x
           cache: pnpm
-          cache-dependency-path: '**/pnpm-lock.yaml'
+          cache-dependency-path: "**/pnpm-lock.yaml"
       - name: Install dependencies
-        run: cd fdefined-ui && pnpm i
+        run: pnpm i
       - name: Build
-        run: cd fdefined-ui && npm run build
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
-          path: './fdefined-ui/dist'
+          path: "./fdefined-ui/dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
