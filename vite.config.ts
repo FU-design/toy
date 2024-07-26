@@ -31,7 +31,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     //todo 解决打包后的访问页面空白问题 (https://blog.csdn.net/muguli2008/article/details/122306515?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-122306515-blog-125894321.235^v43^pc_blog_bottom_relevance_base3&spm=1001.2101.3001.4242.1&utm_relevant_index=3
     // base: "./", // 默认 / ,配置文件的根目录为相对路径
-    // base: "/toy/",
+    // base: "/toy/", (当使用 github pages部署的时候，需要配置该 base)
     plugins: [
       vue(),
       vueJsx(),
