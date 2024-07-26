@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  section {
+    margin: 0;
+    padding: 16px;
+    height: 200px;
+  }
+
+  .search-select {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #a7a7a7;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .search-select input {
+    border: none;
+  }
+
+  .search-select input:focus-visible {
+    outline: none;
+  }
+
+  .droplist {
+    width: 100%;
+    max-height: 300px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    list-style: none;
+    /* background-color: #e0e0e0; */
+    border: 1px solid #a7a7a7;
+    left: 0;
+    top: 32px;
+    border-radius: 8px;
+    padding: 4px;
+    box-sizing: border-box;
+    overflow: auto;
+    display: none;
+  }
+
+  .visible {
+    display: block;
+  }
+
+  .droplist::-webkit-scrollbar {
+    width: 6px;
+  }
+
+
+  .droplist::-webkit-scrollbar-thumb {
+    background: #a8a8a8;
+    border-radius: 8px;
+  }
+
+  .droplist .op {
+    padding: 2px 4px;
+    text-align: start;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+
+  .actived {
+    background-color: rgb(155, 204, 226);
+  }
+
+  .highlight {
+    background-color: #f5f1f1;
+  }
+
+  .selected {
+    display: inline-block;
+  }
+
+  .input-inner {
+    flex: 1;
+    font-size: 16px;
+    padding: 0 2px;
+    line-height: 27px;
+  }
+</style>
+
+<body>
+  <section>
+    <div class="search-select">
+      <div class="selected"></div>
+      <input autocomplete="off" class="input-inner" />
+      <ul class="droplist"></ul>
+    </div>
+  </section>
+  <script>
+    const metaData = new Array(100).fill(1).map((v, idx) => `Apple_${idx}`)
+    // const metaData = ['Apple', 'Banana', 'Orange', 'Mango']
+    const searchSelect = document.querySelector('.search-select')
+    const selected = document.querySelector('.selected')
+    const input = document.querySelector('.input-inner')
+    const opsWrp = document.querySelector('.droplist')
+    let opsList = []
+    let currIdx = 0
+
+    window.addEventListener('DOMContentLoaded', initEvent)
+
+    // 初始化所有事件
+    function initEvent() {
+      input.addEventListener('focus', loadOps)
+      input.addEventListener('input', debounce(loadOps))
+      document.addEventListener('click', handleGlobalClick)
+    }
+
+    // 初始化监听全局点击事件，为实现点击除了下拉表单操作区域，其他地方会清除
+    function handleGlobalClick(e) {
+      const { target: clicked } = e
+      if (opsWrp && (opsWrp.contains(clicked) || clicked === input)) {
+        //📝 设置了输入元素的初始值，只在页面加载时有效，后续的value值修改则再无关联 input.setAttribute('value', op.textContent)
+        if (opsWrp.contains(clicked) && clicked.matches('.op')) {
+          setSelected(clicked)
+          return
+        }
+        input.focus()
+        return
+      }
+      clearInput();
+    }
+
+    // 滚动条联动键盘上下键操作
+    function ensureVisible(el) {
+      const container = opsWrp;
+      const containerRect = container.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+
+      if (elRect.bottom > containerRect.bottom) {
+        container.scrollTop += elRect.bottom - containerRect.bottom;
+      } else if (elRect.top < containerRect.top) {
+        container.scrollTop -= containerRect.top - elRect.top;
+      }
+    }
+
+    // 上下按键事件处理
+    function handleKeyDown(e) {
+      const { key } = e
+      const len = opsList.length
+
+      if (key === 'ArrowDown' || key === 'ArrowUp') {
+        if (key === 'ArrowDown' ? len > currIdx + 1 : currIdx > 0) {
+          !isActived(opsList[currIdx]) && setHighlight(opsList[currIdx])
+          key === 'ArrowDown' ? currIdx++ : currIdx--
+          !isActived(opsList[currIdx]) && setHighlight(opsList[currIdx], true)
+        } else {
+          setHighlight(opsList[currIdx])
+          key === 'ArrowDown' ? currIdx = 0 : currIdx = len - 1
+          !isActived(opsList[currIdx]) && setHighlight(opsList[currIdx], true)
+        }
+      }
+      if (key === 'Enter') {
+        setSelected(opsList[currIdx])
+        input.blur()
+      }
+    }
+
+
+    // 初始化高亮的位置
+    function initCurrHighlightOp() {
+      let currentOp = null
+      opsList = document.querySelectorAll('.op')
+      const len = opsList.length
+      // 这里可以选择使用二分法
+      for (let i = 0; i < len; i++) {
+        if (opsList[i].matches('.actived')) {
+          currIdx = i
+          currentOp = opsList[i]
+          return
+        }
+      }
+      if (!currentOp) {
+        currIdx = 0
+        opsList[currIdx] && opsList[currIdx].classList.toggle('highlight')
+      }
+    }
+
+
+    // 确认选择后，设置选择项
+    function setSelected(op) {
+      const span = document.createElement('span')
+      span.textContent = op.innerText
+      selected.innerHTML = ''
+      selected.appendChild(span)
+      clearInput()
+    }
+
+
+    // 输入框获取焦点
+    function loadOps() {
+      let fuzzyQuery = metaData.filter(v => v.includes(input.value))
+      currIdx = 0
+      opsWrp.classList.add('visible')
+      !input.value && (fuzzyQuery = metaData)
+      opsWrp.innerHTML = ''
+      opsWrp.appendChild(createOpsItem(fuzzyQuery))
+      document.addEventListener('keydown', handleKeyDown)
+      initCurrHighlightOp()
+    }
+
+
+    // 鼠标移入
+    function handleOpHover(e) {
+      const childArr = Array.prototype.slice.call(opsWrp.children);
+      childArr[currIdx].classList.remove('highlight')
+      if (!e.target.matches('.actived')) {
+        const idx = childArr.indexOf(e.target);
+        setHighlight(opsWrp.children[idx], true)
+        currIdx = idx
+      }
+    }
+
+    // 创建下拉选项
+    function createOpsItem(opData) {
+      const activedOp = selected.children[0]?.textContent
+      const fragment = document.createDocumentFragment()
+      const len = opData.length
+      if (len > 0) {
+        for (let i = 0; i < len; i++) {
+          const li = document.createElement('li')
+          li.classList.add('op')
+          li.onmouseenter = (e) => handleOpHover(e)
+          if (opData[i] === activedOp) {
+            li.classList.toggle('actived')//📝 元素上是否存在 actived ，存在则移除；不存在则添加
+          }
+          li.textContent = opData[i]
+          fragment.appendChild(li)
+        }
+      } else {
+        const li = document.createElement('li')
+        li.textContent = '暂无数据'
+        fragment.appendChild(li)
+      }
+      return fragment
+    }
+
+    // 清除下拉框及输入框内容
+    function clearInput() {
+      if (opsWrp) {
+        input.value = ''
+        opsWrp.classList.remove('visible')
+      }
+    }
+
+
+    function isActived(el) {
+      return el.matches('.actived')
+    }
+
+
+    function setHighlight(el, isHighlight = false) {
+      if (isHighlight) {
+        el.classList.add('highlight');
+        ensureVisible(el);
+      } else {
+        el.classList.remove('highlight')
+      }
+    }
+
+
+    // 防抖
+    function debounce(func, delay = 500) {
+      let timer = null
+      return (...args) => {
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+          func(...args)
+        }, delay)
+      }
+    }
+
+  </script>
+</body>
+
+</html>

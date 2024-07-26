@@ -1,0 +1,36 @@
+@import url("highlight.js/styles/atom-one-dark.css");
+
+.hjs {
+    font-size: 8px;
+}
+
+/* 重置 highLight.js 中代码字体样式 */
+code,
+kbd,
+pre,
+samp {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        Liberation Mono, Courier New, monospace;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+/*类名不是 hljs 的 code 标签*/
+code:not(.hljs) {
+    padding: 0 4px;
+    margin: 0 2px;
+    border-radius: 4px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+        rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    background-color: $code-bg;
+    box-sizing: border-box;
+}
+
+pre {
+    margin: 5px 0;
+
+    code {
+        margin: 5px 0;
+        border-radius: 8px;
+    }
+}

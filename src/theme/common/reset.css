@@ -1,0 +1,107 @@
+/* 滚动条样式 */
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::scrollbar {
+  width: 6px;
+  height: 6px;
+}
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+  display: none;
+  -webkit-box-shadow: inset 0 0 2px #b18933;
+}
+::scrollbar-track {
+  display: none;
+  -webkit-box-shadow: inset 0 0 2px #98f165;
+  border-radius: 1px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #e9e9e9;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 102, 102, 0.044);
+}
+::scrollbar-thumb {
+  border-radius: 10px;
+  background: #e9e9e9;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 102, 102, 0.044);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #f8f8f8;
+}
+
+/* 确保所有元素都使用边框盒模型 */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* 图片和视频的响应式 */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 链接样式 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 全局字体大小 */
+html {
+  font-size: 16px; /* 基础字体大小 */
+}
+
+/* 媒体查询断点 */
+/* 超小屏幕（手机） */
+/* @media (max-width: 320px) {
+  html {
+    font-size: 12px;
+  }
+} */
+
+/* 小屏幕（手机） */
+/* @media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* 中等屏幕（平板电脑） */
+/* @media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+} */
+
+/* 大屏幕（笔记本电脑） */
+/* @media (max-width: 1024px) {
+  html {
+    font-size: 18px;
+  }
+} */
+
+/* 超大屏幕（桌面显示器） */
+/* @media (max-width: 1200px) {
+  html {
+    font-size: 20px;
+  }
+} */
+
+/* 更大屏幕（大桌面显示器） */
+/* @media (max-width: 1600px) {
+  html {
+    font-size: 22px;
+  }
+} */

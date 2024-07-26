@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sign-in</title>
+  <link rel="stylesheet" type="text/css" href="http://localhost:3001/sign-in.css">
+</head>
+
+
+<body>
+  <div id="app">
+    <form id="profile-form">
+      <h1>Sign In</h1>
+      <div>
+        <label for="name">name: </label>
+        <input type="text" autocomplete="off" name="name" placeholder="Enter your name" id="name" required />
+      </div>
+      <div>
+        <label for="email">email: </label>
+        <input type="email" autocomplete="off" name="email" placeholder="Enter your email" id="email" required />
+      </div>
+      <div class="btn">
+        <button id="submit" type="submit">submit</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    const profileForm = document.querySelector('#profile-form')
+    const submit = document.getElementById('submit')
+
+    profileForm.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const profile = {}
+      const formData = new FormData(profileForm)
+      // append()
+      // delete()
+      // entries()
+      // forEach()
+      // get()
+      // getAll()
+      // has()
+      // keys()
+      // set()
+      // values()
+      for (let [key, val] of formData.entries()) {
+        if (!profile.hasOwnProperty(key)) {
+          profile[key] = val
+        }
+      }
+      // 发送数据给父页面
+      window.opener.postMessage(profile, 'http://localhost:3000');
+      // 关闭当前窗口
+      window.close();
+    })
+    window.addEventListener('message', (e) => {
+      // 检查消息来源
+      if (e.origin !== "http://localhost:3000") {
+        return;
+      }
+    });
+  </script>
+</body>
+
+</html>
+
+<!-- 
+
+### 1. `document.getElementById()` 或 `document.querySelector()`
+
+- **优点**：简单直接，易于理解和使用。允许你精确地控制哪个元素的值被获取，适用于表单元素较少或需要单独处理某些字段的情况。
+- **缺点**：当表单元素很多时，代码可能会变得冗长和重复。
+
+### 2. `FormData`对象（主流）
+
+- **优点**：简化了表单数据的处理，特别是当处理表单提交或需要操作多个表单字段时。`FormData`可以与AJAX请求一起使用，方便地发送表单数据。
+- **缺点**：较新的API，可能在一些旧浏览器上不被支持（IE10及以下）。
+
+### 3. 使用`name`属性与`document.forms`
+
+- **优点**：直接通过表单和字段的`name`属性访问，代码简洁，易于维护。适用于需要整个表单数据的场景。
+- **缺点**：在使用非标准或动态表单元素名称时，可能不如`querySelector`灵活。
+
+### 推荐的使用场景：
+
+- **对于较小的表单**，或者需要对表单中的特定字段进行精细控制时，使用`document.getElementById()`或`document.querySelector()`是一个不错的选择。
+- **当你需要处理表单的提交，并且想要以非常简洁的方式获取所有表单数据**时，`FormData`是一个很好的选择。特别是在需要与后端API交互时，`FormData`可以简化很多工作。
+- **对于需要通过脚本动态处理多个表单**的应用程序，使用`document.forms`配合表单和元素的`name`属性可以提供一个清晰的结构。
+
+ -->

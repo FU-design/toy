@@ -1,0 +1,40 @@
+{
+  "name": "vue3-86_10-9",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --open --mode dev",
+    "build-tsc": "vue-tsc && vite build",
+    "build": "vite build --mode pro",
+    "preview": "vite build --mode pro && vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "@antv/x6": "^2.18.1",
+    "@antv/x6-plugin-selection": "^2.2.2",
+    "@antv/x6-vue-shape": "^2.1.2",
+    "@highlightjs/vue-plugin": "^2.1.0",
+    "@twist-space/vue3-icons": "^0.2.11",
+    "@types/node": "^20.8.10",
+    "ant-design-vue": "^4.0.6",
+    "axios": "^1.7.2",
+    "clipboard": "^2.0.11",
+    "highlight.js": "^11.9.0",
+    "marked": "^9.1.5",
+    "marked-highlight": "^2.0.6",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "sass": "^1.71.1",
+    "typescript": "^5.0.2",
+    "unplugin-vue-components": "^0.25.2",
+    "vite": "^4.4.5",
+    "vue-tsc": "^1.8.5"
+  }
+}
