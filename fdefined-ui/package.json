@@ -7,7 +7,7 @@
     "dev": "vite --open --mode dev",
     "build-tsc": "vue-tsc && vite build",
     "build": "vite build --mode pro",
-    "preview": "vite preview"
+    "preview": "vite build --mode pro && vite preview"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
