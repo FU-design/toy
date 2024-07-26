@@ -24,7 +24,6 @@ const router = createRouter({
 });
 
 router.beforeEach((_to, _from, next) => {
-  // ❗️ 避免无限重定向
   // if (to.name != "LoginChat") {
   //   const auth = localStorage.getItem("auth");
   //   if (auth) {
