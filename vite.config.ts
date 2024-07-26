@@ -96,7 +96,7 @@ export default defineConfig(({ command, mode }) => {
     build: {
       target: "modules", //默认： 'modules'设置最终构建的浏览器兼容目标
       outDir: "dist", //默认：dist 指定输出路径（相对于 项目根目录).
-      assetsDir: "assets", //默认：assets 指定生成静态资源的存放路径（相对于 build.outDir）。
+      // assetsDir: "assets", //默认：assets 指定生成静态资源的存放路径（相对于 build.outDir）。
     },
   };
 });
