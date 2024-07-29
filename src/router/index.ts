@@ -1,8 +1,8 @@
 import {
   createRouter,
-  // createWebHistory,
+  createWebHistory,
   type RouteRecordRaw,
-  createWebHashHistory,
+  // createWebHashHistory,
 } from "vue-router";
 import NotFound from "@/layouts/NotFound.vue";
 import comp from "./modules/comp";
@@ -18,8 +18,8 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-  // history: createWebHistory(),
-  history: createWebHashHistory(),
+  history: createWebHistory(),
+  // history: createWebHashHistory(),
   routes,
 });
 
