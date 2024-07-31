@@ -8,7 +8,7 @@
       <label>Range</label>
       <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Range"></a>
     </div> -->
-    <cardBox>
+    <card-box>
       <div class="wrp-inner">
         <div class="select-plane" @click="handleClick"></div>
         <div class="list-box">
@@ -28,13 +28,13 @@
           </div>
         </div>
       </div>
-    </cardBox>
-    <cardBox>
+    </card-box>
+    <card-box>
       <template #header>
         <label>核心</label>
       </template>
-      <div v-once v-md="readme"></div>
-    </cardBox>
+      <div v-once v-md="README"></div>
+    </card-box>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 import MixInput from "./tagTextMixInput.vue";
 import { ListItem, InnerOps, CompType } from "./type";
 import { initSelectData, fetchData } from "./request";
-import readme from "./README.md?raw";
+import README from "./README.md?raw";
 
 const list = ref<ListItem[]>([]);
 const currMixFlag = ref<ListItem>();

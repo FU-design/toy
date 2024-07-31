@@ -1,6 +1,6 @@
 <template>
   <div class="wrp">
-    <cardBox>
+    <card-box>
       <template #header> 瀑布流实现（js） </template>
       <div class="warefall-flow">
         <div class="grid">
@@ -9,21 +9,21 @@
           </div>
         </div>
       </div>
-    </cardBox>
+    </card-box>
 
-    <cardBox>
+    <card-box>
       <template #header>
         <div>实现方式</div>
       </template>
-      <div v-once v-md="readme"></div>
-    </cardBox>
+      <div v-once v-md="README"></div>
+    </card-box>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import readme from "./README.md?raw";
-import { getImgs } from "./request";
+import README from "./README.md?raw";
+import { getImgs } from "@/utils/mock";
 import { layoutWarefall, loadScroll } from "./warefallFlowUtil";
 
 const items = ref<string[]>([]);

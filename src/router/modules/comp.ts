@@ -9,71 +9,80 @@ const comp = {
   },
   children: [
     {
-      path: "flowable",
-      name: "Flowable",
-      component: () =>
-        import("@/pages/comp/component/antvx6-flowable/index.vue"),
+      path: "lazyLoadImg",
+      name: "LazyLoadImg",
+      component: () => import("@/pages/comp/component/lazy-load-img/index.vue"),
       meta: {
-        title: "Flowable",
+        title: "LazyLoadImg",
         menu: true,
       },
     },
-    {
-      path: "scrollmore",
-      name: "Scrollmore",
-      component: () => import("@/pages/comp/component/scrollmore/index.vue"),
-      meta: {
-        title: "Scrollmore",
-        menu: true,
-      },
-    },
-    {
-      path: "autoFrom",
-      name: "AutoFrom",
-      component: () => import("@/pages/comp/component/autoForm/index.vue"),
-      meta: {
-        title: "AutoFrom",
-        menu: true,
-      },
-    },
-    {
-      path: "warefallFlow",
-      name: "WarefallFlow",
-      component: () =>
-        import("@/pages/comp/component/warefallFlow/warefallFow.vue"),
-      meta: {
-        title: "WarefallFlow",
-        menu: true,
-      },
-    },
-    {
-      path: "drag",
-      name: "Drag",
-      component: () => import("@/pages/comp/component/drag/index.vue"),
-      meta: {
-        title: "Drag",
-        menu: true,
-      },
-    },
-    {
-      path: "tagTextMixInput",
-      name: "TagTextMixInput",
-      component: () =>
-        import("@/pages/comp/component/tagTextMixInput/index.vue"),
-      meta: {
-        title: "TagTextMixInput",
-        menu: true,
-      },
-    },
-    {
-      path: "xTable",
-      name: "XTable",
-      component: () => import("@/pages/comp/component/xTable/index.vue"),
-      meta: {
-        title: "XTable",
-        menu: true,
-      },
-    },
+    // {
+    //   path: "flowable",
+    //   name: "Flowable",
+    //   component: () =>
+    //     import("@/pages/comp/component/antvx6-flowable/index.vue"),
+    //   meta: {
+    //     title: "Flowable",
+    //     menu: true,
+    //   },
+    // },
+    // {
+    //   path: "scrollmore",
+    //   name: "Scrollmore",
+    //   component: () => import("@/pages/comp/component/scrollmore/index.vue"),
+    //   meta: {
+    //     title: "Scrollmore",
+    //     menu: true,
+    //   },
+    // },
+    // {
+    //   path: "autoFrom",
+    //   name: "AutoFrom",
+    //   component: () => import("@/pages/comp/component/autoForm/index.vue"),
+    //   meta: {
+    //     title: "AutoFrom",
+    //     menu: true,
+    //   },
+    // },
+    // {
+    //   path: "warefallFlow",
+    //   name: "WarefallFlow",
+    //   component: () =>
+    //     import("@/pages/comp/component/warefallFlow/warefallFow.vue"),
+    //   meta: {
+    //     title: "WarefallFlow",
+    //     menu: true,
+    //   },
+    // },
+    // {
+    //   path: "drag",
+    //   name: "Drag",
+    //   component: () => import("@/pages/comp/component/drag/index.vue"),
+    //   meta: {
+    //     title: "Drag",
+    //     menu: true,
+    //   },
+    // },
+    // {
+    //   path: "tagTextMixInput",
+    //   name: "TagTextMixInput",
+    //   component: () =>
+    //     import("@/pages/comp/component/tagTextMixInput/index.vue"),
+    //   meta: {
+    //     title: "TagTextMixInput",
+    //     menu: true,
+    //   },
+    // },
+    // {
+    //   path: "xTable",
+    //   name: "XTable",
+    //   component: () => import("@/pages/comp/component/xTable/index.vue"),
+    //   meta: {
+    //     title: "XTable",
+    //     menu: true,
+    //   },
+    // },
     {
       path: "realMsg",
       name: "RealMsg",

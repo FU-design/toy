@@ -1,6 +1,6 @@
 <template>
   <div class="wrp">
-    <cardBox>
+    <card-box>
       <template #header>
         <div class="get-data-btn">
           <div>滚动加载大量数据简单实现</div>
@@ -12,7 +12,7 @@
           <div class="row">{{ $row }}</div>
         </template>
       </scroll-more-data>
-    </cardBox>
+    </card-box>
   </div>
 </template>
 

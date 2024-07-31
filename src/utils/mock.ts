@@ -36,3 +36,37 @@ export const mockData = (size = 1000): Promise<MockData> => {
     }, 500);
   });
 };
+
+/**
+ * 模拟获取图片
+ * @returns
+ */
+export const getImgs = (
+  size: number = 50,
+  height?: number
+): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    try {
+      setTimeout(() => {
+        resolve(getImgsUrlList(size, height));
+      }, 200);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getImgsUrlList = (size: number, height?: number) => {
+  return Object.keys(new Array(size).fill(1)).map((_v, idx) => {
+    return `https://picsum.photos/id/${idx}/400/${
+      height || generateRandomNumber()
+    }`;
+  });
+};
+
+const generateRandomNumber = () => {
+  // 生成随机宽度和高度，例如，这里设置最大宽高为 800 像素
+  const maxHeight = 200;
+  const randomHeight = Math.floor(Math.random() * maxHeight) + 1;
+  return Math.max(randomHeight, 50);
+};

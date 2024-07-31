@@ -56,7 +56,7 @@ export const parseMD = (content: string) => {
       langPrefix: "hljs language-",
       highlight(code, lang) {
         const language = hljs.getLanguage(lang) ? lang : "plaintext";
-        return hljs.highlight(code, { language }).value; // https://highlightjs.readthedocs.io/en/latest/readme.html#
+        return hljs.highlight(code, { language }).value; // https://highlightjs.readthedocs.io/en/latest/README.html#
       },
     })
   );
