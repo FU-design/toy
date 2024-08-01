@@ -52,7 +52,7 @@ const intersectionCallback = (
 const setIntersectionObserver = () => {
   const lazyImgs = document.querySelectorAll("img[data-src]");
   const options = {
-    root: document.querySelector(".img-wrp"),
+    root: document.querySelector(".img-wrp"), // 当前监听的元素所交叉的父元素（必须是父元素）默认是文档的视口（null）
     rootMargin: "0px",
     threshold: 0.1,
   };
