@@ -85,13 +85,13 @@ const columns: TableColumnType[] = [
 const data = ref<DataItem[]>([]);
 
 const { dataSource, columnsProp, loading, paginateProp, onChange } =
-  useTable<DataItem>(columns, data.value, undefined);
+  useTable<DataItem>(columns, data.value);
 
 /**
  * 模拟数据
  */
 const initData = () => {
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 10; i++) {
     const item: DataItem = {
       key: i.toString(),
       name: `Edrward ${i}`,
@@ -99,6 +99,7 @@ const initData = () => {
       address: `London Park no. ${i}`,
     };
     data.value.push(item);
+    paginateProp.value.total = 100;
   }
 };
 

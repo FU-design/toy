@@ -74,15 +74,15 @@ const comp = {
     //     menu: true,
     //   },
     // },
-    // {
-    //   path: "xTable",
-    //   name: "XTable",
-    //   component: () => import("@/pages/comp/component/xTable/index.vue"),
-    //   meta: {
-    //     title: "XTable",
-    //     menu: true,
-    //   },
-    // },
+    {
+      path: "xTable",
+      name: "XTable",
+      component: () => import("@/pages/comp/component/xTable/index.vue"),
+      meta: {
+        title: "XTable",
+        menu: true,
+      },
+    },
     {
       path: "realMsg",
       name: "RealMsg",
