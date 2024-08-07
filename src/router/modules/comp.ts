@@ -17,6 +17,24 @@ const comp = {
         menu: true,
       },
     },
+    {
+      path: "canvas",
+      name: "Canvas",
+      component: () => import("@/pages/comp/component/canvas/index.vue"),
+      meta: {
+        title: "Canvas",
+        menu: true,
+      },
+    },
+    {
+      path: "threeJs",
+      name: "ThreeJs",
+      component: () => import("@/pages/comp/component/threeJs/index.vue"),
+      meta: {
+        title: "ThreeJs",
+        menu: true,
+      },
+    },
     // {
     //   path: "flowable",
     //   name: "Flowable",
