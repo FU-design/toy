@@ -2,12 +2,14 @@
   <div>
     <card-box>
       <div class="img-wrp">
-        <div v-for="(url, index) in imgs" :key="index">
-          <img
-            src="https://dummyimage.com/400x200/ddd/888"
-            alt="404"
-            :data-src="url"
-          />
+        <div class="img-box">
+          <div v-for="(url, index) in imgs" :key="index">
+            <img
+              src="https://dummyimage.com/400x200/ddd/888"
+              alt="404"
+              :data-src="url"
+            />
+          </div>
         </div>
       </div>
     </card-box>
@@ -67,17 +69,21 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .img-wrp {
+  height: 500px;
+  overflow: auto;
+  position: relative;
+}
+.img-box {
+  position: absolute;
   display: flex;
   flex-wrap: wrap;
-  max-height: 500px;
-  overflow: auto;
+  padding: 1em;
+  left: 50%;
+  transform: translateX(-50%);
   div {
-    margin-right: 1%;
+    margin: 0.5em;
     text-align: center;
-    flex: 0 1 calc(100% / 4 - 1%);
-    &:nth-of-type(4n) {
-      margin-right: 0;
-    }
+    flex: 0 1 calc((100% / 4) - 1em);
   }
 }
 </style>
