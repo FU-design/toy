@@ -1,24 +1,27 @@
 <template>
   <div class="canvas-box">
-    <canvas></canvas>
+    <canvas id="demo1"></canvas>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { DrawCanvas } from "./demo1";
+import { onMounted, onUnmounted, ref } from "vue";
+import { DrawCanvas } from "./DrawCanvas2D";
 
 const drawCanvas = ref<DrawCanvas | null>(null);
 
+const drawRect = (ctx: CanvasRenderingContext2D | null) => {
+  if (!ctx) return;
+  ctx.fillStyle = "red";
+  ctx.fillRect(10, 10, 100, 100);
+};
+
 onMounted(() => {
-  // 确保选择器正确匹配
-  drawCanvas.value = new DrawCanvas("canvas");
-  if (!drawCanvas.value) {
-    return;
-  }
-  const ctx = drawCanvas.value?.canvas?.getContext("2d");
-  ctx!.fillStyle = "red";
-  ctx?.fillRect(10, 10, 100, 100);
+  drawCanvas.value = new DrawCanvas("#demo1", drawRect);
+});
+
+onUnmounted(() => {
+  drawCanvas.value?.destroyedCanvas();
 });
 </script>
 
@@ -28,6 +31,7 @@ onMounted(() => {
   height: 500px;
   box-sizing: border-box;
   margin-top: 16px;
-  border: 1px solid #000;
+  border: 1px solid #eee;
+  background-color: #fff;
 }
 </style>
