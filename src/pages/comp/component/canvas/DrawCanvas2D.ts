@@ -13,7 +13,7 @@ export class DrawCanvas {
     this.initCanvas(container);
   }
 
-  initCanvas(container: string | HTMLCanvasElement | null) {
+  private initCanvas(container: string | HTMLCanvasElement | null) {
     if (typeof container === "string") {
       const canvasElement = document.querySelector(container);
       canvasElement && (this.canvas = canvasElement as HTMLCanvasElement)
@@ -38,7 +38,7 @@ export class DrawCanvas {
     this.drawCanvas();
   }
 
-  drawCanvas() {
+  private drawCanvas() {
     if (!this.ctx) return;
 
     // 清除画布
@@ -46,21 +46,21 @@ export class DrawCanvas {
     this.drawFunc(this.ctx)
   }
 
-  initResize() {
+  private initResize() {
     const parentEl = this.canvas?.parentElement;
     this.resizeObserver = new ResizeObserver(() => {
       this.setCanvasSize();
       this.drawCanvas(); // 更新画布
     });
-    if (parentEl) {
-      this.resizeObserver.observe(parentEl);
-    }
+    parentEl && this.resizeObserver.observe(parentEl);
+
   }
 
   /**
    * 设置画布的大小填充整个父容器
+   * 一般canvas默认 pixels（像素） 大小：width：300px; height：150px
    */
-  setCanvasSize() {
+  private setCanvasSize() {
     const parentEl = this.canvas?.parentElement;
     if (this.canvas && parentEl) {
       this.canvas.width = parentEl.offsetWidth;
