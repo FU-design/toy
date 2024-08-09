@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { DrawCanvas } from "./DrawCanvas2D";
 import { getImageUrl } from "@/utils/tool";
 
@@ -117,7 +117,7 @@ const animation = (ctx: CavansRenderCtx2d) => {
   // 设置颜色
   ctx.fillStyle = "blue";
   // 初始信号量
-  let left: number = -200;
+  let left: number = -10;
   // 动画过程
   setInterval(() => {
     // 清除画布,0,0代表从什么位置开始,600,600代表清除的宽度和高度
@@ -126,18 +126,14 @@ const animation = (ctx: CavansRenderCtx2d) => {
     left++;
     // 如果已经走出画布，则更新信号量为初始位置
     if (left > 600) {
-      left = -200;
+      left = -10;
     }
-    ctx.fillRect(left, 100, 50, 50);
-  }, 10);
+    ctx.fillRect(left, 0, 5, 5);
+  }, 300);
 };
 
 onMounted(() => {
   drawCanvas.value = new DrawCanvas("#demo1", draw);
-});
-
-onUnmounted(() => {
-  drawCanvas.value?.destroyedCanvas();
 });
 </script>
 
@@ -149,5 +145,7 @@ onUnmounted(() => {
 }
 canvas {
   background-color: rgb(19, 19, 19);
+  width: 100%;
+  height: 100%;
 }
 </style>
