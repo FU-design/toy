@@ -18,6 +18,15 @@ const comp = {
       },
     },
     {
+      path: "infiniteScroll",
+      name: "InfiniteScroll",
+      component: () => import("@/pages/comp/component/infinite-scroll/index.vue"),
+      meta: {
+        title: "InfiniteScroll",
+        menu: true,
+      },
+    },
+    {
       path: "canvas",
       name: "Canvas",
       component: () => import("@/pages/comp/component/canvas/index.vue"),

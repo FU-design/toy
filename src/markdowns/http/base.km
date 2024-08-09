@@ -1,0 +1,67 @@
+{
+    "root": {
+        "data": {
+            "id": "d3b0bow9zgg0",
+            "created": 1723168700993,
+            "text": "HTTP 请求的内容通称为\"资源\"",
+            "progress": null,
+            "font-size": 18
+        },
+        "children": [
+            {
+                "data": {
+                    "id": "d3b0dxczbqw0",
+                    "created": 1723168876145,
+                    "text": "每个资源对应 URI 进行标识"
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "d3b0fgre9gw0",
+                            "created": 1723168996740,
+                            "text": "统一资源标识符（Uniform Resource Identifier）",
+                            "font-weight": "bold"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "d3b0fo5wkv40",
+                            "created": 1723169012856,
+                            "text": "组成"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "d3b0gvsypx40",
+                                    "created": 1723169107851,
+                                    "text": "统一资源名称（URN）"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "d3b0hbfgkj40",
+                                    "created": 1723169141863,
+                                    "text": "统一资源属性（URC）"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "d3b0hg0asrs0",
+                                    "created": 1723169151830,
+                                    "text": "统一资源定位器  ( URL)"
+                                },
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "template": "right",
+    "theme": "snow-compact",
+    "version": "1.4.43"
+}

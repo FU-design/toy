@@ -73,3 +73,16 @@ export function windowBeforeCloseConfirm() {
 export function getImageUrl(name?: string) {
   return new URL(`../assets/images/${name}.jpg`, import.meta.url).href
 }
+
+
+export function throttle(func: Function, delay: number) {
+  let lastCall = 0;
+  return function (...args: any[]) {
+    const now = new Date().getTime();
+    if (now - lastCall < delay) {
+      return;
+    }
+    lastCall = now;
+    return func(...args);
+  };
+}

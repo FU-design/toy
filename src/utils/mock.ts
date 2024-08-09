@@ -43,12 +43,13 @@ export const mockData = (size = 1000): Promise<MockData> => {
  */
 export const getImgs = (
   size: number = 50,
+  width?: number,
   height?: number
 ): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     try {
       setTimeout(() => {
-        resolve(getImgsUrlList(size, height));
+        resolve(getImgsUrlList(size, width, height));
       }, 200);
     } catch (error) {
       reject(error);
@@ -56,11 +57,10 @@ export const getImgs = (
   });
 };
 
-const getImgsUrlList = (size: number, height?: number) => {
+export const getImgsUrlList = (size: number, width?: number, height?: number) => {
   return Object.keys(new Array(size).fill(1)).map((_v, idx) => {
-    return `https://picsum.photos/id/${idx}/400/${
-      height || generateRandomNumber()
-    }`;
+    return `https://picsum.photos/id/${idx}/${width || 400}/${height || generateRandomNumber()
+      }`;
   });
 };
 
