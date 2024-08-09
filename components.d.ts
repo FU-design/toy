@@ -15,6 +15,7 @@ declare module 'vue' {
     AInput: typeof import('ant-design-vue/es')['Input']
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
+    ASelect: typeof import('ant-design-vue/es')['Select']
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
     CardBox: typeof import('./src/components/cardBox/CardBox.vue')['default']
     Panel: typeof import('./src/components/panel/Panel.vue')['default']
