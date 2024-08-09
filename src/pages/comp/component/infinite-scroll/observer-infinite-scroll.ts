@@ -14,7 +14,6 @@ export class ObserverInfiniteScroll {
   }
 
   private obersverScroll() {
-    console.log('this.loadingFlag :>> ', this.loadingFlag);
     if (!this.loadingFlag) return
     this.scrollObersver = new IntersectionObserver(this.intersectionCallback, this.options);
     this.scrollObersver.observe(this.loadingFlag)
