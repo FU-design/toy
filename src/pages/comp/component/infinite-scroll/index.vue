@@ -84,8 +84,8 @@ const setScrollObersver = (type: number) => {
     const container = document.querySelector(`#${selects[type].label}.container-wrp`);
     obersver.value = new VanillaInfiniteScroll(container, getList, 500);
   } else if (type === 1) {
-    const container = document.querySelector(`#${selects[type].label}.container-wrp`);
-    const loadingFlag = document.querySelector('#loading-flag')
+    const container = document.querySelector(`#${selects[type].label}.container-wrp`); // 容器
+    const loadingFlag = document.querySelector('#loading-flag') // 交叉触发元素
     const options = {
       root: container,
       rootMargin: "0px",
