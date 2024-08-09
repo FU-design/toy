@@ -34,7 +34,7 @@ export class DrawCanvas {
     }
 
     this.initResize();
-    this.setCanvasSize();
+    // this.setCanvasSize();
     this.drawCanvas();
   }
 

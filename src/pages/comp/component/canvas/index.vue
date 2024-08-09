@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from "vue";
 import { DrawCanvas } from "./DrawCanvas2D";
+import { getImageUrl } from "@/utils/tool";
 
 type CavansRenderCtx2d = CanvasRenderingContext2D | null;
 const drawCanvas = ref<DrawCanvas | null>(null);
@@ -17,7 +18,9 @@ const draw = (ctx: CavansRenderCtx2d) => {
   // drawStrokeRect(ctx);
   // drawCurves(ctx);
   // drawPieChart(ctx);
-  drawText(ctx);
+  // drawText(ctx);
+  // drawImg(ctx);
+  animation(ctx);
 };
 
 const drawfillRect = (ctx: CavansRenderCtx2d) => {
@@ -100,6 +103,35 @@ const drawText = (ctx: CavansRenderCtx2d) => {
   ctx.fillText("I can draw text, too!", 10, 50);
 };
 
+const drawImg = (ctx: CavansRenderCtx2d) => {
+  if (!ctx) return;
+  let img = document.createElement("img");
+  img.src = getImageUrl("bg");
+  img.addEventListener("load", () => {
+    ctx.drawImage(img, 0, 10);
+  });
+};
+
+const animation = (ctx: CavansRenderCtx2d) => {
+  if (!ctx) return;
+  // 设置颜色
+  ctx.fillStyle = "blue";
+  // 初始信号量
+  let left: number = -200;
+  // 动画过程
+  setInterval(() => {
+    // 清除画布,0,0代表从什么位置开始,600,600代表清除的宽度和高度
+    ctx.clearRect(0, 0, 600, 600);
+    // 更新信号量
+    left++;
+    // 如果已经走出画布，则更新信号量为初始位置
+    if (left > 600) {
+      left = -200;
+    }
+    ctx.fillRect(left, 100, 50, 50);
+  }, 10);
+};
+
 onMounted(() => {
   drawCanvas.value = new DrawCanvas("#demo1", draw);
 });
@@ -112,10 +144,10 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .canvas-box {
   width: 100%;
-  height: 500px;
+  height: 100%;
   box-sizing: border-box;
-  margin-top: 16px;
-  border: 1px solid #eee;
-  background-color: #fff;
+}
+canvas {
+  background-color: rgb(19, 19, 19);
 }
 </style>
