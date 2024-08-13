@@ -151,3 +151,6 @@ describe("counter", () => {
 
 - 逐个实现这些示例中的测试用例，并理解每个 API 的使用场景。
 - 如果遇到不理解的部分，可以参考文档或者询问我。
+
+
+### 现代前端测试的三大利器：Vitest、Storybook与Playwright
