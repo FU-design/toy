@@ -1,5 +1,5 @@
-import { mockData, getImgs, getImgsUrlList } from '../../../src/utils/mock.ts'
-import { describe, expect, test, it, vi } from 'vitest'
+import { mockData, getImgs } from '../../../src/utils/mock.ts'
+import { describe, expect, it, } from 'vitest'
 
 describe('mockData', () => {
   it('should return data contain code, data, msg property', async () => {
