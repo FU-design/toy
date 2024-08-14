@@ -1,156 +1,141 @@
-### 示例 1: 测试简单的函数
+## vitest 的使用
 
-```javascript
-// 需要测试的函数
-function add(a, b) {
-  return a + b;
-}
+一. 安装 vitest 和 一些需要用到的依赖
 
-// 测试用例
-import { describe, it, expect } from "vitest";
+```
+pnpm add vitest @vue/test-utils happy-dom -D
+```
 
-describe("add function", () => {
-  it("should return the sum of two numbers", () => {
-    expect(add(2, 3)).toBe(5); // 使用 toBe 匹配器
-  });
+二. 配置 vitest ,可在 vite.config.ts 中配置,也可单独在 vitest.config.ts 同级目录下创建 vitest.config.ts 文件。**（vitest.config.ts 文件中配置的优先级高于 vite.config.ts 文件）**
 
-  it("should return a negative number if the sum is negative", () => {
-    expect(add(-2, -3)).toBe(-5);
-  });
+```ts
+// vitest.config.ts
+
+// 添加这一行适配ts
+/// <reference types="vitest/config" />
+
+// Configure Vitest (https://vitest.dev/config/)
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+export default defineConfig({
+  plugins: [vue()],
+  test: {
+    // 启用类似 jest 的全局测试 API
+    globals: true,
+    include: ["**/tests/**/*.spec.ts"], // Adjust this pattern to match your directory structure
+    // 使用 happy-dom 模拟 DOM
+    // 这需要你安装 happy-dom 作为对等依赖（peer dependency）
+    environment: "happy-dom",
+  },
 });
 ```
 
-**学习点**:
+三. 在 package.json 中添加 scripts
 
-- 使用 `describe` 组织测试用例
-- 使用 `it` 编写单个测试
-- 使用 `expect` 和 `toBe` 进行简单断言
-
-### 示例 2: 测试对象相等性
-
-```javascript
-// 需要测试的函数
-function createUser(name, age) {
-  return { name, age };
-}
-
-// 测试用例
-describe("createUser function", () => {
-  it("should return an object with name and age", () => {
-    expect(createUser("Alice", 30)).toEqual({ name: "Alice", age: 30 }); // 使用 toEqual 匹配器
-  });
-});
+```json
+"scripts": {
+  // ....
+    "test:unit": "vitest",
+    "test": "vitest"
+  },
 ```
 
-**学习点**:
+四. 编写测试代码（单元测试）在 src 目录下创建 `tests` 目录，并在 tests 目录下创建一个 `xxx.test.ts` 文件。
 
-- 使用 `toEqual` 测试对象的深度相等性
+1. 对工具函数 "`mockData, getImgs`" 的单元测试，创建文件 `mock.test.ts`
 
-### 示例 3: 测试数组内容
+   ```ts
+   import { mockData, getImgs } from "../../../src/utils/mock.ts";
+   import { describe, expect, it } from "vitest";
 
-```javascript
-// 需要测试的函数
-function getFruits() {
-  return ["apple", "banana", "orange"];
-}
+   describe("mockData", () => {
+     it("should return data contain code, data, msg property", async () => {
+       const defaultSize = 1000;
+       const respones = await mockData();
+       expect(respones).toHaveProperty("code", 200);
+       expect(respones).toHaveProperty("data");
+       expect(respones).toHaveProperty("msg");
+       expect(respones.data).toHaveLength(defaultSize);
+     });
 
-// 测试用例
-describe("getFruits function", () => {
-  it("should contain specific fruits", () => {
-    const fruits = getFruits();
-    expect(fruits).toContain("banana"); // 使用 toContain 匹配器
-    expect(fruits).toHaveLength(3); // 使用 toHaveLength 匹配器
-  });
-});
-```
+     it("should return 50 pieces of data after some time", async () => {
+       const size = 50;
+       const respones = await mockData(50);
+       expect(respones.data).toHaveLength(size);
+     });
 
-**学习点**:
+     it("should reject with error if the request fails", async () => {
+       const size = -1;
+       const promise = mockData(size);
+       await expect(promise).rejects.toThrow("size must be greater than 0");
+     });
+   });
 
-- 使用 `toContain` 测试数组是否包含特定元素
-- 使用 `toHaveLength` 测试数组的长度
+   describe("getImgs", async () => {
+     it("should handle default parameters correctly", async () => {
+       const defaultSize = 30;
+       const imgList = await getImgs();
+       expect(imgList).toHaveLength(defaultSize);
+       expect(
+         imgList.every((url) => url.startsWith("https://picsum.photos/id/"))
+       ).toBe(true);
+     });
 
-### 示例 4: 测试异步代码
+     it("should return return 100 pictures of 500*500", async () => {
+       const size = 100;
+       const imgList = await getImgs(size, 500, 500);
+       expect(imgList).toHaveLength(size);
+       expect(
+         imgList.every((url) => url.startsWith("https://picsum.photos/id/"))
+       ).toBe(true);
+     });
 
-```javascript
-// 需要测试的函数
-function fetchData() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve("data");
-    }, 100);
-  });
-}
+     it("should reject with error if the request fails", async () => {
+       const size = -1;
+       const promise = getImgs(size);
+       await expect(promise).rejects.toThrow("size must be greater than 0");
+     });
+   });
+   ```
 
-// 测试用例
-describe("fetchData function", () => {
-  it("should return data after some time", async () => {
-    const data = await fetchData();
-    expect(data).toBe("data"); // 使用 async/await 测试异步代码
-  });
-});
-```
+2. 对 vue 组件 "`CardBox.vue`" 的测试，创建测试文件 `card-box.spec.ts`
 
-**学习点**:
+   ```ts
+   import { mount } from "@vue/test-utils";
+   import CardBox from "../../../src/components/cardBox/CardBox.vue";
+   import { expect, it, describe } from "vitest";
 
-- 使用 `async/await` 处理异步测试
+   describe("CardBox", () => {
+     it("does not render a header element when showHeader is false", () => {
+       const showHeader = false;
+       const wrapper = mount(CardBox, {
+         props: {
+           showHeader,
+         },
+       });
+       const header = wrapper.find("header");
+       expect(header.exists()).toBe(showHeader);
+     });
 
-### 示例 5: 测试抛出异常
+     it("renders default slot content when no content is provided", () => {
+       const wrapper = mount(CardBox);
 
-```javascript
-// 需要测试的函数
-function divide(a, b) {
-  if (b === 0) {
-    throw new Error("Division by zero");
-  }
-  return a / b;
-}
+       expect(wrapper.find("p").exists()).toBe(true);
+       expect(wrapper.find("p").text()).toContain("我是卡片");
+     });
 
-// 测试用例
-describe("divide function", () => {
-  it("should throw an error when dividing by zero", () => {
-    expect(() => divide(1, 0)).toThrow("Division by zero"); // 使用 toThrow 匹配器
-  });
-});
-```
-
-**学习点**:
-
-- 使用 `toThrow` 测试函数抛出异常的情况
-
-### 示例 6: 使用 `beforeEach`/`afterEach`
-
-```javascript
-// 需要测试的函数
-let counter = 0;
-
-function increment() {
-  counter += 1;
-}
-
-describe("counter", () => {
-  beforeEach(() => {
-    counter = 0; // 每次测试前重置 counter
-  });
-
-  it("should start at zero", () => {
-    expect(counter).toBe(0);
-  });
-
-  it("should increment the counter", () => {
-    increment();
-    expect(counter).toBe(1);
-  });
-});
-```
-
-**学习点**:
-
-- 使用 `beforeEach` 进行每个测试用例前的初始化工作
-
-### 使用指南
-
-- 逐个实现这些示例中的测试用例，并理解每个 API 的使用场景。
-- 如果遇到不理解的部分，可以参考文档或者询问我。
-
-
-### 现代前端测试的三大利器：Vitest、Storybook与Playwright
+     it("renders custom header, body, and footer content via slots", () => {
+       const wrapper = mount(CardBox, {
+         slots: {
+           header: "<h1>自定义头部</h1>",
+           default: '<div class="content">自定义内容</div>',
+           footer: "<button>确认</button>",
+         },
+       });
+       expect(wrapper.find("p").exists()).toBe(false);
+       expect(wrapper.find("h1").text()).toContain("自定义头部");
+       expect(wrapper.find(".content").text()).toContain("自定义内容");
+       expect(wrapper.find("button").text()).toContain("确认");
+     });
+   });
+   ```
