@@ -1,7 +1,8 @@
 import { defineConfig } from "vite";
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+import { visualizer } from 'rollup-plugin-visualizer'
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
-import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 import path, { join } from "path";
 // import path from 'path'
 
@@ -41,6 +42,10 @@ export default defineConfig(({ command, mode }) => {
             importStyle: false, // css in js
           }),
         ],
+      }),
+      visualizer({
+        filename: 'dist/stats.html', // 输出文件名
+        open: true, // 打包后自动打开浏览器显示报告
       }),
     ],
 
@@ -94,9 +99,18 @@ export default defineConfig(({ command, mode }) => {
     },
 
     build: {
+      minify: false, // 禁用代码压缩
       target: "modules", //默认： 'modules'设置最终构建的浏览器兼容目标
       outDir: "dist", //默认：dist 指定输出路径（相对于 项目根目录).
       // assetsDir: "assets", //默认：assets 指定生成静态资源的存放路径（相对于 build.outDir）。
+      rollupOptions: {
+        plugins: [
+          visualizer({
+            filename: 'dist/stats.html', // 输出文件名
+            open: true, // 打包后自动打开浏览器显示报告
+          }),
+        ],
+      },
     },
   };
 });
