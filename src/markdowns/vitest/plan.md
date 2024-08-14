@@ -1,11 +1,4 @@
-学习 Vitest 的任务表可以帮助你系统地掌握这一测试工具，并应用到你的项目中。以下是一个为期两周的学习计划，涵盖基础到进阶内容，并附带相关的参考资源。
-
 ### 任务表概览
-
-- **第 1 周：基础知识和入门**
-  - 目标：掌握 Vitest 的基本概念、配置和简单的单元测试编写。
-- **第 2 周：进阶知识和实际应用**
-  - 目标：深入理解 Vitest 的高级功能，掌握测试各种复杂场景的方法，并在实际项目中应用。
 
 ### 第 1 周：基础知识和入门
 
@@ -124,5 +117,3 @@
 - **Vitest GitHub 仓库**: [Vitest GitHub](https://github.com/vitest-dev/vitest)
 - **Vitest 官方文档**: [Vitest Docs](https://vitest.dev/guide/)
 - **Vue.js + Vitest 示例项目**: [Vitesse](https://github.com/antfu/vitesse)
-
-这个任务表将帮助你逐步掌握 Vitest，从基础概念到在实际项目中的应用，通过练习和研究开源项目，能让你更深入地理解和掌握 Vitest 的使用方法。

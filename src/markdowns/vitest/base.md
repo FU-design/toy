@@ -1,12 +1,12 @@
 ## vitest 的使用
 
-一. 安装 vitest 和 一些需要用到的依赖
+### 一. 安装 vitest 和 一些需要用到的依赖
 
 ```
 pnpm add vitest @vue/test-utils happy-dom -D
 ```
 
-二. 配置 vitest ,可在 vite.config.ts 中配置,也可单独在 vitest.config.ts 同级目录下创建 vitest.config.ts 文件。**（vitest.config.ts 文件中配置的优先级高于 vite.config.ts 文件）**
+### 二. 配置 vitest ,可在 vite.config.ts 中配置,也可单独在 vitest.config.ts 同级目录下创建 vitest.config.ts 文件。**（vitest.config.ts 文件中配置的优先级高于 vite.config.ts 文件）**
 
 ```ts
 // vitest.config.ts
@@ -30,7 +30,7 @@ export default defineConfig({
 });
 ```
 
-三. 在 package.json 中添加 scripts
+### 三. 在 package.json 中添加 scripts
 
 ```json
 "scripts": {
@@ -40,7 +40,7 @@ export default defineConfig({
   },
 ```
 
-四. 编写测试代码（单元测试）在 src 目录下创建 `tests` 目录，并在 tests 目录下创建一个 `xxx.test.ts` 文件。
+### 四. 编写测试代码（单元测试）在 src 目录下创建 `tests` 目录，并在 tests 目录下创建一个 `xxx.test.ts` 文件。
 
 1. 对工具函数 "`mockData, getImgs`" 的单元测试，创建文件 `mock.test.ts`
 
