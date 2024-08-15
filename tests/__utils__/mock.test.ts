@@ -1,4 +1,4 @@
-import { mockData, getImgs } from '../../../src/utils/mock.ts'
+import { mockData, getImgs } from '../../src/utils/mock.ts'
 import { describe, expect, it, } from 'vitest'
 
 describe('mockData', () => {
