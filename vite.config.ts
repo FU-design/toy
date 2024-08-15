@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"; // Vue 的按需组件自动导入
 import { visualizer } from 'rollup-plugin-visualizer'
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
