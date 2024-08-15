@@ -11,23 +11,22 @@ pnpm add vitest @vue/test-utils happy-dom -D
 ```ts
 // vitest.config.ts
 
-// 添加这一行适配ts
-/// <reference types="vitest/config" />
-
 // Configure Vitest (https://vitest.dev/config/)
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-export default defineConfig({
-  plugins: [vue()],
-  test: {
-    // 启用类似 jest 的全局测试 API
-    globals: true,
-    include: ["**/tests/**/*.spec.ts"], // Adjust this pattern to match your directory structure
-    // 使用 happy-dom 模拟 DOM
-    // 这需要你安装 happy-dom 作为对等依赖（peer dependency）
-    environment: "happy-dom",
-  },
-});
+import { defineConfig, mergeConfig } from "vitest/config";
+import viteConfig from "./vite.config";
+
+export default defineConfig((configEnv) =>
+  mergeConfig(
+    viteConfig(configEnv),
+    defineConfig({
+      test: {
+        globals: true, // 启用类似 jest 的全局测试 API
+        // include: ['**/tests/**/*.spec.ts'], // Adjust this pattern to match your directory structure
+        environment: "happy-dom", // 使用 happy-dom 模拟 DOM
+      },
+    })
+  )
+);
 ```
 
 ### 三. 在 package.json 中添加 scripts
