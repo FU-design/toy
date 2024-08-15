@@ -7,9 +7,9 @@ export default defineConfig(configEnv =>
     viteConfig(configEnv),
     defineConfig({
       test: {
-        globals: true, // 启用类似 jest 的全局测试 API
-        // include: ['**/tests/**/*.spec.ts'], // Adjust this pattern to match your directory structure
-        environment: 'happy-dom'// 使用 happy-dom 模拟 DOM
+        globals: true, // Open global testing API similar to jest
+        include: ['**/tests/**/*.spec.ts'], //  Match directory structure
+        environment: 'happy-dom'// Use happy-dom to simulate DOM
       },
     })
   )
