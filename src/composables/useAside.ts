@@ -1,4 +1,3 @@
-import { ref, type Ref } from "vue";
 
 interface SideState {
   sideState: Ref<boolean>;

@@ -19,8 +19,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
-
 const initEvent = () => {
   getDragEl();
 };

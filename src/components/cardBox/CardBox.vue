@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import { toRefs } from "vue";
 import type { CardBoxProps } from "./types";
 
 const props = withDefaults(defineProps<CardBoxProps>(), {

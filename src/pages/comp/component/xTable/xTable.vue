@@ -38,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs, useSlots, useAttrs, computed } from "vue";
 import { SlotsMap, SlotEnum } from "./type";
 import { Table, TableProps } from "ant-design-vue";
 

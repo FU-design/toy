@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import { Node } from "@antv/x6";
-import { defineComponent, inject, ref } from "vue";
 export default defineComponent({
   setup() {
     const getNode = inject<Function>("getNode") as Function;

@@ -1,5 +1,3 @@
-import { effectScope, ref } from "vue";
-
 export default function useCanvas(selector: HTMLCanvasElement | string) {
   const scope = effectScope();
   const canvas = ref<HTMLCanvasElement | null>();

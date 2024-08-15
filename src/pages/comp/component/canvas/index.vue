@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
 import { DrawCanvas } from "./DrawCanvas2D";
 import { getImageUrl } from "@/utils/tool";
 

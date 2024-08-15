@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onBeforeMount, unref, computed } from "vue";
 interface Props {
   listData: any[];
   eachSize?: number;

@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { Graph, Node } from "@antv/x6";
-import { defineComponent, inject, ref } from "vue";
 import DropMenu from "../flow-ops/dropMenu.vue";
 import { resolveNodePostion } from "../config";
 import { createEdge, createNode, MenuItem } from "../actionOps";

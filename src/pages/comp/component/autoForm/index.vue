@@ -17,8 +17,6 @@
 <script setup lang="ts">
 import AutoFrom from "./autoForm.vue";
 
-import { ref } from "vue";
-
 const form = ref<any>({});
 
 const formItem = [

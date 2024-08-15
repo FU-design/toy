@@ -17,7 +17,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import ScrollMoreData from "./scrollmoredata.vue";
 import { mockData, MockData } from "../../../../utils/mock";
 const listData = ref<string[]>([]);

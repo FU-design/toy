@@ -21,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
 import { type MsgBox, type PosType, MessageType, Pos } from "./type";
 import useAuthStore from "@/stores/authorization";
 import { storeToRefs } from "pinia";

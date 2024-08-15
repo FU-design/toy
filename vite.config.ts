@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"; // Vue 的按需组件自动导入
 import { visualizer } from 'rollup-plugin-visualizer'
+import AutoImport from 'unplugin-auto-import/vite'
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import path, { join } from "path";
@@ -46,6 +47,26 @@ export default defineConfig(({ command, mode }) => {
       visualizer({
         filename: 'dist/stats.html', // 输出文件名
         open: true, // 打包后自动打开浏览器显示报告
+      }),
+      AutoImport({
+        imports: [
+          // presets
+          'vue',
+          'vue-router',
+          // custom
+          {
+
+          },
+          // example type import
+          {
+
+          },
+        ],
+        dts: 'src/auto-imports.d.ts',
+        dirs: [
+          'src/composables',
+          'src/stores',
+        ],
       }),
     ],
 

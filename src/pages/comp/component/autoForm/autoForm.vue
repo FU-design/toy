@@ -41,17 +41,6 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  watch,
-  ref,
-  computed,
-  onMounted,
-  toRefs,
-  unref,
-  type PropType,
-  type Ref,
-} from "vue";
 import type { FormItemState, FormOptions } from "./types.ts";
 
 const FormProps = {

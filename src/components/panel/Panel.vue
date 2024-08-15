@@ -29,7 +29,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch, unref } from "vue";
 import type { Panel, DragState } from "./types";
 
 const props = withDefaults(defineProps<Panel>(), {

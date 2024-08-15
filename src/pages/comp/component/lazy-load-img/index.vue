@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, nextTick } from "vue";
 import README from "./README.md?raw";
 import { getImgs } from "@/utils/mock";
 

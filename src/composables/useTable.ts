@@ -1,4 +1,3 @@
-import { ref, onUnmounted } from "vue";
 import type { TablePaginationConfig, TableColumnType } from "ant-design-vue";
 
 const useBaseTable = <T>(

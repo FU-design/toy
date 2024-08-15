@@ -21,7 +21,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
 import README from "./README.md?raw";
 import { getImgs } from "@/utils/mock";
 import { layoutWarefall, loadScroll } from "./warefallFlowUtil";

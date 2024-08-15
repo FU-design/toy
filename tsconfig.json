@@ -29,8 +29,10 @@
       ]
     },
     "types": [
-      "vitest/globals"
-    ]
+      "vitest"
+    ],
+    "allowJs": true,
+    "strictNullChecks": true,
   },
   "include": [
     "src/*",
@@ -48,5 +50,10 @@
   ],
   "type": [
     "node",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "cypress"
   ]
 }

@@ -16,7 +16,6 @@
 import { provide, shallowRef, unref } from "vue";
 import { Selection } from "@antv/x6-plugin-selection";
 import { Graph, Node, Options } from "@antv/x6";
-import { onMounted, onUnmounted, ref } from "vue";
 import { data } from "./nodeData";
 import {
   CustomGraph,

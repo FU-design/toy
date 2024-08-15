@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
 import { InnerOps, mixConfig, NodeInfo } from "./type";
 
 const props = withDefaults(defineProps<mixConfig<InnerOps>>(), {

@@ -40,7 +40,6 @@
 
 <script setup lang="ts">
 import { mockData, getImgsUrlList } from "@/utils/mock";
-import { onMounted, onUnmounted, ref, watch } from "vue";
 import { VanillaInfiniteScroll } from "./vanilla-infinite-scroll";
 import { ObserverInfiniteScroll } from "./observer-infinite-scroll";
 import { VirtualInfiniteScroll } from "./virtual-infinite-scroll";
