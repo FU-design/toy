@@ -8,7 +8,7 @@ export default defineConfig(configEnv =>
     defineConfig({
       test: {
         globals: true, // Open global testing API similar to jest
-        include: ['**/tests/**/*.spec.ts'], //  Match directory structure
+        include: ['**/tests/**/*.test.ts'], //  Match directory structure
         environment: 'happy-dom'// Use happy-dom to simulate DOM
       },
     })
