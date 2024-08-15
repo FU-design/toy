@@ -6,8 +6,6 @@
 
 <script setup lang="ts">
 import { DrawCanvas } from "./DrawCanvas2D";
-import { getImageUrl } from "@/utils/tool";
-
 type CavansRenderCtx2d = CanvasRenderingContext2D | null;
 const drawCanvas = ref<DrawCanvas | null>(null);
 

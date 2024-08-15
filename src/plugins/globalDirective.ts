@@ -1,4 +1,3 @@
-import { parseMD } from "@/utils/render";
 import type { App } from "vue";
 
 const install = (app: App) => {

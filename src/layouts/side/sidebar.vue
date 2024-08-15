@@ -24,14 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from "vue";
-import { useRouter } from "vue-router";
-import useSideStore from "@/stores/sideBar";
 import { storeToRefs } from "pinia";
 import type { RouteRecordRaw } from "vue-router";
 
 const router = useRouter();
-const side = useSideStore();
+const side = sideBar();
 const { currentRoute } = router;
 const { fold } = storeToRefs(side);
 

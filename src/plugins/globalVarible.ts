@@ -1,4 +1,3 @@
-import { copyText } from "@/utils/tool";
 import type { App } from "vue";
 
 const install = (app: App) => {

@@ -24,8 +24,6 @@
 
 <script setup lang="ts">
 import README from "./README.md?raw";
-import { getImgs } from "@/utils/mock";
-
 const imgs = ref<string[]>([]);
 
 // 模拟获取图片数据

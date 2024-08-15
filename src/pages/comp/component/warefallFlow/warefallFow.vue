@@ -22,7 +22,6 @@
 
 <script lang="ts" setup>
 import README from "./README.md?raw";
-import { getImgs } from "@/utils/mock";
 import { layoutWarefall, loadScroll } from "./warefallFlowUtil";
 
 const items = ref<string[]>([]);

@@ -44,10 +44,6 @@ export default defineConfig(({ command, mode }) => {
           }),
         ],
       }),
-      visualizer({
-        filename: 'dist/stats.html', // 输出文件名
-        open: true, // 打包后自动打开浏览器显示报告
-      }),
       AutoImport({
         imports: [
           // presets
@@ -58,7 +54,12 @@ export default defineConfig(({ command, mode }) => {
         dirs: [
           'src/composables',
           'src/stores',
+          'src/utils'
         ],
+      }),
+      visualizer({
+        filename: 'dist/stats.html', // 输出文件名
+        open: true, // 打包后自动打开浏览器显示报告
       }),
     ],
 

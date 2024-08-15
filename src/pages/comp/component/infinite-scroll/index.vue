@@ -39,7 +39,6 @@
 </template>
 
 <script setup lang="ts">
-import { mockData, getImgsUrlList } from "@/utils/mock";
 import { VanillaInfiniteScroll } from "./vanilla-infinite-scroll";
 import { ObserverInfiniteScroll } from "./observer-infinite-scroll";
 import { VirtualInfiniteScroll } from "./virtual-infinite-scroll";

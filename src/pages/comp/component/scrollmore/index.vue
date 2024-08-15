@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import ScrollMoreData from "./scrollmoredata.vue";
-import { mockData, MockData } from "../../../../utils/mock";
+import type { MockData } from "@/utils/mock";
 const listData = ref<string[]>([]);
 const eachSize = ref<number>(50);
 

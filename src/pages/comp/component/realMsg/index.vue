@@ -22,14 +22,13 @@
 
 <script setup lang="ts">
 import { type MsgBox, type PosType, MessageType, Pos } from "./type";
-import useAuthStore from "@/stores/authorization";
 import { storeToRefs } from "pinia";
 import WebSocketClient from "./websocket.ts";
 import { ChatInfo } from "@/api/login/types.ts";
 
 let ws: WebSocketClient | null;
 const wsUrl = "ws://localhost:8080";
-const auth = useAuthStore();
+const auth = authorization();
 const { chatInfo: chat } = storeToRefs(auth);
 
 const connectWebSocket = () => {

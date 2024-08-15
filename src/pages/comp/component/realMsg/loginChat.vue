@@ -20,11 +20,10 @@
 
 <script setup lang="ts">
 import AutoForm from "../autoForm/autoForm.vue";
-import useAuthStore from "@/stores/authorization";
 import { login } from "@/api/login/index";
 import type { ChatInfo } from "@/api/login/types";
 
-const auth = useAuthStore();
+const auth = authorization();
 const form = ref<ChatInfo>({ chatCode: "", chatName: "" });
 const autoFormRef = ref<InstanceType<typeof AutoForm> | null>(null);
 const router = useRouter();
