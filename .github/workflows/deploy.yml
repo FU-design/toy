@@ -43,6 +43,8 @@ jobs:
           cache-dependency-path: "**/pnpm-lock.yaml"
       - name: Install dependencies
         run: pnpm i
+      - name: Test
+        run: npm run test
       - name: Build
         run: npm run build
       - name: Setup Pages
