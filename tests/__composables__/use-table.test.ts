@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
 import useTable from '../../src/composables/useTable'
 import { withSetup } from '../test-util'
+import { onUnmounted } from "vue";
 
 describe('useTable', () => {
   const columns = [{ title: 'Column 1' }];
@@ -73,12 +74,11 @@ describe('useTable', () => {
       // 替换原始的 restState 方法
       const { restState } = useTable(columns, rows);
       restStateSpy.mockImplementation(restState);
+      onUnmounted(() => restStateSpy())
       return { restState };
     });
-    restStateSpy()
     // 模拟组件卸载
     app.unmount();
-
     // 验证 restState 是否被调用
     expect(restStateSpy).toHaveBeenCalled();
   });
