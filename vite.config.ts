@@ -4,7 +4,9 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
+import vueJsx from "@vitejs/plugin-vue-jsx"; // 可创建并编译 .jsx .tsx 文件
 import path, { join } from "path";
+// import { fileURLToPath, URL } from "node:url";
 // import path from 'path'
 
 /**
@@ -13,10 +15,6 @@ import path, { join } from "path";
  * 【https://www.geeksforgeeks.org/node-js-url-method/?ref=lbp】
  * 【https://nodejs.org/docs/latest/api/url.html】
  */
-// import { fileURLToPath, URL } from "node:url";
-
-// 可创建并编译 .jsx .tsx 文件
-import vueJsx from "@vitejs/plugin-vue-jsx";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -53,14 +51,6 @@ export default defineConfig(({ command, mode }) => {
           // presets
           'vue',
           'vue-router',
-          // custom
-          {
-
-          },
-          // example type import
-          {
-
-          },
         ],
         dts: 'src/auto-imports.d.ts',
         dirs: [
