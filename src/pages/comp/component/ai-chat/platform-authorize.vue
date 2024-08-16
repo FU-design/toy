@@ -1,10 +1,16 @@
 <template>
   <div class="platform-authorize">
-    <div class="item" v-for="item of platformAuthorizes">
-      <label>{{ item.label }}</label>
-      <a-button v-for="option of item.options">
-        {{ option }}
-      </a-button>
+    <div v-if="currStep == 0">
+      <div class="item" v-for="item of platformAuthorizes">
+        <label>{{ item.label }}</label>
+        <a-button v-for="option of item.options">
+          {{ option }}
+        </a-button>
+      </div>
+    </div>
+
+    <div v-if="currStep == 1">
+      
     </div>
   </div>
 </template>
@@ -16,6 +22,7 @@ const platformAuthorizes = [
     options: ["OpenAI", "ChatGLM"],
   },
 ];
+const currStep = ref(0);
 </script>
 
 <style lang="scss" scoped>
