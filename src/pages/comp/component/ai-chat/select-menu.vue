@@ -38,6 +38,7 @@ export interface SelectData {
 interface SelectBoxProps {
   selectData?: SelectData[];
 }
+
 interface SelectBoxEmits {
   (event: "select", option: Option): void;
 }
