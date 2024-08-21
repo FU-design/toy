@@ -60,6 +60,8 @@ const getCompName = computed(() => {
       return PlatformAuthorize;
     case "SELECT_AUTH_PLATFORM":
       return PlatformAuthorize;
+    case "SELECT_MODEL_PLATFORM":
+      return PlatformAuthorize;
     default:
       return PlatformSelect;
   }

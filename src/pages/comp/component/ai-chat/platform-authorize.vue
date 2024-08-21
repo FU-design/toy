@@ -1,23 +1,23 @@
 <template>
   <div class="platform-authorize">
-    <div v-if="currPage?.action == 'ADD_NEW_PLATFORM'">
+    <template v-if="currPage?.action == 'ADD_NEW_PLATFORM'">
       <select-menu :select-data="ADD_NEW_PLATFORM" @select="onSelect('SELECT_AUTH_PLATFORM', $event)" />
-    </div>
+    </template>
 
-    <div v-if="currPage?.action == 'SELECT_AUTH_PLATFORM'">
+    <template v-if="currPage?.action == 'SELECT_AUTH_PLATFORM'">
       <select-menu :select-data="SELECT_AUTH_PLATFORM">
         <template #select-custom-content>
-          <a-form v-bind="layout" :model="formState" :colon="false" name="dynamic_rule">
-            <a-form-item v-for="item in credentialFormModel" :label="item.displayName">
-              <a-input v-model:value="formState[`${item.name}`]" :placeholder="`please input ${item.displayName}`"
-                :rules="[{ required: true, message: `input ${item.displayName}` }]" />
+          <a-form v-bind="layout" ref="formRef" :model="formState" :colon="false">
+            <a-form-item v-for="item in credentialFormModel" :label="item.displayName" :name="item.name"
+              :rules="[{ required: true, message: `Please input ${item.displayName}!` }]">
+              <a-input v-model:value="formState[`${item.name}`]" :placeholder="`please input ${item.displayName}`" />
             </a-form-item>
           </a-form>
         </template>
       </select-menu>
-    </div>
+    </template>
     <footer v-if="currPage?.action == 'SELECT_AUTH_PLATFORM'">
-      <a-button type="primary" @click="onCheck">confirm</a-button>
+      <a-button :loading="loading" type="primary" @click="onCheck">{{ loading ? '校验中' : '确认' }}</a-button>
     </footer>
   </div>
 </template>
@@ -27,22 +27,24 @@ import SelectMenu from "./select-menu.vue";
 import useAIChat from "./ai-chat";
 import { storeToRefs } from "pinia";
 import type { SelectData, Option } from "./select-menu.vue";
-
+import type { FormInstance } from 'ant-design-vue';
 
 interface PlatformAuthorizeProps {
   currPage?: Option;
 }
-
+type FormState = { [key: string]: string }
 const layout = {
-  labelCol: { span: 4 },
+  labelCol: { span: 6 },
   wrapperCol: { span: 18 },
 }
 
 const aiChat = useAIChat();
+const formRef = ref<FormInstance>();
+const formState = ref<FormState>({});
 const props = defineProps<PlatformAuthorizeProps>();
 const emits = defineEmits(["update:currPage"]);
 const { currPage } = toRefs(props);
-const { formState, supportedPlatForms, credentialFormModel } = storeToRefs(aiChat)
+const { loading, supportedPlatForms, credentialFormModel } = storeToRefs(aiChat)
 
 const ADD_NEW_PLATFORM = computed<SelectData[]>(() => {
   return ([{
@@ -57,14 +59,30 @@ const SELECT_AUTH_PLATFORM = computed<SelectData[]>(() => ([{
 },]));
 
 
+watchEffect(() => {
+  formState.value = credentialFormModel.value.reduce((acc, cur) => {
+    acc[cur.name] = ''
+    return acc
+  }, {} as FormState)
+})
+
+
 const onSelect = (type: string, option: Option) => {
-  aiChat.getPlatformOfCredentialFormModel(option.id)
+  const { id, name, supportModels } = option
+  aiChat.setCurrPlatform({ id, name, supportModels })
+  aiChat.getPlatformOfCredentialFormModel()
   emits("update:currPage", { ...option, action: type });
 };
 
-const onCheck = () => {
-  console.log('1111 :>> ', 1111);
-}
+const onCheck = async () => {
+  try {
+    const values = await formRef.value?.validateFields();
+    aiChat.testAuthOfPlatform(values)
+    emits("update:currPage", { ...currPage.value, action: 'SELECT_MODEL_PLATFORM' });
+  } catch (errorInfo) {
+    console.log('Failed:', errorInfo);
+  }
+};
 
 
 </script>

@@ -1,13 +1,18 @@
 import { defineStore } from "pinia"
-import { supportedPlatformList, platformOfCredentialFormModel, } from "./request"
-import type { SupportedPlatForm, CredentialFormItem } from "./request"
+import { supportedPlatformList, platformOfCredentialFormModel, platformOfCredentialTest, } from "./request"
+import type { SupportedPlatForm, CredentialFormItem, AuthCredential, Platform } from "./request"
 
-type FormState = { [key: string]: string }
 
 export default defineStore('ai-chat', () => {
   const supportedPlatForms = ref<SupportedPlatForm[]>([])
   const credentialFormModel = ref<CredentialFormItem[]>([])
-  const formState = ref<FormState>({})
+  const loading = ref(false)
+  const currPlatform = ref<Platform>()
+
+
+  function setCurrPlatform(platform: Platform) {
+    currPlatform.value = platform
+  }
 
   /**
    * 获取系统可支持的ai平台
@@ -26,14 +31,15 @@ export default defineStore('ai-chat', () => {
 
   /**
    * 获取平台ID的认证表单字段
-   * @param platformId 平台id
    */
-  async function getPlatformOfCredentialFormModel(platformId: string) {
+  async function getPlatformOfCredentialFormModel() {
     try {
-      const { code, data } = await platformOfCredentialFormModel(platformId)
+      if (!currPlatform.value?.id) {
+        return
+      }
+      const { code, data } = await platformOfCredentialFormModel(currPlatform.value?.id)
       if (code === 200) {
         credentialFormModel.value = data
-        data.forEach(v => { Object.assign(formState.value, { [`${v.name}`]: '' }) })
       } else {
         credentialFormModel.value = []
       }
@@ -41,12 +47,27 @@ export default defineStore('ai-chat', () => {
     }
   }
 
+  async function testAuthOfPlatform(authFormData = {}) {
+    if (!currPlatform.value?.id) {
+      return
+    }
+    const authCredentials: AuthCredential[] = []
+    const platformId = currPlatform.value?.id
+    for (const [key, value] of Object.entries(authFormData)) {
+      authCredentials.push({ key, value } as AuthCredential)
+    }
+    return await platformOfCredentialTest({ platformId, authCredentials })
+  }
+
   return {
-    formState,
+    loading,
+    currPlatform,
     supportedPlatForms,
     credentialFormModel,
+    setCurrPlatform,
     getSysSupportedPlatforms,
-    getPlatformOfCredentialFormModel
+    getPlatformOfCredentialFormModel,
+    testAuthOfPlatform
   }
 }, {
   persist: true // 启用持久化

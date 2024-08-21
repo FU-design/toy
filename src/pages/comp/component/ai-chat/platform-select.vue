@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import SelectMenu from "./select-menu.vue";
+import PreChat from "./pre-chat.vue";
 import type { SelectData, Option } from "./select-menu.vue";
 
 interface PlatformSelectProps {
@@ -40,6 +41,4 @@ const onSelect = (option: Option) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.platform-select {}
-</style>
+<style lang="scss" scoped></style>
