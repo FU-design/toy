@@ -16,6 +16,7 @@ declare module 'vue' {
     AFormItem: typeof import('ant-design-vue/es')['FormItem']
     AInput: typeof import('ant-design-vue/es')['Input']
     ASelect: typeof import('ant-design-vue/es')['Select']
+    ASpin: typeof import('ant-design-vue/es')['Spin']
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
     CardBox: typeof import('./components/cardBox/CardBox.vue')['default']
     Panel: typeof import('./components/panel/Panel.vue')['default']

@@ -6,14 +6,19 @@ export interface SupportedPlatForm {
   "authCredential": string
 }
 
-interface Response {
+export interface CredentialFormItem {
+  name: string,
+  displayName: string
+}
+
+interface Response<T> {
   code: number,
   message: string,
-  data: SupportedPlatForm[]
+  data: T[]
 }
 
 // 获取当前支持的平台列表
-export function supportedPlatformList(): Promise<Response> {
+export function supportedPlatformList(): Promise<Response<SupportedPlatForm>> {
   return new Promise((resolve, _reject) => {
     setTimeout(() => {
       resolve(
@@ -35,6 +40,24 @@ export function supportedPlatformList(): Promise<Response> {
             }
           ]
         })
-    }, 500)
+    }, 1000)
+  })
+}
+export function platformOfCredentialFormModel(platformId: string): Promise<Response<CredentialFormItem>> {
+  console.log('platformId :>> ', platformId);
+  return new Promise((resolve, _reject) => {
+    setTimeout(() => {
+      resolve(
+        {
+          code: 200,
+          message: '',
+          data: (new Array(4).fill(1)).map((v, idx) => {
+            return {
+              "name": `name${idx + 1}`,
+              "displayName": `label${idx + 1}`
+            }
+          })
+        })
+    }, 2000)
   })
 }

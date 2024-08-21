@@ -20,12 +20,7 @@
             </div>
           </header>
         </template>
-        <main>
-          <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
-        </main>
-        <footer>
-          <a-button type="primary">confirm</a-button>
-        </footer>
+        <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
       </a-card>
     </div>
   </teleport>
@@ -43,7 +38,6 @@ const currPage = ref<Option>({ action: 'SELECT_SOPPORTED_PLATFORM', name: '' });
 const afterPages = ref<Option[]>([currPage.value]);
 const style = {
   width: '100%',
-  height: '100%',
   boxSizing: 'border-box',
   padding: '24px'
 }
@@ -73,7 +67,7 @@ const getCompName = computed(() => {
 
 const onBack = () => {
   afterPages.value.pop();
-  currPage.value = afterPages.value.at(-1) as Option
+  currPage.value = afterPages.value[afterPages.value.length - 1] as Option
 };
 
 const onClosed = () => {
@@ -113,7 +107,7 @@ const onOpen = () => {
     padding: 0;
     display: flex;
     flex-direction: column;
-
+    overflow: auto;
   }
 
   header {
@@ -144,20 +138,8 @@ const onOpen = () => {
     }
   }
 
-  main {
-    flex: 0 1 calc(100% - 90px);
-    overflow: auto;
-  }
 
-  footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 50px;
-    padding: 0 14px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
+
+
 }
 </style>
