@@ -20,8 +20,7 @@
             </div>
           </header>
         </template>
-        <component v-model:currPage="currPage" :is="getCompName"></component>
-        <footer></footer>
+        <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
       </a-card>
     </div>
   </teleport>
@@ -37,6 +36,12 @@ const aiChat = useAIChat();
 const visible = ref(false);
 const currPage = ref<Option>({ action: 'SELECT_SOPPORTED_PLATFORM', name: '' });
 const afterPages = ref<Option[]>([currPage.value]);
+const style = {
+  width: '100%',
+  height: '100%',
+  boxSizing: 'border-box',
+  padding: '24px'
+}
 
 watchEffect(async () => {
   const actions = afterPages.value.map(v => v.action)
@@ -86,7 +91,7 @@ const onOpen = () => {
   position: absolute;
   right: 20px;
   bottom: 0;
-  width: 380px;
+  width: 350px;
   height: 500px;
   border-radius: 14px;
   display: flex;
@@ -99,6 +104,8 @@ const onOpen = () => {
   }
 
   :deep(.ant-card-body) {
+    height: 100%;
+    padding: 0;
     overflow: auto;
   }
 
@@ -129,5 +136,7 @@ const onOpen = () => {
       justify-content: flex-end;
     }
   }
+
+  footer {}
 }
 </style>

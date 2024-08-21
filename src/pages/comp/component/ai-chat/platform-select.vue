@@ -12,24 +12,26 @@ interface PlatformSelectProps {
   currPage?: Option;
 }
 
-const platformSelects: SelectData[] = [
-  {
-    subTitle: "请选择下列已授权的平台",
-    emptyOptionsText: "暂无授权平台",
-    hasDel: true,
-    options: [],
-  },
-  {
-    subTitle: "或者你可以",
-    hasDel: false,
-    options: [
-      {
-        action: "ADD_NEW_PLATFORM",
-        name: "授权新平台",
-      },
-    ],
-  },
-];
+const platformSelects = computed<SelectData[]>(() => (
+  [
+    {
+      subTitle: "请选择下列已授权的平台",
+      emptyOptionsText: "暂无授权平台",
+      hasDel: true,
+      options: [],
+    },
+    {
+      subTitle: "或者你可以",
+      hasDel: false,
+      options: [
+        {
+          action: "ADD_NEW_PLATFORM",
+          name: "授权新平台",
+        },
+      ],
+    },
+  ]
+));
 
 defineProps<PlatformSelectProps>();
 const emits = defineEmits(["update:currPage"]);
@@ -39,7 +41,5 @@ const onSelect = (option: Option) => {
 </script>
 
 <style lang="scss" scoped>
-.platform-select {
-  width: 100%;
-}
+.platform-select {}
 </style>
