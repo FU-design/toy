@@ -11,30 +11,6 @@
             <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
               <a-input :placeholder="`please input ${currPage['authCredential']}`" />
             </a-form-item>
-            <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
-              <a-input :placeholder="`please input ${currPage['authCredential']}`" />
-            </a-form-item>
-            <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
-              <a-input :placeholder="`please input ${currPage['authCredential']}`" />
-            </a-form-item>
-            <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
-              <a-input :placeholder="`please input ${currPage['authCredential']}`" />
-            </a-form-item>
-            <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
-              <a-input :placeholder="`please input ${currPage['authCredential']}`" />
-            </a-form-item>
-            <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
-              <a-input :placeholder="`please input ${currPage['authCredential']}`" />
-            </a-form-item>
-            <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
-              <a-input :placeholder="`please input ${currPage['authCredential']}`" />
-            </a-form-item>
-            <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
-              <a-input :placeholder="`please input ${currPage['authCredential']}`" />
-            </a-form-item>
-            <a-form-item :label="currPage['authCredential']" v-bind="validateInfos.name">
-              <a-input :placeholder="`please input ${currPage['authCredential']}`" />
-            </a-form-item>
           </a-form>
         </template>
       </select-menu>
@@ -46,9 +22,10 @@
 <script setup lang="ts">
 import SelectMenu from "./select-menu.vue";
 import useAIChat from "./ai-chat";
-import type { SelectData, Option } from "./select-menu.vue";
 import { Form } from 'ant-design-vue';
 import { storeToRefs } from "pinia";
+import type { SelectData, Option } from "./select-menu.vue";
+
 
 interface PlatformAuthorizeProps {
   currPage?: Option;
@@ -64,25 +41,21 @@ const useForm = Form.useForm;
 const props = defineProps<PlatformAuthorizeProps>();
 const emits = defineEmits(["update:currPage"]);
 const modelRef = reactive({});
-const rulesRef = reactive({ name: [{ required: true, message: 'Please input name', }], });
+const rulesRef = reactive({ name: [{ required: true, message: 'Please input', }], });
 const { currPage } = toRefs(props);
 const { supportedPlatForms } = storeToRefs(aiChat)
 
 const ADD_NEW_PLATFORM = computed<SelectData[]>(() => {
-  return ([
-    {
-      subTitle: "请选择下列要授权的平台",
-      options: supportedPlatForms.value.map(v => ({ ...v, action: '' })),
-    },
-  ])
+  return ([{
+    subTitle: "请选择下列要授权的平台",
+    options: supportedPlatForms.value.map(v => ({ ...v, action: '' })),
+  }])
 });
 
-const SELECT_AUTH_PLATFORM = computed<SelectData[]>(() => ([
-  {
-    subTitle: `您正在授权 ${currPage.value?.name} 平台, 请填写下列信息`,
-    options: [],
-  },
-]));
+const SELECT_AUTH_PLATFORM = computed<SelectData[]>(() => ([{
+  subTitle: `您正在授权 ${currPage.value?.name} 平台, 请填写下列信息`,
+  options: [],
+},]));
 
 const onSelect = (type: string, option: Option) => {
   emits("update:currPage", { ...option, action: type });

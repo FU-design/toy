@@ -20,7 +20,12 @@
             </div>
           </header>
         </template>
-        <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
+        <main>
+          <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
+        </main>
+        <footer>
+          <a-button type="primary">confirm</a-button>
+        </footer>
       </a-card>
     </div>
   </teleport>
@@ -106,7 +111,9 @@ const onOpen = () => {
   :deep(.ant-card-body) {
     height: 100%;
     padding: 0;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
+
   }
 
   header {
@@ -137,6 +144,20 @@ const onOpen = () => {
     }
   }
 
-  footer {}
+  main {
+    flex: 0 1 calc(100% - 90px);
+    overflow: auto;
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 }
 </style>
