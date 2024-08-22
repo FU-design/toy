@@ -1,26 +1,66 @@
 <template>
-  <select-menu :select-data="SELECT_MODEL_PLATFORM" />
+  <div class="pre-chat">
+    <template v-if="currPage?.action === 'PLATFORM_MODEL'">
+      <select-menu :select-data="PLATFORM_MODEL" @select="onSelect('ChAT_THREAD_MANAGEMENT', $event)" />
+    </template>
+    <template v-if="currPage?.action === 'ChAT_THREAD_MANAGEMENT'">
+      <select-menu :select-data="ChAT_THREAD_MANAGEMENT" @select="onSelect('PLATFORM_CHAT', $event)" />
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">
 import SelectMenu from "./select-menu.vue";
-import useAIChat from "./ai-chat";
+import useAIChat from "./ai-chat.ts";
 import { storeToRefs } from "pinia";
 import type { SelectData, Option } from "./select-menu.vue";
+import { Platform } from "./request.ts";
 
 interface PreChatPorps {
   currPage?: Option;
 }
 
 const aiChat = useAIChat();
-defineProps<PreChatPorps>();
+const props = defineProps<PreChatPorps>();
+const emits = defineEmits(["update:currPage"]);
+const { currPage } = toRefs(props);
 const { currPlatform, } = storeToRefs(aiChat)
 
 
-const SELECT_MODEL_PLATFORM = computed<SelectData[]>(() => ([{
+const PLATFORM_MODEL = computed<SelectData[]>(() => ([{
   subTitle: `请选择您要使用的模型`,
   options: currPlatform.value?.supportModels.split(',').map(v => ({ name: v, action: '' })),
 },]));
+
+const ChAT_THREAD_MANAGEMENT = computed<SelectData[]>(() => ([
+  {
+    subTitle: `请选择下面的线程进入聊天`,
+    hasDel: true,
+    options: [],
+  },
+  {
+    subTitle: `或者你可以`,
+    hasDel: false,
+    options: [
+      {
+        action: "PLATFORM_CHAT",
+        name: "创建新线程",
+      },
+    ],
+  }
+]));
+
+
+const onSelect = (type: string, option: Option) => {
+  if (type == 'ChAT_THREAD_MANAGEMENT') {
+    const newPlatFrom = {
+      ...currPlatform.value,
+      currModel: option.name
+    } as Platform
+    aiChat.updateCurrPlatform(newPlatFrom)
+  }
+  emits("update:currPage", { ...currPage.value, action: type });
+}
 
 
 </script>

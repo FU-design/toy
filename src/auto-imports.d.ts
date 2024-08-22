@@ -21,6 +21,7 @@ declare global {
   const getImageUrl: typeof import('./utils/tool')['getImageUrl']
   const getImgs: typeof import('./utils/mock')['getImgs']
   const getImgsUrlList: typeof import('./utils/mock')['getImgsUrlList']
+  const getSvgUrl: typeof import('./utils/tool')['getSvgUrl']
   const getSysFontSize: typeof import('./utils/adaptation')['getSysFontSize']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']

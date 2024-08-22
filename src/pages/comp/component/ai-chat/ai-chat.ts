@@ -1,17 +1,30 @@
 import { defineStore } from "pinia"
-import { supportedPlatformList, platformOfCredentialFormModel, platformOfCredentialTest, } from "./request"
-import type { SupportedPlatForm, CredentialFormItem, AuthCredential, Platform } from "./request"
+import { supportedPlatformList, platformOfCredentialFormModel, platformOfCredentialTest, newThreadCreate, } from "./request"
+import type { SupportedPlatForm, CredentialFormItem, AuthCredential, Platform, ThreadCondition, ThreadInfo } from "./request"
 
 
 export default defineStore('ai-chat', () => {
   const supportedPlatForms = ref<SupportedPlatForm[]>([])
   const credentialFormModel = ref<CredentialFormItem[]>([])
+  const threads = ref<ThreadInfo[]>([])
   const loading = ref(false)
   const currPlatform = ref<Platform>()
+  const currThread = ref<ThreadInfo>()
 
 
-  function setCurrPlatform(platform: Platform) {
+  function updateCurrPlatform(platform: Platform) {
     currPlatform.value = platform
+  }
+
+  function updateCurrThread(thread: ThreadInfo) {
+    currThread.value = thread
+  }
+
+  function updateThreads(thread: ThreadInfo) {
+    const threadIds = threads.value.map(v => v.threadId)
+    if (threadIds.includes(thread.threadId)) {
+      threads.value.push(thread)
+    }
   }
 
   /**
@@ -26,13 +39,14 @@ export default defineStore('ai-chat', () => {
         supportedPlatForms.value = []
       }
     } catch (error) {
+      console.log('error :>> ', error);
     }
   }
 
   /**
    * 获取平台ID的认证表单字段
    */
-  async function getPlatformOfCredentialFormModel() {
+  async function getPlatformofCredentialFormModel() {
     try {
       if (!currPlatform.value?.id) {
         return
@@ -44,30 +58,55 @@ export default defineStore('ai-chat', () => {
         credentialFormModel.value = []
       }
     } catch (error) {
+      console.log('error :>> ', error);
     }
   }
 
-  async function testAuthOfPlatform(authFormData = {}) {
-    if (!currPlatform.value?.id) {
-      return
+  async function testAuthofPlatform(authFormData = {}) {
+    try {
+      if (!currPlatform.value?.id) {
+        return
+      }
+      const authCredentials: AuthCredential[] = []
+      const platformId = currPlatform.value?.id
+      for (const [key, value] of Object.entries(authFormData)) {
+        authCredentials.push({ key, value } as AuthCredential)
+      }
+      const { code, data } = await platformOfCredentialTest({ platformId, authCredentials })
+      if (code === 200) updateCurrPlatform(data)
+    } catch (error) {
+      console.log('error :>> ', error);
     }
-    const authCredentials: AuthCredential[] = []
-    const platformId = currPlatform.value?.id
-    for (const [key, value] of Object.entries(authFormData)) {
-      authCredentials.push({ key, value } as AuthCredential)
+
+  }
+
+  /**
+   * 创建新的聊天线程
+   * @param platfromInfo 
+   */
+  async function createThreadofChat(platfromInfo: ThreadCondition) {
+    try {
+      const { code, data } = await newThreadCreate(platfromInfo)
+      if (code === 200) {
+        updateThreads(data)
+        updateCurrThread(data)
+      }
+    } catch (error) {
+      console.log('error :>> ', error);
     }
-    return await platformOfCredentialTest({ platformId, authCredentials })
   }
 
   return {
     loading,
     currPlatform,
+    currThread,
     supportedPlatForms,
     credentialFormModel,
-    setCurrPlatform,
+    updateCurrPlatform,
     getSysSupportedPlatforms,
-    getPlatformOfCredentialFormModel,
-    testAuthOfPlatform
+    getPlatformofCredentialFormModel,
+    testAuthofPlatform,
+    createThreadofChat
   }
 }, {
   persist: true // 启用持久化

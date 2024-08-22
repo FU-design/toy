@@ -1,9 +1,9 @@
 
 export interface SupportedPlatForm {
-  "id": string | number,
-  "name": string,
-  "supportModels": string,
-  "authCredential": string
+  id: string | number,
+  name: string,
+  supportModels: string,
+  authCredential: string
 }
 
 export interface CredentialFormItem {
@@ -21,10 +21,21 @@ export interface CredentialTest {
   authCredentials: AuthCredential[],
 }
 
+export interface ThreadCondition {
+  platformId: string | number,
+  model: string,
+}
+export interface ThreadInfo extends ThreadCondition {
+  threadId: string | number,
+  createTime: string,
+  updateTime: string
+}
+
 export interface Platform {
   id: string | number,
-  name: string
+  name: string,
   supportModels: string,
+  currModel?: string
 }
 
 interface Response<T> {
@@ -59,6 +70,11 @@ export function supportedPlatformList(): Promise<Response<SupportedPlatForm[]>> 
     }, 1000)
   })
 }
+/**
+ * 新增ai平台的认证信息表单元素
+ * @param platformId 
+ * @returns 
+ */
 export function platformOfCredentialFormModel(platformId: string | number): Promise<Response<CredentialFormItem[]>> {
   console.log('platformId :>> ', platformId);
   return new Promise((resolve, _reject) => {
@@ -78,6 +94,11 @@ export function platformOfCredentialFormModel(platformId: string | number): Prom
   })
 }
 
+/**
+ * 新增的ai平台授权验证
+ * @param params 
+ * @returns 
+ */
 export function platformOfCredentialTest(params: CredentialTest): Promise<Response<Platform>> {
   console.log('params :>> ', params);
   return new Promise((resolve, _reject) => {
@@ -89,6 +110,25 @@ export function platformOfCredentialTest(params: CredentialTest): Promise<Respon
           id: 0,
           name: 'test',
           supportModels: 'gpt-3.5-turbo'
+        }
+      })
+    }, 2000)
+  })
+}
+
+export function newThreadCreate(params: ThreadCondition): Promise<Response<ThreadInfo>> {
+  console.log('params :>> ', params);
+  return new Promise((resolve, _reject) => {
+    setTimeout(() => {
+      resolve({
+        code: 200,
+        message: 'success',
+        data: {
+          "threadId": 0,
+          "platformId": params.platformId,
+          "model": params.model,
+          "createTime": new Date().toISOString(),
+          "updateTime": new Date().toISOString()
         }
       })
     }, 2000)

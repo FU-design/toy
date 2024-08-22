@@ -1,11 +1,11 @@
 <template>
   <div class="platform-authorize">
-    <template v-if="currPage?.action == 'ADD_NEW_PLATFORM'">
-      <select-menu :select-data="ADD_NEW_PLATFORM" @select="onSelect('SELECT_AUTH_PLATFORM', $event)" />
+    <template v-if="currPage?.action == 'PLATFORM_MANAGEMENT'">
+      <select-menu :select-data="PLATFORM_MANAGEMENT" @select="onSelect('PLATFORM_AUTH', $event)" />
     </template>
 
-    <template v-if="currPage?.action == 'SELECT_AUTH_PLATFORM'">
-      <select-menu :select-data="SELECT_AUTH_PLATFORM">
+    <template v-if="currPage?.action == 'PLATFORM_AUTH'">
+      <select-menu :select-data="PLATFORM_AUTH">
         <template #select-custom-content>
           <a-form v-bind="layout" ref="formRef" :model="formState" :colon="false">
             <a-form-item v-for="item in credentialFormModel" :label="item.displayName" :name="item.name"
@@ -16,7 +16,7 @@
         </template>
       </select-menu>
     </template>
-    <footer v-if="currPage?.action == 'SELECT_AUTH_PLATFORM'">
+    <footer v-if="currPage?.action == 'PLATFORM_AUTH'">
       <a-button :loading="loading" type="primary" @click="onCheck">{{ loading ? '校验中' : '确认' }}</a-button>
     </footer>
   </div>
@@ -46,14 +46,14 @@ const emits = defineEmits(["update:currPage"]);
 const { currPage } = toRefs(props);
 const { loading, supportedPlatForms, credentialFormModel } = storeToRefs(aiChat)
 
-const ADD_NEW_PLATFORM = computed<SelectData[]>(() => {
+const PLATFORM_MANAGEMENT = computed<SelectData[]>(() => {
   return ([{
     subTitle: "请选择下列要授权的平台",
     options: supportedPlatForms.value.map(v => ({ ...v, action: '' })),
   }])
 });
 
-const SELECT_AUTH_PLATFORM = computed<SelectData[]>(() => ([{
+const PLATFORM_AUTH = computed<SelectData[]>(() => ([{
   subTitle: `您正在授权 ${currPage.value?.name} 平台, 请填写下列信息`,
   options: [],
 },]));
@@ -69,16 +69,16 @@ watchEffect(() => {
 
 const onSelect = (type: string, option: Option) => {
   const { id, name, supportModels } = option
-  aiChat.setCurrPlatform({ id, name, supportModels })
-  aiChat.getPlatformOfCredentialFormModel()
+  aiChat.updateCurrPlatform({ id, name, supportModels })
+  aiChat.getPlatformofCredentialFormModel()
   emits("update:currPage", { ...option, action: type });
 };
 
 const onCheck = async () => {
   try {
     const values = await formRef.value?.validateFields();
-    aiChat.testAuthOfPlatform(values)
-    emits("update:currPage", { ...currPage.value, action: 'SELECT_MODEL_PLATFORM' });
+    aiChat.testAuthofPlatform(values)
+    emits("update:currPage", { ...currPage.value, action: 'PLATFORM_MODEL' });
   } catch (errorInfo) {
     console.log('Failed:', errorInfo);
   }
@@ -94,8 +94,6 @@ const onCheck = async () => {
   flex-direction: column;
   justify-content: space-between;
 }
-
-
 
 footer {
   width: 100%;

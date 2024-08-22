@@ -2,7 +2,7 @@
   <teleport to="body">
     <a-float-button type="default" @click="onOpen">
       <template #icon>
-        <img class="robot-icon" src="../../../../assets/svg/ai-chat/robot.svg" alt="ai chat" />
+        <img class="robot-icon" :src="getSvgUrl('ai-chat', 'robot')" alt="ai chat" />
       </template>
     </a-float-button>
 
@@ -11,16 +11,24 @@
         <template #title>
           <header>
             <div class="header-left">
-              <img src="../../../../assets/svg/ai-chat/left.svg" alt="back"
-                v-if="currPage?.action !== 'SELECT_SOPPORTED_PLATFORM'" @click="onBack" />
+              <img :src="getSvgUrl('ai-chat', 'left')" alt="back"
+                v-if="!['SUPPORTED_PLATFORM_SELECT', 'PLATFORM_CHAT'].includes(currPage?.action)" @click="onBack" />
+              <img :src="getSvgUrl('ai-chat', 'home')" alt="home" v-if="'PLATFORM_CHAT' === currPage?.action"
+                @click="onHome" />
             </div>
-            <div class="header-middle">线程1</div>
+            <div class="header-middle" v-if="currPage?.action === 'PLATFORM_CHAT'">线程1</div>
             <div class="header-right">
-              <img src="../../../../assets/svg/ai-chat/close.svg" alt="close" @click="onClosed" />
+              <template v-if="'PLATFORM_CHAT' === currPage?.action">
+                <img :src="getSvgUrl('ai-chat', 'history')" alt="history" @click="onHistory" />
+                <img :src="getSvgUrl('ai-chat', 'full-screen')" alt="full-screen" @click="onFullScreen" />
+              </template>
+              <img :src="getSvgUrl('ai-chat', 'close')" alt="close" @click="onClosed" />
             </div>
           </header>
         </template>
-        <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
+        <keep-alive>
+          <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
+        </keep-alive>
       </a-card>
     </div>
   </teleport>
@@ -29,12 +37,15 @@
 <script setup lang="ts">
 import PlatformSelect from "./platform-select.vue";
 import PlatformAuthorize from "./platform-authorize.vue";
+import PlatformChat from "./platform-chat.vue";
+import PreChat from "./pre-chat.vue";
 import useAIChat from "./ai-chat";
+import { getSvgUrl } from "@/utils/tool";
 import type { Option } from "./select-menu.vue";
 
 const aiChat = useAIChat();
 const visible = ref(false);
-const currPage = ref<Option>({ action: 'SELECT_SOPPORTED_PLATFORM', name: '' });
+const currPage = ref<Option>({ action: 'SUPPORTED_PLATFORM_SELECT', name: '' });
 const afterPages = ref<Option[]>([currPage.value]);
 const style = {
   width: '100%',
@@ -47,21 +58,25 @@ watchEffect(async () => {
   if (!actions?.includes(currPage.value?.action)) {
     afterPages.value?.push(currPage.value)
   }
-  if (currPage.value?.action === "ADD_NEW_PLATFORM") {
+  if (currPage.value?.action === "PLATFORM_MANAGEMENT") {
     await aiChat.getSysSupportedPlatforms();
   }
 })
 
 const getCompName = computed(() => {
   switch (currPage.value?.action) {
-    case "SELECT_SOPPORTED_PLATFORM":
+    case "SUPPORTED_PLATFORM_SELECT":
       return PlatformSelect;
-    case "ADD_NEW_PLATFORM":
+    case "PLATFORM_MANAGEMENT":
       return PlatformAuthorize;
-    case "SELECT_AUTH_PLATFORM":
+    case "PLATFORM_AUTH":
       return PlatformAuthorize;
-    case "SELECT_MODEL_PLATFORM":
-      return PlatformAuthorize;
+    case "PLATFORM_MODEL":
+      return PreChat;
+    case "ChAT_THREAD_MANAGEMENT":
+      return PreChat;
+    case "PLATFORM_CHAT":
+      return PlatformChat;
     default:
       return PlatformSelect;
   }
@@ -71,6 +86,16 @@ const onBack = () => {
   afterPages.value.pop();
   currPage.value = afterPages.value[afterPages.value.length - 1] as Option
 };
+
+const onHome = () => {
+
+}
+
+const onHistory = () => {
+
+}
+
+const onFullScreen = () => { }
 
 const onClosed = () => {
   visible.value = false;
@@ -137,6 +162,10 @@ const onOpen = () => {
       display: flex;
       align-items: center;
       justify-content: flex-end;
+
+      img {
+        margin-left: 6px;
+      }
     }
   }
 

@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import SelectMenu from "./select-menu.vue";
-import PreChat from "./pre-chat.vue";
 import type { SelectData, Option } from "./select-menu.vue";
 
 interface PlatformSelectProps {
@@ -26,7 +25,7 @@ const platformSelects = computed<SelectData[]>(() => (
       hasDel: false,
       options: [
         {
-          action: "ADD_NEW_PLATFORM",
+          action: "PLATFORM_MANAGEMENT",
           name: "授权新平台",
         },
       ],
