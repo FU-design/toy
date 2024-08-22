@@ -1,35 +1,36 @@
 <template>
   <teleport to="body">
-    <a-float-button type="default" @click="onOpen">
+    <a-float-button type="default" @click="() => visibleWindow()">
       <template #icon>
         <img class="robot-icon" :src="getSvgUrl('ai-chat', 'robot')" alt="ai chat" />
       </template>
     </a-float-button>
 
-    <div class="robot">
-      <a-card class="chat-model" v-show="visible">
-        <template #title>
-          <header>
-            <div class="header-left">
-              <img :src="getSvgUrl('ai-chat', 'left')" alt="back"
-                v-if="!['SUPPORTED_PLATFORM_SELECT', 'PLATFORM_CHAT'].includes(currPage?.action)" @click="onBack" />
-              <img :src="getSvgUrl('ai-chat', 'home')" alt="home" v-if="'PLATFORM_CHAT' === currPage?.action"
-                @click="onHome" />
-            </div>
-            <div class="header-middle" v-if="currPage?.action === 'PLATFORM_CHAT'">线程1</div>
-            <div class="header-right">
-              <template v-if="'PLATFORM_CHAT' === currPage?.action">
-                <img :src="getSvgUrl('ai-chat', 'history')" alt="history" @click="onHistory" />
-                <img :src="getSvgUrl('ai-chat', 'full-screen')" alt="full-screen" @click="onFullScreen" />
-              </template>
-              <img :src="getSvgUrl('ai-chat', 'close')" alt="close" @click="onClosed" />
-            </div>
-          </header>
-        </template>
-        <keep-alive>
-          <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
-        </keep-alive>
-      </a-card>
+    <div :class="[isExpand ? 'ai-chat-expand' : 'ai-chat']">
+      <a-spin :spinning="loading">
+        <a-card v-show="visible" class="base-model" :class="[isExpand ? 'chat-model-expand' : 'chat-model']">
+          <template #title>
+            <header>
+              <div class="header-left">
+                <img :src="getSvgUrl('ai-chat', 'left')" alt="back" v-if="showBack" @click="onBack" />
+                <img :src="getSvgUrl('ai-chat', 'home')" alt="home" v-if="showChatPageOption && !isExpand"
+                  @click="onHome" />
+              </div>
+              <div class="header-middle" v-if="showChatPageOption">{{ `线程${currThread?.platformId}` }}</div>
+              <div class="header-right">
+                <template v-if="showChatPageOption">
+                  <img :src="getSvgUrl('ai-chat', 'history')" alt="history" @click="onHistory" />
+                  <img :src="getSvgUrl('ai-chat', 'full-screen')" alt="full-screen" @click="onFullScreen" />
+                </template>
+                <img :src="getSvgUrl('ai-chat', 'close')" alt="close" @click="visibleWindow(true)" />
+              </div>
+            </header>
+          </template>
+          <keep-alive>
+            <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
+          </keep-alive>
+        </a-card>
+      </a-spin>
     </div>
   </teleport>
 </template>
@@ -41,12 +42,14 @@ import PlatformChat from "./platform-chat.vue";
 import PreChat from "./pre-chat.vue";
 import useAIChat from "./ai-chat";
 import { getSvgUrl } from "@/utils/tool";
+import { storeToRefs } from "pinia";
 import type { Option } from "./select-menu.vue";
 
 const aiChat = useAIChat();
 const visible = ref(false);
 const currPage = ref<Option>({ action: 'SUPPORTED_PLATFORM_SELECT', name: '' });
 const afterPages = ref<Option[]>([currPage.value]);
+const { currThread, loading, isExpand } = storeToRefs(aiChat)
 const style = {
   width: '100%',
   boxSizing: 'border-box',
@@ -61,7 +64,16 @@ watchEffect(async () => {
   if (currPage.value?.action === "PLATFORM_MANAGEMENT") {
     await aiChat.getSysSupportedPlatforms();
   }
+  if (currPage.value?.action === "SUPPORTED_PLATFORM_SELECT") {
+    //todo 获取已授权的平台列表
+  }
+  if (currPage.value?.action === "ChAT_THREAD_MANAGEMENT") {
+    //todo 获取已创建的聊天线程
+  }
 })
+
+const showBack = computed(() => 'PLATFORM_CHAT' != (currPage.value?.action) && afterPages.value.length > 1)
+const showChatPageOption = computed(() => 'PLATFORM_CHAT' === currPage.value?.action)
 
 const getCompName = computed(() => {
   switch (currPage.value?.action) {
@@ -82,43 +94,69 @@ const getCompName = computed(() => {
   }
 });
 
+const visibleWindow = (close = false) => {
+  close ? visible.value = false : visible.value = !visible.value
+}
+
 const onBack = () => {
   afterPages.value.pop();
-  currPage.value = afterPages.value[afterPages.value.length - 1] as Option
+  currPage.value = afterPages.value[afterPages.value.length - 1]
 };
 
 const onHome = () => {
-
+  currPage.value = { action: 'SUPPORTED_PLATFORM_SELECT', name: '' }
+  afterPages.value = [currPage.value]
 }
 
 const onHistory = () => {
-
+  afterPages.value = unref(afterPages).filter(page => page.action == "ChAT_THREAD_MANAGEMENT")
+  currPage.value = afterPages.value[afterPages.value.length - 1]
 }
 
-const onFullScreen = () => { }
+const onFullScreen = () => {
+  aiChat.setWindowExpandStatus(!isExpand.value)
+}
 
-const onClosed = () => {
-  visible.value = false;
-};
 
-const onOpen = () => {
-  visible.value = !visible.value;
-};
 </script>
 
 <style lang="scss" scoped>
-.robot {
+img {
+  cursor: pointer;
+}
+
+.ai-chat {
   position: fixed;
   bottom: 10%;
   right: 0;
 }
 
+.ai-chat-expand {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.chat-model-expand {
+  position: fixed;
+  width: floor($number: 70%);
+  height: floor($number: 80%);
+  min-width: 350px;
+  min-height: 500px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .chat-model {
+  width: 350px;
+  height: 500px;
   position: absolute;
   right: 20px;
   bottom: 0;
-  width: 350px;
-  height: 500px;
+}
+
+.base-model {
   border-radius: 14px;
   display: flex;
   flex-direction: column;
@@ -168,9 +206,5 @@ const onOpen = () => {
       }
     }
   }
-
-
-
-
 }
 </style>

@@ -67,7 +67,7 @@ export function supportedPlatformList(): Promise<Response<SupportedPlatForm[]>> 
             }
           ]
         })
-    }, 1000)
+    }, 200)
   })
 }
 /**
@@ -90,7 +90,7 @@ export function platformOfCredentialFormModel(platformId: string | number): Prom
             }
           })
         })
-    }, 2000)
+    }, 200)
   })
 }
 
@@ -112,7 +112,7 @@ export function platformOfCredentialTest(params: CredentialTest): Promise<Respon
           supportModels: 'gpt-3.5-turbo'
         }
       })
-    }, 2000)
+    }, 200)
   })
 }
 
@@ -131,6 +131,6 @@ export function newThreadCreate(params: ThreadCondition): Promise<Response<Threa
           "updateTime": new Date().toISOString()
         }
       })
-    }, 2000)
+    }, 200)
   })
 }

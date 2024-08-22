@@ -14,7 +14,7 @@ import SelectMenu from "./select-menu.vue";
 import useAIChat from "./ai-chat.ts";
 import { storeToRefs } from "pinia";
 import type { SelectData, Option } from "./select-menu.vue";
-import { Platform } from "./request.ts";
+import { Platform, ThreadCondition } from "./request.ts";
 
 interface PreChatPorps {
   currPage?: Option;
@@ -59,6 +59,15 @@ const onSelect = (type: string, option: Option) => {
     } as Platform
     aiChat.updateCurrPlatform(newPlatFrom)
   }
+
+  if (type == 'PLATFORM_CHAT') {
+    const platformInfo = {
+      platformId: currPlatform.value?.id,
+      model: option.name
+    } as ThreadCondition
+    aiChat.createThreadofChat(platformInfo)
+  }
+
   emits("update:currPage", { ...currPage.value, action: type });
 }
 

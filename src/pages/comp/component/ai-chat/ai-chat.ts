@@ -7,9 +7,10 @@ export default defineStore('ai-chat', () => {
   const supportedPlatForms = ref<SupportedPlatForm[]>([])
   const credentialFormModel = ref<CredentialFormItem[]>([])
   const threads = ref<ThreadInfo[]>([])
-  const loading = ref(false)
   const currPlatform = ref<Platform>()
   const currThread = ref<ThreadInfo>()
+  const loading = ref(false)
+  const isExpand = ref(false)
 
 
   function updateCurrPlatform(platform: Platform) {
@@ -22,9 +23,13 @@ export default defineStore('ai-chat', () => {
 
   function updateThreads(thread: ThreadInfo) {
     const threadIds = threads.value.map(v => v.threadId)
-    if (threadIds.includes(thread.threadId)) {
+    if (!threadIds.includes(thread.threadId)) {
       threads.value.push(thread)
     }
+  }
+
+  function setWindowExpandStatus(status: boolean) {
+    isExpand.value = status
   }
 
   /**
@@ -32,14 +37,17 @@ export default defineStore('ai-chat', () => {
    */
   async function getSysSupportedPlatforms() {
     try {
+      loading.value = true
       const { code, data } = await supportedPlatformList()
       if (code === 200) {
         supportedPlatForms.value = data
+        loading.value = false
       } else {
         supportedPlatForms.value = []
       }
     } catch (error) {
       console.log('error :>> ', error);
+      loading.value = false
     }
   }
 
@@ -51,14 +59,17 @@ export default defineStore('ai-chat', () => {
       if (!currPlatform.value?.id) {
         return
       }
+      loading.value = true
       const { code, data } = await platformOfCredentialFormModel(currPlatform.value?.id)
       if (code === 200) {
         credentialFormModel.value = data
+        loading.value = false
       } else {
         credentialFormModel.value = []
       }
     } catch (error) {
       console.log('error :>> ', error);
+      loading.value = false
     }
   }
 
@@ -67,15 +78,20 @@ export default defineStore('ai-chat', () => {
       if (!currPlatform.value?.id) {
         return
       }
+      loading.value = true
       const authCredentials: AuthCredential[] = []
       const platformId = currPlatform.value?.id
       for (const [key, value] of Object.entries(authFormData)) {
         authCredentials.push({ key, value } as AuthCredential)
       }
       const { code, data } = await platformOfCredentialTest({ platformId, authCredentials })
-      if (code === 200) updateCurrPlatform(data)
+      if (code === 200) {
+        updateCurrPlatform(data)
+        loading.value = false
+      }
     } catch (error) {
       console.log('error :>> ', error);
+      loading.value = false
     }
 
   }
@@ -98,15 +114,18 @@ export default defineStore('ai-chat', () => {
 
   return {
     loading,
+    isExpand,
     currPlatform,
     currThread,
     supportedPlatForms,
     credentialFormModel,
+    threads,
     updateCurrPlatform,
     getSysSupportedPlatforms,
     getPlatformofCredentialFormModel,
     testAuthofPlatform,
-    createThreadofChat
+    createThreadofChat,
+    setWindowExpandStatus
   }
 }, {
   persist: true // 启用持久化
