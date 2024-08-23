@@ -1,33 +1,68 @@
 <template>
-  <teleport to="body">
-    <a-float-button type="default" @click="() => visibleWindow()">
-      <template #icon>
-        <img class="robot-icon" :src="getSvgUrl('ai-chat', 'robot')" alt="ai chat" />
-      </template>
-    </a-float-button>
+  <a-float-button type="default" @click="() => visibleWindow()">
+    <template #icon>
+      <img
+        class="robot-icon"
+        :src="getSvgUrl('ai-chat', 'robot')"
+        alt="ai chat"
+      />
+    </template>
+  </a-float-button>
 
+  <teleport to="body">
     <div :class="[isExpand ? 'ai-chat-expand' : 'ai-chat']">
       <a-spin :spinning="loading">
-        <a-card v-show="visible" class="base-model" :class="[isExpand ? 'chat-model-expand' : 'chat-model']">
+        <a-card
+          v-show="visible"
+          class="base-model"
+          :class="[isExpand ? 'chat-model-expand' : 'chat-model']"
+        >
           <template #title>
             <header>
               <div class="header-left">
-                <img :src="getSvgUrl('ai-chat', 'left')" alt="back" v-if="showBack" @click="onBack" />
-                <img :src="getSvgUrl('ai-chat', 'home')" alt="home" v-if="showChatPageOption && !isExpand"
-                  @click="onHome" />
+                <img
+                  :src="getSvgUrl('ai-chat', 'left')"
+                  alt="back"
+                  v-if="showBack"
+                  @click="onBack"
+                />
+                <img
+                  :src="getSvgUrl('ai-chat', 'home')"
+                  alt="home"
+                  v-if="showChatPageOption && !isExpand"
+                  @click="onHome"
+                />
               </div>
-              <div class="header-middle" v-if="showChatPageOption">{{ `线程${currThread?.platformId}` }}</div>
+              <div class="header-middle" v-if="showChatPageOption">
+                {{ `线程${currThread?.platformId}` }}
+              </div>
               <div class="header-right">
                 <template v-if="showChatPageOption">
-                  <img :src="getSvgUrl('ai-chat', 'history')" alt="history" @click="onHistory" />
-                  <img :src="getSvgUrl('ai-chat', 'full-screen')" alt="full-screen" @click="onFullScreen" />
+                  <img
+                    :src="getSvgUrl('ai-chat', 'history')"
+                    alt="history"
+                    @click="onHistory"
+                  />
+                  <img
+                    :src="getSvgUrl('ai-chat', 'full-screen')"
+                    alt="full-screen"
+                    @click="onFullScreen"
+                  />
                 </template>
-                <img :src="getSvgUrl('ai-chat', 'close')" alt="close" @click="visibleWindow(true)" />
+                <img
+                  :src="getSvgUrl('ai-chat', 'close')"
+                  alt="close"
+                  @click="visibleWindow(true)"
+                />
               </div>
             </header>
           </template>
           <keep-alive>
-            <component v-bind="{ style }" v-model:currPage="currPage" :is="getCompName"></component>
+            <component
+              v-bind="{ style }"
+              v-model:currPage="currPage"
+              :is="getCompName"
+            ></component>
           </keep-alive>
         </a-card>
       </a-spin>
@@ -47,19 +82,19 @@ import type { Option } from "./select-menu.vue";
 
 const aiChat = useAIChat();
 const visible = ref(false);
-const currPage = ref<Option>({ action: 'SUPPORTED_PLATFORM_SELECT', name: '' });
+const currPage = ref<Option>({ action: "SUPPORTED_PLATFORM_SELECT", name: "" });
 const afterPages = ref<Option[]>([currPage.value]);
-const { currThread, loading, isExpand } = storeToRefs(aiChat)
+const { currThread, loading, isExpand } = storeToRefs(aiChat);
 const style = {
-  width: '100%',
-  boxSizing: 'border-box',
-  padding: '24px'
-}
+  width: "100%",
+  boxSizing: "border-box",
+  padding: "24px",
+};
 
 watchEffect(async () => {
-  const actions = afterPages.value.map(v => v.action)
+  const actions = afterPages.value.map((v) => v.action);
   if (!actions?.includes(currPage.value?.action)) {
-    afterPages.value?.push(currPage.value)
+    afterPages.value?.push(currPage.value);
   }
   if (currPage.value?.action === "PLATFORM_MANAGEMENT") {
     await aiChat.getSysSupportedPlatforms();
@@ -70,10 +105,14 @@ watchEffect(async () => {
   if (currPage.value?.action === "ChAT_THREAD_MANAGEMENT") {
     //todo 获取已创建的聊天线程
   }
-})
+});
 
-const showBack = computed(() => 'PLATFORM_CHAT' != (currPage.value?.action) && afterPages.value.length > 1)
-const showChatPageOption = computed(() => 'PLATFORM_CHAT' === currPage.value?.action)
+const showBack = computed(
+  () => "PLATFORM_CHAT" != currPage.value?.action && afterPages.value.length > 1
+);
+const showChatPageOption = computed(
+  () => "PLATFORM_CHAT" === currPage.value?.action
+);
 
 const getCompName = computed(() => {
   switch (currPage.value?.action) {
@@ -95,29 +134,29 @@ const getCompName = computed(() => {
 });
 
 const visibleWindow = (close = false) => {
-  close ? visible.value = false : visible.value = !visible.value
-}
+  close ? (visible.value = false) : (visible.value = !visible.value);
+};
 
 const onBack = () => {
   afterPages.value.pop();
-  currPage.value = afterPages.value[afterPages.value.length - 1]
+  currPage.value = afterPages.value[afterPages.value.length - 1];
 };
 
 const onHome = () => {
-  currPage.value = { action: 'SUPPORTED_PLATFORM_SELECT', name: '' }
-  afterPages.value = [currPage.value]
-}
+  currPage.value = { action: "SUPPORTED_PLATFORM_SELECT", name: "" };
+  afterPages.value = [currPage.value];
+};
 
 const onHistory = () => {
-  afterPages.value = unref(afterPages).filter(page => page.action == "ChAT_THREAD_MANAGEMENT")
-  currPage.value = afterPages.value[afterPages.value.length - 1]
-}
+  afterPages.value = unref(afterPages).filter(
+    (page) => page.action == "ChAT_THREAD_MANAGEMENT"
+  );
+  currPage.value = afterPages.value[afterPages.value.length - 1];
+};
 
 const onFullScreen = () => {
-  aiChat.setWindowExpandStatus(!isExpand.value)
-}
-
-
+  aiChat.setWindowExpandStatus(!isExpand.value);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -133,14 +172,12 @@ img {
 
 .ai-chat-expand {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
 }
 
 .chat-model-expand {
   position: fixed;
-  width: floor($number: 70%);
-  height: floor($number: 80%);
+  width: 80%;
+  height: 70%;
   min-width: 350px;
   min-height: 500px;
   left: 50%;
@@ -179,7 +216,7 @@ img {
     box-sizing: border-box;
     display: flex;
 
-    &>div {
+    & > div {
       flex: 1;
     }
   }
@@ -202,7 +239,7 @@ img {
       justify-content: flex-end;
 
       img {
-        margin-left: 6px;
+        margin-left: 10px;
       }
     }
   }

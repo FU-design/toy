@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
-import { supportedPlatformList, platformOfCredentialFormModel, platformOfCredentialTest, newThreadCreate, } from "./request"
-import type { SupportedPlatForm, CredentialFormItem, AuthCredential, Platform, ThreadCondition, ThreadInfo } from "./request"
+import { supportedPlatformList, platformOfCredentialFormModel, platformOfCredentialTest, newThreadCreate, connectAssistant, } from "./request"
+import type { SupportedPlatForm, CredentialFormItem, AuthCredential, Platform, ThreadCondition, ThreadInfo, Record } from "./request"
 
 
 export default defineStore('ai-chat', () => {
@@ -11,6 +11,7 @@ export default defineStore('ai-chat', () => {
   const currThread = ref<ThreadInfo>()
   const loading = ref(false)
   const isExpand = ref(false)
+  const chatRecords = ref<Record[]>([])
 
 
   function updateCurrPlatform(platform: Platform) {
@@ -26,6 +27,10 @@ export default defineStore('ai-chat', () => {
     if (!threadIds.includes(thread.threadId)) {
       threads.value.push(thread)
     }
+  }
+
+  function updateChatRecords(record: Record) {
+    chatRecords.value.push(record)
   }
 
   function setWindowExpandStatus(status: boolean) {
@@ -112,6 +117,20 @@ export default defineStore('ai-chat', () => {
     }
   }
 
+  async function startConnectAssistant() {
+    if (currThread.value?.threadId) {
+      return
+    }
+    try {
+      const { code, data } = await connectAssistant({ threadId: currThread.value?.threadId as (string | number) })
+      if (code === 200) {
+        updateChatRecords(data)
+      }
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  }
+
   return {
     loading,
     isExpand,
@@ -120,12 +139,14 @@ export default defineStore('ai-chat', () => {
     supportedPlatForms,
     credentialFormModel,
     threads,
+    chatRecords,
     updateCurrPlatform,
     getSysSupportedPlatforms,
     getPlatformofCredentialFormModel,
     testAuthofPlatform,
     createThreadofChat,
-    setWindowExpandStatus
+    setWindowExpandStatus,
+    startConnectAssistant
   }
 }, {
   persist: true // 启用持久化

@@ -7,7 +7,7 @@
     <template v-if="currPage?.action == 'PLATFORM_AUTH'">
       <select-menu :select-data="PLATFORM_AUTH">
         <template #select-custom-content>
-          <a-form v-bind="layout" ref="formRef" :model="formState" :colon="false">
+          <a-form ref="formRef" :model="formState" :colon="false">
             <a-form-item v-for="item in credentialFormModel" :label="item.displayName" :name="item.name"
               :rules="[{ required: true, message: `Please input ${item.displayName}!` }]">
               <a-input v-model:value="formState[`${item.name}`]" :placeholder="`please input ${item.displayName}`" />
