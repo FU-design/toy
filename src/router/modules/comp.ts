@@ -20,7 +20,8 @@ const comp = {
     {
       path: "infiniteScroll",
       name: "InfiniteScroll",
-      component: () => import("@/pages/comp/component/infinite-scroll/index.vue"),
+      component: () =>
+        import("@/pages/comp/component/infinite-scroll/index.vue"),
       meta: {
         title: "InfiniteScroll",
         menu: true,
@@ -88,15 +89,6 @@ const comp = {
     //     import("@/pages/comp/component/warefallFlow/warefallFow.vue"),
     //   meta: {
     //     title: "WarefallFlow",
-    //     menu: true,
-    //   },
-    // },
-    // {
-    //   path: "drag",
-    //   name: "Drag",
-    //   component: () => import("@/pages/comp/component/drag/index.vue"),
-    //   meta: {
-    //     title: "Drag",
     //     menu: true,
     //   },
     // },
