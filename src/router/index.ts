@@ -7,12 +7,10 @@ import {
 import NotFound from "@/layouts/NotFound.vue";
 import comp from "./modules/comp";
 import question from "./modules/question";
-import minecraft from "./modules/minecraft";
 
 const routes: RouteRecordRaw[] = [
   comp,
   question,
-  minecraft,
   // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
