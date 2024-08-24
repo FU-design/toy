@@ -7,19 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AButton: typeof import('ant-design-vue/es')['Button']
-    ACard: typeof import('ant-design-vue/es')['Card']
-    AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
-    AEmpty: typeof import('ant-design-vue/es')['Empty']
-    AFloatButton: typeof import('ant-design-vue/es')['FloatButton']
-    AForm: typeof import('ant-design-vue/es')['Form']
-    AFormItem: typeof import('ant-design-vue/es')['FormItem']
-    AInput: typeof import('ant-design-vue/es')['Input']
-    AInputGroup: typeof import('ant-design-vue/es')['InputGroup']
-    AInputSearch: typeof import('ant-design-vue/es')['InputSearch']
-    ASelect: typeof import('ant-design-vue/es')['Select']
-    ASpin: typeof import('ant-design-vue/es')['Spin']
-    ATextarea: typeof import('ant-design-vue/es')['Textarea']
     CardBox: typeof import('./components/cardBox/CardBox.vue')['default']
     Panel: typeof import('./components/panel/Panel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
