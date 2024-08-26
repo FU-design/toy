@@ -69,16 +69,16 @@ export function windowBeforeCloseConfirm() {
   });
 }
 
-
 export function getImageUrl(name?: string) {
-  return new URL(`../assets/images/${name}.jpg`, import.meta.url).href
+  return new URL(`../assets/images/${name}.jpg`, import.meta.url).href;
 }
 
 export function getSvgUrl(fileName: string, name?: string) {
-  const path = fileName ? `../assets/svg/${fileName}/${name}.svg` : `../assets/svg/${name}.svg`
-  return new URL(path, import.meta.url).href
+  const path = fileName
+    ? `../assets/svg/${fileName}/${name}.svg`
+    : `../assets/svg/${name}.svg`;
+  return new URL(path, import.meta.url).href;
 }
-
 
 export function throttle(func: Function, delay: number) {
   let lastCall = 0;
@@ -90,4 +90,21 @@ export function throttle(func: Function, delay: number) {
     lastCall = now;
     return func(...args);
   };
+}
+
+/**
+ * 从给定的文件路径中提取不带扩展名的文件名。
+ * @param filePath 文件的完整路径。
+ * @returns 提取到的不带扩展名的文件名。
+ */
+export function extractFileNameWithoutExtension(filePath: string): string {
+  // 正则表达式用于匹配文件名（不含扩展名）
+  const fileNameRegex = /\/([^/.]+)\.[^/]+$/;
+  const match = filePath.match(fileNameRegex);
+  if (match) {
+    // 返回匹配到的文件名（不含扩展名）
+    return match[1];
+  }
+  // 如果没有匹配到，则返回空字符串
+  return "";
 }

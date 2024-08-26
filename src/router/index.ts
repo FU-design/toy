@@ -5,12 +5,15 @@ import {
   // createWebHashHistory,
 } from "vue-router";
 import NotFound from "@/layouts/NotFound.vue";
-import comp from "./modules/comp";
-import question from "./modules/question";
+
+const dynamicRouteFiles = import.meta.glob("./modules/**/*.ts", {
+  eager: true,
+});
+
+const dynamicRoutes = mergeRouteModules(dynamicRouteFiles);
 
 const routes: RouteRecordRaw[] = [
-  comp,
-  question,
+  ...dynamicRoutes,
   // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
