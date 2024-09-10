@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from "vue-router";
 
 interface RouteModuleType {
-  routes: RouteRecordRaw[];
+  default: RouteRecordRaw;
 }
 export function mergeRouteModules(
   routeModules: Record<string, unknown>
@@ -9,8 +9,8 @@ export function mergeRouteModules(
   const mergedRoutes: RouteRecordRaw[] = [];
 
   for (const routeModule of Object.values(routeModules)) {
-    const moduleRoutes = (routeModule as RouteModuleType)?.routes ?? [];
-    mergedRoutes.push(...moduleRoutes);
+    const moduleRoutes = (routeModule as RouteModuleType)?.default ?? [];
+    mergedRoutes.push(moduleRoutes);
   }
 
   return mergedRoutes;

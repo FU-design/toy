@@ -1,15 +1,14 @@
 import pageView from "@/layouts/pageView.vue";
-const comp = {
-  path: "/comp",
+const routes = {
+  path: "/",
   name: "Comp",
-  redirect: "/comp/scrollmore",
   component: pageView,
   meta: {
     title: "组件",
   },
   children: [
     {
-      path: "lazyLoadImg",
+      path: "",
       name: "LazyLoadImg",
       component: () => import("@/pages/comp/component/lazy-load-img/index.vue"),
       meta: {
@@ -142,4 +141,4 @@ const comp = {
   ],
 };
 
-export default comp;
+export default routes;
