@@ -14,6 +14,10 @@ import { chatMsgHistory, type RoleInfo } from "./request";
 
 const mockData = ref<RoleInfo[]>();
 
+const initScrollEvent = () => {
+  const box = document.querySelector(".chat-content");
+};
+
 onMounted(async () => {
   const res = await chatMsgHistory();
   mockData.value = res.data;

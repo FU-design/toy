@@ -12,14 +12,14 @@
     >
       <div
         class="markdown-body p-4 rounded-lg"
-        v-html="parseMDByHighlight(props.roleInfo.content)"
+        v-html="parseMDByHighlight(displayedContent)"
       ></div>
     </article>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { RoleInfo } from "./request";
 import { getSvgUrl } from "@/utils/tool";
 import { parseMDByHighlight } from "@/utils/render";
@@ -28,7 +28,24 @@ interface Props {
   roleInfo: RoleInfo;
 }
 const props = defineProps<Props>();
+const displayedContent = ref(""); // 用于逐字显示的部分 HTML
+const fullContent = ref(props.roleInfo.content); // 解析后的完整 HTML
 const getPosition = computed(() => props.roleInfo.role === "assistant");
+
+const typeText = (text: string, delay = 20) => {
+  let index = 0;
+  const interval = setInterval(() => {
+    displayedContent.value += text[index];
+    index += 1;
+    if (index >= text.length) {
+      clearInterval(interval);
+    }
+  }, delay);
+};
+
+onMounted(() => {
+  typeText(fullContent.value);
+});
 </script>
 
 <style>
