@@ -1,16 +1,13 @@
 import { createApp } from 'vue'
 
-export function withSetup(composable) {
-  let result: any;
+export function withSetup<T>(composable: any, payload?: T) {
+  let result: any
   const app = createApp({
     setup() {
-      result = composable()
-      // 忽略模板警告
+      result = composable(payload)
       return () => { }
     }
   })
   app.mount(document.createElement('div'))
-  // 返回结果与应用实例
-  // 用来测试供给和组件卸载
   return [result, app]
 }
