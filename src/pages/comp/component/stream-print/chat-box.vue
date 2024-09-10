@@ -25,6 +25,8 @@ onMounted(async () => {
   &-container {
     min-height: 600px;
     min-width: 320px;
+    max-height: 80vh;
+    overflow: auto;
   }
   &-content {
     border-radius: 8px;
@@ -63,7 +65,7 @@ onMounted(async () => {
 /* 中屏桌面设备 (1025px - 1200px) */
 @media only screen and (min-width: 1025px) {
   .chat-content {
-    width: 700px;
+    width: 900px;
   }
 }
 

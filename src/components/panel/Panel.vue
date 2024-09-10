@@ -222,7 +222,7 @@ const handleClose = () => {
 }
 </style>
 <!-- 自定义markdown中元素的样式 -->
-<style>
+<!-- <style>
 .panel-content h3,
 h4 {
   padding: 8px;
@@ -279,4 +279,4 @@ h4 {
   font-weight: 600;
   color: rgb(207 85 85 / 99%);
 }
-</style>
+</style> -->

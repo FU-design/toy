@@ -64,6 +64,19 @@ export const parseMD = (content: string) => {
   return marked.parse(content);
 };
 
+export const parseMDByHighlight = (content: string) => {
+  const marked = new Marked(
+    markedHighlight({
+      langPrefix: "hljs language-",
+      highlight(code, lang) {
+        const language = hljs.getLanguage(lang) ? lang : "plaintext";
+        return hljs.highlight(code, { language }).value; // https://highlightjs.readthedocs.io/en/latest/README.html#
+      },
+    })
+  );
+  return marked.parse(content);
+};
+
 /**
  * 通过获取的模块中的文件目录，遍历解析模块中的md文件，展示到页面中
  * @param modulesFiles

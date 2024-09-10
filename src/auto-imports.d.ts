@@ -50,6 +50,8 @@ declare global {
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
   const parseMD: typeof import('./utils/render')['parseMD']
+  const parseMDByDefault: typeof import('./utils/render')['parseMDByDefault']
+  const parseMDByHighlight: typeof import('./utils/render')['parseMDByHighlight']
   const provide: typeof import('vue')['provide']
   const radTrigger: typeof import('./utils/tool')['radTrigger']
   const randomString: typeof import('./utils/mock')['randomString']

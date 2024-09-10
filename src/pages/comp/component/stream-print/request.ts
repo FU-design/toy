@@ -9,6 +9,8 @@ export interface Response {
   data: RoleInfo[]
 }
 
+import test from './test.md?raw'
+
 export function chatMsgHistory(): Promise<Response> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -28,7 +30,7 @@ export function chatMsgHistory(): Promise<Response> {
           {
             role: "assistant",
             icon: "",
-            content: "异步路由（Asynchronous Routing）通常用于单页应用（SPA）中，以优化应用加载时间和性能。具体来说，异步路由可以根据需要动态加载路由组件，而不是在应用启动时一次性加载所有路由组件。",
+            content: test,
           },
         ]
       })
