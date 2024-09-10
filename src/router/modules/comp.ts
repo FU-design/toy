@@ -3,12 +3,13 @@ const routes = {
   path: "/",
   name: "Comp",
   component: pageView,
+  redirect: "/lazyLoadimg",
   meta: {
     title: "组件",
   },
   children: [
     {
-      path: "",
+      path: "lazyLoadimg",
       name: "LazyLoadImg",
       component: () => import("@/pages/comp/component/lazy-load-img/index.vue"),
       meta: {
@@ -110,34 +111,34 @@ const routes = {
         menu: true,
       },
     },
-    {
-      path: "realMsg",
-      name: "RealMsg",
-      redirect: "/comp/realMsg/loginChat",
-      meta: {
-        title: "RealMsg",
-        menu: true,
-      },
-      children: [
-        {
-          path: "loginChat",
-          name: "LoginChat",
-          component: () =>
-            import("@/pages/comp/component/realMsg/loginChat.vue"),
-          meta: {
-            menu: false,
-          },
-        },
-        {
-          path: "chat",
-          name: "Chat",
-          component: () => import("@/pages/comp/component/realMsg/index.vue"),
-          meta: {
-            menu: false,
-          },
-        },
-      ],
-    },
+    // {
+    //   path: "realMsg",
+    //   name: "RealMsg",
+    //   redirect: "/comp/realMsg/loginChat",
+    //   meta: {
+    //     title: "RealMsg",
+    //     menu: true,
+    //   },
+    //   children: [
+    //     {
+    //       path: "loginChat",
+    //       name: "LoginChat",
+    //       component: () =>
+    //         import("@/pages/comp/component/realMsg/loginChat.vue"),
+    //       meta: {
+    //         menu: false,
+    //       },
+    //     },
+    //     {
+    //       path: "chat",
+    //       name: "Chat",
+    //       component: () => import("@/pages/comp/component/realMsg/index.vue"),
+    //       meta: {
+    //         menu: false,
+    //       },
+    //     },
+    //   ],
+    // },
   ],
 };
 

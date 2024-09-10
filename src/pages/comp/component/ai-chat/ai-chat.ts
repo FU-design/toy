@@ -9,9 +9,9 @@ export default defineStore('ai-chat', () => {
   const threads = ref<ThreadInfo[]>([])
   const currPlatform = ref<Platform>()
   const currThread = ref<ThreadInfo>()
+  const chatRecords = ref<Record[]>([])
   const loading = ref(false)
   const isExpand = ref(false)
-  const chatRecords = ref<Record[]>([])
 
 
   function updateCurrPlatform(platform: Platform) {
@@ -78,6 +78,11 @@ export default defineStore('ai-chat', () => {
     }
   }
 
+  /**
+   * 测试ai平台的授权认证
+   * @param authFormData 
+   * @returns 
+   */
   async function testAuthofPlatform(authFormData = {}) {
     try {
       if (!currPlatform.value?.id) {
@@ -117,6 +122,10 @@ export default defineStore('ai-chat', () => {
     }
   }
 
+  /**
+   * 与ai建立连接
+   * @returns 
+   */
   async function startConnectAssistant() {
     if (currThread.value?.threadId) {
       return

@@ -35,7 +35,7 @@ const { fold } = storeToRefs(side);
 const routerMap = computed(() => router.getRoutes().filter((r) => r.meta.menu));
 
 const isActive = (path: string) => {
-  return currentRoute.value.path.startsWith(path);
+  return currentRoute.value.path === path;
 };
 
 onMounted(() => {
