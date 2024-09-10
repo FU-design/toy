@@ -18,6 +18,15 @@ const routes = {
       },
     },
     {
+      path: "streamPrint",
+      name: "StreamPrint",
+      component: () => import("@/pages/comp/component/stream-print/index.vue"),
+      meta: {
+        title: "StreamPrint",
+        menu: true,
+      },
+    },
+    {
       path: "infiniteScroll",
       name: "InfiniteScroll",
       component: () =>
