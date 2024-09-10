@@ -40,6 +40,7 @@ const { showHeader } = toRefs(props);
   }
   & > main {
     width: 100%;
+    overflow: auto;
     height: auto;
     padding: 10px 16px 16px;
   }

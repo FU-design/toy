@@ -3,7 +3,7 @@
     <template #icon>
       <img
         class="robot-icon"
-        :src="getSvgUrl('ai-chat', 'robot')"
+        :src="getSvgUrl('robot', 'ai-chat')"
         alt="ai chat"
       />
     </template>
@@ -21,13 +21,13 @@
             <header>
               <div class="header-left">
                 <img
-                  :src="getSvgUrl('ai-chat', 'left')"
+                  :src="getSvgUrl('left', 'ai-chat')"
                   alt="back"
                   v-if="showBack"
                   @click="onBack"
                 />
                 <img
-                  :src="getSvgUrl('ai-chat', 'home')"
+                  :src="getSvgUrl('home', 'ai-chat')"
                   alt="home"
                   v-if="showChatPageOption && !isExpand"
                   @click="onHome"
@@ -39,18 +39,18 @@
               <div class="header-right">
                 <template v-if="showChatPageOption">
                   <img
-                    :src="getSvgUrl('ai-chat', 'history')"
+                    :src="getSvgUrl('history', 'ai-chat')"
                     alt="history"
                     @click="onHistory"
                   />
                   <img
-                    :src="getSvgUrl('ai-chat', 'full-screen')"
+                    :src="getSvgUrl('full-screen', 'ai-chat')"
                     alt="full-screen"
                     @click="onFullScreen"
                   />
                 </template>
                 <img
-                  :src="getSvgUrl('ai-chat', 'close')"
+                  :src="getSvgUrl('close', 'ai-chat')"
                   alt="close"
                   @click="visibleWindow(true)"
                 />

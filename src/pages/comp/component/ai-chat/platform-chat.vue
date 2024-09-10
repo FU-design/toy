@@ -24,7 +24,7 @@
             @click="sendMessage"
           >
             <img
-              :src="getSvgUrl('ai-chat', sendable ? 'send' : 'send-disabled')"
+              :src="getSvgUrl(sendable ? 'send' : 'send-disabled', 'ai-chat')"
               alt="send"
             />
           </a-button>
