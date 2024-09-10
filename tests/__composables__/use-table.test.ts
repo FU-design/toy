@@ -1,7 +1,6 @@
-import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
+import { describe, it, expect, vi, } from "vitest";
 import useTable from '../../src/composables/useTable'
 import { withSetup } from '../test-util'
-import { onUnmounted } from "vue";
 
 describe('useTable', () => {
   const columns = [{ title: 'Column 1' }];
