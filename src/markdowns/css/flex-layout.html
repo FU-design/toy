@@ -9,11 +9,14 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #000;
+      background-color: #3f3f3f44;
+    }
+    .container-wrapper {
+      padding: 100px;
+      box-sizing: border-box;
     }
     .container {
       width: 100%;
-      height: 300px;
       padding: 10px;
       overflow: auto;
       border-radius: 8px;
@@ -30,36 +33,65 @@
          2. 百分比：根据父容器宽度计算百分比
       */
       gap: 10px; /* row-gap: 10px column-gap: 10px */
+      /* align-content: center; */
+      align-content: flex-start;
+      /* align-content: flex-end; */
+      /* align-content: space-around; */
+      /* align-content: space-between; */
     }
 
     .item {
-      height: 50px;
+      min-height: 50px;
       min-width: 50px;
+      padding: 6px;
+      box-sizing: border-box;
       background-color: chocolate;
       border-radius: 8px;
 
-      flex: 0 1 calc((100% - 20px) / 3);
+      flex: 0 1 calc((100% - 50px + 6px) / 5);
+    }
+    .item:nth-child(odd) {
+      background-color: #fff;
+      align-self: center;
+    }
+    .item:nth-child(even) {
+      order: 1;
+      background-color: #0c6e7a;
+    }
+
+    .item > span {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-color: chocolate;
+      border-radius: 50%;
+      text-align: center;
+      padding: 2px;
+      color: #fff;
     }
   </style>
 
   <body>
-    <div class="container">
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
-      <div class="item"></div>
+    <div class="container-wrapper">
+      <!-- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+      <div class="container" contenteditable="true">
+        <div class="item"><span>1</span></div>
+        <div class="item"><span>2</span></div>
+        <div class="item"><span>3</span></div>
+        <div class="item"><span>4</span></div>
+        <div class="item"><span>5</span></div>
+        <div class="item"><span>6</span></div>
+        <div class="item"><span>7</span></div>
+        <div class="item"><span>8</span></div>
+        <div class="item"><span>9</span></div>
+        <div class="item"><span>10</span></div>
+        <div class="item"><span>11</span></div>
+        <div class="item"><span>12</span></div>
+        <div class="item"><span>13</span></div>
+        <div class="item"><span>14</span></div>
+        <div class="item"><span>15</span></div>
+        <div class="item"><span>16</span></div>
+      </div>
     </div>
   </body>
 </html>
