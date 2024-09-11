@@ -54,10 +54,115 @@
      - 根元素
 
 - flex:1; 是哪些属性的缩写，对应的属性代表什么含义
+
   - `flex:1` <==> `flex:1 1 0%`
+
     - `1` 代表 `flex-grow`;
     - `1` 代表 `flex-shrink`;
     - `0%` 代表 `flex-basis`;
+
+  - 重温 `flex` 布局
+
+    ```html
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #3f3f3f44;
+        }
+        .container-wrapper {
+          padding: 100px;
+          box-sizing: border-box;
+        }
+        .container {
+          width: 100%;
+          padding: 10px;
+          overflow: auto;
+          border-radius: 8px;
+          box-sizing: border-box;
+          border: 2px solid #ffffff;
+
+          display: flex;
+          flex-flow: row wrap;
+          /* 
+              显式控制 Flex 项目之间的空间。
+              它仅在项目之间应用该间距，而不是在外边缘上。  
+              取值：
+              1. 像素值：px
+              2. 百分比：根据父容器宽度计算百分比
+            */
+          gap: 10px; /* row-gap: 10px column-gap: 10px */
+          /* align-content: center; */
+          align-content: flex-start;
+          /* align-content: flex-end; */
+          /* align-content: space-around; */
+          /* align-content: space-between; */
+        }
+
+        .item {
+          min-height: 50px;
+          min-width: 50px;
+          padding: 6px;
+          box-sizing: border-box;
+          background-color: chocolate;
+          border-radius: 8px;
+
+          flex: 0 1 calc((100% - 50px + 6px) / 5);
+        }
+        .item:nth-child(odd) {
+          background-color: #fff;
+          align-self: center;
+        }
+        .item:nth-child(even) {
+          order: 1;
+          background-color: #0c6e7a;
+        }
+
+        .item > span {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          background-color: chocolate;
+          border-radius: 50%;
+          text-align: center;
+          padding: 2px;
+          color: #fff;
+        }
+      </style>
+
+      <body>
+        <div class="container-wrapper">
+          <!-- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+          <div class="container" contenteditable="true">
+            <div class="item"><span>1</span></div>
+            <div class="item"><span>2</span></div>
+            <div class="item"><span>3</span></div>
+            <div class="item"><span>4</span></div>
+            <div class="item"><span>5</span></div>
+            <div class="item"><span>6</span></div>
+            <div class="item"><span>7</span></div>
+            <div class="item"><span>8</span></div>
+            <div class="item"><span>9</span></div>
+            <div class="item"><span>10</span></div>
+            <div class="item"><span>11</span></div>
+            <div class="item"><span>12</span></div>
+            <div class="item"><span>13</span></div>
+            <div class="item"><span>14</span></div>
+            <div class="item"><span>15</span></div>
+            <div class="item"><span>16</span></div>
+          </div>
+        </div>
+      </body>
+    </html>
+    ```
+
 - 隐藏元素的属性有哪些
   - `opacity:0`: 元素的透明度，元素大小不变，**不影响布局和元素交互**。
   - `visibility:hidden`: 元素不可见，元素本身大小不变，**不影响布局**，但元素**无法交互**
@@ -65,17 +170,89 @@
 
 # Js 相关
 
-- 为什么 let a = '123' 之后可以 a 可以直接使用 String 的方法？
-- Js 的基础类型，typeof 和 instanceof 的区别
-  - typeof: typeof 可以用来判断基本类型，返回值为 string。
-  - instanceof: instanceof 可以用来判断对象是否属于某个类，返回值为 boolean。
-- 数组的 forEach 和 map 方法有哪些区别？常用哪些方法去对数组进行增、删、改
-- 闭包和作用域
-- 实现一个类似关键字 new 功能的函数
-- 如何实现继承（原型和原型链）
-- 箭头函数和普通函数有什么区别
-- 迭代器(iterator)接口和生成器(generator)函数的关系
-- 浏览器的事件循环机制
+### Js 的基础类型，typeof 和 instanceof 的区别
+
+- `typeof`: 主要用来判断**基本类型**，返回值为 `string`。
+
+  ```js
+  console.log(typeof 42); // "number"
+  console.log(typeof "Hello"); // "string"
+  console.log(typeof true); // "boolean"
+  console.log(typeof undefined); // "undefined"
+  console.log(typeof { name: "John" }); // "object"
+  console.log(typeof null); // "object"   (这是一个特殊情况，null 被认为是对象类型)
+  console.log(typeof function () {}); // "function"
+  console.log(typeof Symbol()); // "symbol"
+  console.log(typeof 123n); // "bigint"
+  ```
+
+- `instanceof`:
+  - 判断一个对象是否是**某个类或其子类的实例** ，返回值为 `boolean`。
+  - 当对象为 `null`或 `undefined` 时，`instanceof` 总是返回 `false`
+  ```js
+  let color1 = new String("green");
+  color1 instanceof String; //  true
+  let color2 = "coral"; //no type specified
+  color2 instanceof String; //  false (color2 is not a String object)
+  ```
+
+### 数组的 forEach 和 map 方法有哪些区别？常用哪些方法去对数组进行增、删、改
+
+- 预备数据
+
+  ```js
+  const arr = new Array(5).fill(1).map((_, index) => index + 1);
+  ```
+
+- forEach:
+
+  - 没有返回值，始终返回 `undefined`
+  - 遍历所有元素，执行指定的副作用（显示修改元素数组或输出打印内容）
+  - 不改变原数组，除非回调函数显式修改
+  - 无法再副作用函数中使用 `break` 和 `continue`，会提示存在语法错误
+
+  ```js
+  const forEachReturns = arr.forEach((item, index, array) => {
+    array.unshiftu(222);
+    console.log(item); // 1 1 1 1 1
+    return 1;
+    // setTimeout(console.log, index * 1000, item);
+  });
+
+  console.log("arr", arr); // [222, 222, 222, 222, 222, 1, 2, 3, 4, 5]
+
+  // 在执行副作用的回调函数中最外层使用 return , 不会使 forEach 具备返回值，依旧是 undefined
+  console.log("forEachReturns", forEachReturns); // undefined
+  ```
+
+- map:
+
+  - 返回一个新数组，原数组不变，新数组的长度与原数组一致
+  - 遍历所有元素，执行指定的副作用（显示修改元素数组或输出打印内容）
+  - 无法再副作用函数中使用 `break` 和 `continue`，会提示存在语法错误
+
+  ```js
+  const forEachReturns = arr.map((item, index, array) => {
+    array.unshift(999);
+    return item;
+    // setTimeout(console.log, index * 1000, item);
+  });
+
+  console.log("arr", arr); // [999, 999, 999, 999, 999, 1, 2, 3, 4, 5]
+  console.log("forEachReturns", forEachReturns); //  [1, 1, 1, 1, 1]
+  ```
+
+### 闭包和作用域
+
+### 实现一个类似关键字 new 功能的函数
+
+### 如何实现继承（原型和原型链）
+
+### 箭头函数和普通函数有什么区别
+
+### 迭代器(iterator)接口和生成器(generator)函数的关系
+
+### 浏览器的事件循环机制
 
 # TypeScript
 
