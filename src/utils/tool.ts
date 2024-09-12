@@ -108,3 +108,143 @@ export function extractFileNameWithoutExtension(filePath: string): string {
   // 如果没有匹配到，则返回空字符串
   return "";
 }
+
+
+/**
+ * 比较两个数组是否相等
+ * @param arr1
+ * @param arr2
+ * @returns
+ */
+export function isArraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (!isObjectEqual(arr1[i], arr2[i])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * 递归数组中每个对象中的元素及元素值是否相等
+ * @param obj1
+ * @param obj2
+ * @returns
+ */
+export function isObjectEqual(obj1, obj2) {
+  if (!obj1 && !obj2) {
+    return true;
+  }
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  for (const key of keys1) {
+    const val1 = obj1[key];
+    const val2 = obj2[key];
+
+    if (typeof val1 === 'object' && typeof val2 === 'object') {
+      // 递归比较对象的属性值
+      if (!isObjectEqual(val1, val2)) {
+        return false;
+      }
+    } else {
+      // 直接比较基本类型的属性值
+      if (val1 !== val2) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+/**
+ * 比较两个对象是否相等
+ * @param obj1
+ * @param obj2
+ * @returns {boolean}
+ */
+export const compareObject = (obj1, obj2) => {
+  // 递归终止条件，当 obj1 或 obj2 不是对象时，此时就可以进行判断了
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object') {
+    if (obj1 === obj2) {
+      return true;
+    } else if (obj1 !== obj2) {
+      return false;
+    }
+  }
+  // 获取对象的自由属性组成的数组
+  const obj1PropsArr = Object.getOwnPropertyNames(obj1);
+  const obj2PropsArr = Object.getOwnPropertyNames(obj2);
+  // 如果数组的长度不相等，那么说明对象属性的个数都不同，返回 false
+  if (obj1PropsArr.length !== obj2PropsArr.length) {
+    return false;
+  }
+  // 记录当前 compareObject 的返回值，默认是 true
+  let status = true;
+  for (const key of obj1PropsArr) {
+    if (obj1[key] != null && obj2[key] != null) {
+      status = compareObject(obj1[key], obj2[key]);
+      // 关键代码，当 status 为 false 时下面就不用再进行判断了，说明两个对象的内容并不相同
+      // 如果没有下面这条语句，那么只要对象底层的内容是相同的那么就返回 true
+      if (!status) {
+        break;
+      }
+    }
+  }
+  // 每次 compareObject 执行的返回结果
+  return status;
+};
+
+
+// // 阻止浏览器后退
+// const preventBackNavigation = () => {
+//   window.history.pushState(null, '', window.location.href);
+//   window.addEventListener('popstate', handlePopState);
+// };
+
+// // 恢复浏览器前进后退功能
+// const allowBackNavigation = () => {
+//   window.removeEventListener('popstate', handlePopState);
+// };
+
+// // 处理浏览器后退时的事件
+// const handlePopState = () => {
+//   if (!checkReqParamschanged()) {
+//     const payLoad = {
+//       title: '请检查编辑内容是否已保存',
+//       confirmButtonText: '继续退出',
+//       cancelButtonText: '继续编辑',
+//       ctxHtmlStr: `若不保存，退出后所编辑的内容会丢失`,
+//     };
+//     useElMessageBox2(payLoad)
+//       .then(() => {
+//         allowBackNavigation(); // 确认退出时恢复正常历史记录功能
+//         window.history.back(); // 执行浏览器后退
+//       })
+//       .catch(() => {
+//         preventBackNavigation(); // 继续阻止后退，重新绑定监听器
+//       });
+//   } else {
+//     executeBackNavigation();
+//   }
+// };
+
+// // 执行浏览器的返回操作
+// const executeBackNavigation = () => {
+//   const popstateHandler = () => {
+//     allowBackNavigation();
+//     window.removeEventListener('popstate', popstateHandler);
+//   };
+//   window.addEventListener('popstate', popstateHandler);
+//   window.history.back();
+// };
