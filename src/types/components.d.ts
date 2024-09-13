@@ -16,9 +16,8 @@ declare module 'vue' {
     AInput: typeof import('ant-design-vue/es')['Input']
     ASelect: typeof import('ant-design-vue/es')['Select']
     ASpin: typeof import('ant-design-vue/es')['Spin']
-    ATextarea: typeof import('ant-design-vue/es')['Textarea']
-    CardBox: typeof import('./components/cardBox/CardBox.vue')['default']
-    Panel: typeof import('./components/panel/Panel.vue')['default']
+    CardBox: typeof import('./../components/cardBox/CardBox.vue')['default']
+    Panel: typeof import('./../components/panel/Panel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

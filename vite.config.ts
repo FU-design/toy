@@ -37,7 +37,7 @@ export default defineConfig(({ command, mode }) => {
       vue(),
       vueJsx(),
       Components({
-        dts: 'src/components.d.ts', // 将类型声明文件生成在 src 目录
+        dts: 'src/types/components.d.ts', // 将类型声明文件生成在 src 目录
         resolvers: [
           AntDesignVueResolver({
             importStyle: false, // css in js
@@ -46,11 +46,10 @@ export default defineConfig(({ command, mode }) => {
       }),
       AutoImport({
         imports: [
-          // presets
           'vue',
           'vue-router',
         ],
-        dts: 'src/auto-imports.d.ts', // 将类型声明文件生成在 src 目录
+        dts: 'src/types/auto-imports.d.ts', // 将类型声明文件生成在 src 目录
         dirs: [
           'src/composables',
           'src/stores',
@@ -87,17 +86,7 @@ export default defineConfig(({ command, mode }) => {
          * 通过相对路径我们就能得到一个被完整解析的静态资源
          */
         "@": fileURLToPath(new URL("./src", import.meta.url)),
-        // "@": path.resovle(__dirname, "./src"),
         "@assets": fileURLToPath(new URL("./src/assets", import.meta.url))
-
-        /**
-         * 因为别名的配置主要是对资源目录的操作，在node中，path 模块会很有帮助，通常会配合使用。
-         * path 模块 ： node 中专门用来处理文件路径的模块；
-         * path.resolve() : path 模块中进行文件路径拼接的方法；
-         * __dirname : node 中的一个变量，哪个文件中使用了它，他就代表了该文件所在的目录（绝对路径）。
-         */
-        // "@": join(__dirname, "src"),
-        // "@assets": join(__dirname, "src/assets"),
       },
       extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"], //todo 导入时想要省略的扩展名列表; 现在配置的是默认的
     },
