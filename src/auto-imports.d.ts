@@ -26,6 +26,8 @@ declare global {
   const getSysFontSize: typeof import('./utils/adaptation')['getSysFontSize']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']
+  const isArraysEqual: typeof import('./utils/tool')['isArraysEqual']
+  const isObjectEqual: typeof import('./utils/tool')['isObjectEqual']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
