@@ -14,6 +14,7 @@ import hljs from "highlight.js";
 type Props = {
   markRaw: string
 }
+
 const props = withDefaults(defineProps<Props>(), {
   markRaw: ''
 })
@@ -33,7 +34,7 @@ const copyCode = (code: string) => {
 }
 
 const upgradeCodeBlock = async (el: HTMLElement) => {
-  await nextTick()
+  await nextTick() // 静态 markdown 文件解析时需要添加
   const pres = el.querySelectorAll('pre')
   pres.forEach((pre) => {
     const code = pre.querySelector('code')

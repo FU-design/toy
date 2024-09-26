@@ -3,10 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import pinia from "@/stores/index";
 import plugin from "./plugins";
-// import { windowBeforeCloseConfirm } from "@/utils/tool";
-import "./theme/main.css";
 
-// windowBeforeCloseConfirm();
+import "./theme/main.css";
+import "virtual:svg-icons-register";
+
 const app = createApp(App);
 app.use(plugin);
 app.use(router);

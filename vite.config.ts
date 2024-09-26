@@ -2,20 +2,12 @@ import { defineConfig } from "vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"; // Vue 的按需组件自动导入
 import { visualizer } from "rollup-plugin-visualizer";
 import { fileURLToPath, URL } from "node:url";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import AutoImport from "unplugin-auto-import/vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import vueJsx from "@vitejs/plugin-vue-jsx"; // 可创建并编译 .jsx .tsx 文件
-
-// import path, { join } from "path";
-// import path from 'path'
-
-/**
- * todo node 中的内置方法
- * 【https://www.geeksforgeeks.org/node-js-url-fileurltopath-api/】
- * 【https://www.geeksforgeeks.org/node-js-url-method/?ref=lbp】
- * 【https://nodejs.org/docs/latest/api/url.html】
- */
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -36,6 +28,12 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       vue(),
       vueJsx(),
+      // https://github.com/vbenjs/vite-plugin-svg-icons
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(process.cwd(), "src/assets/svg")],
+        symbolId: "icon-[dir]-[name]",
+        customDomId: "__svg__icons__dom__",
+      }),
       Components({
         dts: "src/types/components.d.ts", // 将类型声明文件生成在 src 目录
         resolvers: [

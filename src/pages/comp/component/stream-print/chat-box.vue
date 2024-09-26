@@ -14,9 +14,6 @@ import { chatMsgHistory, type RoleInfo } from "./request";
 
 const mockData = ref<RoleInfo[]>();
 
-const initScrollEvent = () => {
-  const box = document.querySelector(".chat-content");
-};
 
 onMounted(async () => {
   const res = await chatMsgHistory();
@@ -32,12 +29,14 @@ onMounted(async () => {
     max-height: 80vh;
     overflow: auto;
   }
+
   &-content {
     border-radius: 8px;
     padding: 16px;
     min-width: 320px;
   }
 }
+
 /* 超小屏幕：手机 (max-width: 320px) */
 @media only screen and (max-width: 320px) {
   .chat-content {

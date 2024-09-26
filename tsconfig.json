@@ -30,7 +30,8 @@
     },
     "types": [
       "vitest",
-      "vitest/globals"
+      "vitest/globals",
+      "vite-plugin-svg-icons/client",
     ],
     "allowJs": true,
     "strictNullChecks": true,
