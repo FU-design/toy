@@ -55,9 +55,9 @@ const routes = {
       },
     },
     {
-      path: "autoFrom",
-      name: "AutoFrom",
-      component: () => import("@/pages/comp/component/autoForm/index.vue"),
+      path: "autoForm",
+      name: "AutoForm",
+      component: () => import("@/pages/comp/component/auto-form/index.vue"),
       meta: {
         title: "AutoFrom",
         menu: true,
@@ -105,7 +105,7 @@ const routes = {
           path: "loginChat",
           name: "LoginChat",
           component: () =>
-            import("@/pages/comp/component/realMsg/loginChat.vue"),
+            import("@/pages/comp/component/real-msg/loginChat.vue"),
           meta: {
             menu: false,
           },
@@ -113,7 +113,7 @@ const routes = {
         {
           path: "chat",
           name: "Chat",
-          component: () => import("@/pages/comp/component/realMsg/index.vue"),
+          component: () => import("@/pages/comp/component/real-msg/index.vue"),
           meta: {
             menu: false,
           },
