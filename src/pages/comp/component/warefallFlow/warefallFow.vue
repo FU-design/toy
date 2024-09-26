@@ -15,13 +15,13 @@
       <template #header>
         <div>实现方式</div>
       </template>
-      <marked-view v-once :mark-raw="README"></marked-view>
+      <marked-view v-once :mark-raw="helper"></marked-view>
     </card-box>
   </div>
 </template>
 
 <script lang="ts" setup>
-import README from "./README.md?raw";
+import helper from "./helper.md?raw";
 import { layoutWarefall, loadScroll } from "./warefallFlowUtil";
 
 const items = ref<string[]>([]);

@@ -16,8 +16,14 @@
             <div class="item">{{ item.id }}</div>
             <div class="item">{{ item.name }}</div>
             <div class="item">
-              <mix-input :ref="(el) => getMixInputRefs(el, item)" :key="item.id" placeholder="请输入内容"
-                v-model:contents="item.inputContent" @focus="handleFocus(item)" @change="handleChange" />
+              <mix-input
+                :ref="(el) => getMixInputRefs(el, item)"
+                :key="item.id"
+                placeholder="请输入内容"
+                v-model:contents="item.inputContent"
+                @focus="handleFocus(item)"
+                @change="handleChange"
+              />
             </div>
           </div>
         </div>
@@ -27,7 +33,7 @@
       <template #header>
         <label>核心</label>
       </template>
-      <marked-view v-once :mark-raw="README"></marked-view>
+      <marked-view v-once :mark-raw="helper"></marked-view>
     </card-box>
   </div>
 </template>
@@ -36,7 +42,7 @@
 import MixInput from "./tagTextMixInput.vue";
 import { ListItem, InnerOps, CompType } from "./type";
 import { initSelectData, fetchData } from "./request";
-import README from "./README.md?raw";
+import helper from "./helper.md?raw";
 
 const list = ref<ListItem[]>([]);
 const currMixFlag = ref<ListItem>();

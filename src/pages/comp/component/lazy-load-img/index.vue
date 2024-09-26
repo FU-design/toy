@@ -13,13 +13,13 @@
       <template #header>
         <div>实现方式</div>
       </template>
-      <marked-view :mark-raw="README"></marked-view>
+      <marked-view :mark-raw="helper"></marked-view>
     </card-box>
   </div>
 </template>
 
 <script setup lang="ts">
-import README from "./README.md?raw";
+import helper from "./helper.md?raw";
 const imgs = ref<string[]>([]);
 
 // 模拟获取图片数据
