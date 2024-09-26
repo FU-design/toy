@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"; // Vue 的按需组件自动导入
-import { visualizer } from 'rollup-plugin-visualizer'
+import { visualizer } from "rollup-plugin-visualizer";
 import { fileURLToPath, URL } from "node:url";
-import AutoImport from 'unplugin-auto-import/vite'
+import AutoImport from "unplugin-auto-import/vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import vueJsx from "@vitejs/plugin-vue-jsx"; // 可创建并编译 .jsx .tsx 文件
@@ -37,7 +37,7 @@ export default defineConfig(({ command, mode }) => {
       vue(),
       vueJsx(),
       Components({
-        dts: 'src/types/components.d.ts', // 将类型声明文件生成在 src 目录
+        dts: "src/types/components.d.ts", // 将类型声明文件生成在 src 目录
         resolvers: [
           AntDesignVueResolver({
             importStyle: false, // css in js
@@ -45,19 +45,12 @@ export default defineConfig(({ command, mode }) => {
         ],
       }),
       AutoImport({
-        imports: [
-          'vue',
-          'vue-router',
-        ],
-        dts: 'src/types/auto-imports.d.ts', // 将类型声明文件生成在 src 目录
-        dirs: [
-          'src/composables',
-          'src/stores',
-          'src/utils'
-        ],
+        imports: ["vue", "vue-router"],
+        dts: "src/types/auto-imports.d.ts", // 将类型声明文件生成在 src 目录
+        dirs: ["src/composables", "src/stores", "src/utils"],
       }),
       visualizer({
-        filename: 'dist/stats.html', // 输出文件名
+        filename: "dist/stats.html", // 输出文件名
         open: true, // 打包后自动打开浏览器显示报告
       }),
     ],
@@ -67,14 +60,14 @@ export default defineConfig(({ command, mode }) => {
       port: 86, //项目启动时的自定义端口
       hmr: true, //开启热更新,更改代码后自动更新页面
       open: true, //项目启动时，自动在浏览器中打开应用程序（也可以在package.json中的 “script” 选项中配置）
-      // proxy: {
-      //   "/api": {
-      //     target: "http://127.0.0.1:86",
-      //     changeOrigin: true,
-      //     ws: true,
-      //     rewrite: (path) => path.replace(/^\/api/, ""),
-      //   },
-      // },
+      proxy: {
+        "/api": {
+          target: "http://127.0.0.1:86",
+          changeOrigin: true,
+          ws: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
     },
 
     resolve: {
@@ -86,7 +79,7 @@ export default defineConfig(({ command, mode }) => {
          * 通过相对路径我们就能得到一个被完整解析的静态资源
          */
         "@": fileURLToPath(new URL("./src", import.meta.url)),
-        "@assets": fileURLToPath(new URL("./src/assets", import.meta.url))
+        "@assets": fileURLToPath(new URL("./src/assets", import.meta.url)),
       },
       extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"], //todo 导入时想要省略的扩展名列表; 现在配置的是默认的
     },
@@ -110,7 +103,7 @@ export default defineConfig(({ command, mode }) => {
       rollupOptions: {
         plugins: [
           visualizer({
-            filename: 'dist/stats.html', // 输出文件名
+            filename: "dist/stats.html", // 输出文件名
             open: true, // 打包后自动打开浏览器显示报告
           }),
         ],

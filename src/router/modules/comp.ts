@@ -45,15 +45,6 @@ const routes = {
         menu: true,
       },
     },
-    {
-      path: "aichat",
-      name: "AIChat",
-      component: () => import("@/pages/comp/component/ai-chat/index.vue"),
-      meta: {
-        title: "AIChat",
-        menu: true,
-      },
-    },
     // {
     //   path: "flowable",
     //   name: "Flowable",
