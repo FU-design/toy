@@ -32,7 +32,6 @@ export default defineConfig(({ command, mode }) => {
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), "src/assets/svg")],
         symbolId: "icon-[dir]-[name]",
-        customDomId: "__svg__icons__dom__",
       }),
       Components({
         dts: "src/types/components.d.ts", // 将类型声明文件生成在 src 目录
