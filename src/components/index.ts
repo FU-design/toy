@@ -1,6 +1,6 @@
 import type { Component } from "vue";
-import CardBox from "@/components/cardBox/CardBox.vue";
-import Panel from "@/components/panel/Panel.vue";
+import CardBox from "@/components/CardBox/CardBox.vue";
+import Panel from "@/components/Panel/Panel.vue";
 
 const components: {
   [propName: string]: Component;

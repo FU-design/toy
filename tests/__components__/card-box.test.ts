@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import CardBox from "../../src/components/cardBox/CardBox.vue";
+import CardBox from "../../src/components/CardBox/CardBox.vue";
 import { expect, it, describe } from "vitest";
 
 describe('CardBox', () => {
