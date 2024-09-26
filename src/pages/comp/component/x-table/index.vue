@@ -83,7 +83,7 @@ const columns: TableColumnType[] = [
 const data = ref<DataItem[]>([]);
 
 const { dataSource, columnsProp, loading, paginateProp, onChange } =
-  useTable<DataItem>(columns, data.value);
+  useTable<DataItem>({ columns, rows: data.value });
 
 /**
  * 模拟数据

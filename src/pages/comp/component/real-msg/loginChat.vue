@@ -81,7 +81,7 @@ const formItem = [
 const submitIsOk = async () => {
   try {
     const chatInfo = unref(form) as ChatInfo;
-    const res = await login<ChatInfo>(chatInfo);
+    await login<ChatInfo>(chatInfo);
     const { status, statusText, data } = await login<ChatInfo>(chatInfo);
     if (status === 200) {
       auth.setChatInfo(data);
