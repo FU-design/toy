@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import AutoForm from "../autoForm/autoForm.vue";
+import AutoForm from "../auto-form/autoForm.vue";
 import { login } from "@/api/login/index";
 import type { ChatInfo } from "@/api/login/types";
 

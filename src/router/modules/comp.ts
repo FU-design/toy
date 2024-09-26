@@ -45,39 +45,39 @@ const routes = {
         menu: true,
       },
     },
-    // {
-    //   path: "scrollmore",
-    //   name: "Scrollmore",
-    //   component: () => import("@/pages/comp/component/scrollmore/index.vue"),
-    //   meta: {
-    //     title: "Scrollmore",
-    //     menu: true,
-    //   },
-    // },
-    // {
-    //   path: "autoFrom",
-    //   name: "AutoFrom",
-    //   component: () => import("@/pages/comp/component/autoForm/index.vue"),
-    //   meta: {
-    //     title: "AutoFrom",
-    //     menu: true,
-    //   },
-    // },
-    // {
-    //   path: "warefallFlow",
-    //   name: "WarefallFlow",
-    //   component: () =>
-    //     import("@/pages/comp/component/warefallFlow/warefallFow.vue"),
-    //   meta: {
-    //     title: "WarefallFlow",
-    //     menu: true,
-    //   },
-    // },
+    {
+      path: "scrollmore",
+      name: "Scrollmore",
+      component: () => import("@/pages/comp/component/scrollmore/index.vue"),
+      meta: {
+        title: "Scrollmore",
+        menu: true,
+      },
+    },
+    {
+      path: "autoFrom",
+      name: "AutoFrom",
+      component: () => import("@/pages/comp/component/autoForm/index.vue"),
+      meta: {
+        title: "AutoFrom",
+        menu: true,
+      },
+    },
+    {
+      path: "warefallFlow",
+      name: "WarefallFlow",
+      component: () =>
+        import("@/pages/comp/component/warefall-flow/warefallFow.vue"),
+      meta: {
+        title: "WarefallFlow",
+        menu: true,
+      },
+    },
     {
       path: "tagTextMixInput",
       name: "TagTextMixInput",
       component: () =>
-        import("@/pages/comp/component/tag-text-mix-Input/index.vue"),
+        import("@/pages/comp/component/tag-text-mix-input/index.vue"),
       meta: {
         title: "TagTextMixInput",
         menu: true,
@@ -86,40 +86,40 @@ const routes = {
     {
       path: "xTable",
       name: "XTable",
-      component: () => import("@/pages/comp/component/xTable/index.vue"),
+      component: () => import("@/pages/comp/component/x-table/index.vue"),
       meta: {
         title: "XTable",
         menu: true,
       },
     },
-    // {
-    //   path: "realMsg",
-    //   name: "RealMsg",
-    //   redirect: "/comp/realMsg/loginChat",
-    //   meta: {
-    //     title: "RealMsg",
-    //     menu: true,
-    //   },
-    //   children: [
-    //     {
-    //       path: "loginChat",
-    //       name: "LoginChat",
-    //       component: () =>
-    //         import("@/pages/comp/component/realMsg/loginChat.vue"),
-    //       meta: {
-    //         menu: false,
-    //       },
-    //     },
-    //     {
-    //       path: "chat",
-    //       name: "Chat",
-    //       component: () => import("@/pages/comp/component/realMsg/index.vue"),
-    //       meta: {
-    //         menu: false,
-    //       },
-    //     },
-    //   ],
-    // },
+    {
+      path: "realMsg",
+      name: "RealMsg",
+      redirect: "/comp/realMsg/loginChat",
+      meta: {
+        title: "RealMsg",
+        menu: true,
+      },
+      children: [
+        {
+          path: "loginChat",
+          name: "LoginChat",
+          component: () =>
+            import("@/pages/comp/component/realMsg/loginChat.vue"),
+          meta: {
+            menu: false,
+          },
+        },
+        {
+          path: "chat",
+          name: "Chat",
+          component: () => import("@/pages/comp/component/realMsg/index.vue"),
+          meta: {
+            menu: false,
+          },
+        },
+      ],
+    },
   ],
 };
 
