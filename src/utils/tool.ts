@@ -65,9 +65,9 @@ export function getImageUrl(name?: string) {
 
 /**
  * 获取图片地址 svg
- * @param name 
- * @param fileName 
- * @returns 
+ * @param name
+ * @param fileName
+ * @returns
  */
 export function getSvgUrl(name: string, fileName?: string) {
   const path = fileName
@@ -78,9 +78,9 @@ export function getSvgUrl(name: string, fileName?: string) {
 
 /**
  * 节流
- * @param func 
- * @param delay 
- * @returns 
+ * @param func
+ * @param delay
+ * @returns
  */
 export function throttle(func: Function, delay: number) {
   let lastCall = 0;
