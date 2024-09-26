@@ -16,14 +16,8 @@
             <div class="item">{{ item.id }}</div>
             <div class="item">{{ item.name }}</div>
             <div class="item">
-              <mix-input
-                :ref="(el) => getMixInputRefs(el, item)"
-                :key="item.id"
-                placeholder="请输入内容"
-                v-model:contents="item.inputContent"
-                @focus="handleFocus(item)"
-                @change="handleChange"
-              />
+              <mix-input :ref="(el) => getMixInputRefs(el, item)" :key="item.id" placeholder="请输入内容"
+                v-model:contents="item.inputContent" @focus="handleFocus(item)" @change="handleChange" />
             </div>
           </div>
         </div>
@@ -33,7 +27,7 @@
       <template #header>
         <label>核心</label>
       </template>
-      <div v-once v-md="README"></div>
+      <marked-view v-once :mark-raw="README"></marked-view>
     </card-box>
   </div>
 </template>
@@ -110,8 +104,10 @@ onUnmounted(() => {
   flex-direction: column;
   padding: 20px;
 }
+
 .wrp-inner {
   display: flex;
+
   .list {
     &-box {
       flex: 1;
@@ -122,14 +118,17 @@ onUnmounted(() => {
       border-radius: 6px;
       overflow: auto;
     }
+
     &-item {
       display: flex;
       border-bottom: 1px solid #ddd;
+
       &:last-child {
         border: none;
       }
     }
   }
+
   .item {
     width: calc(100% / 3);
     height: 100%;
@@ -139,6 +138,7 @@ onUnmounted(() => {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
     &:last-child {
       border: none;
     }
@@ -154,11 +154,13 @@ onUnmounted(() => {
   border: 1px solid #ddd;
   background-color: #eee;
   overflow: auto;
+
   .select-item {
     padding: 6px;
     background-color: #fff;
     border-bottom: 1px solid #eee;
     cursor: pointer;
+
     &:hover {
       background-color: #ddd;
     }

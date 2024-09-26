@@ -15,7 +15,7 @@
       <template #header>
         <div>实现方式</div>
       </template>
-      <div v-once v-md="README"></div>
+      <marked-view v-once :mark-raw="README"></marked-view>
     </card-box>
   </div>
 </template>

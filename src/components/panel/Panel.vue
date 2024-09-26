@@ -156,8 +156,10 @@ const handleClose = () => {
   pointer-events: auto;
   position: absolute;
   z-index: 1000;
-  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
-    0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
 
   display: flex;
   flex-direction: column;
@@ -193,8 +195,10 @@ const handleClose = () => {
 
 .panel-header {
   padding: 2px 10px;
-  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
-    0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
 
   display: flex;
   align-items: center;
@@ -221,62 +225,3 @@ const handleClose = () => {
   cursor: pointer;
 }
 </style>
-<!-- 自定义markdown中元素的样式 -->
-<!-- <style>
-.panel-content h3,
-h4 {
-  padding: 8px;
-  margin-top: 0;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  background-image: linear-gradient(135deg, #c3cfe2 0%, #f5f7fa 100%);
-  font-size: Nunito, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu,
-    Cantarell, "Noto Sans", sans-serif;
-}
-.panel-content p {
-  margin: 10px 0;
-}
-
-.panel-content pre {
-  margin-top: 6px;
-}
-
-.panel-content ul {
-  margin: 0;
-}
-.panel-content ul li {
-  margin: 10px 0;
-  &::marker {
-    color: rgb(39, 72, 133);
-  }
-}
-
-.panel-content blockquote {
-  position: relative;
-  margin: 20px 0;
-  /* background-image: linear-gradient(135deg, #c3cfe23f 0%, #f5f7fa 100%); */
-  font-size: #0000003f;
-}
-
-.panel-content blockquote > p {
-  padding: 10px;
-  font-size: 15px;
-}
-
-.panel-content blockquote::before {
-  content: "";
-  height: 100%;
-  width: 4px;
-  display: inline-block;
-  position: absolute;
-  background-color: #2a43b35c;
-}
-
-.panel-content :not(pre) > code {
-  background-color: rgba(0, 0, 0, 0.089);
-  padding: 2px 10px;
-  border-radius: 4px;
-  font-weight: 600;
-  color: rgb(207 85 85 / 99%);
-}
-</style> -->

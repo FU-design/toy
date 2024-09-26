@@ -17,8 +17,10 @@ declare module 'vue' {
     ASelect: typeof import('ant-design-vue/es')['Select']
     ASpin: typeof import('ant-design-vue/es')['Spin']
     CardBox: typeof import('./../components/CardBox/CardBox.vue')['default']
+    MarkedView: typeof import('./../components/MarkedView/MarkedView.vue')['default']
     Panel: typeof import('./../components/Panel/Panel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./../components/SvgIcon/SvgIcon.vue')['default']
   }
 }

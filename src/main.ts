@@ -4,7 +4,7 @@ import router from "./router";
 import pinia from "@/stores/index";
 import plugin from "./plugins";
 // import { windowBeforeCloseConfirm } from "@/utils/tool";
-import "./theme/index.css";
+import "./theme/main.css";
 
 // windowBeforeCloseConfirm();
 const app = createApp(App);

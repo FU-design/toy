@@ -4,11 +4,7 @@
       <div class="img-wrp">
         <div class="img-box">
           <div v-for="(url, index) in imgs" :key="index">
-            <img
-              src="https://dummyimage.com/400x200/ddd/888"
-              alt="404"
-              :data-src="url"
-            />
+            <img src="https://dummyimage.com/400x200/ddd/888" alt="404" :data-src="url" />
           </div>
         </div>
       </div>
@@ -17,7 +13,7 @@
       <template #header>
         <div>实现方式</div>
       </template>
-      <div v-once v-md="README"></div>
+      <marked-view :mark-raw="README"></marked-view>
     </card-box>
   </div>
 </template>
@@ -70,6 +66,7 @@ onMounted(() => {
   overflow: auto;
   position: relative;
 }
+
 .img-box {
   position: absolute;
   display: flex;
@@ -77,6 +74,7 @@ onMounted(() => {
   padding: 1em;
   left: 50%;
   transform: translateX(-50%);
+
   div {
     margin: 0.5em;
     text-align: center;

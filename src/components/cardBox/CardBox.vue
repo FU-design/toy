@@ -16,13 +16,15 @@
 </template>
 
 <script lang="ts" setup>
-import type { CardBoxProps } from "./types";
+type Props = {
+  showHeader?: boolean;
+}
 
-const props = withDefaults(defineProps<CardBoxProps>(), {
+const props = withDefaults(defineProps<Props>(), {
   showHeader: true,
 });
 
-const { showHeader } = toRefs(props);
+const { showHeader } = props;
 </script>
 
 <style lang="scss" scoped>
@@ -32,13 +34,15 @@ const { showHeader } = toRefs(props);
   border-radius: 8px;
   box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
   background-color: #ffffffa4;
+
   /* overflow: auto; */
-  & > header {
+  &>header {
     padding: 10px 16px;
     font-weight: 600;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   }
-  & > main {
+
+  &>main {
     width: 100%;
     overflow: auto;
     height: auto;

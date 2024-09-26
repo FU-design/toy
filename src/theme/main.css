@@ -1,6 +1,5 @@
-@import "./common/reset.css";
 @import "./common/reset.scss";
-@import "github-markdown-css/github-markdown.css";
+@import "./marked/marked.scss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
