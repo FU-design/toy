@@ -1,7 +1,6 @@
 <template>
-  <div class="aside-wrp" :class="{ folded: fold }">
+  <div class="aside-wrp">
     <aside>
-      <h1 class="web-title">Fdefined</h1>
       <div class="menu-wrap">
         <ul class="menu-list">
           <li
@@ -15,11 +14,6 @@
         </ul>
       </div>
     </aside>
-    <div class="fold-btn">
-      <svg width="100%" height="100%" @click="handleFold">
-        <circle v-for="idx in 5" cx="14" :cy="idx * 10" r="2" fill="#d9d9d9" />
-      </svg>
-    </div>
   </div>
 </template>
 
@@ -57,61 +51,6 @@ const handleFold = () => {
 </script>
 
 <style lang="scss" scoped>
-.aside-wrp {
-  width: 18vw;
-  height: 100%;
-  display: flex;
-  background-color: $side-bg;
-  transition: 0.5s ease;
-  position: relative;
-}
-
-// /* 针对手机竖屏的样式 */
-// @media (max-width: 320px) {
-//   .aside-wrp {
-//     width: 10px;
-//   }
-// }
-
-// /* 针对小屏幕（手机）的样式 */
-// @media (max-width: 480px) {
-//   .aside-wrp {
-//     width: 100px;
-//   }
-// }
-
-/* 针对中小屏幕（大屏手机和小平板）的样式 */
-// @media (max-width: 600px) {
-//   .aside-wrp {
-//     width: 10px;
-//   }
-// }
-
-/* 针对中等屏幕（平板竖屏）的样式 */
-@media (max-width: 768px) {
-  .aside-wrp {
-    width: 10px;
-  }
-}
-
-// /* 针对大屏幕（平板横屏、小型桌面显示器）的样式 */
-// @media (min-width: 992px) {
-//   .aside-wrp {
-//   }
-// }
-
-// /* 针对特大屏幕（桌面显示器）的样式 */
-// @media (min-width: 1200px) {
-//   .aside-wrp {
-//   }
-// }
-
-// /* 针对超大屏幕（大型桌面显示器）的样式 */
-// @media (max-width: 1600px) {
-//   .aside-wrp {
-//   }
-// }
-
 aside {
   width: 100%;
   height: 100%;
@@ -122,8 +61,6 @@ aside {
   }
   .menu-wrap {
     height: 100%;
-    padding: 16px 0;
-    margin-right: 10px;
     overflow: auto;
   }
   .menu-list {
@@ -131,7 +68,6 @@ aside {
     display: flex;
     flex-wrap: wrap;
     margin: 0;
-    padding: 10px 0 0 10px;
     .selected {
       background-color: $hover-bg;
       transition: all 0.5s;
@@ -146,6 +82,7 @@ aside {
       margin: 4px;
       color: $li-text-color;
       border: 1px solid $border-color;
+      background-color: #0000007e;
 
       &:hover {
         color: $hover-text;
@@ -156,30 +93,6 @@ aside {
     }
     &-text {
       padding: 0 8px;
-    }
-  }
-}
-
-.folded {
-  width: 10px;
-  & > .aside-wrp {
-    transform: translateX(-100vh);
-  }
-}
-
-.fold-btn {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  cursor: pointer;
-  width: 20px;
-  height: 60px;
-  & > svg:hover {
-    transition: all 0.2;
-
-    & > circle {
-      fill: #666;
     }
   }
 }

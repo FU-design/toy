@@ -1,5 +1,5 @@
 <template>
-  <div class="page-view">
+  <div class="page-view" id="page-view">
     <page-layout>
       <router-view v-slot="{ Component }">
         <transition name="slide-fade">
@@ -7,24 +7,21 @@
         </transition>
       </router-view>
     </page-layout>
-
-    <!-- 添加内置组件过度 -->
-    <!-- <transition name="slide-fade">
-      <router-view />
-    </transition> -->
+    <drag-sidebar />
   </div>
 </template>
 
 <script setup lang="ts">
 import PageLayout from "./pageLayout.vue";
+import dragSidebar from "./dragsidebar/drag-sidebar.vue";
 </script>
 
 <style scoped>
 .page-view {
   width: 100%;
   height: 100%;
-  /* background-color: aliceblue; */
-  /* background-color: #f2f3f5; */
+  background-color: #fff;
+  position: relative;
 }
 /*
   进入和离开动画可以使用不同

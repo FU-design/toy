@@ -18,6 +18,7 @@ declare module 'vue' {
     ASpin: typeof import('ant-design-vue/es')['Spin']
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
     CardBox: typeof import('./../components/CardBox/CardBox.vue')['default']
+    FloatButton: typeof import('./../components/FloatButton/FloatButton.vue')['default']
     MarkedView: typeof import('./../components/MarkedView/MarkedView.vue')['default']
     Panel: typeof import('./../components/Panel/Panel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

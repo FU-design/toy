@@ -1,5 +1,7 @@
 <template>
-  <header></header>
+  <header>
+    <h1>Fdefined</h1>
+  </header>
 </template>
 
 <script setup lang="ts"></script>
@@ -7,8 +9,7 @@
 <style lang="scss" scoped>
 header {
   width: 100%;
-  height: 24px;
-  // background-color: aliceblue;
-  position: absolute;
+  height: 60px;
+  background-color: $li-text-color;
 }
 </style>

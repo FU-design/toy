@@ -1,34 +1,32 @@
 <template>
   <div class="page-layout">
-    <!-- <pageHeader /> -->
-    <side-bar />
-    <section class="page-layout-content">
-      <slot></slot>
-    </section>
+    <pageHeader />
+    <main class="page-layout-content">
+      <section>
+        <slot></slot>
+      </section>
+    </main>
     <footer></footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-// import PageHeader from "./header/pageHeader.vue";
+import PageHeader from "./header/pageHeader.vue";
 import SideBar from "./side/sidebar.vue";
-onMounted(() => {
-  // router.hasRoute(path); //# 检查路由是否存在
-  // router.getRoutes(); //# 获取所有路由
-});
 </script>
 
 <style lang="scss" scoped>
 .page-layout {
   height: 100%;
-  display: flex;
   &-content {
-    width: 100%;
-    padding: 0 10px;
-    background-color: $page-bg;
-    position: relative;
-    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    section {
+      height: 100%;
+      padding: 64px;
+      overflow: auto;
+    }
   }
 }
 </style>

@@ -28,6 +28,8 @@ const svgClass = computed(() => className ? `svg-icon ${className}` : "svg-icon"
 
 <style lang="scss" scoped>
 .svg-icon {
+  width: 100%;
+  height: 100%;
   padding: 4px;
   box-sizing: border-box;
   overflow: hidden;

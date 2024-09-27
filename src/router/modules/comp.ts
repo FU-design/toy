@@ -1,6 +1,6 @@
 import pageView from "@/layouts/pageView.vue";
 const routes = {
-  path: "/",
+  path: "/comp",
   name: "Comp",
   component: pageView,
   redirect: "/lazyLoadimg",
