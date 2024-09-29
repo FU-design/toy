@@ -10,13 +10,12 @@
   box-shadow: rgba(172, 130, 130, 0.3) 2px 8px 8px;
   border-width: $border-width;
   border-style: solid;
-  // border-color: rgba(255, 255, 255, 0.4) rgba(40, 40, 40, 0.35) rgba(40, 40, 40, 0.35) rgba(255, 255, 255, 0.4);
   border-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.2);
   border-image: initial;
 }
 
-$background-color: #000; // 背景色
-$primary-color: #FF6F61; // 主色
+$background-color: #5e5e5e4f; // 背景色
+$primary-color: #919191; // 主色
 $text-color: #ECF0F1; // 文本色
 $title-color: #FFFFFF; // 标题色
 $link-color: #1ABC9C; // 链接色
@@ -26,16 +25,13 @@ $border-color: #34495E; // 边框色
 $focus-border-color: #1ABC9C;
 $warning-color: #F39C12; // 提示/警告色
 $content-background-color: #212529;
+$code-block-header-color: #3B3B3B;
 
 
 // dark-阴影颜色
 $shadow-light: rgba(255, 255, 255, 0.1); // 轻微阴影，白色透明
 $shadow-medium: rgba(255, 255, 255, 0.4); // 中等阴影，深色透明
 $shadow-dark: rgba(255, 255, 255, 0.7); // 强阴影，深色透明
-
-$code-block-header-color: #3B3B3B;
-$hover-bg: #31363f;
-$li-text-color: #888;
 
 
 // light-阴影颜色

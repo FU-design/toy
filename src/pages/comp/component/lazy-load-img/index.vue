@@ -4,7 +4,11 @@
       <div class="img-wrp">
         <div class="img-box">
           <div v-for="(url, index) in imgs" :key="index">
-            <img src="https://dummyimage.com/400x200/ddd/888" alt="404" :data-src="url" />
+            <img
+              src="https://dummyimage.com/400x200/ddd/888"
+              alt="404"
+              :data-src="url"
+            />
           </div>
         </div>
       </div>

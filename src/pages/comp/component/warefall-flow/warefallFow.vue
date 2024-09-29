@@ -1,5 +1,5 @@
 <template>
-  <div class="wrp">
+  <div>
     <card-box>
       <template #header> 瀑布流实现（js） </template>
       <div class="warefall-flow">

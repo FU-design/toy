@@ -73,7 +73,7 @@ aside {
       font-weight: 500;
       padding: 4px;
       margin: 4px;
-      color: $li-text-color;
+      color: $text-color;
       border: 1px solid transparent;
 
       &:hover {

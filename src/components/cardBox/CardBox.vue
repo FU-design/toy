@@ -35,7 +35,6 @@ const { showHeader } = props;
   box-shadow: 0 2px 5px 1px $shadow-light;
   background-color: $content-background-color;
 
-  /* overflow: auto; */
   & > header {
     padding: 10px 16px;
     font-weight: 600;
@@ -44,8 +43,7 @@ const { showHeader } = props;
 
   & > main {
     width: 100%;
-    overflow: auto;
-    height: auto;
+    height: 100%;
     padding: 10px 16px 16px;
   }
 }
