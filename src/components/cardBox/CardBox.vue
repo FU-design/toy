@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 type Props = {
   showHeader?: boolean;
-}
+};
 
 const props = withDefaults(defineProps<Props>(), {
   showHeader: true,
@@ -32,17 +32,17 @@ const { showHeader } = props;
   height: auto;
   margin: 16px 0;
   border-radius: 8px;
-  box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
-  background-color: #ffffffa4;
+  box-shadow: 0 2px 5px 1px $shadow-light;
+  background-color: $background-color;
 
   /* overflow: auto; */
-  &>header {
+  & > header {
     padding: 10px 16px;
     font-weight: 600;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    box-shadow: $shadow-light;
   }
 
-  &>main {
+  & > main {
     width: 100%;
     overflow: auto;
     height: auto;

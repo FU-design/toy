@@ -16,11 +16,11 @@ import PageLayout from "./pageLayout.vue";
 import dragSidebar from "./dragsidebar/drag-sidebar.vue";
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .page-view {
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: $background-color;
   position: relative;
 }
 /*

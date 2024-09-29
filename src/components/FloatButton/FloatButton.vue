@@ -33,7 +33,7 @@ const { floatContentPos } = props;
 <style lang="scss" scoped>
 .float-btn-wrp {
   position: fixed;
-  // bottom: 1%;
+  // bottom: 1%;  
   // right: 1%;
   top: 8%;
   right: 1%;
@@ -46,10 +46,7 @@ const { floatContentPos } = props;
   padding: 6px;
   border-radius: 50%;
   flex-shrink: 0;
-  background-color: rgba(110, 104, 104, 0.658);
-  border: 1px solid #000;
-}
-
-.float-content-pos {
+  background-color: $button-color;
+  border: 1px solid $border-color;
 }
 </style>

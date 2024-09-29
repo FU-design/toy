@@ -139,14 +139,11 @@ onBeforeUnmount(() => {
   padding: 10px 12px;
   margin: 0;
   border-radius: 8px;
-  // word-break: break-word;
   word-break: break-all;
   font-size: 14px;
   display: flex;
   align-items: center;
-  box-shadow:
-    rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: $shadow-light;
 }
 
 .sender {
@@ -157,9 +154,7 @@ onBeforeUnmount(() => {
   font-size: 19px;
   font-weight: 600;
   border-radius: 50%;
-  box-shadow:
-    rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: $shadow-light;
 
   // 纵横比
   aspect-ratio: 1 / 1;
@@ -203,15 +198,14 @@ onBeforeUnmount(() => {
   height: 500px;
   width: 100%;
   .msg-output {
-    // background: hsl(150, 30%, 92%);
     height: 70%;
     padding: 6px 10px;
     overflow: auto;
   }
   .msg-input {
     height: calc(100% - 70%);
-    border-top: 1px solid #bbb;
-    border-bottom: 1px solid #bbb;
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
     display: flex;
     flex-direction: column;
 

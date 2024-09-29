@@ -220,14 +220,13 @@ defineExpose({
   caret-color: chocolate; /* 光标颜色 */
   border-width: 1px;
   border-style: solid;
-  border-color: #d9d9d9;
+  border-color: $border-color;
   border-radius: 6px;
   transition: all 0.2s;
   overflow: auto;
   white-space: normal;
   &::before {
     content: attr(data-placeholder); /* 模拟原生 input 的 placeholder */
-    color: #888;
 
     /* 字体溢出变为省略号 */
     display: block;
@@ -240,7 +239,7 @@ defineExpose({
   }
   &:focus-visible {
     outline: 0;
-    border-color: cornflowerblue;
+    border-color: $focus-border-color;
   }
   .tag {
     padding: 1px 4px;
@@ -248,9 +247,9 @@ defineExpose({
     display: inline-block;
     line-height: 1.5;
     border-radius: 4px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    color: cornflowerblue;
+    box-shadow: $shadow-light;
+    color: $primary-color;
+    border: 1px solid $primary-color;
   }
 }
 </style>

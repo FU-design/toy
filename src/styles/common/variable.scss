@@ -1,0 +1,39 @@
+@mixin flex($row: null, $col: null) {
+  display: flex;
+  align-items: $col;
+  justify-content: $row;
+}
+
+@mixin glass($blur: 8px, $border-width: 0) {
+  backdrop-filter: blur($blur);
+  background-color: rgba(30, 30, 31, 0.5);
+  box-shadow: rgba(172, 130, 130, 0.3) 2px 8px 8px;
+  border-width: $border-width;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.4) rgba(40, 40, 40, 0.35) rgba(40, 40, 40, 0.35) rgba(255, 255, 255, 0.4);
+  border-image: initial;
+}
+
+$background-color: #2A2A2A; // 新的背景色，深灰近黑色
+$primary-color: #FF6F61; // 主色
+$text-color: #ECF0F1; // 文本色
+$title-color: #FFFFFF; // 标题色
+$link-color: #1ABC9C; // 链接色
+$button-color: #B0BEC5; // 新的按钮色，柔和的灰蓝色
+$button-hover-color: #90A4AE; // 新的按钮悬停色，稍深的灰色
+$border-color: #34495E; // 边框色
+$focus-border-color: #1ABC9C;
+$warning-color: #F39C12; // 提示/警告色
+$card-background-color: #F7F7F7;
+
+
+// 阴影颜色
+$shadow-light: rgba(0, 0, 0, 0.2); // 轻微阴影
+$shadow-medium: rgba(0, 0, 0, 0.4); // 中等阴影
+$shadow-dark: rgba(0, 0, 0, 0.6); // 强阴影
+
+
+
+$code-block-header-color: #3B3B3B;
+$hover-bg: #31363f;
+$li-text-color: #888;

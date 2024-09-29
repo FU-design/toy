@@ -60,18 +60,18 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .warefall-flow {
   height: 500px;
   overflow: auto;
 }
 
 .item {
-  background-color: #f3f3f3;
-  border: 1px solid #ccc;
+  background-color: $background-color;
+  border: 1px solid $border-color;
   border-radius: 5px;
   padding: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px $shadow-light;
   opacity: 0;
   /* transition: all 0.3s; */
 

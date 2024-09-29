@@ -148,7 +148,7 @@ ul {
       padding: 4px;
       margin: 4px;
       box-sizing: border-box;
-      border: 1px solid #000;
+      border: 1px solid $border-color;
 
     }
   }

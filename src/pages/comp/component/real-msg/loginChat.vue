@@ -111,7 +111,7 @@ onMounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
+  background-color: $card-background-color;
   padding: 16px;
   border-radius: 8px;
   display: flex;

@@ -76,6 +76,5 @@ onBeforeMount(() => {
 .scroll-wrapper ul .loading {
   border: none;
   text-align: center;
-  color: rgb(194, 194, 194);
 }
 </style>

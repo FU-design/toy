@@ -4,7 +4,7 @@ import router from "./router";
 import pinia from "@/stores/index";
 import plugin from "./plugins";
 
-import "./theme/main.css";
+import "./styles/main.css";
 import "virtual:svg-icons-register";
 
 const app = createApp(App);

@@ -33,20 +33,20 @@ const getData = async () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .get-data-btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .row {
-  background-color: burlywood;
+  background-color: $background-color;
   padding: 10px 6px;
   margin: 2px;
   border-radius: 4px;
   cursor: pointer;
 }
 .row:hover {
-  background-color: cornflowerblue;
+  background-color: $button-hover-color;
 }
 </style>

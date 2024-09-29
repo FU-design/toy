@@ -1,5 +1,5 @@
 @import "./common/reset.scss";
-@import "./marked/marked.scss";
+@import "./marked.scss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,10 +15,8 @@
     sans-serif;
   font-weight: 400;
   color-scheme: light dark;
-  /* color: rgba(255, 255, 255, 0.87); */
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-  color: #242424;
+  background-color: $background-color;
+  color: $text-color;
   overflow: hidden;
 
   font-synthesis: none;

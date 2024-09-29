@@ -120,14 +120,14 @@ onUnmounted(() => {
       display: flex;
       height: 400px;
       flex-direction: column;
-      border: 1px solid #ddd;
+      border: 1px solid $border-color;
       border-radius: 6px;
       overflow: auto;
     }
 
     &-item {
       display: flex;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $border-color;
 
       &:last-child {
         border: none;
@@ -139,7 +139,7 @@ onUnmounted(() => {
     width: calc(100% / 3);
     height: 100%;
     padding: 10px;
-    border-right: 1px solid #ddd;
+    border-right: 1px solid $border-color;
 
     overflow: hidden;
     white-space: nowrap;
@@ -157,18 +157,18 @@ onUnmounted(() => {
   margin-right: 40px;
   height: 400px;
   border-radius: 6px;
-  border: 1px solid #ddd;
-  background-color: #eee;
+  border: 1px solid $border-color;
+  background-color: $background-color;
   overflow: auto;
 
   .select-item {
     padding: 6px;
-    background-color: #fff;
-    border-bottom: 1px solid #eee;
+    background-color: $background-color;
+    border-bottom: 1px solid $border-color;
     cursor: pointer;
 
     &:hover {
-      background-color: #ddd;
+      background-color: $button-hover-color;
     }
   }
 }

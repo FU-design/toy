@@ -10,6 +10,6 @@
 header {
   width: 100%;
   height: 60px;
-  background-color: $li-text-color;
+  background-color: $code-block-header-color;
 }
 </style>

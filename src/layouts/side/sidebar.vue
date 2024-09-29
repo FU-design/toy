@@ -69,10 +69,9 @@ aside {
     flex-wrap: wrap;
     margin: 0;
     .selected {
-      background-color: $hover-bg;
       transition: all 0.5s;
-      color: #e8e8e8;
-      box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+      background-color: $background-color;
+      box-shadow: 0 0 1px $shadow-light;
     }
     li {
       cursor: pointer;
@@ -81,14 +80,13 @@ aside {
       padding: 4px;
       margin: 4px;
       color: $li-text-color;
-      border: 1px solid $border-color;
-      background-color: #0000007e;
+      border: 1px solid transparent;
 
       &:hover {
-        color: $hover-text;
-        background-color: $hover-bg;
+        color: $button-hover-color;
+        background-color: $background-color;
         transition: all 0.5s;
-        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+        border: 1px solid $border-color;
       }
     }
     &-text {

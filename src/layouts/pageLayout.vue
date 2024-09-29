@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 import PageHeader from "./header/pageHeader.vue";
-import SideBar from "./side/sidebar.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -21,7 +20,7 @@ import SideBar from "./side/sidebar.vue";
   &-content {
     height: 100%;
     box-sizing: border-box;
-    background-color: #fff;
+    background-color: $background-color;
     section {
       height: 100%;
       padding: 64px;
