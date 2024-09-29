@@ -1,16 +1,21 @@
 <template>
   <teleport to="body">
     <div
-      class="float-btn-wrp"
+      class="float-wrp"
       :style="{ 'flex-direction': PositionMap[props.floatContentPos] }"
-      @click="$emit('click')"
     >
-      <button class="float-btn" :class="{ rotate: props.isRotate }">
+      <button
+        class="float-btn"
+        :class="{ rotate: props.isRotate }"
+        @click.stop="(e: Event) => emits('click', e)"
+      >
         <slot name="btn-content">
           <svg-icon name="robot" />
         </slot>
       </button>
-      <slot> </slot>
+      <div class="float-content">
+        <slot> </slot>
+      </div>
     </div>
   </teleport>
 </template>
@@ -18,7 +23,7 @@
 <script setup lang="ts">
 type Props = {
   isRotate?: boolean;
-  floatContentPos?: "top" | "bottom" | "left" | "right";
+  floatContentPos?: keyof typeof PositionMap;
 };
 enum PositionMap {
   top = "column-reverse",
@@ -31,13 +36,13 @@ const props = withDefaults(defineProps<Props>(), {
   floatContentPos: "left",
 });
 
-const emit = defineEmits<{
-  (e: "click"): void;
+const emits = defineEmits<{
+  (e: "click", event: Event): void;
 }>();
 </script>
 
 <style lang="scss" scoped>
-.float-btn-wrp {
+.float-wrp {
   position: fixed;
   top: 8%;
   right: 1%;
@@ -50,8 +55,8 @@ const emit = defineEmits<{
 }
 
 .float-btn {
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   padding: 6px;
   border-radius: 50%;
   flex-shrink: 0;
@@ -61,9 +66,20 @@ const emit = defineEmits<{
 
   &:hover {
     box-shadow: 0 0 10px $shadow-medium;
+    .float-content {
+      transform: translateX(500px) !important;
+    }
   }
   &:active {
     box-shadow: 0 0 2px $shadow-medium;
   }
+}
+
+.float-content {
+  width: 200px;
+  display: flex;
+  background-color: $content-background-color;
+  box-shadow: 0 0 2px $shadow-medium;
+  border-radius: 8px;
 }
 </style>

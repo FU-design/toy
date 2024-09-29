@@ -1,9 +1,7 @@
 <template>
-  <float-button :is-rotate="fold" @click="handleExpand">
+  <float-button :is-rotate="fold" @click.stop="handleExpand">
     <template #default>
-      <div>
-        <sidebar />
-      </div>
+      <sidebar />
     </template>
   </float-button>
 </template>

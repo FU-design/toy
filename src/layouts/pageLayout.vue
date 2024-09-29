@@ -23,7 +23,7 @@ import PageHeader from "./header/pageHeader.vue";
     background-color: $background-color;
     section {
       height: 100%;
-      padding: 64px;
+      padding: 10px 30vh;
       overflow: auto;
     }
   }

@@ -14,7 +14,7 @@
   border-image: initial;
 }
 
-$background-color: #2A2A2A; // 新的背景色，深灰近黑色
+$background-color: #000; // 背景色
 $primary-color: #FF6F61; // 主色
 $text-color: #ECF0F1; // 文本色
 $title-color: #FFFFFF; // 标题色
@@ -24,7 +24,8 @@ $button-hover-color: #90A4AE; // 新的按钮悬停色，稍深的灰色
 $border-color: #34495E; // 边框色
 $focus-border-color: #1ABC9C;
 $warning-color: #F39C12; // 提示/警告色
-$card-background-color: #F7F7F7;
+$content-background-color: #212529;
+
 
 // dark-阴影颜色
 $shadow-light: rgba(255, 255, 255, 0.1); // 轻微阴影，白色透明

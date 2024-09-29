@@ -33,13 +33,13 @@ const { showHeader } = props;
   margin: 16px 0;
   border-radius: 8px;
   box-shadow: 0 2px 5px 1px $shadow-light;
-  background-color: $background-color;
+  background-color: $content-background-color;
 
   /* overflow: auto; */
   & > header {
     padding: 10px 16px;
     font-weight: 600;
-    box-shadow: $shadow-light;
+    box-shadow: 0 0 5px 1px $shadow-light;
   }
 
   & > main {

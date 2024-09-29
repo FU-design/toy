@@ -10,7 +10,7 @@
 }
 
 .markdown-body {
-  background-color: $background-color;
+  background-color: $content-background-color;
   color: $text-color;
   padding: 20px;
   border-radius: 10px;
@@ -32,7 +32,6 @@
 
 .markdown-body ul {
   list-style-type: disc;
-  margin-left: 20px;
   margin-bottom: 10px;
 }
 
