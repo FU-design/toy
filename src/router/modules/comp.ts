@@ -73,16 +73,16 @@ const routes = {
         menu: true,
       },
     },
-    {
-      path: "tagTextMixInput",
-      name: "TagTextMixInput",
-      component: () =>
-        import("@/pages/comp/component/tag-text-mix-input/index.vue"),
-      meta: {
-        title: "TagTextMixInput",
-        menu: true,
-      },
-    },
+    // {
+    //   path: "tagTextMixInput",
+    //   name: "TagTextMixInput",
+    //   component: () =>
+    //     import("@/pages/comp/component/tag-text-mix-input/index.vue"),
+    //   meta: {
+    //     title: "TagTextMixInput",
+    //     menu: true,
+    //   },
+    // },
     {
       path: "xTable",
       name: "XTable",
