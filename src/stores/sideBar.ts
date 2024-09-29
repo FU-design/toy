@@ -1,19 +1,4 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
-
-// options store
-// export default defineStore("side", {
-//   state: () => ({ fold: true }),
-//   getters: {},
-//   actions: {
-//     setSideState(state: boolean) {
-//       this.fold = state;
-//     },
-//   },
-// persist: {
-// ...配置
-// },
-// });
 
 // setup store （$reset需要自己创建）
 export default defineStore(
@@ -39,3 +24,17 @@ export default defineStore(
     },
   }
 );
+
+// options store
+// export default defineStore("side", {
+//   state: () => ({ fold: true }),
+//   getters: {},
+//   actions: {
+//     setSideState(state: boolean) {
+//       this.fold = state;
+//     },
+//   },
+// persist: {
+// ...配置
+// },
+// });

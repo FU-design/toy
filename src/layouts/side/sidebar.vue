@@ -18,13 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
 import type { RouteRecordRaw } from "vue-router";
 
 const router = useRouter();
-const side = sideBar();
 const { currentRoute } = router;
-const { fold } = storeToRefs(side);
 
 const routerMap = computed(() => router.getRoutes().filter((r) => r.meta.menu));
 
@@ -43,10 +40,6 @@ onMounted(() => {
  */
 const routerSkip = (o: RouteRecordRaw) => {
   router.push({ name: o.name });
-};
-
-const handleFold = () => {
-  side.setSideState(!fold.value);
 };
 </script>
 
@@ -70,7 +63,8 @@ aside {
     margin: 0;
     .selected {
       transition: all 0.5s;
-      background-color: $background-color;
+      color: $text-color;
+      border: 1px solid $border-color;
       box-shadow: 0 0 1px $shadow-light;
     }
     li {
@@ -83,7 +77,7 @@ aside {
       border: 1px solid transparent;
 
       &:hover {
-        color: $button-hover-color;
+        color: $text-color;
         background-color: $background-color;
         transition: all 0.5s;
         border: 1px solid $border-color;
