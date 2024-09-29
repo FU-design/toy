@@ -25,7 +25,7 @@ import PageHeader from "./header/pageHeader.vue";
     scroll-behavior: smooth;
     background-color: $background-color;
     section {
-      padding-bottom: 240px;
+      padding-bottom: 350px;
       margin: 0 auto;
       width: 80%;
     }
