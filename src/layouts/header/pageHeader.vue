@@ -10,6 +10,7 @@
 header {
   width: 100%;
   height: 60px;
-  background-color: $code-block-header-color;
+  background-color: $content-background-color;
+  @include glass(10px, 0px);
 }
 </style>

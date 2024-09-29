@@ -21,10 +21,11 @@ import PageHeader from "./header/pageHeader.vue";
     height: 100%;
     box-sizing: border-box;
     background-color: $background-color;
+    padding-bottom: 4%;
+    overflow: auto;
     section {
-      height: 100%;
-      padding: 10px 30vh;
-      overflow: auto;
+      margin: 0 auto;
+      width: 80%;
     }
   }
 }

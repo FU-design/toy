@@ -1,5 +1,9 @@
 <template>
-  <float-button :is-rotate="fold" @click.stop="handleExpand">
+  <float-button
+    :is-rotate="fold"
+    float-content-pos="right"
+    @click.stop="handleExpand"
+  >
     <template #default>
       <sidebar />
     </template>

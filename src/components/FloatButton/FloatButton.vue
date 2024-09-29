@@ -1,7 +1,7 @@
 <template>
   <teleport to="body">
     <div
-      class="float-wrp"
+      class="float-wrp-tl"
       :style="{ 'flex-direction': PositionMap[props.floatContentPos] }"
     >
       <button
@@ -13,9 +13,11 @@
           <svg-icon name="robot" />
         </slot>
       </button>
-      <div class="float-content">
-        <slot> </slot>
-      </div>
+      <transition>
+        <div v-if="!props.isRotate" class="float-content">
+          <slot> </slot>
+        </div>
+      </transition>
     </div>
   </teleport>
 </template>
@@ -42,11 +44,36 @@ const emits = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
-.float-wrp {
+$float-btn-size: 46px;
+$float-content-w: 300px;
+
+@mixin float-wrp {
   position: fixed;
+  display: flex;
+}
+
+.float-wrp-tr {
   top: 8%;
   right: 1%;
-  display: flex;
+  @include float-wrp;
+}
+
+.float-wrp-tl {
+  top: 8%;
+  left: 1%;
+  @include float-wrp;
+}
+
+.float-wrp-bl {
+  bottom: 8%;
+  left: 1%;
+  @include float-wrp;
+}
+
+.float-wrp-br {
+  bottom: 8%;
+  right: 1%;
+  @include float-wrp;
 }
 
 .rotate {
@@ -55,20 +82,18 @@ const emits = defineEmits<{
 }
 
 .float-btn {
-  width: 46px;
-  height: 46px;
+  width: $float-btn-size;
+  height: $float-btn-size;
   padding: 6px;
+  margin: 0 6px;
   border-radius: 50%;
   flex-shrink: 0;
   background-color: $button-color;
-  box-shadow: 0 0 2px $shadow-medium;
+  box-shadow: 0 0 2px $shadow-light;
   transition: 0.4s;
 
   &:hover {
-    box-shadow: 0 0 10px $shadow-medium;
-    .float-content {
-      transform: translateX(500px) !important;
-    }
+    box-shadow: 0 0 10px $shadow-light;
   }
   &:active {
     box-shadow: 0 0 2px $shadow-medium;
@@ -76,10 +101,22 @@ const emits = defineEmits<{
 }
 
 .float-content {
-  width: 200px;
   display: flex;
+  width: $float-content-w;
+  margin-top: $float-btn-size;
   background-color: $content-background-color;
   box-shadow: 0 0 2px $shadow-medium;
   border-radius: 8px;
+  @include glass(10px, 2px);
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
