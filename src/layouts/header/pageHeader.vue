@@ -1,16 +1,22 @@
 <template>
   <header>
-    <h1>Fdefined</h1>
+    <img :src="logo" />
   </header>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const logo = computed(() => getImageUrl("logo"));
+</script>
 
 <style lang="scss" scoped>
 header {
   width: 100%;
-  height: 60px;
   background-color: $content-background-color;
+  padding: 6px 0;
   @include glass(10px, 0px);
+  @include flex(center, center);
+  img {
+    height: 20px;
+  }
 }
 </style>

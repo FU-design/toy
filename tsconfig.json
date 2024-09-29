@@ -30,6 +30,7 @@
     },
     "types": [
       "vitest",
+      "vite/client", // https://cn.vitejs.dev/guide/assets.html
       "vitest/globals",
     ],
     "allowJs": true,

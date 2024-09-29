@@ -59,8 +59,8 @@ export const copyText = (text: string): Promise<any> => {
  * @param name
  * @returns
  */
-export function getImageUrl(name?: string) {
-  return new URL(`../assets/images/${name}.jpg`, import.meta.url).href;
+export function getImageUrl(name?: string, txt = "png") {
+  return new URL(`../assets/images/${name}.${txt}`, import.meta.url).href;
 }
 
 /**
