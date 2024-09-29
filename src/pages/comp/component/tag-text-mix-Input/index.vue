@@ -16,7 +16,7 @@
             <div class="item">{{ item.id }}</div>
             <div class="item">{{ item.name }}</div>
             <div class="item">
-              <mix-input
+              <tag-text-mix-input
                 :ref="(el) => getMixInputRefs(el, item)"
                 :key="item.id"
                 placeholder="请输入内容"
@@ -39,14 +39,16 @@
 </template>
 
 <script lang="ts" setup>
-import MixInput from "./tagTextMixInput.vue";
+import TagTextMixInput from "./tagTextMixInput.vue";
 import { ListItem, InnerOps, CompType } from "./type";
 import { initSelectData, fetchData } from "./request";
 import helper from "./helper.md?raw";
 
 const list = ref<ListItem[]>([]);
 const currMixFlag = ref<ListItem>();
-const mixInputRef = ref<Map<ListItem, CompType<typeof MixInput>>>(new Map());
+const mixInputRef = ref<Map<ListItem, CompType<typeof TagTextMixInput>>>(
+  new Map()
+);
 
 /**
  * 根据table数据的id存储循环中的子组件实例
