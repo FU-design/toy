@@ -1,12 +1,15 @@
 <template>
-  <div class="flex justify-end w-full my-11">
-    <section class="flex flex-shrink-0 w-8 h-8 rounded-full border border-[#34495E] bg-[#B0BEC5] mr-2" v-if="isAssistant">
+  <div :class="[isAssistant ? 'chat-msg-item-l' : 'chat-msg-item-r', 'chat-msg-item']">
+    <section v-if="isAssistant">
       <svg-icon name="robot" />
     </section>
-    <article class="flex items-cente rounded-lg" :class="[!isAssistant ? 'bg-[#2A2A2A]' : 'flex-auto']">
-      <marked-view v-if="isAssistant" class="markdown-body p-4 rounded-lg" :mark-raw="roleInfo.content"></marked-view>
-      <div v-else class="markdown-body p-4 rounded-lg">{{ roleInfo.content }}</div>
+    <article>
+      <marked-view v-if="isAssistant" class="markdown-body  rounded-lg " :mark-raw="roleInfo.content"></marked-view>
+      <div v-else class="markdown-body  rounded-lg ">{{ roleInfo.content }}</div>
     </article>
+    <section v-if="!isAssistant">
+      <svg-icon name="robot" />
+    </section>
   </div>
 </template>
 
@@ -21,3 +24,37 @@ const props = defineProps<Props>();
 const { roleInfo } = props
 const isAssistant = computed(() => props.roleInfo.role === "assistant");
 </script>
+<style lang="scss" scoped>
+.chat-msg-item {
+  display: flex;
+  width: 100%;
+  margin: 24px 0;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.chat-msg-item-r {
+  justify-content: flex-end;
+}
+
+.chat-msg-item-l {
+  justify-content: flex-start;
+}
+
+section {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #34495E;
+  background-color: #B0BEC5;
+  box-sizing: border-box;
+  justify-content: flex-end;
+}
+
+article {
+  border-radius: 8px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+</style>

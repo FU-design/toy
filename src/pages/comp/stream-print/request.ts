@@ -32,6 +32,17 @@ export function chatMsgHistory(): Promise<Response> {
             icon: "",
             content: test,
           },
+          {
+            role: "assistant",
+            icon: "",
+            content: "你addddddddddddddddddffffffffffffffffffffffffffffffoaaaa好",
+          },
+          {
+            role: "user",
+            icon: "",
+            content: "你好,什么是异aalhlfhafaufoafnafoafoanfaofnaonfaofna步路由?",
+          },
+        
         ]
       })
     })

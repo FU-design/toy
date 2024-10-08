@@ -7,13 +7,15 @@
   justify-content: space-between;
   padding: 6px 14px;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .markdown-body {
   color: $text-color;
   padding: 20px;
   border-radius: 10px;
-  background-color: $content-background-color;
+  background-color: #000;
+  box-sizing: border-box;
 }
 
 .markdown-body h1,

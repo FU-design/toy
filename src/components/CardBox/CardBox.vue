@@ -35,14 +35,14 @@ const { showHeader } = props;
   box-shadow: 0 2px 5px 1px $shadow-light;
   background-color: $content-background-color;
 
-  & > header {
+  &>header {
     padding: 10px 16px;
     font-weight: 600;
     box-shadow: 0 0 5px 1px $shadow-light;
   }
 
-  & > main {
-    width: 100%;
+  &>main {
+    width: auto;
     height: 100%;
     padding: 10px 16px 16px;
   }
