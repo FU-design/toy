@@ -11,7 +11,7 @@ const routes = {
     {
       path: "lazyLoadimg",
       name: "LazyLoadImg",
-      component: () => import("@/pages/comp/component/lazy-load-img/index.vue"),
+      component: () => import("@/pages/comp/lazy-load-img/index.vue"),
       meta: {
         title: "LazyLoadImg",
         menu: true,
@@ -20,7 +20,7 @@ const routes = {
     {
       path: "streamPrint",
       name: "StreamPrint",
-      component: () => import("@/pages/comp/component/stream-print/index.vue"),
+      component: () => import("@/pages/comp/stream-print/index.vue"),
       meta: {
         title: "StreamPrint",
         menu: true,
@@ -29,8 +29,7 @@ const routes = {
     {
       path: "infiniteScroll",
       name: "InfiniteScroll",
-      component: () =>
-        import("@/pages/comp/component/infinite-scroll/index.vue"),
+      component: () => import("@/pages/comp/infinite-scroll/index.vue"),
       meta: {
         title: "InfiniteScroll",
         menu: true,
@@ -39,7 +38,7 @@ const routes = {
     {
       path: "threeJs",
       name: "ThreeJs",
-      component: () => import("@/pages/comp/component/threeJs/index.vue"),
+      component: () => import("@/pages/comp/threeJs/index.vue"),
       meta: {
         title: "ThreeJs",
         menu: true,
@@ -48,7 +47,7 @@ const routes = {
     {
       path: "scrollmore",
       name: "Scrollmore",
-      component: () => import("@/pages/comp/component/scrollmore/index.vue"),
+      component: () => import("@/pages/comp/scrollmore/index.vue"),
       meta: {
         title: "Scrollmore",
         menu: true,
@@ -57,7 +56,7 @@ const routes = {
     {
       path: "autoForm",
       name: "AutoForm",
-      component: () => import("@/pages/comp/component/auto-form/index.vue"),
+      component: () => import("@/pages/comp/auto-form/index.vue"),
       meta: {
         title: "AutoFrom",
         menu: true,
@@ -66,8 +65,7 @@ const routes = {
     {
       path: "warefallFlow",
       name: "WarefallFlow",
-      component: () =>
-        import("@/pages/comp/component/warefall-flow/warefallFow.vue"),
+      component: () => import("@/pages/comp/warefall-flow/warefallFow.vue"),
       meta: {
         title: "WarefallFlow",
         menu: true,
@@ -76,8 +74,7 @@ const routes = {
     {
       path: "tagTextMixInput",
       name: "TagTextMixInput",
-      component: () =>
-        import("@/pages/comp/component/tag-text-mix-input/index.vue"),
+      component: () => import("@/pages/comp/tag-text-mix-input/index.vue"),
       meta: {
         title: "TagTextMixInput",
         menu: true,
@@ -86,7 +83,7 @@ const routes = {
     {
       path: "xTable",
       name: "XTable",
-      component: () => import("@/pages/comp/component/x-table/index.vue"),
+      component: () => import("@/pages/comp/x-table/index.vue"),
       meta: {
         title: "XTable",
         menu: true,
@@ -104,8 +101,7 @@ const routes = {
         {
           path: "loginChat",
           name: "LoginChat",
-          component: () =>
-            import("@/pages/comp/component/real-msg/loginChat.vue"),
+          component: () => import("@/pages/comp/real-msg/loginChat.vue"),
           meta: {
             menu: false,
           },
@@ -113,7 +109,7 @@ const routes = {
         {
           path: "chat",
           name: "Chat",
-          component: () => import("@/pages/comp/component/real-msg/index.vue"),
+          component: () => import("@/pages/comp/real-msg/index.vue"),
           meta: {
             menu: false,
           },
