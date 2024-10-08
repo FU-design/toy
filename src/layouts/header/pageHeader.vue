@@ -39,6 +39,7 @@ header {
   background-color: $content-background-color;
   box-shadow: 0 0 2px $shadow-medium;
   position: sticky;
+  transition: all .5s ease-out;
   // background-image: url("../../assets/images/banner1.jpg");
   // background-size: cover; /* 保持图片完整显示 */
   // background-repeat: no-repeat; /* 防止图片重复 */
