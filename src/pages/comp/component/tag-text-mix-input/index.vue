@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrp">
     <!-- <div>
       <label>Selection</label>
       <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Selection"></a>
@@ -107,6 +107,9 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.wrp {
+  display: flex;
+}
 .wrp-inner {
   display: flex;
 
