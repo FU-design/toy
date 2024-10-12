@@ -26,7 +26,7 @@ export interface ListItem {
   [propKey: string]: any;
 }
 
-const NodeInfo = {
+const nodeInfo = {
   attributes: true,
   childList: true,
   subtree: true,
@@ -58,7 +58,7 @@ const onFocus = (e: Event) => {
   if (!observer.value) {
     observer.value = new MutationObserver(handleObserver);
   }
-  observer.value?.observe(tagTextMixinputRef.value as HTMLElement, NodeInfo);
+  observer.value?.observe(tagTextMixinputRef.value as HTMLElement, nodeInfo);
   emits("focus", e);
 };
 
