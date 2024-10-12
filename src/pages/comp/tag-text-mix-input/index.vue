@@ -34,6 +34,7 @@
         <label>核心</label>
       </template>
       <marked-view v-once :mark-raw="helper"></marked-view>
+      <marked-view v-once :mark-raw="code"></marked-view>
     </card-box>
   </div>
 </template>
@@ -43,6 +44,7 @@ import TagTextMixInput from "./tagTextMixInput.vue";
 import { ListItem, InnerOps, CompType } from "./type";
 import { initSelectData, fetchData } from "./request";
 import helper from "./helper.md?raw";
+import code from "./code.md?raw";
 
 const list = ref<ListItem[]>([]);
 const currMixFlag = ref<ListItem>();
@@ -107,9 +109,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.wrp {
-  display: flex;
-}
 .wrp-inner {
   display: flex;
 

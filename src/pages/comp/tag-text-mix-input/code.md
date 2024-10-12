@@ -1,3 +1,4 @@
+```html
 <template>
   <div
     class="tag-text-mixinput"
@@ -7,8 +8,11 @@
     :class="{ 'tag-text-mixinput--deactive': props.disabled }"
   ></div>
 </template>
+```
 
+```ts
 <script setup lang="ts">
+
 export interface ContentItem {
   type: "tag" | "text";
   text: string;
@@ -224,6 +228,9 @@ defineExpose({
   removeAllEvent,
 });
 </script>
+```
+
+```css
 <style lang="scss">
 .tag-text-mixinput {
   min-width: 0;
@@ -270,3 +277,5 @@ defineExpose({
   }
 }
 </style>
+
+```
