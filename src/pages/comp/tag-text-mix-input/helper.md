@@ -66,10 +66,7 @@ const onFocus = (e: Event) => {
 处理监听回调
 
 ```ts
-const handleObserver = (
-  mutations: MutationRecord[],
-  _observer: MutationObserver
-) => {
+const handleObserver = (mutations: MutationRecord[],_observer: MutationObserver) => {
   mutations.forEach((mutation) => {
     if (mutation.type === "childList") {
       console.log("childList :>> ");
