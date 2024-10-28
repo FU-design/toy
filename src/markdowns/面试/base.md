@@ -243,7 +243,99 @@
   ```
 
 ### 闭包和作用域
-- 
+#### 闭包
+ 在函数内部定义的函数可访问外部函数的变量，即使外部函数执行完毕，内部函数仍然能够访问这些变量。
+
+ - 内部函数会 **记住** 它所在的 **作用域环境**（包括作用域链和其中的变量）
+ - 当内部函数被调用时，它可以 **访问外部函数的变量** ，即使 **外部函数** 已经 **执行完毕**
+ - 闭包 **延长了变量的生命周期**
+ - **作用域** 决定了闭包中哪些变量是可访问的
+
+ 应用场景：
+  1. 数据封装：**创建私有变量**，外部无法访问闭包中的变量，只能使用特定的函数来间接调用
+  2. 回调函数: 
+  3. 模块模式
+
+ 注意事项：
+  尽量少使用闭包，因闭包中的 **变量** 会一直被 **保存在内存中**，所以 **频繁使用** 时，会导致 **内存占用较高**。
+
+使用案例
+1. 计数器
+2. 异步操作中，使用闭包延迟使用变量
+3. 柯里化（currying）
+4. 防抖节流
+5. 分布执行
+   ```js
+   function multiply(x, y) {
+    return x * y;
+    }
+
+    function partial(fn, ...initialArgs) {
+        return function(...laterArgs) {
+            return fn(...initialArgs, ...laterArgs);
+        };
+    }
+
+    // 创建只需一个参数的 double 函数
+    const double = partial(multiply, 2);
+    console.log(double(3)); // 输出 6
+
+    // 计算平方和立方
+    function power(base, exponent) {
+        return Math.pow(base, exponent);
+    }
+
+    const square = partial(power, undefined, 2);
+    const cube = partial(power, undefined, 3);
+    console.log(square(4)); // 输出 16
+    console.log(cube(2));   // 输出 8
+
+   ``` 
+6. 事件监听器
+    ```js
+    function createButtonClickHandler(buttonId) {
+        let clickCount = 0;
+        const button = document.getElementById(buttonId);
+        button.addEventListener('click', function() {
+            clickCount++;
+            console.log(`Button clicked ${clickCount} times`);
+        });
+    }
+
+    createButtonClickHandler('myButton');  // clickCount 不会因为每次点击绑定事件的按钮就被重置为 0，而是持续叠加。
+    ```
+7. 私有变量
+    ```js
+    function createBankAccount(initialBalance) {
+      let balance = initialBalance; // 私有变量
+      return {
+        deposit(amount) {
+          balance += amount;
+          return balance;
+        },
+        withdraw(amount) {
+          if (amount <= balance) {
+            balance -= amount;
+            return balance;
+          } else {
+            return "Insufficient funds";
+          }
+        },
+        checkBalance() {
+          return balance;
+        },
+      };
+    }
+    const account = createBankAccount(100);
+    console.log(account.deposit(50)); // 输出 150
+    console.log(account.withdraw(30)); // 输出 120
+    console.log(account.balance); // 输出 undefined，balance 无法被外部访问
+    ```
+
+#### 作用域：
+  - 全局作用域：顶层作用域，脚本中的什么地方都可访问。
+  - 局部作用域：在 **函数** 或 **代码块** 中定义的 **变量**
+  - 块级作用域：**归属**于 **局部作用域**，只能在块中使用。如 let，const。（**块即 {}**）
 
 ### 实现一个类似关键字 new 功能的函数
 
