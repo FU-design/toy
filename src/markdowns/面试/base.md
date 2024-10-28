@@ -251,15 +251,13 @@
  - 闭包 **延长了变量的生命周期**
  - **作用域** 决定了闭包中哪些变量是可访问的
 
- 应用场景：
-  1. 数据封装：**创建私有变量**，外部无法访问闭包中的变量，只能使用特定的函数来间接调用
-  2. 回调函数: 
-  3. 模块模式
 
- 注意事项：
-  尽量少使用闭包，因闭包中的 **变量** 会一直被 **保存在内存中**，所以 **频繁使用** 时，会导致 **内存占用较高**。
+注意事项：尽量少使用闭包，因闭包中的 **变量** 会一直被 **保存在内存中**，所以 **频繁使用** 时，会导致 **内存占用较高**。
+
+  
 
 使用案例
+
 1. 计数器
 2. 异步操作中，使用闭包延迟使用变量
 3. 柯里化（currying）
@@ -338,10 +336,54 @@
   - 块级作用域：**归属**于 **局部作用域**，只能在块中使用。如 let，const。（**块即 {}**）
 
 ### 实现一个类似关键字 new 功能的函数
+new 关键字使用时的过程
 
+1. 创建一个空对象`{}`
+2. 将新对象的原型设置为构造函数的 `prototype` 属性
+3. 将构造函数的`this`绑定到新对象
+4. 执行构造函数中的内容
+5. 若没有明确指定构造函数返回的内容，则默认返回该创建的空对象。
+
+手动实现
+  ```js
+      function coverNew(constructor,...args) {
+        let obj = Object.create(constructor.prototype);
+        let result = constructor.apply(obj,args);
+        return (typeof result === 'object' && result !== null) ? result : obj;
+      }
+
+      function Person(name) {
+        this.name = name;
+      }
+
+      Person.prototype.sayHello = function() {
+        console.log('Hello, my name is ' + this.name);
+      };
+
+
+      let person = coverNew(Person, 'Kimi');
+      person.sayHello(); // 输出：Hello, my name is
+
+      class Profile{
+        constructor(name){
+          this.name = name
+        }
+      }
+
+      let profile = coverNew(Profile, 'Kimi'); // error
+      console.log('profile :>> ', profile.name);
+
+  ```
+   
 ### 如何实现继承（原型和原型链）
 
 ### 箭头函数和普通函数有什么区别
+1. 箭头函数内部 **没有**自己的 **this**,其 this 是 **所在作用域的 this**
+2. 因为**没有**自身的`this`,故箭头函数**无法作为构造函数**来使用，也就**无法使用** `new` 关键字
+3. 箭头函数写法**语法**更为**简洁**
+4. 箭头函数**没有**绑定 `arguments` 对象
+5. 箭头函数**没有** `prototype` 属性
+  
 
 ### 迭代器(iterator)接口和生成器(generator)函数的关系
 
