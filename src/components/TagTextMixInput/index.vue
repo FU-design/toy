@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import TagTextMixInput from './TagTextMixInput.vue';
+import TagTextMixInput from './TagTextInput.vue';
 import { ListItem, InnerOps, CompType } from './type';
 import { initSelectData, fetchData } from './request';
 import helper from './helper.md?raw';
