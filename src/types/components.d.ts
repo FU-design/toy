@@ -7,12 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AButton: typeof import('ant-design-vue/es')['Button']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
-    AForm: typeof import('ant-design-vue/es')['Form']
-    AFormItem: typeof import('ant-design-vue/es')['FormItem']
-    AInput: typeof import('ant-design-vue/es')['Input']
-    ATextarea: typeof import('ant-design-vue/es')['Textarea']
     AutoForm: typeof import('./../components/AutoForm/AutoForm.vue')['default']
     CardBox: typeof import('./../components/CardBox/CardBox.vue')['default']
     ChatBox: typeof import('./../components/StreamPrint/ChatBox.vue')['default']
