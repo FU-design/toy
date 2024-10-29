@@ -1,13 +1,8 @@
-import router from "@/router";
-import axios from "axios";
-import useAuthStore from "@/stores/authorization";
+import router from '@/router';
+import axios from 'axios';
+import useAuthStore from '@/stores/authorization';
 
-import type {
-  AxiosInstance,
-  AxiosError,
-  AxiosResponse,
-  AxiosRequestConfig,
-} from "axios";
+import type { AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 export interface ApiResponse<T> {
   code: number;
@@ -21,9 +16,9 @@ export interface ApiResponse<T> {
 }
 
 const baseConfig = {
-  baseURL: "http://localhost:3000", // 替换为服务器地址
+  baseURL: 'http://localhost:3000', // 替换为服务器地址
   timeout: 10000, // 请求超时时间
-  headers: { "Content-Type": "application/json" },
+  headers: { 'Content-Type': 'application/json' }
 };
 // 创建 axios 实例
 const axiosInstance: AxiosInstance = axios.create(baseConfig);
@@ -39,9 +34,9 @@ request.use(
     const { chatInfo } = useAuthStore();
     const token = chatInfo?.token;
     if (token) {
-      config.headers["authorization"] = `${token}`;
+      config.headers['authorization'] = `${token}`;
     } else {
-      router.replace({ name: "LoginChat" });
+      router.replace({ name: 'LoginChat' });
     }
     return config;
   },

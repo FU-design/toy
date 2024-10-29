@@ -54,7 +54,7 @@ disposables = [];
 
   ```js
   // effect, computed, watch, watchEffect created inside the scope will be collected
-  import { effectScope } from "vue";
+  import { effectScope } from 'vue';
 
   const scope = effectScope();
 
@@ -64,7 +64,7 @@ disposables = [];
 
     watch(doubled, () => console.log(doubled.value));
 
-    watchEffect(() => console.log("Count: ", doubled.value));
+    watchEffect(() => console.log('Count: ', doubled.value));
   });
 
   // to dispose all effects in the scope

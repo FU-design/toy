@@ -21,7 +21,7 @@ type Props = {
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  showHeader: true,
+  showHeader: true
 });
 
 const { showHeader } = props;
@@ -35,13 +35,13 @@ const { showHeader } = props;
   box-shadow: 0 2px 5px 1px $shadow-light;
   background-color: $content-background-color;
 
-  &>header {
+  & > header {
     padding: 10px 16px;
     font-weight: 600;
     box-shadow: 0 0 5px 1px $shadow-light;
   }
 
-  &>main {
+  & > main {
     width: auto;
     height: 100%;
     padding: 10px 16px 16px;

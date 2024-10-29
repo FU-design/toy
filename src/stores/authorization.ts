@@ -1,10 +1,10 @@
-import { ChatInfo } from "@/api/login/types";
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ChatInfo } from '@/api/login/types';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 // setup store （$reset需要自己创建）
 export default defineStore(
-  "auth",
+  'auth',
   () => {
     const chatInfo = ref<ChatInfo | null>(null);
 
@@ -22,8 +22,8 @@ export default defineStore(
   // 持久化配置
   {
     persist: {
-      key: "auth",
-      storage: localStorage,
-    },
+      key: 'auth',
+      storage: localStorage
+    }
   }
 );

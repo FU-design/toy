@@ -7,7 +7,11 @@
             {{ selects[selected].label }}
           </div>
           <div>
-            <a-select v-model:value="selected" placeholder="Select a infiniteScroll" :options="selects"></a-select>
+            <a-select
+              v-model:value="selected"
+              placeholder="Select a infiniteScroll"
+              :options="selects"
+            ></a-select>
           </div>
         </div>
       </template>
@@ -39,30 +43,30 @@
 </template>
 
 <script setup lang="ts">
-import { VanillaInfiniteScroll } from "./vanilla-infinite-scroll";
-import { ObserverInfiniteScroll } from "./observer-infinite-scroll";
-import { VirtualInfiniteScroll } from "./virtual-infinite-scroll";
+import { VanillaInfiniteScroll } from './vanilla-infinite-scroll';
+import { ObserverInfiniteScroll } from './observer-infinite-scroll';
+import { VirtualInfiniteScroll } from './virtual-infinite-scroll';
 
 interface Selected {
   value: number;
   label: string;
 }
 
-type ClassType = VanillaInfiniteScroll | ObserverInfiniteScroll | VirtualInfiniteScroll
+type ClassType = VanillaInfiniteScroll | ObserverInfiniteScroll | VirtualInfiniteScroll;
 
 const selects: Selected[] = [
   {
     value: 0,
-    label: "vanilla-infinite-scroll",
+    label: 'vanilla-infinite-scroll'
   },
   {
     value: 1,
-    label: "observer-infinite-scroll",
+    label: 'observer-infinite-scroll'
   },
   {
     value: 2,
-    label: "virtual-infinite-scroll",
-  },
+    label: 'virtual-infinite-scroll'
+  }
 ];
 
 const size = 50;
@@ -83,31 +87,30 @@ const setScrollObersver = (type: number) => {
     obersver.value = new VanillaInfiniteScroll(container, getList, 500);
   } else if (type === 1) {
     const container = document.querySelector(`#${selects[type].label}.container-wrp`); // 容器
-    const loadingFlag = document.querySelector('#loading-flag') // 交叉触发元素
+    const loadingFlag = document.querySelector('#loading-flag'); // 交叉触发元素
     const options = {
       root: container,
-      rootMargin: "0px",
-      threshold: 1.0, // 阈值: 目标可见度达到多少百分比时，观察器的回调就应该执行；1.0 标识目标元素完全出现在 root 选项指定的元素中 100% 可见时，回调函数将会被执行
-    }
+      rootMargin: '0px',
+      threshold: 1.0 // 阈值: 目标可见度达到多少百分比时，观察器的回调就应该执行；1.0 标识目标元素完全出现在 root 选项指定的元素中 100% 可见时，回调函数将会被执行
+    };
     obersver.value = new ObserverInfiniteScroll(loadingFlag, getList, options);
   } else {
   }
 };
 
 const clearScrollObersver = (type: number) => {
-  if (!obersver.value) return
+  if (!obersver.value) return;
   if (type === 0 && obersver.value instanceof VanillaInfiniteScroll) {
-    obersver.value.clearUpObersever()
+    obersver.value.clearUpObersever();
   } else if (type === 1 && obersver.value instanceof ObserverInfiniteScroll) {
-    obersver.value.clearUpObersever()
+    obersver.value.clearUpObersever();
   } else {
-
   }
-}
+};
 
 watch(selected, (val) => {
-  dataSource.value = []
-  getList()
+  dataSource.value = [];
+  getList();
   setScrollObersver(val);
 });
 
@@ -117,7 +120,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  clearScrollObersver(selected.value)
+  clearScrollObersver(selected.value);
 });
 </script>
 
@@ -142,23 +145,19 @@ ul {
     display: flex;
     flex-wrap: wrap;
 
-
     li {
       flex: 0 1 calc(100% / 4 - 8px);
       padding: 4px;
       margin: 4px;
       box-sizing: border-box;
       border: 1px solid $border-color;
-
     }
   }
-  #loading-flag{
+  #loading-flag {
     padding: 10px 0;
     text-align: center;
   }
 }
-
-
 
 .list-move,
 /* apply transition to moving elements */

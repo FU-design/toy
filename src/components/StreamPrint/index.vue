@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import ChatBox from "./ChatBox.vue";
+import ChatBox from './ChatBox.vue';
 </script>
 
 <style scoped></style>

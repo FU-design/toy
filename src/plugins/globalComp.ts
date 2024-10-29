@@ -1,5 +1,5 @@
-import components from "@/components";
-import type { App } from "vue";
+import components from '@/components';
+import type { App } from 'vue';
 
 const install = (app: App) => {
   for (const [key, comp] of Object.entries(components)) {
@@ -8,5 +8,5 @@ const install = (app: App) => {
 };
 
 export default {
-  install,
+  install
 };

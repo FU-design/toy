@@ -7,11 +7,11 @@ type voidFunc = () => void;
  */
 export function layoutWarefall(selector: string | HTMLElement): void {
   let el: HTMLElement | undefined;
-  if (typeof selector == "string") {
+  if (typeof selector == 'string') {
     el = document.querySelector(selector) as HTMLElement; // 获取容器
   }
   if (el) {
-    el.style.setProperty("position", "relative");
+    el.style.setProperty('position', 'relative');
     const gridItems = Array.from(el?.children) as HTMLElement[]; // 获取所有的子项目
     const pw = el?.offsetWidth; // 获取容器的宽
     const itemw = gridItems[0].offsetWidth; // 获取单个子项目的最后内部填充后的宽
@@ -26,23 +26,20 @@ export function layoutWarefall(selector: string | HTMLElement): void {
       const resetStyle = {
         left: `${Math.floor((colIdx + 1) * space + itemw * colIdx)}px`,
         top: `${minColHeight}px`,
-        position: "absolute",
-        opacity: 1, // 等待计算完成后再显示，处理出现的缩聚点影响观感问题
+        position: 'absolute',
+        opacity: 1 // 等待计算完成后再显示，处理出现的缩聚点影响观感问题
       };
       Object.assign(gridItems[i].style, resetStyle);
       columns[colIdx] += gridItems[i].offsetHeight + 10;
     }
-    el?.style.setProperty("height", `${Math.max(...columns)}px`);
+    el?.style.setProperty('height', `${Math.max(...columns)}px`);
   }
 }
 
 // 判断容器的滚动条是否滚动到底部
-export function loadScroll(
-  selector: string | Element,
-  binding: voidFunc
-): voidFunc {
+export function loadScroll(selector: string | Element, binding: voidFunc): voidFunc {
   let el: Element | undefined;
-  if (typeof selector == "string") {
+  if (typeof selector == 'string') {
     el = document.querySelector(selector) as Element; // 获取容器
   }
 
@@ -52,9 +49,9 @@ export function loadScroll(
       binding();
     }
   };
-  el?.addEventListener("scroll", throttle(handleScroll));
+  el?.addEventListener('scroll', throttle(handleScroll));
   return () => {
-    el?.removeEventListener("scroll", throttle(handleScroll));
+    el?.removeEventListener('scroll', throttle(handleScroll));
   };
 }
 
@@ -73,13 +70,16 @@ export function throttle<T>(func: Function, delay: number = 1000) {
       lastTime = Date.now();
     } else {
       timer && clearTimeout(timer);
-      timer = setTimeout(() => {
-        if (Date.now() - lastTime >= delay) {
-          func(...args);
-          lastTime = Date.now();
-          timer = null;
-        }
-      }, delay - (Date.now() - lastTime));
+      timer = setTimeout(
+        () => {
+          if (Date.now() - lastTime >= delay) {
+            func(...args);
+            lastTime = Date.now();
+            timer = null;
+          }
+        },
+        delay - (Date.now() - lastTime)
+      );
     }
   };
 }

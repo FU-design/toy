@@ -3,11 +3,7 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -24,17 +20,15 @@
     // 别名配置
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     "types": [
       "vitest",
       "vite/client", // https://cn.vitejs.dev/guide/assets.html
-      "vitest/globals",
+      "vitest/globals"
     ],
     "allowJs": true,
-    "strictNullChecks": true,
+    "strictNullChecks": true
   },
   "include": [
     "src/*",
@@ -50,12 +44,6 @@
       "path": "./tsconfig.node.json"
     }
   ],
-  "type": [
-    "node",
-  ],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "cypress"
-  ]
+  "type": ["node"],
+  "exclude": ["dist", "node_modules", "cypress"]
 }

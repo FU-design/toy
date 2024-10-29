@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import PageHeader from "./header/pageHeader.vue";
+import PageHeader from './header/pageHeader.vue';
 </script>
 
 <style lang="scss" scoped>

@@ -21,7 +21,7 @@ const obj = {
     return () => {
       console.log(this.a);
     };
-  },
+  }
 };
 
 console.log(obj.a);

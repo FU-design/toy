@@ -1,4 +1,3 @@
-
 interface SideState {
   sideState: Ref<boolean>;
   setSideState: (state: boolean) => void;
@@ -13,6 +12,6 @@ export default function useSideState(): SideState {
   }
   return {
     sideState,
-    setSideState,
+    setSideState
   };
 }

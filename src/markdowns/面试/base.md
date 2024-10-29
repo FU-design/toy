@@ -64,7 +64,7 @@
   - 重温 `flex` 布局
 
     ```html
-    <!DOCTYPE html>
+    <!doctype html>
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
@@ -176,10 +176,10 @@
 
   ```js
   console.log(typeof 42); // "number"
-  console.log(typeof "Hello"); // "string"
+  console.log(typeof 'Hello'); // "string"
   console.log(typeof true); // "boolean"
   console.log(typeof undefined); // "undefined"
-  console.log(typeof { name: "John" }); // "object"
+  console.log(typeof { name: 'John' }); // "object"
   console.log(typeof null); // "object"   (这是一个特殊情况，null 被认为是对象类型)
   console.log(typeof function () {}); // "function"
   console.log(typeof Symbol()); // "symbol"
@@ -190,9 +190,9 @@
   - 判断一个对象是否是**某个类或其子类的实例** ，返回值为 `boolean`。
   - 当对象为 `null`或 `undefined` 时，`instanceof` 总是返回 `false`
   ```js
-  let color1 = new String("green");
+  let color1 = new String('green');
   color1 instanceof String; //  true
-  let color2 = "coral"; //no type specified
+  let color2 = 'coral'; //no type specified
   color2 instanceof String; //  false (color2 is not a String object)
   ```
 
@@ -219,10 +219,10 @@
     // setTimeout(console.log, index * 1000, item);
   });
 
-  console.log("arr", arr); // [222, 222, 222, 222, 222, 1, 2, 3, 4, 5]
+  console.log('arr', arr); // [222, 222, 222, 222, 222, 1, 2, 3, 4, 5]
 
   // 在执行副作用的回调函数中最外层使用 return , 不会使 forEach 具备返回值，依旧是 undefined
-  console.log("forEachReturns", forEachReturns); // undefined
+  console.log('forEachReturns', forEachReturns); // undefined
   ```
 
 - map:
@@ -238,23 +238,22 @@
     // setTimeout(console.log, index * 1000, item);
   });
 
-  console.log("arr", arr); // [999, 999, 999, 999, 999, 1, 2, 3, 4, 5]
-  console.log("forEachReturns", forEachReturns); //  [1, 1, 1, 1, 1]
+  console.log('arr', arr); // [999, 999, 999, 999, 999, 1, 2, 3, 4, 5]
+  console.log('forEachReturns', forEachReturns); //  [1, 1, 1, 1, 1]
   ```
 
 ### 闭包和作用域
+
 #### 闭包
- 在函数内部定义的函数可访问外部函数的变量，即使外部函数执行完毕，内部函数仍然能够访问这些变量。
 
- - 内部函数会 **记住** 它所在的 **作用域环境**（包括作用域链和其中的变量）
- - 当内部函数被调用时，它可以 **访问外部函数的变量** ，即使 **外部函数** 已经 **执行完毕**
- - 闭包 **延长了变量的生命周期**
- - **作用域** 决定了闭包中哪些变量是可访问的
+在函数内部定义的函数可访问外部函数的变量，即使外部函数执行完毕，内部函数仍然能够访问这些变量。
 
+- 内部函数会 **记住** 它所在的 **作用域环境**（包括作用域链和其中的变量）
+- 当内部函数被调用时，它可以 **访问外部函数的变量** ，即使 **外部函数** 已经 **执行完毕**
+- 闭包 **延长了变量的生命周期**
+- **作用域** 决定了闭包中哪些变量是可访问的
 
 注意事项：尽量少使用闭包，因闭包中的 **变量** 会一直被 **保存在内存中**，所以 **频繁使用** 时，会导致 **内存占用较高**。
-
-  
 
 使用案例
 
@@ -263,79 +262,84 @@
 3. 柯里化（currying）
 4. 防抖节流
 5. 分布执行
+
    ```js
    function multiply(x, y) {
-    return x * y;
-    }
+     return x * y;
+   }
 
-    function partial(fn, ...initialArgs) {
-        return function(...laterArgs) {
-            return fn(...initialArgs, ...laterArgs);
-        };
-    }
+   function partial(fn, ...initialArgs) {
+     return function (...laterArgs) {
+       return fn(...initialArgs, ...laterArgs);
+     };
+   }
 
-    // 创建只需一个参数的 double 函数
-    const double = partial(multiply, 2);
-    console.log(double(3)); // 输出 6
+   // 创建只需一个参数的 double 函数
+   const double = partial(multiply, 2);
+   console.log(double(3)); // 输出 6
 
-    // 计算平方和立方
-    function power(base, exponent) {
-        return Math.pow(base, exponent);
-    }
+   // 计算平方和立方
+   function power(base, exponent) {
+     return Math.pow(base, exponent);
+   }
 
-    const square = partial(power, undefined, 2);
-    const cube = partial(power, undefined, 3);
-    console.log(square(4)); // 输出 16
-    console.log(cube(2));   // 输出 8
+   const square = partial(power, undefined, 2);
+   const cube = partial(power, undefined, 3);
+   console.log(square(4)); // 输出 16
+   console.log(cube(2)); // 输出 8
+   ```
 
-   ``` 
 6. 事件监听器
-    ```js
-    function createButtonClickHandler(buttonId) {
-        let clickCount = 0;
-        const button = document.getElementById(buttonId);
-        button.addEventListener('click', function() {
-            clickCount++;
-            console.log(`Button clicked ${clickCount} times`);
-        });
-    }
 
-    createButtonClickHandler('myButton');  // clickCount 不会因为每次点击绑定事件的按钮就被重置为 0，而是持续叠加。
-    ```
+   ```js
+   function createButtonClickHandler(buttonId) {
+     let clickCount = 0;
+     const button = document.getElementById(buttonId);
+     button.addEventListener('click', function () {
+       clickCount++;
+       console.log(`Button clicked ${clickCount} times`);
+     });
+   }
+
+   createButtonClickHandler('myButton'); // clickCount 不会因为每次点击绑定事件的按钮就被重置为 0，而是持续叠加。
+   ```
+
 7. 私有变量
-    ```js
-    function createBankAccount(initialBalance) {
-      let balance = initialBalance; // 私有变量
-      return {
-        deposit(amount) {
-          balance += amount;
-          return balance;
-        },
-        withdraw(amount) {
-          if (amount <= balance) {
-            balance -= amount;
-            return balance;
-          } else {
-            return "Insufficient funds";
-          }
-        },
-        checkBalance() {
-          return balance;
-        },
-      };
-    }
-    const account = createBankAccount(100);
-    console.log(account.deposit(50)); // 输出 150
-    console.log(account.withdraw(30)); // 输出 120
-    console.log(account.balance); // 输出 undefined，balance 无法被外部访问
-    ```
+   ```js
+   function createBankAccount(initialBalance) {
+     let balance = initialBalance; // 私有变量
+     return {
+       deposit(amount) {
+         balance += amount;
+         return balance;
+       },
+       withdraw(amount) {
+         if (amount <= balance) {
+           balance -= amount;
+           return balance;
+         } else {
+           return 'Insufficient funds';
+         }
+       },
+       checkBalance() {
+         return balance;
+       }
+     };
+   }
+   const account = createBankAccount(100);
+   console.log(account.deposit(50)); // 输出 150
+   console.log(account.withdraw(30)); // 输出 120
+   console.log(account.balance); // 输出 undefined，balance 无法被外部访问
+   ```
 
 #### 作用域：
-  - 全局作用域：顶层作用域，脚本中的什么地方都可访问。
-  - 局部作用域：在 **函数** 或 **代码块** 中定义的 **变量**
-  - 块级作用域：**归属**于 **局部作用域**，只能在块中使用。如 let，const。（**块即 {}**）
+
+- 全局作用域：顶层作用域，脚本中的什么地方都可访问。
+- 局部作用域：在 **函数** 或 **代码块** 中定义的 **变量**
+- 块级作用域：**归属**于 **局部作用域**，只能在块中使用。如 let，const。（**块即 {}**）
 
 ### 实现一个类似关键字 new 功能的函数
+
 new 关键字使用时的过程
 
 1. 创建一个空对象`{}`
@@ -345,45 +349,44 @@ new 关键字使用时的过程
 5. 若没有明确指定构造函数返回的内容，则默认返回该创建的空对象。
 
 手动实现
-  ```js
-      function coverNew(constructor,...args) {
-        let obj = Object.create(constructor.prototype);
-        let result = constructor.apply(obj,args);
-        return (typeof result === 'object' && result !== null) ? result : obj;
-      }
 
-      function Person(name) {
-        this.name = name;
-      }
+```js
+function coverNew(constructor, ...args) {
+  let obj = Object.create(constructor.prototype);
+  let result = constructor.apply(obj, args);
+  return typeof result === 'object' && result !== null ? result : obj;
+}
 
-      Person.prototype.sayHello = function() {
-        console.log('Hello, my name is ' + this.name);
-      };
+function Person(name) {
+  this.name = name;
+}
 
+Person.prototype.sayHello = function () {
+  console.log('Hello, my name is ' + this.name);
+};
 
-      let person = coverNew(Person, 'Kimi');
-      person.sayHello(); // 输出：Hello, my name is
+let person = coverNew(Person, 'Kimi');
+person.sayHello(); // 输出：Hello, my name is
 
-      class Profile{
-        constructor(name){
-          this.name = name
-        }
-      }
+class Profile {
+  constructor(name) {
+    this.name = name;
+  }
+}
 
-      let profile = coverNew(Profile, 'Kimi'); // error
-      console.log('profile :>> ', profile.name);
+let profile = coverNew(Profile, 'Kimi'); // error
+console.log('profile :>> ', profile.name);
+```
 
-  ```
-   
 ### 如何实现继承（原型和原型链）
 
 ### 箭头函数和普通函数有什么区别
+
 1. 箭头函数内部 **没有**自己的 **this**,其 this 是 **所在作用域的 this**
 2. 因为**没有**自身的`this`,故箭头函数**无法作为构造函数**来使用，也就**无法使用** `new` 关键字
 3. 箭头函数写法**语法**更为**简洁**
 4. 箭头函数**没有**绑定 `arguments` 对象
 5. 箭头函数**没有** `prototype` 属性
-  
 
 ### 迭代器(iterator)接口和生成器(generator)函数的关系
 

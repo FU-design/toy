@@ -3,10 +3,7 @@
     <div
       class="panel"
       ref="panelRef"
-      :style="[
-        { width: width || '' },
-        { transition: isDrag ? 'none' : 'all 0.2s' },
-      ]"
+      :style="[{ width: width || '' }, { transition: isDrag ? 'none' : 'all 0.2s' }]"
       :class="[visible ? 'panel-active' : 'panel-deactive']"
     >
       <div class="drag-size" @mousedown="dragChangeSize"></div>
@@ -29,22 +26,22 @@
 </template>
 
 <script lang="ts" setup>
-import type { Panel, DragState } from "./types";
+import type { Panel, DragState } from './types';
 
 const props = withDefaults(defineProps<Panel>(), {
   visible: false,
-  width: "70%",
-  title: "",
-  hasFooter: true,
+  width: '70%',
+  title: '',
+  hasFooter: true
 });
-const emits = defineEmits(["update:visible", "closed"]);
+const emits = defineEmits(['update:visible', 'closed']);
 const visible = ref(props.visible);
 const width = ref(props.width);
 const panelRef = ref<HTMLDivElement>();
 const isDrag = ref(false);
 const dragState = reactive<DragState>({
   startMouseL: 0,
-  startSizeW: 0,
+  startSizeW: 0
 });
 
 watch(
@@ -53,10 +50,10 @@ watch(
     visible.value = val;
     if (val) {
       // 当抽屉打开时，监听上下文的点击事件
-      document.addEventListener("click", autoClosePanel);
+      document.addEventListener('click', autoClosePanel);
     } else {
       // 当抽屉关闭后，移除监听上下文的点击事件
-      document.removeEventListener("click", autoClosePanel);
+      document.removeEventListener('click', autoClosePanel);
       isDrag.value = false;
     }
   }
@@ -79,9 +76,9 @@ const dragChangeSize = (e: MouseEvent) => {
     dragState.startSizeW = unref(panelRef)?.offsetWidth || 0;
   }
   // 监听鼠标键移动事件
-  document.addEventListener("mousemove", mouseMove);
+  document.addEventListener('mousemove', mouseMove);
   // 监听鼠标键抬起事件
-  document.addEventListener("mouseup", mouseUp);
+  document.addEventListener('mouseup', mouseUp);
 };
 
 /**
@@ -106,7 +103,7 @@ const mouseMove = (e: MouseEvent) => {
  * @description 鼠标抬起事件回调
  */
 const mouseUp = () => {
-  document.removeEventListener("mousemove", mouseMove);
+  document.removeEventListener('mousemove', mouseMove);
   document.onmouseup = null;
   // 要恢复页面的复制文本功能
   document.onselectstart = () => true;
@@ -123,11 +120,11 @@ const autoClosePanel = (evt: MouseEvent) => {
    * 如果匹配不到，则返回 null。
    */
   const el: Element = evt.target as Element;
-  const parent: Element | null = el.closest(".panel-wrapper");
+  const parent: Element | null = el.closest('.panel-wrapper');
   if (!parent) {
     visible.value = false;
-    emits("update:visible", unref(visible));
-    emits("closed", unref(visible));
+    emits('update:visible', unref(visible));
+    emits('closed', unref(visible));
   }
 };
 
@@ -136,8 +133,8 @@ const autoClosePanel = (evt: MouseEvent) => {
  */
 const handleClose = () => {
   visible.value = false;
-  emits("update:visible", unref(visible));
-  emits("closed", unref(visible));
+  emits('update:visible', unref(visible));
+  emits('closed', unref(visible));
 };
 </script>
 <style scoped>

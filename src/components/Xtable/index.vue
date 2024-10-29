@@ -24,9 +24,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TableColumnType } from "ant-design-vue";
-import { CopyOutlined } from "@ant-design/icons-vue";
-import xTable from "./XTable.vue";
+import type { TableColumnType } from 'ant-design-vue';
+import { CopyOutlined } from '@ant-design/icons-vue';
+import xTable from './XTable.vue';
 
 interface DataItem {
   key: string;
@@ -39,51 +39,53 @@ const app = getCurrentInstance();
 const globalProperties = app?.appContext.config.globalProperties;
 const columns: TableColumnType[] = [
   {
-    title: "name",
-    dataIndex: "name",
-    width: "25%",
+    title: 'name',
+    dataIndex: 'name',
+    width: '25%',
     filters: [
       {
-        text: "Joe",
-        value: "Joe",
+        text: 'Joe',
+        value: 'Joe'
       },
       {
-        text: "Category 1",
-        value: "Category 1",
+        text: 'Category 1',
+        value: 'Category 1'
       },
       {
-        text: "Category 2",
-        value: "Category 2",
-      },
+        text: 'Category 2',
+        value: 'Category 2'
+      }
     ],
-    filterMode: "tree",
+    filterMode: 'tree',
     filterSearch: true,
     // filterIcon: ({ filtered, column }) => {
     //   console.log("filtered-boolean :>> ", filtered);
     //   console.log("column-Column :>> ", column);
     //   return h(CopyOutlined);
     // },
-    onFilter: (value, record) => record.name.startsWith(value),
+    onFilter: (value, record) => record.name.startsWith(value)
   },
   {
-    title: "age",
-    dataIndex: "age",
-    width: "15%",
+    title: 'age',
+    dataIndex: 'age',
+    width: '15%'
   },
   {
-    title: "address",
-    dataIndex: "address",
-    width: "40%",
+    title: 'address',
+    dataIndex: 'address',
+    width: '40%'
   },
   {
-    title: "operation",
-    dataIndex: "operation",
-  },
+    title: 'operation',
+    dataIndex: 'operation'
+  }
 ];
 const data = ref<DataItem[]>([]);
 
-const { dataSource, columnsProp, loading, paginateProp, onChange } =
-  useTable<DataItem>({ columns, rows: data.value });
+const { dataSource, columnsProp, loading, paginateProp, onChange } = useTable<DataItem>({
+  columns,
+  rows: data.value
+});
 
 /**
  * 模拟数据
@@ -94,7 +96,7 @@ const initData = () => {
       key: i.toString(),
       name: `Edrward ${i}`,
       age: 32,
-      address: `London Park no. ${i}`,
+      address: `London Park no. ${i}`
     };
     data.value.push(item);
     paginateProp.value.total = 100;
@@ -109,10 +111,10 @@ const handleCopy = (text: string) => {
   copyText &&
     copyText(text)
       .then(() => {
-        console.log("复制成功 :>> ");
+        console.log('复制成功 :>> ');
       })
       .catch((err: Error) => {
-        console.log("复制失败 :>> ", err);
+        console.log('复制失败 :>> ', err);
       });
 };
 

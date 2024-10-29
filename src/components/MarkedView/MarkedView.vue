@@ -1,25 +1,21 @@
 <template>
-  <div
-    v-upgradeCodeBlock
-    v-dompurify-html="markdownContent"
-    class="markdown-body"
-  ></div>
+  <div v-upgradeCodeBlock v-dompurify-html="markdownContent" class="markdown-body"></div>
 </template>
 
 <script setup lang="ts">
-import { computed, toRefs, nextTick } from "vue";
-import { Marked } from "marked";
-import { markedHighlight } from "marked-highlight";
-import { copyText } from "@/utils/tool";
-import { message } from "ant-design-vue";
-import hljs from "highlight.js";
+import { computed, toRefs, nextTick } from 'vue';
+import { Marked } from 'marked';
+import { markedHighlight } from 'marked-highlight';
+import { copyText } from '@/utils/tool';
+import { message } from 'ant-design-vue';
+import hljs from 'highlight.js';
 
 type Props = {
   markRaw: string;
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  markRaw: "",
+  markRaw: ''
 });
 
 const { markRaw } = toRefs(props);
@@ -28,30 +24,27 @@ const markdownContent = computed(() => parseMDByHighlight(markRaw.value));
 const copyCode = (code: string) => {
   copyText(code)
     .then(() => {
-      message.success("copy success");
+      message.success('copy success');
     })
     .catch((err: Error) => {
-      message.error("copy fail");
-      console.log("err :>> ", err);
+      message.error('copy fail');
+      console.log('err :>> ', err);
     });
 };
 
 const upgradeCodeBlock = async (el: HTMLElement) => {
   await nextTick(); // 静态 markdown 文件解析时需要添加
-  const pres = el.querySelectorAll("pre");
+  const pres = el.querySelectorAll('pre');
   pres.forEach((pre) => {
-    const code = pre.querySelector("code");
-    const langTag = pre.querySelector("#language");
-    const copyTag = pre.querySelector("#copy");
+    const code = pre.querySelector('code');
+    const langTag = pre.querySelector('#language');
+    const copyTag = pre.querySelector('#copy');
 
     langTag!.textContent = (
-      code?.classList.value.replace("hljs language-", "") as string
+      code?.classList.value.replace('hljs language-', '') as string
     ).toLowerCase();
-    copyTag &&
-      copyTag.removeEventListener("click", () =>
-        copyCode(code?.textContent || "")
-      );
-    copyTag?.addEventListener("click", () => copyCode(code?.textContent || ""));
+    copyTag && copyTag.removeEventListener('click', () => copyCode(code?.textContent || ''));
+    copyTag?.addEventListener('click', () => copyCode(code?.textContent || ''));
   });
 };
 
@@ -62,11 +55,11 @@ const upgradedCodeBlock = (parsedMarked: string) => {
 
 const getMarkedHighlightOps = () => {
   return markedHighlight({
-    langPrefix: "hljs language-",
+    langPrefix: 'hljs language-',
     highlight(code, lang) {
-      const language = hljs.getLanguage(lang) ? lang : "plaintext";
+      const language = hljs.getLanguage(lang) ? lang : 'plaintext';
       return hljs.highlight(code, { language }).value;
-    },
+    }
   });
 };
 
@@ -77,7 +70,7 @@ const parseMDByHighlight = (content: string) => {
 
 const vUpgradeCodeBlock = {
   // updated: upgradeCodeBlock,
-  mounted: upgradeCodeBlock,
+  mounted: upgradeCodeBlock
 };
 </script>
 

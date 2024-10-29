@@ -15,35 +15,35 @@
 </template>
 
 <script setup lang="ts">
-import AutoFrom from "./AutoForm.vue";
+import AutoFrom from './AutoForm.vue';
 
 const form = ref<any>({});
 
 const formItem = [
   {
-    type: "input",
-    key: "resourceName",
+    type: 'input',
+    key: 'resourceName',
     itemOptions: {
-      name: "resourceName",
-      label: "资源名称",
+      name: 'resourceName',
+      label: '资源名称',
       rules: [
-        { required: true, message: "请输入资源名称", trigger: "blur" },
-        { min: 3, max: 50, message: "长度3-50", trigger: "blur" },
+        { required: true, message: '请输入资源名称', trigger: 'blur' },
+        { min: 3, max: 50, message: '长度3-50', trigger: 'blur' },
         {
           pattern: /^[0-9a-zA-Z_]{1,}$/,
-          message: "请输入正确的资源名称，字母/数字/下划线,",
-        },
-      ],
-    },
+          message: '请输入正确的资源名称，字母/数字/下划线,'
+        }
+      ]
+    }
   },
   {
-    type: "textarea",
-    key: "description",
+    type: 'textarea',
+    key: 'description',
     itemOptions: {
-      name: "description",
-      label: "描述",
-    },
-  },
+      name: 'description',
+      label: '描述'
+    }
+  }
 ];
 </script>
 

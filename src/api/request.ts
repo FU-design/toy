@@ -1,4 +1,4 @@
-import axiosInstance, { ApiResponse } from "@/utils/server";
+import axiosInstance, { ApiResponse } from '@/utils/server';
 
 const get = <T>(
   url: string,
@@ -7,38 +7,26 @@ const get = <T>(
 ): Promise<ApiResponse<T>> => {
   return axiosInstance.get(url, {
     params,
-    headers,
+    headers
   });
 };
 
-const post = <T>(
-  url: string,
-  data: object = {},
-  headers: object = {}
-): Promise<ApiResponse<T>> => {
+const post = <T>(url: string, data: object = {}, headers: object = {}): Promise<ApiResponse<T>> => {
   return axiosInstance.post(url, data, {
-    headers,
+    headers
   });
 };
 
-const put = <T>(
-  url: string,
-  data: object = {},
-  headers: object = {}
-): Promise<ApiResponse<T>> => {
+const put = <T>(url: string, data: object = {}, headers: object = {}): Promise<ApiResponse<T>> => {
   return axiosInstance.put(url, data, {
-    headers,
+    headers
   });
 };
 
-const del = <T>(
-  url: string,
-  data: object = {},
-  headers: object = {}
-): Promise<ApiResponse<T>> => {
+const del = <T>(url: string, data: object = {}, headers: object = {}): Promise<ApiResponse<T>> => {
   return axiosInstance.delete(url, {
     data,
-    headers,
+    headers
   });
 };
 

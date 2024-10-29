@@ -41,24 +41,24 @@
 </template>
 
 <script lang="ts">
-import type { FormItemState, FormOptions } from "./types.ts";
+import type { FormItemState, FormOptions } from './types.ts';
 
 const FormProps = {
   modelValue: {
     type: Object as PropType<Record<string, any>>,
-    required: false,
+    required: false
   },
   formItems: {
     type: Array as PropType<FormItemState[]>,
-    default: () => [],
+    default: () => []
   },
   // 其他的表单选项配置
   options: {
     type: Object as PropType<FormOptions>,
     default: () => {
       return {};
-    },
-  },
+    }
+  }
 };
 
 interface InitFormItem {
@@ -66,12 +66,12 @@ interface InitFormItem {
 }
 
 export default defineComponent({
-  name: "AutoForm",
+  name: 'AutoForm',
   props: FormProps,
-  emits: ["update:modelValue", "ok"],
+  emits: ['update:modelValue', 'ok'],
   // props,{attrs, slots, emit, expose}
   setup(props, { emit, expose }) {
-    const labelCol = { style: { width: "auto" } };
+    const labelCol = { style: { width: 'auto' } };
     const wrapperCol = { span: 24 };
     const { modelValue, formItems } = toRefs(props);
 
@@ -90,8 +90,8 @@ export default defineComponent({
       },
       set(val) {
         tmp_localData.value = val || {};
-        emit("update:modelValue", val);
-      },
+        emit('update:modelValue', val);
+      }
     });
 
     // 实时更新表单最后的值
@@ -99,7 +99,7 @@ export default defineComponent({
       ruleForm,
       (val) => {
         if (val) {
-          emit("update:modelValue", val);
+          emit('update:modelValue', val);
         }
       },
       { deep: true }
@@ -111,11 +111,11 @@ export default defineComponent({
 
       // 通过遍历 formItems 配置信息，获取当前 ruleForm 中所需要的变量
       formItems.value.forEach(({ key, defaultValue }) => {
-        newForm[key] = defaultValue || "";
+        newForm[key] = defaultValue || '';
       });
       Object.assign(ruleForm.value, {
         ...newForm,
-        ...ruleFormTmpResolve.value,
+        ...ruleFormTmpResolve.value
       });
     }
 
@@ -133,11 +133,11 @@ export default defineComponent({
       ruleFormRef.value
         .validate()
         .then(() => {
-          emit("update:modelValue", unref(ruleForm));
-          emit("ok");
+          emit('update:modelValue', unref(ruleForm));
+          emit('ok');
         })
         .catch((error: Error) => {
-          console.log("error", error);
+          console.log('error', error);
         });
     };
 
@@ -160,9 +160,9 @@ export default defineComponent({
       onSubmit,
       onReset,
       setOptionsVal,
-      updateValue,
+      updateValue
     };
-  },
+  }
 });
 </script>
 

@@ -1,9 +1,6 @@
 <template>
   <teleport to="body">
-    <div
-      class="float-wrp-tl"
-      :style="{ 'flex-direction': PositionMap[props.floatContentPos] }"
-    >
+    <div class="float-wrp-tl" :style="{ 'flex-direction': PositionMap[props.floatContentPos] }">
       <button
         class="float-btn"
         :class="{ rotate: props.isRotate }"
@@ -28,18 +25,18 @@ type Props = {
   floatContentPos?: keyof typeof PositionMap;
 };
 enum PositionMap {
-  top = "column-reverse",
-  bottom = "column",
-  left = "row-reverse",
-  right = "row",
+  top = 'column-reverse',
+  bottom = 'column',
+  left = 'row-reverse',
+  right = 'row'
 }
 const props = withDefaults(defineProps<Props>(), {
   isRotate: false,
-  floatContentPos: "left",
+  floatContentPos: 'left'
 });
 
 const emits = defineEmits<{
-  (e: "click", event: Event): void;
+  (e: 'click', event: Event): void;
 }>();
 </script>
 

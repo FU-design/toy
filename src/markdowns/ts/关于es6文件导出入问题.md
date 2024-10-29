@@ -19,7 +19,7 @@
 `useChat.ts`
 
 ```ts
-import { ref, Ref } from "vue";
+import { ref, Ref } from 'vue';
 
 // 命名带出
 export interface ChatInfo {
@@ -39,7 +39,7 @@ export default function useChat(): Chat {
 
   return {
     chatInfo,
-    setChatInfo,
+    setChatInfo
   };
 }
 ```

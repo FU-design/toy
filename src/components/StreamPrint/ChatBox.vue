@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import ChatMsgItem from "./ChatMsgItem.vue";
-import { chatMsgHistory, type RoleInfo } from "./request";
+import ChatMsgItem from './ChatMsgItem.vue';
+import { chatMsgHistory, type RoleInfo } from './request';
 
 const mockData = ref<RoleInfo[]>();
 

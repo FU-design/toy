@@ -4,7 +4,7 @@
  * @returns
  */
 export const degTrigger = (deg: string): number => {
-  return parseInt(deg.replace("deg", "")) * (Math.PI / 180);
+  return parseInt(deg.replace('deg', '')) * (Math.PI / 180);
 };
 
 /**
@@ -13,7 +13,7 @@ export const degTrigger = (deg: string): number => {
  * @returns
  */
 export const radTrigger = (rad: string): number => {
-  return parseInt(rad.replace("rad", "")) * (180 / Math.PI);
+  return parseInt(rad.replace('rad', '')) * (180 / Math.PI);
 };
 
 /**
@@ -28,28 +28,28 @@ export const copyText = (text: string): Promise<any> => {
   // 浏览器不支持 clipboard Api 时使用 ClipboardJS
   return new Promise(async (resolve, reject) => {
     try {
-      const { default: ClipboardJS } = await import("clipboard");
+      const { default: ClipboardJS } = await import('clipboard');
       // 判断浏览器是否支持
       if (!ClipboardJS.isSupported()) {
-        reject(new Error("ClipboardJS not support!"));
+        reject(new Error('ClipboardJS not support!'));
         return;
       }
-      const btn = document.createElement("button");
+      const btn = document.createElement('button');
       btn.innerText = text;
       const clipboard = new ClipboardJS(btn, {
-        text: () => text,
+        text: () => text
       });
-      clipboard.on("success", () => {
+      clipboard.on('success', () => {
         resolve(true);
         clipboard.destroy();
       });
-      clipboard.on("error", (err) => {
+      clipboard.on('error', (err) => {
         reject(err);
         clipboard.destroy();
       });
       btn.click();
     } catch (error) {
-      console.log("copytext :>> ", error);
+      console.log('copytext :>> ', error);
     }
   });
 };
@@ -59,7 +59,7 @@ export const copyText = (text: string): Promise<any> => {
  * @param name
  * @returns
  */
-export function getImageUrl(name?: string, txt = "png") {
+export function getImageUrl(name?: string, txt = 'png') {
   return new URL(`../assets/images/${name}.${txt}`, import.meta.url).href;
 }
 
@@ -70,9 +70,7 @@ export function getImageUrl(name?: string, txt = "png") {
  * @returns
  */
 export function getSvgUrl(name: string, fileName?: string) {
-  const path = fileName
-    ? `../assets/svg/${fileName}/${name}.svg`
-    : `../assets/svg/${name}.svg`;
+  const path = fileName ? `../assets/svg/${fileName}/${name}.svg` : `../assets/svg/${name}.svg`;
   return new URL(path, import.meta.url).href;
 }
 
@@ -108,7 +106,7 @@ export function extractFileNameWithoutExtension(filePath: string): string {
     return match[1];
   }
   // 如果没有匹配到，则返回空字符串
-  return "";
+  return '';
 }
 
 /**
@@ -146,7 +144,7 @@ export function isObjectEqual(obj1: any, obj2: any): boolean {
     const val1 = obj1[key];
     const val2 = obj2[key];
 
-    if (typeof val1 === "object" && typeof val2 === "object") {
+    if (typeof val1 === 'object' && typeof val2 === 'object') {
       // 递归比较对象的属性值
       if (!isObjectEqual(val1, val2)) {
         return false;

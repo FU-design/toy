@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import PageLayout from "./pageLayout.vue";
-import dragSidebar from "./dragsidebar/drag-sidebar.vue";
+import PageLayout from './pageLayout.vue';
+import dragSidebar from './dragsidebar/drag-sidebar.vue';
 </script>
 
 <style lang="scss" scoped>

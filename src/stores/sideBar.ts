@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
 // setup store （$reset需要自己创建）
 export default defineStore(
-  "sideState",
+  'sideState',
   () => {
     const fold = ref(false);
 
@@ -19,9 +19,9 @@ export default defineStore(
   // 持久化配置
   {
     persist: {
-      key: "sideState",
-      storage: sessionStorage,
-    },
+      key: 'sideState',
+      storage: sessionStorage
+    }
   }
 );
 

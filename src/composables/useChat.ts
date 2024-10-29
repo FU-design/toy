@@ -1,4 +1,4 @@
-import { ChatInfo } from "@/api/login/types";
+import { ChatInfo } from '@/api/login/types';
 interface Chat {
   chatInfo: Ref<ChatInfo | null>;
   setChatInfo: (info: ChatInfo) => void;
@@ -10,11 +10,11 @@ export default function useChat(): Chat {
   function setChatInfo(info: ChatInfo | null) {
     if (!info) return;
     chatInfo.value = info;
-    localStorage.setItem("myChat", JSON.stringify(unref(chatInfo)));
+    localStorage.setItem('myChat', JSON.stringify(unref(chatInfo)));
   }
 
   function checkChatInfoExists() {
-    let chat = localStorage.getItem("myChat");
+    let chat = localStorage.getItem('myChat');
     if (chat) {
       setChatInfo(JSON.parse(chat));
     }
@@ -26,6 +26,6 @@ export default function useChat(): Chat {
 
   return {
     chatInfo,
-    setChatInfo,
+    setChatInfo
   };
 }

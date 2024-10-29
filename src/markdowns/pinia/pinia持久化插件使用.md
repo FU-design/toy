@@ -7,21 +7,21 @@
 2. 在`main.ts` 引入 `piniaPluginPersistedstate`
 
    ```ts
-   import { createPinia } from "pinia";
+   import { createPinia } from 'pinia';
    // pinia 持久化插件引入
-   import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+   import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
    const pinia = createPinia();
    pinia.use(piniaPluginPersistedstate);
 
    app.use(pinia);
-   app.mount("#app");
+   app.mount('#app');
    ```
 
 3. 在 `store` 中使用`persist` 为配置项
 
    ```ts
-   import { defineStore } from "pinia";
-   import { ref } from "vue";
+   import { defineStore } from 'pinia';
+   import { ref } from 'vue';
 
    // options store
    // export default defineStore("side", {
@@ -39,7 +39,7 @@
 
    // setup store
    export default defineStore(
-     "aside",
+     'aside',
      () => {
        const fold = ref(false);
 
@@ -52,9 +52,9 @@
      // 持久化配置
      {
        persist: {
-         key: "aside", // 指定需要持久化变量
-         storage: sessionStorage, // 指定存储位置
-       },
+         key: 'aside', // 指定需要持久化变量
+         storage: sessionStorage // 指定存储位置
+       }
      }
    );
    ```

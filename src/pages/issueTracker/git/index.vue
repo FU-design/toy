@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import common from "./common.md?raw";
+import common from './common.md?raw';
 </script>
 
 <style scoped></style>

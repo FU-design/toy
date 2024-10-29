@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 const headerRef = ref<HTMLElement | null>(null);
-const logo = computed(() => getImageUrl("logo"));
+const logo = computed(() => getImageUrl('logo'));
 </script>
 
 <style lang="scss" scoped>

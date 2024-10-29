@@ -6,9 +6,7 @@
           <!-- 默认作用域插槽 -->
           <slot :$row="v" :$idx="i">{{ v }}</slot>
         </li>
-        <li class="loading" v-show="isLoading && eachSize <= listData.length">
-          加载中。。。
-        </li>
+        <li class="loading" v-show="isLoading && eachSize <= listData.length">加载中。。。</li>
       </ul>
     </div>
   </div>
@@ -22,7 +20,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   listData: [] as any,
-  eachSize: 50,
+  eachSize: 50
 });
 
 const listData = ref<any[]>(computed(() => props.listData) as unknown as any[]);
@@ -34,8 +32,8 @@ const isLoading = ref<boolean>(false);
  * 监听滚动事件，递增数据叠加
  */
 const initEvent = () => {
-  wrapBox.value = document.querySelector(".scroll-wrapper");
-  unref(wrapBox)?.addEventListener("scroll", (e) => {
+  wrapBox.value = document.querySelector('.scroll-wrapper');
+  unref(wrapBox)?.addEventListener('scroll', (e) => {
     const target = e.target as Element;
     if (target.scrollHeight - target.scrollTop == target.clientHeight) {
       isLoading.value = true;
@@ -51,7 +49,7 @@ const initEvent = () => {
  * 组件销毁前移除监听事件
  */
 const removeEvent = () => {
-  unref(wrapBox)?.removeEventListener("scroll", () => {});
+  unref(wrapBox)?.removeEventListener('scroll', () => {});
 };
 
 onMounted(() => {

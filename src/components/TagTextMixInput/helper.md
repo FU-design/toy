@@ -49,7 +49,7 @@ const nodeInfo = {
   attributes: true,
   childList: true,
   subtree: true,
-  characterData: true, // 修改字符是否发生改变(默认false)
+  characterData: true // 修改字符是否发生改变(默认false)
 };
 // 输入框获取焦点事件
 const onFocus = (e: Event) => {
@@ -59,27 +59,27 @@ const onFocus = (e: Event) => {
     observer.value = new MutationObserver(handleObserver);
   }
   observer.value?.observe(tagTextMixinputRef.value as HTMLElement, nodeInfo);
-  emits("focus", e);
+  emits('focus', e);
 };
 ```
 
 处理监听回调
 
 ```ts
-const handleObserver = (mutations: MutationRecord[],_observer: MutationObserver) => {
+const handleObserver = (mutations: MutationRecord[], _observer: MutationObserver) => {
   mutations.forEach((mutation) => {
-    if (mutation.type === "childList") {
-      console.log("childList :>> ");
+    if (mutation.type === 'childList') {
+      console.log('childList :>> ');
     }
-    if (mutation.type === "attributes") {
-      console.log("attributes :>> ");
+    if (mutation.type === 'attributes') {
+      console.log('attributes :>> ');
     }
-    if (mutation.type === "characterData") {
-      console.log("characterData :>> ");
+    if (mutation.type === 'characterData') {
+      console.log('characterData :>> ');
     }
   });
-  emits("change", formatMixInputContents());
-  emits("update:contents", formatMixInputContents());
+  emits('change', formatMixInputContents());
+  emits('update:contents', formatMixInputContents());
 };
 ```
 
@@ -108,7 +108,7 @@ const handleObserver = (mutations: MutationRecord[],_observer: MutationObserver)
     text-overflow: ellipsis;
   }
   &:not(:empty)::before {
-    content: "";
+    content: '';
   }
 }
 ```

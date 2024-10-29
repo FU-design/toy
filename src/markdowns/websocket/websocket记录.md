@@ -2,7 +2,7 @@
 
 1. 创建 websocket 实例
    ```ts
-   const ws: WebSocket = new WebSocket("ws://localhost:8080");
+   const ws: WebSocket = new WebSocket('ws://localhost:8080');
    ```
 2. 通过 websocket 实例的 4 个主要事件来控制通讯过程
 
@@ -16,27 +16,27 @@
    ```ts
    let ws: WebSocket;
    const connectWebSocket = () => {
-     ws = new WebSocket("ws://localhost:8080");
+     ws = new WebSocket('ws://localhost:8080');
 
      // 监听打开事件
      ws.onopen = (event) => {
-       console.log("连接到WebSocket服务器", event);
+       console.log('连接到WebSocket服务器', event);
      };
 
      // 监听消息事件
      ws.onmessage = (event) => {
        const recevice = event.data as string;
-       console.log("接收到的消息" + JSON.parse(recevice));
+       console.log('接收到的消息' + JSON.parse(recevice));
      };
 
      // 监听关闭事件
      ws.onclose = (event) => {
-       console.log("断开与WebSocket服务器的连接", event);
+       console.log('断开与WebSocket服务器的连接', event);
      };
 
      // 监听错误事件
      ws.onerror = (error) => {
-       console.error("WebSocket错误:", error);
+       console.error('WebSocket错误:', error);
      };
    };
    ```
@@ -82,48 +82,48 @@ WebSocket 对象有一个`readyState`属性，它表示 WebSocket 连接的当�
 
 ```javascript
 // 创建WebSocket连接
-const socket = new WebSocket("wss://example.com/socket");
+const socket = new WebSocket('wss://example.com/socket');
 
 // 监听连接打开事件
-socket.addEventListener("open", (event) => {
-  console.log("WebSocket is open now.");
+socket.addEventListener('open', (event) => {
+  console.log('WebSocket is open now.');
   checkConnectionStatus();
 });
 
 // 监听连接关闭事件
-socket.addEventListener("close", (event) => {
-  console.log("WebSocket is closed now.");
+socket.addEventListener('close', (event) => {
+  console.log('WebSocket is closed now.');
   checkConnectionStatus();
 });
 
 // 监听连接错误事件
-socket.addEventListener("error", (event) => {
-  console.error("WebSocket error observed:", event);
+socket.addEventListener('error', (event) => {
+  console.error('WebSocket error observed:', event);
   checkConnectionStatus();
 });
 
 // 监听消息事件
-socket.addEventListener("message", (event) => {
-  console.log("Message from server:", event.data);
+socket.addEventListener('message', (event) => {
+  console.log('Message from server:', event.data);
 });
 
 // 检查WebSocket连接状态
 function checkConnectionStatus() {
   switch (socket.readyState) {
     case WebSocket.CONNECTING:
-      console.log("WebSocket is connecting...");
+      console.log('WebSocket is connecting...');
       break;
     case WebSocket.OPEN:
-      console.log("WebSocket is open.");
+      console.log('WebSocket is open.');
       break;
     case WebSocket.CLOSING:
-      console.log("WebSocket is closing...");
+      console.log('WebSocket is closing...');
       break;
     case WebSocket.CLOSED:
-      console.log("WebSocket is closed.");
+      console.log('WebSocket is closed.');
       break;
     default:
-      console.log("Unknown WebSocket state.");
+      console.log('Unknown WebSocket state.');
       break;
   }
 }

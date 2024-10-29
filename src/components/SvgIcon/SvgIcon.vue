@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue';
 
 type Props = {
   prefix?: string;
@@ -15,15 +15,14 @@ type Props = {
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  prefix: "icon",
-  color: "#000",
-  className: "",
+  prefix: 'icon',
+  color: '#000',
+  className: ''
 });
 
 const { className, prefix, name } = props;
 const symbolId = computed(() => `#${prefix}-${name}`);
-const svgClass = computed(() => className ? `svg-icon ${className}` : "svg-icon");
-
+const svgClass = computed(() => (className ? `svg-icon ${className}` : 'svg-icon'));
 </script>
 
 <style lang="scss" scoped>

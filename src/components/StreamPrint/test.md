@@ -19,7 +19,7 @@ npm install github-markdown-css
 在你的 Vue 组件或全局样式文件中引入该样式：
 
 ```javascript
-import "github-markdown-css/github-markdown.css";
+import 'github-markdown-css/github-markdown.css';
 ```
 
 然后给解析后的 Markdown 内容添加 `markdown-body` 的样式类，以便样式生效。
@@ -32,9 +32,9 @@ import "github-markdown-css/github-markdown.css";
 </template>
 
 <script>
-  import { marked } from "marked"; // 引入 marked 库
-  import DOMPurify from "dompurify";
-  import "github-markdown-css/github-markdown.css"; // 引入 GitHub Markdown 样式
+  import { marked } from 'marked'; // 引入 marked 库
+  import DOMPurify from 'dompurify';
+  import 'github-markdown-css/github-markdown.css'; // 引入 GitHub Markdown 样式
 
   export default {
     data() {
@@ -53,14 +53,14 @@ import "github-markdown-css/github-markdown.css";
         \`\`\`
 
         [点击这里访问](https://www.example.com)
-      `,
+      `
       };
     },
     computed: {
       parsedMarkdown() {
         return DOMPurify.sanitize(marked(this.markdownContent));
-      },
-    },
+      }
+    }
   };
 </script>
 ```
@@ -80,7 +80,7 @@ import "github-markdown-css/github-markdown.css";
     ```
   - 引入代码高亮样式（例如 `atom-one-dark`）：
     ```javascript
-    import "highlight.js/styles/atom-one-dark.css";
+    import 'highlight.js/styles/atom-one-dark.css';
     ```
 
 ### 方法 2: 自定义 Markdown 样式
@@ -104,7 +104,7 @@ import "github-markdown-css/github-markdown.css";
     background-color: #f5f5f5;
     padding: 2px 4px;
     border-radius: 4px;
-    font-family: "Courier New", monospace;
+    font-family: 'Courier New', monospace;
   }
 
   .markdown-body pre code {

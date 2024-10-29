@@ -4,11 +4,7 @@
       <div class="img-wrp">
         <div class="img-box">
           <div v-for="(url, index) in imgs" :key="index">
-            <img
-              src="https://dummyimage.com/400x200/ddd/888"
-              alt="404"
-              :data-src="url"
-            />
+            <img src="https://dummyimage.com/400x200/ddd/888" alt="404" :data-src="url" />
           </div>
         </div>
       </div>
@@ -23,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import helper from "./helper.md?raw";
+import helper from './helper.md?raw';
 const imgs = ref<string[]>([]);
 
 // 模拟获取图片数据
@@ -42,18 +38,18 @@ const intersectionCallback = (
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       let img = entry.target as HTMLImageElement;
-      img.src = img.dataset.src || ""; // 将 data-src 的值赋给 src
+      img.src = img.dataset.src || ''; // 将 data-src 的值赋给 src
       observer.unobserve(img); // 图片加载后取消观察
     }
   });
 };
 
 const setIntersectionObserver = () => {
-  const lazyImgs = document.querySelectorAll("img[data-src]");
+  const lazyImgs = document.querySelectorAll('img[data-src]');
   const options = {
-    root: document.querySelector(".img-wrp"), // 当前监听的元素所交叉的父元素（必须是父元素）默认是文档的视口（null）
-    rootMargin: "0px",
-    threshold: 0.1,
+    root: document.querySelector('.img-wrp'), // 当前监听的元素所交叉的父元素（必须是父元素）默认是文档的视口（null）
+    rootMargin: '0px',
+    threshold: 0.1
   };
   const observer = new IntersectionObserver(intersectionCallback, options);
   lazyImgs.forEach((lazyImage) => observer.observe(lazyImage));

@@ -23,29 +23,29 @@
       // routes.js
       const routes = [
         {
-          path: "/dashboard",
+          path: '/dashboard',
           component: DashboardComponent,
           meta: {
-            requiredRoles: ["admin", "user"],
-            title: "Dashboard",
-          },
+            requiredRoles: ['admin', 'user'],
+            title: 'Dashboard'
+          }
         },
         {
-          path: "/user-management",
+          path: '/user-management',
           component: UserManagementComponent,
           meta: {
-            requiredRoles: ["admin"],
-            title: "User Management",
-          },
+            requiredRoles: ['admin'],
+            title: 'User Management'
+          }
         },
         {
-          path: "/settings",
+          path: '/settings',
           component: SettingsComponent,
           meta: {
-            requiredRoles: ["admin"],
-            title: "Settings",
-          },
-        },
+            requiredRoles: ['admin'],
+            title: 'Settings'
+          }
+        }
       ];
       ```
 
@@ -54,25 +54,23 @@
       ```js
       // 静态路由，如登录、注册页面
       const constantRoutes = [
-        { path: "/login", component: LoginComp },
-        { path: "/register", component: RegisterComp },
+        { path: '/login', component: LoginComp },
+        { path: '/register', component: RegisterComp }
       ];
 
       // 动态路由，根据用户权限加载
       const asyncRoutes = [
         {
-          path: "/dashboard",
+          path: '/dashboard',
           component: DashboardComponent,
-          meta: { requiredRoles: ["admin", "user"] },
-        },
+          meta: { requiredRoles: ['admin', 'user'] }
+        }
       ];
 
       // 用户登录并获取权限后 userPermissions: 后端返回的当前用户的角色对应的所有权限
       async function handleUserLogin(userPermissions) {
         const allowedRoutes = routes.filter((route) =>
-          route.meta.requiredRoles.every((role) =>
-            userPermissions.includes(role)
-          )
+          route.meta.requiredRoles.every((role) => userPermissions.includes(role))
         );
 
         // 动态添加到路由表中

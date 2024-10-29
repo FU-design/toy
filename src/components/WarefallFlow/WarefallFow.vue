@@ -21,8 +21,8 @@
 </template>
 
 <script lang="ts" setup>
-import helper from "./helper.md?raw";
-import { layoutWarefall, loadScroll } from "./warefallFlowUtil";
+import helper from './helper.md?raw';
+import { layoutWarefall, loadScroll } from './warefallFlowUtil';
 
 const items = ref<string[]>([]);
 const clear = ref<() => void>();
@@ -34,21 +34,21 @@ const getImgUrls = async () => {
 };
 
 const handleResize = () => {
-  layoutWarefall(".grid");
+  layoutWarefall('.grid');
 };
 
 const initEvent = () => {
   getImgUrls();
-  clear.value = loadScroll(".warefall-flow", () => {
-    console.log("nihao :>> ");
+  clear.value = loadScroll('.warefall-flow', () => {
+    console.log('nihao :>> ');
     getImgUrls();
   });
-  window.addEventListener("resize", handleResize);
+  window.addEventListener('resize', handleResize);
 };
 
 const clearEvent = () => {
   clear.value && clear.value();
-  window.removeEventListener("resize", handleResize);
+  window.removeEventListener('resize', handleResize);
 };
 
 onMounted(() => {

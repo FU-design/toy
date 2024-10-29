@@ -5,12 +5,12 @@ export default function useCanvas(selector: HTMLCanvasElement | string) {
 
   const initSelector = () => {
     scope.run(() => {
-      if (typeof selector === "string") {
+      if (typeof selector === 'string') {
         canvas.value = document.querySelector(selector) as HTMLCanvasElement;
       } else {
         canvas.value = selector;
       }
-      ctx.value = canvas.value?.getContext("2d");
+      ctx.value = canvas.value?.getContext('2d');
     });
   };
 
@@ -22,6 +22,6 @@ export default function useCanvas(selector: HTMLCanvasElement | string) {
     canvas,
     ctx,
     initSelector,
-    cleanup,
+    cleanup
   };
 }

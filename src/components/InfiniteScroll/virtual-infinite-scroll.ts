@@ -1,5 +1,3 @@
 export class VirtualInfiniteScroll {
-  constructor() {
-
-  }
+  constructor() {}
 }

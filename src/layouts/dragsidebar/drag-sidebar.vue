@@ -1,9 +1,5 @@
 <template>
-  <float-button
-    :is-rotate="fold"
-    float-content-pos="right"
-    @click.stop="handleExpand"
-  >
+  <float-button :is-rotate="fold" float-content-pos="right" @click.stop="handleExpand">
     <template #default>
       <sidebar />
     </template>
@@ -11,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import sidebar from "@/layouts/side/sidebar.vue";
-import { storeToRefs } from "pinia";
+import sidebar from '@/layouts/side/sidebar.vue';
+import { storeToRefs } from 'pinia';
 const side = sideBar();
 const { fold } = storeToRefs(side);
 const handleExpand = () => {

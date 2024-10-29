@@ -26,12 +26,9 @@
       <input v-model="value1" />
       ```
       ```html
-      <input
-        :value="value1"
-        @change="($event) => value = $event.target.value"
-      />
+      <input :value="value1" @change="($event) => value = $event.target.value" />
       ```
-    - 组件上使用 
+    - 组件上使用
 
 3. **如何在 Vue.js 中使用指令（如 `v-if`、`v-for` 和 `v-bind`）？**
 4. **Vue 组件的生命周期钩子函数有哪些？请简要描述每个钩子函数的用途。**

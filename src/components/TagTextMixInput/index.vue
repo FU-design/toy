@@ -39,16 +39,14 @@
 </template>
 
 <script lang="ts" setup>
-import TagTextMixInput from "./TagTextMixInput.vue";
-import { ListItem, InnerOps, CompType } from "./type";
-import { initSelectData, fetchData } from "./request";
-import helper from "./helper.md?raw";
+import TagTextMixInput from './TagTextMixInput.vue';
+import { ListItem, InnerOps, CompType } from './type';
+import { initSelectData, fetchData } from './request';
+import helper from './helper.md?raw';
 
 const list = ref<ListItem[]>([]);
 const currMixFlag = ref<ListItem>();
-const mixInputRef = ref<Map<ListItem, CompType<typeof TagTextMixInput>>>(
-  new Map()
-);
+const mixInputRef = ref<Map<ListItem, CompType<typeof TagTextMixInput>>>(new Map());
 
 /**
  * 根据table数据的id存储循环中的子组件实例
@@ -65,12 +63,12 @@ const getMixInputRefs = (el: any, flag: ListItem) => {
  */
 const handleClick = (e: Event) => {
   const target = e.target as HTMLElement;
-  const key = target.getAttribute("data-key");
+  const key = target.getAttribute('data-key');
   if (key) {
     if (currMixFlag.value != undefined) {
       mixInputRef.value?.get(currMixFlag.value)?.insertTag({
-        type: "tag",
-        text: key,
+        type: 'tag',
+        text: key
       });
     }
   }
@@ -93,7 +91,7 @@ const handleFocus = (flag: ListItem) => {
 };
 
 const handleChange = (val: InnerOps) => {
-  console.log("val :>> ", val);
+  console.log('val :>> ', val);
 };
 
 onMounted(() => {

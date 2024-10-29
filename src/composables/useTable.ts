@@ -1,4 +1,4 @@
-import type { TablePaginationConfig, TableColumnType } from "ant-design-vue";
+import type { TablePaginationConfig, TableColumnType } from 'ant-design-vue';
 
 export interface UseBaseTableProps<T> {
   columns: TableColumnType[];
@@ -14,9 +14,9 @@ const useBaseTable = <T>(props: UseBaseTableProps<T>) => {
     current: 1,
     pageSize: 10,
     total: dataSource.value.length,
-    size: "small",
+    size: 'small',
     showSizeChanger: true,
-    pageSizeOptions: ["10", "20", "30", "40", "50"],
+    pageSizeOptions: ['10', '20', '30', '40', '50']
   });
 
   // merge pagination config
@@ -35,9 +35,9 @@ const useBaseTable = <T>(props: UseBaseTableProps<T>) => {
       current: 1,
       pageSize: 10,
       total: dataSource.value.length || 0,
-      size: "small",
+      size: 'small',
       showSizeChanger: true,
-      pageSizeOptions: ["10", "20", "30", "40", "50"],
+      pageSizeOptions: ['10', '20', '30', '40', '50']
     };
   };
 
@@ -51,7 +51,7 @@ const useBaseTable = <T>(props: UseBaseTableProps<T>) => {
     loading,
     paginateProp,
     onChange,
-    restState,
+    restState
   };
 };
 

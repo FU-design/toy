@@ -10,8 +10,8 @@ export interface MockData {
  * @return {string} 生成的字符串
  */
 export const randomString = (length: number) => {
-  const str = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let result = "";
+  const str = '123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result = '';
   for (let i = length; i > 0; --i) {
     result += str[Math.floor(Math.random() * str.length)];
   }
@@ -31,13 +31,12 @@ export const mockData = (size = 1000): Promise<MockData> => {
         resolve({
           code: 200,
           data: data,
-          msg: "",
+          msg: ''
         });
       }, 500);
     });
   }
-  return Promise.reject(new Error("size must be greater than 0"));
-
+  return Promise.reject(new Error('size must be greater than 0'));
 };
 
 /**
@@ -60,7 +59,7 @@ export const getImgs = (
       }
     });
   }
-  return Promise.reject(new Error("size must be greater than 0"));
+  return Promise.reject(new Error('size must be greater than 0'));
 };
 
 export const getImgsUrlList = (size: number, width?: number, height?: number) => {

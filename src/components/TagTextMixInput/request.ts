@@ -3,11 +3,11 @@
  */
 export const initSelectData = () => {
   const fragment = document.createDocumentFragment();
-  const selectBox = document.querySelector(".select-plane");
+  const selectBox = document.querySelector('.select-plane');
   for (let i = 0; i < 30; i++) {
-    const item = document.createElement("div");
-    item.classList.add("select-item");
-    item.setAttribute("data-key", `item-${i}`);
+    const item = document.createElement('div');
+    item.classList.add('select-item');
+    item.setAttribute('data-key', `item-${i}`);
     item.innerHTML = `function ${i + 1}`;
     fragment.appendChild(item);
   }
@@ -26,14 +26,14 @@ export const fetchData = () => {
           name: `name-${idx}`,
           inputContent: [
             {
-              type: "text",
-              text: "hello",
+              type: 'text',
+              text: 'hello'
             },
             {
-              type: "tag",
-              text: "hello",
-            },
-          ],
+              type: 'tag',
+              text: 'hello'
+            }
+          ]
         };
       }, 1000);
       resolve(data);

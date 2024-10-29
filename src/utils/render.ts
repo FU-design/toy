@@ -5,7 +5,7 @@
  */
 const cleanUrl = (href: string) => {
   try {
-    href = encodeURI(href).replace(/%25/g, "%");
+    href = encodeURI(href).replace(/%25/g, '%');
   } catch (e) {
     return null;
   }
@@ -70,12 +70,12 @@ export const getFileList = (modulesFiles: any, modName: string) => {
   const importStrs = [];
   for (let [k, v] of Object.entries(modulesFiles)) {
     importStrs.push({
-      QS: k.replace(`/src/markdowns/${modName}/`, "").replace(".md", ""),
-      AS: "",
-      URL: "",
+      QS: k.replace(`/src/markdowns/${modName}/`, '').replace('.md', ''),
+      AS: '',
+      URL: '',
       MDMETA: v,
       MDPARSE: parseMD(v as string),
-      isMD: false,
+      isMD: false
     });
   }
   return importStrs;

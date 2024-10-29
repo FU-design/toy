@@ -12,8 +12,8 @@ pnpm add vitest @vue/test-utils happy-dom -D
 // vitest.config.ts
 
 // Configure Vitest (https://vitest.dev/config/)
-import { defineConfig, mergeConfig } from "vitest/config";
-import viteConfig from "./vite.config";
+import { defineConfig, mergeConfig } from 'vitest/config';
+import viteConfig from './vite.config';
 
 export default defineConfig((configEnv) =>
   mergeConfig(
@@ -22,8 +22,8 @@ export default defineConfig((configEnv) =>
       test: {
         globals: true, // 启用类似 jest 的全局测试 API
         // include: ['**/tests/**/*.spec.ts'], // Adjust this pattern to match your directory structure
-        environment: "happy-dom", // 使用 happy-dom 模拟 DOM
-      },
+        environment: 'happy-dom' // 使用 happy-dom 模拟 DOM
+      }
     })
   )
 );
@@ -44,55 +44,51 @@ export default defineConfig((configEnv) =>
 1. 对工具函数 "`mockData, getImgs`" 的单元测试，创建文件 `mock.test.ts`
 
    ```ts
-   import { mockData, getImgs } from "../../../src/utils/mock.ts";
-   import { describe, expect, it } from "vitest";
+   import { mockData, getImgs } from '../../../src/utils/mock.ts';
+   import { describe, expect, it } from 'vitest';
 
-   describe("mockData", () => {
-     it("should return data contain code, data, msg property", async () => {
+   describe('mockData', () => {
+     it('should return data contain code, data, msg property', async () => {
        const defaultSize = 1000;
        const respones = await mockData();
-       expect(respones).toHaveProperty("code", 200);
-       expect(respones).toHaveProperty("data");
-       expect(respones).toHaveProperty("msg");
+       expect(respones).toHaveProperty('code', 200);
+       expect(respones).toHaveProperty('data');
+       expect(respones).toHaveProperty('msg');
        expect(respones.data).toHaveLength(defaultSize);
      });
 
-     it("should return 50 pieces of data after some time", async () => {
+     it('should return 50 pieces of data after some time', async () => {
        const size = 50;
        const respones = await mockData(50);
        expect(respones.data).toHaveLength(size);
      });
 
-     it("should reject with error if the request fails", async () => {
+     it('should reject with error if the request fails', async () => {
        const size = -1;
        const promise = mockData(size);
-       await expect(promise).rejects.toThrow("size must be greater than 0");
+       await expect(promise).rejects.toThrow('size must be greater than 0');
      });
    });
 
-   describe("getImgs", async () => {
-     it("should handle default parameters correctly", async () => {
+   describe('getImgs', async () => {
+     it('should handle default parameters correctly', async () => {
        const defaultSize = 30;
        const imgList = await getImgs();
        expect(imgList).toHaveLength(defaultSize);
-       expect(
-         imgList.every((url) => url.startsWith("https://picsum.photos/id/"))
-       ).toBe(true);
+       expect(imgList.every((url) => url.startsWith('https://picsum.photos/id/'))).toBe(true);
      });
 
-     it("should return return 100 pictures of 500*500", async () => {
+     it('should return return 100 pictures of 500*500', async () => {
        const size = 100;
        const imgList = await getImgs(size, 500, 500);
        expect(imgList).toHaveLength(size);
-       expect(
-         imgList.every((url) => url.startsWith("https://picsum.photos/id/"))
-       ).toBe(true);
+       expect(imgList.every((url) => url.startsWith('https://picsum.photos/id/'))).toBe(true);
      });
 
-     it("should reject with error if the request fails", async () => {
+     it('should reject with error if the request fails', async () => {
        const size = -1;
        const promise = getImgs(size);
-       await expect(promise).rejects.toThrow("size must be greater than 0");
+       await expect(promise).rejects.toThrow('size must be greater than 0');
      });
    });
    ```
@@ -100,41 +96,41 @@ export default defineConfig((configEnv) =>
 2. 对 vue 组件 "`CardBox.vue`" 的测试，创建测试文件 `card-box.spec.ts`
 
    ```ts
-   import { mount } from "@vue/test-utils";
-   import CardBox from "../../../src/components/cardBox/CardBox.vue";
-   import { expect, it, describe } from "vitest";
+   import { mount } from '@vue/test-utils';
+   import CardBox from '../../../src/components/cardBox/CardBox.vue';
+   import { expect, it, describe } from 'vitest';
 
-   describe("CardBox", () => {
-     it("does not render a header element when showHeader is false", () => {
+   describe('CardBox', () => {
+     it('does not render a header element when showHeader is false', () => {
        const showHeader = false;
        const wrapper = mount(CardBox, {
          props: {
-           showHeader,
-         },
+           showHeader
+         }
        });
-       const header = wrapper.find("header");
+       const header = wrapper.find('header');
        expect(header.exists()).toBe(showHeader);
      });
 
-     it("renders default slot content when no content is provided", () => {
+     it('renders default slot content when no content is provided', () => {
        const wrapper = mount(CardBox);
 
-       expect(wrapper.find("p").exists()).toBe(true);
-       expect(wrapper.find("p").text()).toContain("我是卡片");
+       expect(wrapper.find('p').exists()).toBe(true);
+       expect(wrapper.find('p').text()).toContain('我是卡片');
      });
 
-     it("renders custom header, body, and footer content via slots", () => {
+     it('renders custom header, body, and footer content via slots', () => {
        const wrapper = mount(CardBox, {
          slots: {
-           header: "<h1>自定义头部</h1>",
+           header: '<h1>自定义头部</h1>',
            default: '<div class="content">自定义内容</div>',
-           footer: "<button>确认</button>",
-         },
+           footer: '<button>确认</button>'
+         }
        });
-       expect(wrapper.find("p").exists()).toBe(false);
-       expect(wrapper.find("h1").text()).toContain("自定义头部");
-       expect(wrapper.find(".content").text()).toContain("自定义内容");
-       expect(wrapper.find("button").text()).toContain("确认");
+       expect(wrapper.find('p').exists()).toBe(false);
+       expect(wrapper.find('h1').text()).toContain('自定义头部');
+       expect(wrapper.find('.content').text()).toContain('自定义内容');
+       expect(wrapper.find('button').text()).toContain('确认');
      });
    });
    ```

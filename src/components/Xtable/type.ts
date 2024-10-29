@@ -1,14 +1,14 @@
 export enum SlotEnum {
-  "customFilterIcon",
-  "customFilterDropdown",
-  "bodyCell",
-  "emptyText",
-  "expandColumnTitle",
-  "expandIcon",
-  "footer",
-  "headerCell",
-  "summary",
-  "title",
+  'customFilterIcon',
+  'customFilterDropdown',
+  'bodyCell',
+  'emptyText',
+  'expandColumnTitle',
+  'expandIcon',
+  'footer',
+  'headerCell',
+  'summary',
+  'title'
 }
 
 export type SlotTypes = keyof typeof SlotEnum;
