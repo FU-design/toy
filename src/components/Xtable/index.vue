@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import type { TableColumnType } from "ant-design-vue";
 import { CopyOutlined } from "@ant-design/icons-vue";
-import xTable from "./xTable.vue";
+import xTable from "./XTable.vue";
 
 interface DataItem {
   key: string;

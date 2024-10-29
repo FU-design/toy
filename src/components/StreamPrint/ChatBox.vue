@@ -7,11 +7,10 @@
 </template>
 
 <script setup lang="ts">
-import ChatMsgItem from "./chat-msg-item.vue";
+import ChatMsgItem from "./ChatMsgItem.vue";
 import { chatMsgHistory, type RoleInfo } from "./request";
 
 const mockData = ref<RoleInfo[]>();
-
 
 onMounted(async () => {
   const res = await chatMsgHistory();

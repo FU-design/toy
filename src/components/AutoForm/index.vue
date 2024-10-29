@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import AutoFrom from "./autoForm.vue";
+import AutoFrom from "./AutoForm.vue";
 
 const form = ref<any>({});
 

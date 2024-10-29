@@ -11,7 +11,7 @@ const routes = {
     {
       path: "lazyLoadimg",
       name: "LazyLoadImg",
-      component: () => import("@/pages/comp/lazy-load-img/index.vue"),
+      component: () => import("@/components/LazyLoadImg/index.vue"),
       meta: {
         title: "LazyLoadImg",
         menu: true,
@@ -20,7 +20,7 @@ const routes = {
     {
       path: "streamPrint",
       name: "StreamPrint",
-      component: () => import("@/pages/comp/stream-print/index.vue"),
+      component: () => import("@/components/StreamPrint/index.vue"),
       meta: {
         title: "StreamPrint",
         menu: true,
@@ -29,25 +29,16 @@ const routes = {
     {
       path: "infiniteScroll",
       name: "InfiniteScroll",
-      component: () => import("@/pages/comp/infinite-scroll/index.vue"),
+      component: () => import("@/components/InfiniteScroll/index.vue"),
       meta: {
         title: "InfiniteScroll",
         menu: true,
       },
     },
     {
-      path: "threeJs",
-      name: "ThreeJs",
-      component: () => import("@/pages/comp/threeJs/index.vue"),
-      meta: {
-        title: "ThreeJs",
-        menu: true,
-      },
-    },
-    {
       path: "scrollmore",
       name: "Scrollmore",
-      component: () => import("@/pages/comp/scrollmore/index.vue"),
+      component: () => import("@/components/ScrollMore/index.vue"),
       meta: {
         title: "Scrollmore",
         menu: true,
@@ -56,7 +47,7 @@ const routes = {
     {
       path: "autoForm",
       name: "AutoForm",
-      component: () => import("@/pages/comp/auto-form/index.vue"),
+      component: () => import("@/components/AutoForm/index.vue"),
       meta: {
         title: "AutoFrom",
         menu: true,
@@ -65,7 +56,7 @@ const routes = {
     {
       path: "warefallFlow",
       name: "WarefallFlow",
-      component: () => import("@/pages/comp/warefall-flow/warefallFow.vue"),
+      component: () => import("@/components/WarefallFlow/WarefallFow.vue"),
       meta: {
         title: "WarefallFlow",
         menu: true,
@@ -74,7 +65,7 @@ const routes = {
     {
       path: "tagTextMixInput",
       name: "TagTextMixInput",
-      component: () => import("@/pages/comp/tag-text-mix-input/index.vue"),
+      component: () => import("@/components/TagTextMixInput/index.vue"),
       meta: {
         title: "TagTextMixInput",
         menu: true,
@@ -83,39 +74,39 @@ const routes = {
     {
       path: "xTable",
       name: "XTable",
-      component: () => import("@/pages/comp/x-table/index.vue"),
+      component: () => import("@/components/Xtable/index.vue"),
       meta: {
         title: "XTable",
         menu: true,
       },
     },
-    {
-      path: "realMsg",
-      name: "RealMsg",
-      redirect: "/comp/realMsg/loginChat",
-      meta: {
-        title: "RealMsg",
-        menu: true,
-      },
-      children: [
-        {
-          path: "loginChat",
-          name: "LoginChat",
-          component: () => import("@/pages/comp/real-msg/loginChat.vue"),
-          meta: {
-            menu: false,
-          },
-        },
-        {
-          path: "chat",
-          name: "Chat",
-          component: () => import("@/pages/comp/real-msg/index.vue"),
-          meta: {
-            menu: false,
-          },
-        },
-      ],
-    },
+    // {
+    //   path: "realMsg",
+    //   name: "RealMsg",
+    //   redirect: "/comp/realMsg/loginChat",
+    //   meta: {
+    //     title: "RealMsg",
+    //     menu: true,
+    //   },
+    //   children: [
+    //     {
+    //       path: "loginChat",
+    //       name: "LoginChat",
+    //       component: () => import("@/components/real-msg/loginChat.vue"),
+    //       meta: {
+    //         menu: false,
+    //       },
+    //     },
+    //     {
+    //       path: "chat",
+    //       name: "Chat",
+    //       component: () => import("@/components/real-msg/index.vue"),
+    //       meta: {
+    //         menu: false,
+    //       },
+    //     },
+    //   ],
+    // },
   ],
 };
 
