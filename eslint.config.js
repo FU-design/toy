@@ -10,6 +10,7 @@ export default [
     languageOptions: {
       globals: globals.node
     },
+    // rules
     rules: {
       'constructor-super': ['error'],
       'for-direction': ['error'],
