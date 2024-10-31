@@ -1,10 +1,10 @@
-### React 项目:
+### React 项目
 
 使用 Jest 进行单元测试和快照测试。
 使用 React Testing Library 进行组件测试。
 使用 Cypress 进行端到端测试。
 
-### Vue 项目:
+### Vue 项目
 
 使用 Jest 或 Mocha 进行单元测试。
 使用 Vue Test Utils 进行组件测试。
@@ -59,6 +59,7 @@
    ```
 
 5. **运行测试:**
+
    ```bash
    npm test
    ```
@@ -95,6 +96,7 @@
    ```
 
 3. **运行测试:**
+
    ```bash
    npm test
    ```
@@ -134,6 +136,7 @@
    ```
 
 4. **运行测试:**
+
    ```bash
    npx cypress run
    ```
