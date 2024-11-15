@@ -23,18 +23,18 @@
                 <a-select-option
                   v-for="(child, childIndex) in options(item)"
                   :key="childIndex"
-                  :value="optionBindValue(child, item)"
+                  :value="optionBinds('value', child, item)"
                 >
-                  {{ optionBindLable(child, item) }}
+                  {{ optionBinds('label', child, item) }}
                 </a-select-option>
               </template>
               <template v-if="item.type === 'RADIO'">
                 <a-radio
                   v-for="(child, childIndex) in options(item)"
                   :key="childIndex"
-                  :value="optionBindValue(child, item)"
+                  :value="optionBinds('value', child, item)"
                 >
-                  {{ optionBindLable(child, item) }}
+                  {{ optionBinds('label', child, item) }}
                 </a-radio>
               </template>
             </component>
@@ -59,7 +59,7 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref, toRaw, toRefs, watch } from 'vue';
-import { Emits, FormItemState, FormState, Props, Slots } from './types';
+import { DedaultFieldMap, Emits, FormItemState, FormState, Props, Slots } from './types';
 import { Input, Select, RadioGroup, Textarea } from 'ant-design-vue';
 
 defineSlots<Slots>();
@@ -132,22 +132,16 @@ const options = computed(() => {
   };
 });
 
-const optionBindValue = computed(() => {
-  return (child: string | Record<string, string>, item: FormItemState) => {
+const optionBinds = computed(() => {
+  return (
+    key: keyof DedaultFieldMap,
+    child: string | Record<string, string>,
+    item: FormItemState
+  ) => {
     if (typeof child === 'string') {
       return child;
     } else {
-      return child[(item.fieldMap && item.fieldMap.value) || 'value'];
-    }
-  };
-});
-
-const optionBindLable = computed(() => {
-  return (child: string | Record<string, string>, item: FormItemState) => {
-    if (typeof child === 'string') {
-      return child;
-    } else {
-      return child[(item.fieldMap && item.fieldMap.label) || 'label'];
+      return child[(item.fieldMap && item.fieldMap[key]) || key];
     }
   };
 });

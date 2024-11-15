@@ -11,6 +11,7 @@ export type FormState<T = Record<string, string | number | undefined>> = T;
 export type FormRules = {
   [k: string]: RuleObject | RuleObject[];
 };
+export type DedaultFieldMap = { label: string; value: string };
 export type ComponentTypeKeys = keyof typeof ComponentType;
 export interface FormItemState {
   type: ComponentTypeKeys;
@@ -18,7 +19,7 @@ export interface FormItemState {
   slot?: string;
   slotLabel?: string;
   defaultValue?: string;
-  fieldMap?: { label: string; value: string };
+  fieldMap?: DedaultFieldMap;
   formItemProps?: FormItemProps;
   componentProps?: Record<string, unknown>;
   defaultOptionsMap?: unknown[];
