@@ -72,7 +72,14 @@ export default [
       'no-with': ['error'],
       'require-yield': ['error'],
       'use-isnan': ['error'],
-      'valid-typeof': ['error']
+      'valid-typeof': ['error'],
+      "vue/multi-word-component-names": [
+        "error",
+        {
+          ignores: ["index"],
+        },
+      ],
+
     }
   },
   pluginJs.configs.recommended,

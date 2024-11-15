@@ -7,13 +7,20 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AButton: typeof import('ant-design-vue/es')['Button']
+    ACard: typeof import('ant-design-vue/es')['Card']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
-    AutoForm: typeof import('./../components/AutoForm/index.vue')['default']
+    AForm: typeof import('ant-design-vue/es')['Form']
+    AFormItem: typeof import('ant-design-vue/es')['FormItem']
+    AInput: typeof import('ant-design-vue/es')['Input']
+    ARadio: typeof import('ant-design-vue/es')['Radio']
+    ASelectOption: typeof import('ant-design-vue/es')['SelectOption']
+    ASpace: typeof import('ant-design-vue/es')['Space']
+    AutoForm: typeof import('./../components/AutoForm/AutoForm.vue')['default']
     CardBox: typeof import('./../components/CardBox/CardBox.vue')['default']
     ChatBox: typeof import('./../components/StreamPrint/ChatBox.vue')['default']
     ChatMsgItem: typeof import('./../components/StreamPrint/ChatMsgItem.vue')['default']
     FloatButton: typeof import('./../components/FloatButton/FloatButton.vue')['default']
-    Form: typeof import('./../components/AutoForm/Form.vue')['default']
     InfiniteScroll: typeof import('./../components/InfiniteScroll/index.vue')['default']
     LazyLoadImg: typeof import('./../components/LazyLoadImg/index.vue')['default']
     MarkedView: typeof import('./../components/MarkedView/MarkedView.vue')['default']
