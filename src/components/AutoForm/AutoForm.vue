@@ -57,7 +57,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { computed, onMounted, ref, toRaw, toRefs, watch } from 'vue';
 import { DedaultFieldMap, Emits, FormItemState, FormState, Props, Slots } from './types';
 import { Input, Select, RadioGroup, Textarea } from 'ant-design-vue';
@@ -118,34 +118,6 @@ const getComponentName = computed(() => {
   };
 });
 
-const componentisDisable = computed(() => {
-  return (item: FormItemState): boolean => {
-    return disabledItems.value
-      ? disabledItems.value.includes(item.field)
-      : (item.componentProps?.disabled as boolean);
-  };
-});
-
-const options = computed(() => {
-  return (item: FormItemState) => {
-    return optionMap.value[item.field] || item.defaultOptionsMap || [];
-  };
-});
-
-const optionBinds = computed(() => {
-  return (
-    key: keyof DedaultFieldMap,
-    child: string | Record<string, string>,
-    item: FormItemState
-  ) => {
-    if (typeof child === 'string') {
-      return child;
-    } else {
-      return child[(item.fieldMap && item.fieldMap[key]) || key];
-    }
-  };
-});
-
 watch(
   formState,
   (newState) => {
@@ -155,6 +127,24 @@ watch(
     deep: true
   }
 );
+
+const componentisDisable = (item: FormItemState): boolean => {
+  return disabledItems.value
+    ? disabledItems.value.includes(item.field)
+    : (item.componentProps?.disabled as boolean);
+};
+
+const options = (item: FormItemState) => {
+  return optionMap.value[item.field] || item.defaultOptionsMap || [];
+};
+
+const optionBinds = (
+  key: keyof DedaultFieldMap,
+  child: string | Record<string, string>,
+  item: FormItemState
+) => {
+  return typeof child === 'string' ? child : child[(item.fieldMap && item.fieldMap[key]) || key];
+};
 
 const initForm = () => {
   const newForm: FormState = {};
