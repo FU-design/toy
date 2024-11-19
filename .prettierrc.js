@@ -3,7 +3,7 @@ export default {
   useTabs: false, // 不使用缩进符，而使用空格
   tabWidth: 2, // 使用 2 个空格缩进
   tabSize: 2,
-  semi: true, // 行尾需要有分号
+  semi: false, // 行尾需要有分号
   singleQuote: true, // 使用单引号, 默认false(在jsx中配置无效, 默认都是双引号)
   quoteProps: 'as-needed', // 对象的 key 仅在必要时用引号
   jsxSingleQuote: false, // jsx 不使用单引号，而使用双引号

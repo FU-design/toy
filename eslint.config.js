@@ -3,95 +3,36 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginVue from 'eslint-plugin-vue';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import pluginPrettier from 'eslint-plugin-prettier';
 
 export default [
   {
-    files: ['**/*.{js,mjs,cjs,ts,vue}'],
+    files: ['**/*.{js,mjs,cjs,ts,vue}'], // 规则仅作用于src中所有的 js,mjs,cjs,ts,vue
+    ignores: ['dist/', 'node_modules/'], // 需要忽略哪些文件（默认忽略 ["**/node_modules/", ".git/"]）
     languageOptions: {
       globals: globals.node
     },
-    // rules
+    linterOptions: {
+      // 内联配置是使用 /*eslint*/ 注释实现的，例如 /*eslint semi: error*/
+      noInlineConfig: false,
+      parser: 'vue-eslint-parser' // 全局解析器
+    },
+    plugins: {
+      prettier: pluginPrettier // 引入 Prettier 插件
+    },
+    // 规则配置对象
     rules: {
-      'constructor-super': ['error'],
-      'for-direction': ['error'],
-      'getter-return': ['error'],
-      'no-async-promise-executor': ['error'],
-      'no-case-declarations': ['error'],
-      'no-class-assign': ['error'],
-      'no-compare-neg-zero': ['error'],
-      'no-cond-assign': ['error'],
-      'no-const-assign': ['error'],
-      'no-constant-binary-expression': ['error'],
-      'no-constant-condition': ['error'],
-      'no-control-regex': ['error'],
-      'no-debugger': ['error'],
-      'no-delete-var': ['error'],
-      'no-dupe-args': ['error'],
-      'no-dupe-class-members': ['error'],
-      'no-dupe-else-if': ['error'],
-      'no-dupe-keys': ['error'],
-      'no-duplicate-case': ['error'],
-      'no-empty': ['error'],
-      'no-empty-character-class': ['error'],
-      'no-empty-pattern': ['error'],
-      'no-empty-static-block': ['error'],
-      'no-ex-assign': ['error'],
-      'no-extra-boolean-cast': ['error'],
-      'no-fallthrough': ['error'],
-      'no-func-assign': ['error'],
-      'no-global-assign': ['error'],
-      'no-import-assign': ['error'],
-      'no-invalid-regexp': ['error'],
-      'no-irregular-whitespace': ['error'],
-      'no-loss-of-precision': ['error'],
-      'no-misleading-character-class': ['error'],
-      'no-new-native-nonconstructor': ['error'],
-      'no-nonoctal-decimal-escape': ['error'],
-      'no-obj-calls': ['error'],
-      'no-octal': ['error'],
-      'no-prototype-builtins': ['error'],
-      'no-redeclare': ['error'],
-      'no-regex-spaces': ['error'],
-      'no-self-assign': ['error'],
-      'no-setter-return': ['error'],
-      'no-shadow-restricted-names': ['error'],
-      'no-sparse-arrays': ['error'],
-      'no-this-before-super': ['error'],
-      'no-undef': ['error'],
-      'no-unexpected-multiline': ['error'],
-      'no-unreachable': ['error'],
-      'no-unsafe-finally': ['error'],
-      'no-unsafe-negation': ['error'],
-      'no-unsafe-optional-chaining': ['error'],
-      'no-unused-labels': ['error'],
-      'no-unused-private-class-members': ['error'],
-      'no-unused-vars': ['error'],
-      'no-useless-backreference': ['error'],
-      'no-useless-catch': ['error'],
-      'no-useless-escape': ['error'],
-      'no-with': ['error'],
-      'require-yield': ['error'],
-      'use-isnan': ['error'],
-      'valid-typeof': ['error'],
-      "vue/multi-word-component-names": [
-        "error",
-        {
-          ignores: ["index"],
-        },
-      ],
+      // 开启 Prettier 规则作为 ESLint 的一部分
+      'prettier/prettier': 'error',
 
+      // 其他 ESLint 规则
+      semi: ['error', 'never'], // 禁用分号
+      'no-unused-vars': 'error', // 检查未使用的变量
+      'vue/multi-word-component-names': 'off' // 关闭多单词组件名称限制 (如 index)
     }
   },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
-  {
-    files: ['**/*.vue'],
-    languageOptions: {
-      parserOptions: {
-        parser: tseslint.parser
-      }
-    }
-  },
-  eslintConfigPrettier
+  pluginJs.configs.recommended, // JS 推荐规则
+  ...tseslint.configs.recommended, // TS
+  ...pluginVue.configs['flat/essential'], // Vue 必需规则
+  ...eslintConfigPrettier // 禁用与 Prettier 冲突的规则
 ];

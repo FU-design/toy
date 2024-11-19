@@ -11,6 +11,8 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
+  console.log('command :>> ', command);
+  console.log('mode :>> ', mode);
   // if (command === "serve") {
   //   return {
   //     // dev 独有配置
@@ -34,7 +36,7 @@ export default defineConfig(({ command, mode }) => {
         symbolId: 'icon-[dir]-[name]'
       }),
       Components({
-        dts: 'src/types/components.d.ts', // 将类型声明文件生成在 src 目录
+        dts: './types/components.d.ts', // 将类型声明文件生成在 src 目录外部
         resolvers: [
           AntDesignVueResolver({
             importStyle: false // css in js
@@ -43,8 +45,15 @@ export default defineConfig(({ command, mode }) => {
       }),
       AutoImport({
         imports: ['vue', 'vue-router'],
-        dts: 'src/types/auto-imports.d.ts', // 将类型声明文件生成在 src 目录
-        dirs: ['src/composables', 'src/stores', 'src/utils']
+        dts: './types/auto-imports.d.ts', // 将类型声明文件生成在 src 目录
+        dirs: ['src/composables', 'src/stores', 'src/utils'],
+        // 解决eslint报错问题
+        eslintrc: {
+          // 这里先设置成true然后npm run dev 运行之后会生成 .eslintrc-auto-import.json 文件之后，在改为false
+          enabled: false,
+          filepath: './config/.eslintrc-auto-import.json', // 生成的文件路径
+          globalsPropValue: true
+        }
       }),
       visualizer({
         filename: 'dist/stats.html', // 输出文件名

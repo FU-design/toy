@@ -17,7 +17,6 @@
 
 <script setup lang="ts">
 import { FormItemState, FormRules, FormState } from './types';
-import { ref, computed, onMounted, reactive } from 'vue';
 import AutoForm from './AutoForm.vue';
 
 type AutoFromInstance = InstanceType<typeof AutoForm>;
