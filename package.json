@@ -9,8 +9,7 @@
     "build": "vite build --mode pro",
     "preview": "vite build --mode pro && vite preview",
     "test": "vitest",
-    "test:run": "vitest run",
-    "format": "pnpm exec prettier . --write"
+    "test:run": "vitest run"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
