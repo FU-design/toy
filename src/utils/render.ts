@@ -3,14 +3,14 @@
  * @param href
  * @returns
  */
-const cleanUrl = (href: string) => {
+const cleanUrl = (href: string, name: string) => {
   try {
-    href = encodeURI(href).replace(/%25/g, '%');
+    href = encodeURI(href).replace(/%25/g, '%')
   } catch (e) {
-    return null;
+    return null
   }
-  return href;
-};
+  return href
+}
 
 // /**
 //  * @description 重写 renderer函数
@@ -67,7 +67,7 @@ const cleanUrl = (href: string) => {
  * @returns
  */
 export const getFileList = (modulesFiles: any, modName: string) => {
-  const importStrs = [];
+  const importStrs = []
   for (let [k, v] of Object.entries(modulesFiles)) {
     importStrs.push({
       QS: k.replace(`/src/markdowns/${modName}/`, '').replace('.md', ''),
@@ -76,7 +76,7 @@ export const getFileList = (modulesFiles: any, modName: string) => {
       MDMETA: v,
       MDPARSE: parseMD(v as string),
       isMD: false
-    });
+    })
   }
-  return importStrs;
-};
+  return importStrs
+}
