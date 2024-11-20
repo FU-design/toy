@@ -1,7 +1,12 @@
 # Ignore artifacts:
-build
-coverage
-src/types
+build/
+coverage/
+types/
+
+# Ignore file
+pnpm-lock.yaml
+package.json
+tsconfig.json
 
 # Ignore default 
 # **/.git
