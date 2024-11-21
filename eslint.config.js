@@ -22,7 +22,7 @@ export default [
       'no-unused-vars': 'error', // 0 or off | 1 or warn | 2 or error
       'no-undef': 'error', 
       'prefer-const': ["error", { 'ignoreReadBeforeAssign': true }], // 推荐使用 const 定义变量
-      'vue/multi-word-component-names': 'off', // 允许单词组件名称
+      'pluginVue/multi-word-component-names': 'off', // 允许单词组件名称
 
       // TypeScript 特定规则
       'typescriptEslint/no-unused-vars': 'error', // TS 的未使用变量
