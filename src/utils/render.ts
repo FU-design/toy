@@ -5,8 +5,9 @@
  */
 const cleanUrl = (href: string, name: string) => {
   try {
-    href = encodeURI(href).replace(/%25/g, '%')
+    href = encodeURI(href).replace(/%25/g, '%');
   } catch (e) {
+    console.log('e :>> ', e);
     return null
   }
   return href

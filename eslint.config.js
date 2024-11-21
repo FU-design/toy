@@ -1,49 +1,48 @@
 import globals from 'globals'
 import pluginJs from '@eslint/js'
-import tseslint from '@typescript-eslint/eslint-plugin'
-import tsParser from '@typescript-eslint/parser'
+import tseslint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
 import eslintConfigPrettier from 'eslint-config-prettier'
-import pluginPrettier from 'eslint-plugin-prettier'
 
+/** @type {import('eslint').Linter.Config[]} */
 export default [
+  pluginJs.configs.recommended,
+  ...pluginVue.configs['flat/essential'],
+  ...tseslint.configs.recommended,
+  ...eslintConfigPrettier,
   {
-    files: ['**/*.{js,mjs,cjs,ts,tsx,vue}'], // 扩展到 tsx 等文件
+    files: ['**/*.{js,mjs,cjs,ts,tsx,vue,.config.js}'],
     ignores: ['dist/', 'node_modules/'],
-    languageOptions: {
-      parser: tsParser, // 使用 TypeScript 的解析器
-      parserOptions: {
-        ecmaVersion: 2021,
-        sourceType: 'module',
-        extraFileExtensions: ['.vue'] // 支持 Vue 文件解析
-      },
-      globals: globals.node
-    },
-    linterOptions: {
-      noInlineConfig: false
-    },
-    plugins: {
-      prettier: pluginPrettier, // Prettier 插件
-      vue: pluginVue, // Vue 插件
-      '@typescript-eslint': tseslint // TypeScript 插件
+    plugins:{
+      pluginVue: pluginVue, // Vue 插件
+      typescriptEslint: typescriptEslint, // ts 插件
     },
     rules: {
-      // Prettier 规则
-      'prettier/prettier': 'error',
-
       // 通用 ESLint 规则
-      semi: ['error', 'never'], // 禁用分号
-      'no-unused-vars': 'warn', // 未使用变量警告
-      'no-console': 'warn', // 警告 console
+      'no-unused-vars': 'error', // 0 or off | 1 or warn | 2 or error
+      'no-undef': 'error', 
+      'prefer-const': ["error", { 'ignoreReadBeforeAssign': true }], // 推荐使用 const 定义变量
       'vue/multi-word-component-names': 'off', // 允许单词组件名称
 
       // TypeScript 特定规则
-      '@typescript-eslint/no-unused-vars': 'warn', // TS 的未使用变量
-      '@typescript-eslint/explicit-module-boundary-types': 'off' // 关闭显式返回类型要求
+      'typescriptEslint/no-unused-vars': 'error', // TS 的未使用变量
+    },
+  },
+  {
+    languageOptions: {
+      ecmaVersion: "latest", // 默认 latest 最新的，检查的代码的 ECMAScript 版本
+      sourceType: "module", // 默认 module [module | commonjs | script (无模块化)]
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      }
     }
   },
-  pluginJs.configs.recommended, // JavaScript 推荐规则
-  tseslint.configs.recommended, // TypeScript 推荐规则
-  pluginVue.configs['flat/essential'], // Vue 必需规则
-  eslintConfigPrettier // 禁用与 Prettier 冲突的规则
+  {
+    files: ['**/*.vue',],
+    languageOptions: {
+      parserOptions: { parser: tseslint.parser }
+    }
+  },
+ 
 ]
