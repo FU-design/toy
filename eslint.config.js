@@ -9,23 +9,19 @@ export default [
   pluginJs.configs.recommended,
   ...pluginVue.configs['flat/essential'],
   ...tseslint.configs.recommended,
-  ...eslintConfigPrettier,
+  eslintConfigPrettier,
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx,vue,.config.js}'],
     ignores: ['dist/', 'node_modules/'],
-    plugins:{
-      pluginVue: pluginVue, // Vue 插件
-      typescriptEslint: typescriptEslint, // ts 插件
+    languageOptions: {
+      parserOptions: { parser: tseslint.parser }
     },
     rules: {
       // 通用 ESLint 规则
       'no-unused-vars': 'error', // 0 or off | 1 or warn | 2 or error
       'no-undef': 'error', 
       'prefer-const': ["error", { 'ignoreReadBeforeAssign': true }], // 推荐使用 const 定义变量
-      'pluginVue/multi-word-component-names': 'off', // 允许单词组件名称
-
-      // TypeScript 特定规则
-      'typescriptEslint/no-unused-vars': 'error', // TS 的未使用变量
+      '@pluginVue/multi-word-component-names': 'off', // 允许单词组件名称
     },
   },
   {
@@ -38,11 +34,4 @@ export default [
       }
     }
   },
-  {
-    files: ['**/*.vue',],
-    languageOptions: {
-      parserOptions: { parser: tseslint.parser }
-    }
-  },
- 
 ]

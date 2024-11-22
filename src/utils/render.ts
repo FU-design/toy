@@ -1,17 +1,17 @@
-/**
- * @description 对href进一步格式化
- * @param href
- * @returns
- */
-const cleanUrl = (href: string, name: string) => {
-  try {
-    href = encodeURI(href).replace(/%25/g, '%');
-  } catch (e) {
-    console.log('e :>> ', e);
-    return null
-  }
-  return href
-}
+// /**
+//  * @description 对href进一步格式化
+//  * @param href
+//  * @returns
+//  */
+// const cleanUrl = (href: string, name: string) => {
+//   try {
+//     href = encodeURI(href).replace(/%25/g, '%')
+//   } catch (e) {
+//     console.log('e :>> ', e)
+//     return null
+//   }
+//   return href
+// }
 
 // /**
 //  * @description 重写 renderer函数
@@ -61,23 +61,23 @@ const cleanUrl = (href: string, name: string) => {
 //   return marked.parse(content);
 // };
 
-/**
- * 通过获取的模块中的文件目录，遍历解析模块中的md文件，展示到页面中
- * @param modulesFiles
- * @param modName 目录名称
- * @returns
- */
-export const getFileList = (modulesFiles: any, modName: string) => {
-  const importStrs = []
-  for (let [k, v] of Object.entries(modulesFiles)) {
-    importStrs.push({
-      QS: k.replace(`/src/markdowns/${modName}/`, '').replace('.md', ''),
-      AS: '',
-      URL: '',
-      MDMETA: v,
-      MDPARSE: parseMD(v as string),
-      isMD: false
-    })
-  }
-  return importStrs
-}
+// /**
+//  * 通过获取的模块中的文件目录，遍历解析模块中的md文件，展示到页面中
+//  * @param modulesFiles
+//  * @param modName 目录名称
+//  * @returns
+//  */
+// export const getFileList = (modulesFiles, modName: string) => {
+//   const importStrs = []
+//   for (let [k, v] of Object.entries(modulesFiles)) {
+//     importStrs.push({
+//       QS: k.replace(`/src/markdowns/${modName}/`, '').replace('.md', ''),
+//       AS: '',
+//       URL: '',
+//       MDMETA: v,
+//       MDPARSE: parseMD(v as string),
+//       isMD: false
+//     })
+//   }
+//   return importStrs
+// }
