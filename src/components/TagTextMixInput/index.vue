@@ -12,7 +12,7 @@
       <div class="wrp-inner">
         <div class="select-plane" @click="handleClick"></div>
         <div class="list-box">
-          <div class="list-item" v-for="item in list">
+          <div class="list-item" v-for="item in list" :key="item.id">
             <div class="item">{{ item.id }}</div>
             <div class="item">{{ item.name }}</div>
             <div class="item">
@@ -39,14 +39,14 @@
 </template>
 
 <script lang="ts" setup>
-import TagTextMixInput from './TagTextInput.vue';
-import { ListItem, InnerOps, CompType } from './type';
-import { initSelectData, fetchData } from './request';
-import helper from './helper.md?raw';
+import TagTextMixInput from './TagTextInput.vue'
+import { ListItem, InnerOps, CompType } from './type'
+import { initSelectData, fetchData } from './request'
+import helper from './helper.md?raw'
 
-const list = ref<ListItem[]>([]);
-const currMixFlag = ref<ListItem>();
-const mixInputRef = ref<Map<ListItem, CompType<typeof TagTextMixInput>>>(new Map());
+const list = ref<ListItem[]>([])
+const currMixFlag = ref<ListItem>()
+const mixInputRef = ref<Map<ListItem, CompType<typeof TagTextMixInput>>>(new Map())
 
 /**
  * 根据table数据的id存储循环中的子组件实例
@@ -54,54 +54,54 @@ const mixInputRef = ref<Map<ListItem, CompType<typeof TagTextMixInput>>>(new Map
  * @param flag table中每一行的数据
  */
 const getMixInputRefs = (el: any, flag: ListItem) => {
-  mixInputRef.value?.set(flag, el);
-};
+  mixInputRef.value?.set(flag, el)
+}
 
 /**
  * 利用事件冒泡的特性实现每一条点击事件的触发
  * @param e
  */
 const handleClick = (e: Event) => {
-  const target = e.target as HTMLElement;
-  const key = target.getAttribute('data-key');
+  const target = e.target as HTMLElement
+  const key = target.getAttribute('data-key')
   if (key) {
     if (currMixFlag.value != undefined) {
       mixInputRef.value?.get(currMixFlag.value)?.insertTag({
         type: 'tag',
         text: key
-      });
+      })
     }
   }
-};
+}
 
 /**
  * 获取table数据
  */
 const getList = async () => {
-  const res = await fetchData();
-  list.value = res as ListItem[];
-};
+  const res = await fetchData()
+  list.value = res as ListItem[]
+}
 
 /**
  * 获取当前操作的混合输入框的标识
  * @param flag
  */
 const handleFocus = (flag: ListItem) => {
-  currMixFlag.value = flag;
-};
+  currMixFlag.value = flag
+}
 
 const handleChange = (val: InnerOps) => {
-  console.log('val :>> ', val);
-};
+  console.log('val :>> ', val)
+}
 
 onMounted(() => {
-  getList();
-  initSelectData();
-});
+  getList()
+  initSelectData()
+})
 
 onUnmounted(() => {
-  mixInputRef.value.clear();
-});
+  mixInputRef.value.clear()
+})
 </script>
 
 <style lang="scss" scoped>
