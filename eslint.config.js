@@ -8,7 +8,7 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
+  ...pluginVue.configs['flat/recommended'],
   eslintConfigPrettier,
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx,vue,.config.js}'],

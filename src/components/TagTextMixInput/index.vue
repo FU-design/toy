@@ -12,15 +12,15 @@
       <div class="wrp-inner">
         <div class="select-plane" @click="handleClick"></div>
         <div class="list-box">
-          <div class="list-item" v-for="item in list" :key="item.id">
+          <div v-for="item in list" :key="item.id" class="list-item">
             <div class="item">{{ item.id }}</div>
             <div class="item">{{ item.name }}</div>
             <div class="item">
               <tag-text-mix-input
                 :ref="(el) => getMixInputRefs(el, item)"
                 :key="item.id"
-                placeholder="请输入内容"
                 v-model:contents="item.inputContent"
+                placeholder="请输入内容"
                 @focus="handleFocus(item)"
                 @change="handleChange"
               />
