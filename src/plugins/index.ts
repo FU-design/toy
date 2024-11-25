@@ -1,14 +1,14 @@
-import directivePlugin from './globalDirective';
-import compPlugin from './globalComp';
-import varible from './globalVarible';
-import vueDOMPurifyHTML from 'vue-dompurify-html';
-import type { App } from 'vue';
+import pluginApp from './plugin-app'
+import pluginComp from './plugin-comp'
+import pluginDirective from './plugin-directive'
+import vueDOMPurifyHTML from 'vue-dompurify-html'
+import type { App } from 'vue'
 
 export default {
-  install(app: App, options?: any) {
-    app.use(compPlugin);
-    app.use(directivePlugin);
-    app.use(vueDOMPurifyHTML);
-    app.use(varible);
+  install(app: App) {
+    app.use(pluginApp)
+    app.use(pluginComp)
+    app.use(pluginDirective)
+    app.use(vueDOMPurifyHTML)
   }
-};
+}

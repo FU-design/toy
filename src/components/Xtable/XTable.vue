@@ -3,10 +3,10 @@
     :data-source="dataSource"
     :columns="columns"
     :loading="loading"
-    :rowKey="rowKey"
+    :row-key="rowKey"
     :pagination="pagination"
-    @change="(...args) => emits('change', ...args)"
     v-bind="attrs"
+    @change="(...args) => emits('change', ...args)"
   >
     <template #headerCell="{ column }">
       <span v-if="column.title">{{ column.title }}</span>
@@ -31,40 +31,40 @@
         ></slot>
       </template>
     </template>
-    <template v-for="slot in slotsMap.elseSlots" v-slot:[slot]="slotScope">
-      <slot :name="slot" :slotScope="{ slotScope }"></slot>
+    <template v-for="slot in slotsMap.elseSlots" #[slot]="slotScope">
+      <slot :slot-scope="{ slotScope }" :name="slot"></slot>
     </template>
   </Table>
 </template>
 
 <script setup lang="ts">
-import { SlotsMap, SlotEnum } from './type';
-import { Table, TableProps } from 'ant-design-vue';
+import { SlotsMap, SlotEnum } from './type'
+import { Table, TableProps } from 'ant-design-vue'
 
-const slots = useSlots();
-const attrs = useAttrs();
-const props = defineProps<TableProps>();
-const { dataSource, columns, rowKey, pagination } = toRefs(props);
-const emits = defineEmits(['change']);
+const slots = useSlots()
+const attrs = useAttrs()
+const props = defineProps<TableProps>()
+const { dataSource, columns, rowKey, pagination } = toRefs(props)
+const emits = defineEmits(['change'])
 
 /**
  * 获取表头插槽和单元格插槽
  */
 const slotsMap = computed<SlotsMap>(() => {
-  const res: SlotsMap = { thSlots: [], tdSlots: [], elseSlots: [] };
+  const res: SlotsMap = { thSlots: [], tdSlots: [], elseSlots: [] }
   Object.keys(slots).forEach((s: any) => {
     if (/^th-/.test(s)) {
-      res.thSlots.push(s);
+      res.thSlots.push(s)
     } else if (/^td-/.test(s)) {
-      res.tdSlots.push(s);
+      res.tdSlots.push(s)
     } else {
       if (SlotEnum[s] !== undefined) {
-        res.elseSlots.push(s);
+        res.elseSlots.push(s)
       }
     }
-  });
-  return res;
-});
+  })
+  return res
+})
 </script>
 
 <style scoped></style>

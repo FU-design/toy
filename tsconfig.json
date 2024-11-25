@@ -8,7 +8,7 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "skipLibCheck": true,
+    "skipLibCheck": true, // 跳过库的类型检查
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

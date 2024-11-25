@@ -3,12 +3,14 @@ import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
 import eslintConfigPrettier from 'eslint-config-prettier'
+import eslintrcAutoImportConfig from './plugin-vite/.eslintrc-auto-import.json'
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
+  ...eslintrcAutoImportConfig,
   eslintConfigPrettier,
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx,vue,.config.js}'],

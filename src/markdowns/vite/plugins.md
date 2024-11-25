@@ -1,10 +1,10 @@
-- rollup-plugin-visualizer 的使用
+### rollup-plugin-visualizer 的使用
 
   1. 安装 `rollup-plugin-visualizer`到开发环境
      ```
      pnpm add rollup-plugin-visualizer -D
      ```
-  2. 在 vite.config.ts 中配置
+  2. 在 `vite.config.ts` 中配置
 
      ```ts
      import { defineConfig } from 'vite';
@@ -22,10 +22,7 @@
          ],
 
          build: {
-           minify: false, // 禁用代码压缩
-           target: 'modules', //默认： 'modules'设置最终构建的浏览器兼容目标
-           outDir: 'dist', //默认：dist 指定输出路径（相对于 项目根目录).
-           // assetsDir: "assets", //默认：assets 指定生成静态资源的存放路径（相对于 build.outDir）。
+          // ...else
            rollupOptions: {
              plugins: [
                visualizer({
@@ -39,13 +36,13 @@
      });
      ```
 
-- unplugin-auto-import 的使用
+### [unplugin-auto-import]( https://github.com/unplugin/unplugin-auto-import) 的使用
 
   1. 安装 `unplugin-auto-import`到开发环境
      ```
      pnpm add unplugin-auto-import -D
      ```
-  2. 在 vite.config.ts 中配置
+  2. 在 `vite.config.ts` 中配置
 
      ```ts
      import { defineConfig } from 'vite';
@@ -58,12 +55,65 @@
            vue(),
            AutoImport({
              imports: ['vue', 'vue-router'],
-             dts: 'src/auto-imports.d.ts', // 将类型声明文件生成在 src 目录
+             dts: 'src/auto-imports.d.ts',
              dirs: ['src/composables', 'src/stores', 'src/utils']
            })
          ]
        };
      });
      ```
+  3. 在使用 `typescript` 和 `eslint` 中的 `no-undef` 设置为 `error` 时，若存在对自动导入的错误提示，则按以下步骤解决：
+   
+     - 给 `AutoImport` 添加 `eslintrc` 配置项
+  
+        ```ts
+          eslintrc: {
+            enabled: true, // Default `false`
+            filepath: './plugin-vite/.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+            globalsPropValue: true 
+          }
+        ```
+      - 运行项目，该配置会生成一个 `json` 文件,将此JSON文件添加到 `eslint` 配置文件
+         ```ts
+          // eslint.config.js eslint@9.xxx 平铺式写法
+          export default [
+              ...pluginVue.configs['flat/recommended'],
+              ...eslintrcAutoImportConfig,
+            // ... else
+          ]
 
-- unplugin-vue-components 的使用
+          // .eslintrc.js
+          module.exports = {
+            extends: [
+              './.eslintrc-auto-import.json',
+            ],
+          }
+         ```
+      - 文件生成后，把 `enabled` 置为 `false`, 不会每次运行项目时重新生成
+
+### [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components) 的使用
+
+ 1. 安装 `unplugin-auto-import`到开发环境
+     ```
+     pnpm unplugin-vue-components -D
+     ```
+  2. 在 `vite.config.ts` 中配置
+
+     ```ts
+     import { defineConfig } from 'vite';
+     import vue from '@vitejs/plugin-vue';
+     import AutoImport from 'unplugin-auto-import/vite';
+
+     export default defineConfig(({ command, mode }) => {
+       return {
+         Components({
+            dts: './types/components.d.ts',
+            resolvers: [
+              AntDesignVueResolver({
+                importStyle: false // css in js
+              })
+            ]
+          }),
+       };
+     });
+     ```

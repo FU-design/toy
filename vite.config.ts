@@ -1,18 +1,16 @@
-import { defineConfig } from 'vite';
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'; // Vue 的按需组件自动导入
-import { visualizer } from 'rollup-plugin-visualizer';
-import { fileURLToPath, URL } from 'node:url';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import AutoImport from 'unplugin-auto-import/vite';
-import vue from '@vitejs/plugin-vue';
-import Components from 'unplugin-vue-components/vite';
-import vueJsx from '@vitejs/plugin-vue-jsx'; // 可创建并编译 .jsx .tsx 文件
-import path from 'path';
+import { defineConfig } from 'vite'
+import { visualizer } from 'rollup-plugin-visualizer'
+import { fileURLToPath, URL } from 'node:url'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx' // 可创建并编译 .jsx .tsx 文件
+import path from 'path'
+import pluginVite from './plugin-vite'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  console.log('command :>> ', command);
-  console.log('mode :>> ', mode);
+  console.log('command :>> ', command)
+  console.log('mode :>> ', mode)
   // if (command === "serve") {
   //   return {
   //     // dev 独有配置
@@ -35,32 +33,12 @@ export default defineConfig(({ command, mode }) => {
         iconDirs: [path.resolve(process.cwd(), 'src/assets/svg')],
         symbolId: 'icon-[dir]-[name]'
       }),
-      Components({
-        dts: './types/components.d.ts', // 将类型声明文件生成在 src 目录外部
-        resolvers: [
-          AntDesignVueResolver({
-            importStyle: false // css in js
-          })
-        ]
-      }),
-      AutoImport({
-        imports: ['vue', 'vue-router'],
-        dts: './types/auto-imports.d.ts', // 将类型声明文件生成在 src 目录
-        dirs: ['src/composables', 'src/stores', 'src/utils'],
-        // 解决eslint报错问题
-        eslintrc: {
-          // 这里先设置成true然后npm run dev 运行之后会生成 .eslintrc-auto-import.json 文件之后，在改为false
-          enabled: false,
-          filepath: './config/.eslintrc-auto-import.json', // 生成的文件路径
-          globalsPropValue: true
-        }
-      }),
       visualizer({
         filename: 'dist/stats.html', // 输出文件名
         open: true // 打包后自动打开浏览器显示报告
-      })
+      }),
+      ...pluginVite
     ],
-
     server: {
       host: '0.0.0.0',
       port: 86, //项目启动时的自定义端口
@@ -75,7 +53,6 @@ export default defineConfig(({ command, mode }) => {
         }
       }
     },
-
     resolve: {
       //别名路径配置
       alias: {
@@ -115,7 +92,7 @@ export default defineConfig(({ command, mode }) => {
         ]
       }
     }
-  };
-});
+  }
+})
 
 // 参考：https://www.cnblogs.com/yayuya/p/17046666.html

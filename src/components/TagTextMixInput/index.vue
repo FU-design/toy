@@ -17,7 +17,7 @@
             <div class="item">{{ item.name }}</div>
             <div class="item">
               <tag-text-mix-input
-                :ref="(el) => getMixInputRefs(el, item)"
+                :ref="(el) => getMixInputRefs(el as unknown as TagTextMixInputType, item)"
                 :key="item.id"
                 v-model:contents="item.inputContent"
                 placeholder="请输入内容"
@@ -44,16 +44,18 @@ import { ListItem, InnerOps, CompType } from './type'
 import { initSelectData, fetchData } from './request'
 import helper from './helper.md?raw'
 
+type TagTextMixInputType = CompType<typeof TagTextMixInput>
+
 const list = ref<ListItem[]>([])
 const currMixFlag = ref<ListItem>()
-const mixInputRef = ref<Map<ListItem, CompType<typeof TagTextMixInput>>>(new Map())
+const mixInputRef = ref<Map<ListItem, TagTextMixInputType>>(new Map())
 
 /**
  * 根据table数据的id存储循环中的子组件实例
  * @param el 子组件实例
  * @param flag table中每一行的数据
  */
-const getMixInputRefs = (el: any, flag: ListItem) => {
+const getMixInputRefs = (el: TagTextMixInputType, flag: ListItem) => {
   mixInputRef.value?.set(flag, el)
 }
 
