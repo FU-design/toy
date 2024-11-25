@@ -8,13 +8,11 @@
 
      ```ts
      import { defineConfig } from 'vite';
-     import vue from '@vitejs/plugin-vue';
      import AutoImport from 'rollup-plugin-visualizer';
 
      export default defineConfig(({ command, mode }) => {
        return {
          plugins: [
-           vue(),
            visualizer({
              filename: 'dist/stats.html', // 输出文件名
              open: true // 打包后自动打开浏览器显示报告
@@ -46,7 +44,6 @@
 
      ```ts
      import { defineConfig } from 'vite';
-     import vue from '@vitejs/plugin-vue';
      import AutoImport from 'unplugin-auto-import/vite';
 
      export default defineConfig(({ command, mode }) => {
@@ -101,8 +98,8 @@
 
      ```ts
      import { defineConfig } from 'vite';
-     import vue from '@vitejs/plugin-vue';
-     import AutoImport from 'unplugin-auto-import/vite';
+     import Components from 'unplugin-vue-components/vite'
+     import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers' // Vue 的按需组件自动导入
 
      export default defineConfig(({ command, mode }) => {
        return {
