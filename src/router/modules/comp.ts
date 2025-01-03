@@ -1,4 +1,4 @@
-import pageView from '@/layouts/pageView.vue';
+import pageView from '@/layouts/pageView.vue'
 const routes = {
   path: '/comp',
   name: 'Comp',
@@ -79,6 +79,15 @@ const routes = {
         title: 'XTable',
         menu: true
       }
+    },
+    {
+      path: 'autoDnd',
+      name: 'AutoDnd',
+      component: () => import('@/components/AutoDnd/index.vue'),
+      meta: {
+        title: 'AutoDnd',
+        menu: true
+      }
     }
     // {
     //   path: "realMsg",
@@ -108,6 +117,6 @@ const routes = {
     //   ],
     // },
   ]
-};
+}
 
-export default routes;
+export default routes

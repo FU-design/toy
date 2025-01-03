@@ -84,6 +84,7 @@
     "useLink": true,
     "useRoute": true,
     "useRouter": true,
+    "useScrollLoad": true,
     "useSlots": true,
     "useTable": true,
     "watch": true,

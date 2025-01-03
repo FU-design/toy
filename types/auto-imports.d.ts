@@ -81,6 +81,7 @@ declare global {
   const useLink: typeof import('vue-router')['useLink']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
+  const useScrollLoad: typeof import('../src/composables/useScrollLoad')['default']
   const useSlots: typeof import('vue')['useSlots']
   const useTable: typeof import('../src/composables/useTable')['default']
   const watch: typeof import('vue')['watch']
