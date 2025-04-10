@@ -7,8 +7,17 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AButton: typeof import('ant-design-vue/es')['Button']
+    ACard: typeof import('ant-design-vue/es')['Card']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
+    AForm: typeof import('ant-design-vue/es')['Form']
+    AFormItem: typeof import('ant-design-vue/es')['FormItem']
+    AInput: typeof import('ant-design-vue/es')['Input']
     AppNode: typeof import('./../src/components/AutoDnd/components/nodes/appNode.vue')['default']
+    ARadio: typeof import('ant-design-vue/es')['Radio']
+    ASelect: typeof import('ant-design-vue/es')['Select']
+    ASelectOption: typeof import('ant-design-vue/es')['SelectOption']
+    ASpace: typeof import('ant-design-vue/es')['Space']
     AutoDnd: typeof import('./../src/components/AutoDnd/AutoDnd.vue')['default']
     AutoForm: typeof import('./../src/components/AutoForm/AutoForm.vue')['default']
     CardBox: typeof import('./../src/components/CardBox/CardBox.vue')['default']
@@ -17,7 +26,6 @@ declare module 'vue' {
     EdgeNode: typeof import('./../src/components/AutoDnd/components/edges/edgeNode.vue')['default']
     EndNode: typeof import('./../src/components/AutoDnd/components/nodes/endNode.vue')['default']
     FloatButton: typeof import('./../src/components/FloatButton/FloatButton.vue')['default']
-    FlowLine: typeof import('./../src/components/AutoDnd/components/edges/flowLine.vue')['default']
     InfiniteScroll: typeof import('./../src/components/InfiniteScroll/index.vue')['default']
     LazyLoadImg: typeof import('./../src/components/LazyLoadImg/index.vue')['default']
     MarkedView: typeof import('./../src/components/MarkedView/MarkedView.vue')['default']
